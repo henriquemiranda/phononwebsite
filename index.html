@@ -1,166 +1,41 @@
-
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>three.js webgl - trackball controls</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-        <style>
-            body {
-                color: #000;
-                font-family:Monospace;
-                font-size:13px;
-                text-align:center;
-                font-weight: bold;
+<html>
+<head>
 
-                background-color: #fff;
-                margin: 0px;
-                overflow: hidden;
-            }
+	<title>TSS Physics - Home</title>
+	<!-- META TAGS about the Website-->
+	<meta name="author" content="Henrique Miranda, Raoul Weber">	
+	<meta name="copyright" content="2015 Theoretical Solid-State Physics Group of University of Luxembourg">
+	<meta http-equiv="content-language" content="en">
+	<meta name="title" content="Theoretical Solid-State Physics">
+	<meta name="description" content="Interactive website for the visualization of phonons (lattice vibrations).">
+	<meta name="keywords" content="University of Luxembourg, theoretical solid-state physics, phonons, lattice vibrations, visualization of phonons, phonon dispersion">
+	<meta name="date" content="2014-07-25">
 
-            #info {
-                color:#000;
-                position: absolute;
-                top: 0px; width: 100%;
-                padding: 5px;
+	<!-- CSS Design-->
+	<link href="css/style.css" type="text/css" rel="stylesheet">
 
-            }
+	<!-- Meta tags symbols -->
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
-            a {
-                color: red;
-            }
-        </style>
-    </head>
+</head>
 
-    <body>
-        <div id="container"></div>
-        <div id="info">
-            <a href="http://threejs.org" target="_blank">three.js</a> - trackball controls example</br>
-            MOVE mouse &amp; press LEFT/A: rotate, MIDDLE/S: zoom, RIGHT/D: pan
-        </div>
+<body>
 
-        <script src="js/three.min.js"></script>
+<header>
+	<ul class="navigation">
+		<li><a href="index.html">Home</a></font></li>
+		<li><a href="phonon.html">Phonons</a></font></li>
+		<li><a href="contact.html">Contact</a></font></li>
+	</ul>
+<center>Theoretical Solid-State Physics</center>
 
-        <script src="js/TrackballControls.js"></script>
+</header>
 
-        <script src="js/Detector.js"></script>
-        <script src="js/stats.min.js"></script>
+<section></br></br></br>
+Welcome to the project of phonon visualization provided by the Theoretical Solid State Physics group of the University of Luxembourg.</br>
+This project provides the opportunity to communicate recent research results of the theoretical solid-state physics group and by its interactivity it gives to users a better understanding of the physics of different materials. Thereby, the main focus lies on visualizing phonons (lattice vibrations) of these materials by an interplay between their phonon dispersion and the corresponding animated states of these systems. So in addition to phonon dispersion curves, the database provides a multitude of animated crystal structures and further informations about the materials.
+</section>
+</body>
 
-        <script>
-
-            if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
-
-            var container, stats;
-
-            var camera, controls, scene, renderer;
-
-            var cross;
-
-            init();
-            animate();
-
-            function init() {
-
-                camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.1, 5000 );
-                camera.position.z = 500;
-
-                controls = new THREE.TrackballControls( camera );
-
-                controls.rotateSpeed = 1.0;
-                controls.zoomSpeed = 1.2;
-                controls.panSpeed = 0.8;
-
-                controls.noZoom = false;
-                controls.noPan = false;
-
-                controls.staticMoving = true;
-                controls.dynamicDampingFactor = 0.3;
-
-                controls.addEventListener( 'change', render );
-
-                // world
-
-                scene = new THREE.Scene();
-                
-                var map = THREE.ImageUtils.loadTexture( 'textures/me.jpg' );
-                map.wrapS = map.wrapT = THREE.RepeatWrapping;
-                map.anisotropy = 16;
-
-                var material = new THREE.MeshLambertMaterial( { map: map, side: THREE.DoubleSide } );
-
-                for (i=-5;i<5;i++) {
-                    for (j=-5;j<5;j++) {   
-                        object = new THREE.Mesh( new THREE.SphereGeometry( 50, 20, 10 ), material );
-                        object.position.set( i*100, j*100, 0 );
-                        scene.add( object );
-                    }
-                }
-                // lights
-
-                light = new THREE.DirectionalLight( 0xffffff );
-                light.position.set( 0, 0, 100 );
-                scene.add( light );
-
-                light = new THREE.AmbientLight( 0x222222 );
-                scene.add( light );
-
-
-                // renderer
-
-                renderer = new THREE.WebGLRenderer( { antialias: true } );
-                renderer.setClearColor( 0x000000 );
-                renderer.setPixelRatio( window.devicePixelRatio );
-                renderer.setSize( window.innerWidth, window.innerHeight );
-
-                container = document.getElementById( 'container' );
-                container.appendChild( renderer.domElement );
-
-                stats = new Stats();
-                stats.domElement.style.position = 'absolute';
-                stats.domElement.style.top = '0px';
-                stats.domElement.style.zIndex = 100;
-                container.appendChild( stats.domElement );
-
-                //
-
-                window.addEventListener( 'resize', onWindowResize, false );
-                //
-
-                render();
-
-            }
-
-            function onWindowResize() {
-
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-
-                renderer.setSize( window.innerWidth, window.innerHeight );
-
-                controls.handleResize();
-
-                render();
-
-            }
-
-            function animate() {
-
-                requestAnimationFrame( animate );
-                controls.update();
-                render();
-
-            }
-
-            function render() {
-
-                renderer.render( scene, camera );
-                stats.update();
-
-            }
-
-
-        </script>
-
-    </body>
 </html>
-

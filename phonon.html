@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TSS Physics - Visualization of phonons</title>
+<!-- META TAGS about the Website-->
+	<meta name="author" content="Raoul Weber">	
+	<meta name="copyright" content="2014 Theoretical Solid-State Physics Group of University of Luxembourg">
+	<meta http-equiv="content-language" content="text/html; charset=utf-8; en">
+	<meta name="title" content="Theoretical Solid-State Physics: Phonon visualizations">
+	<meta name="description" content="Interactive website for the visualization of phonons (lattice vibrations).">
+	<meta name="keywords" content="University of Luxembourg, theoretical solid-state physics, phonons, lattice vibrations, visualization of phonons, phonon dispersion">
+	<meta name="date" content="2014-07-25">
+
+<!-- META TAGS start Jmol animation -->
+	<meta name="Title" content="Phonon animation">
+	<meta name="Format" content="text/html">
+	<meta name="Language" content="en">
+	<meta charset="utf-8">
+
+<!-- CSS -->
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+
+<!-- jquery -->
+	<script src="js/jquery.min.js"></script>
+	
+<!-- highcharts script tags -->
+    <script src="highcharts/highcharts.js"></script>
+
+<!-- page javascript -->
+	<script src="js/display_phonon.js"></script>
+    <script src="js/three.min.js"></script>
+
+    <script src="js/TrackballControls.js"></script>
+
+    <script src="js/Detector.js"></script>
+    <script src="js/stats.min.js"></script>
+    <script src="js/vibmol.js"></script>	
+
+</head>
+
+<body>
+    <ul class="navigation">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="phonon.html">Phonons</a></li>
+        <li><a href="contact.html">Contact</a></li>
+    </ul>
+	<center><p id="t1">Material</p></center>
+	<div class="flex-container">	
+		<div class="flex-item">
+			<div>Materials:<br/>
+				<ul id="mat" style="overflow:scroll;">
+				    <li><a href="#" onclick="folder='carbon_linearchain'; p.updateAll(jmolApplet0);">C linear chain</a></li>
+				    <li><a href="#" onclick="folder='graphene';           p.updateAll(jmolApplet0);">Graphene</a></li>
+				    <li><a href="#" onclick="folder='mos2_bulk';          p.updateAll(jmolApplet0);">Bulk MoS2</a></li>
+				    <li><a href="#" onclick="folder='mos2_singlelayer';   p.updateAll(jmolApplet0);">Layer MoS2</a></li>
+				</ul><br>
+			</div>
+
+			<div>
+			Unit cell:<br>
+				<table>
+					<tr><td>Number of Atoms:</td><td id="uc_natoms"></td></tr>
+					<tr><td>Atom Types:</td>     <td id="uc_atypes"></td></tr>
+				</table><br>
+			</div>
+
+			<div>
+			Lattice parameters (Å):<br>
+				<table>
+					<tr><td id="uc_00"></td><td id="uc_01"></td><td id="uc_02"></td></tr>
+					<tr><td id="uc_10"></td><td id="uc_11"></td><td id="uc_12"></td></tr>
+					<tr><td id="uc_20"></td><td id="uc_21"></td><td id="uc_22"></td></tr>
+				</table><br>
+			</div>
+
+			<div>
+				Atomic positions (reduced):<br>
+				<div width="100%" style="overflow:scroll;">
+					<table id="ap">
+						<tr></tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="flex-vibmol"     id="vibmol"    ></div>
+		<div class="flex-highcharts" id="highcharts"></div>
+		<div class="flex-item">			
+			<form>
+				Repetitions:<br>
+				<input class="input-rep" id="nx" type="number" name="quantity" min="1" value="1" max="10">
+				<input class="input-rep" id="ny" type="number" name="quantity" min="1" value="1" max="10">
+				<input class="input-rep" id="nz" type="number" name="quantity" min="1" value="1" max="10">
+			</form>
+		</div>
+	</div>
+</body>
+</html>

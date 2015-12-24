@@ -1,0 +1,102 @@
+body {
+  font-family: Arial,helvetica,sans-serif;
+  height: 100%;
+}
+
+html {
+  height: 100%;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+th, td {
+  padding: 0.25rem;
+  text-align: left;
+  border: 1px solid #ccc;
+}
+
+.flex-container {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  
+  -webkit-flex-flow: row wrap;
+  height: 80%;
+  align-items: stretch;
+}
+
+.flex-item {
+  padding: 5px;
+  width: 100%;
+  flex: 1 0px;
+}
+
+.flex-vibmol {
+  padding: 5px;
+  height: 100%;
+  background-color: blue;
+  flex: 2 0px;
+}
+
+.flex-highcharts {
+  padding: 5px;
+  flex: 2 0px;
+}
+
+.input-rep {
+  width: 20%;
+}
+
+.navigation {
+  list-style: none;
+  margin: 0;
+  
+  background: deepskyblue;
+  
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  
+  -webkit-flex-flow: row wrap;
+  justify-content: flex-start;
+}
+
+.navigation a {
+  text-decoration: none;
+  display: block;
+  padding: 1em;
+  color: white;
+}
+
+@media all and (max-width: 800px) {
+  .navigation {
+    justify-content: space-around;
+  }
+}
+
+@media all and (max-width: 600px) {
+  .navigation {
+    -webkit-flex-flow: column wrap;
+    flex-flow: column wrap;
+    padding: 0;
+  }
+  
+  .navigation a { 
+    text-align: center; 
+    padding: 10px;
+  }
+
+  .navigation li:last-of-type a {
+    border-bottom: none;	
+  }
+}
