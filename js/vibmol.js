@@ -72,8 +72,12 @@ function vibmol(phonon) {
 }
 
 function updateObjects(phonon) {
-    var selectedObjects = scene.getObjectByName("atom");
-    scene.remove( selectedObjects );
+    var nobjects = scene.children.length;
+    for (i=nobjects-1;i>=0;i--) {
+        if (scene.children[i].name == "atom") {
+            scene.remove(scene.children[i]);
+        }
+    }
     var objects = phonon.getVibmolStructure();
     for (i=0;i<objects.length;i++) {
         scene.add( objects[i] );
