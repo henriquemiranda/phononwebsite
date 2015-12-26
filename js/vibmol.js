@@ -39,19 +39,13 @@ function vibmol(phonon) {
     // world
     scene = new THREE.Scene();
     
-    var objects = phonon.getVibmolStructure();
+    var objects = phonon.getVibmolObjects();
     for (i=0;i<objects.length;i++) {
         scene.add( objects[i] );
     }
-    
-    // lights
-    light = new THREE.DirectionalLight( 0xffffff );
-    light.position.set( 0, 0, 100 );
-    scene.add( light );
 
-    light = new THREE.AmbientLight( 0x222222 );
-    scene.add( light );
-
+    addLights();   
+ 
     // renderer
     renderer = new THREE.WebGLRenderer( { antialias: true } );
     renderer.setClearColor( 0x000000 );
@@ -71,6 +65,16 @@ function vibmol(phonon) {
     render();
 }
 
+function addLights() {
+    // lights
+    light = new THREE.DirectionalLight( 0xffffff );
+    light.position.set( 0, 0, 100 );
+    scene.add( light );
+
+    light = new THREE.AmbientLight( 0x222222 );
+    scene.add( light );
+}
+
 function updateObjects(phonon) {
     var nobjects = scene.children.length;
     for (i=nobjects-1;i>=0;i--) {
@@ -78,7 +82,9 @@ function updateObjects(phonon) {
             scene.remove(scene.children[i]);
         }
     }
-    var objects = phonon.getVibmolStructure();
+
+    //add alights
+    var objects = phonon.getVibmolObjects();
     for (i=0;i<objects.length;i++) {
         scene.add( objects[i] );
     }

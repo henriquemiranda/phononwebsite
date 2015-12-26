@@ -46,8 +46,38 @@ Phonon = {
             self.getRepetitions();
         });
     },
-    
+ 
     getVibmolStructure: function() {
+        var self = this;
+ 		var i,j,n=0;
+        var veckn = this.vec[this.k][this.n];
+        var r=0.5, lat=20, lon=10;
+        var pos = [0,0,0];
+        var objects = [];	
+
+		//create jmol command
+        for (var ix=0;ix<this.nx;ix++) {
+            for (var iy=0;iy<this.ny;iy++) {
+                for (var iz=0;iz<this.nz;iz++) {				
+                    for (i=0;i<this.natoms;i++) {
+                        object = self.objects[ n ];
+                        
+                        //postions of the atoms
+                        for (j=0;j<3;j++) {
+                            pos[j] = self.atom_pos_car[i][j] + ix*self.lat[0][j]
+                                                             + iy*self.lat[1][j]
+                                                             + iz*self.lat[2][j];
+                        }                       
+ 
+                        object.position.set(pos[0],pos[1],pos[2]);
+                        n+=1;
+                    }
+                }
+            }
+        }
+    },
+   
+    getVibmolObjects: function() {
         var self = this;
  		var i,j;
         var veckn = this.vec[this.k][this.n];
@@ -133,7 +163,7 @@ Phonon = {
                          click: function(event) {
                                     Phonon.k = this.x;
                                     Phonon.n = this.series.name;
-                                    //update structure
+                                    Phonon.getVibmolStructure();
                                                 }
                         }
                     }
