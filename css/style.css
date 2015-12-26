@@ -42,7 +42,6 @@ th, td {
 .flex-vibmol {
   padding: 5px;
   height: 100%;
-  background-color: blue;
   flex: 2 0px;
 }
 

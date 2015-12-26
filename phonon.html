@@ -27,14 +27,16 @@
     <script src="highcharts/highcharts.js"></script>
 
 <!-- page javascript -->
-	<script src="js/display_phonon.js"></script>
     <script src="js/three.min.js"></script>
 
     <script src="js/TrackballControls.js"></script>
 
     <script src="js/Detector.js"></script>
     <script src="js/stats.min.js"></script>
+    <script src="js/complex.min.js"></script>
+
     <script src="js/vibmol.js"></script>	
+	<script src="js/display_phonon.js"></script>
 
 </head>
 
@@ -79,19 +81,19 @@
 					<table id="ap">
 						<tr></tr>
 					</table>
-				</div>
+				</div><br>
+			</div>
+			<div>
+                <form>
+                    Repetitions:<br>
+                    <input class="input-rep" id="nx" type="number" name="quantity" min="1" value="1" max="10">
+                    <input class="input-rep" id="ny" type="number" name="quantity" min="1" value="1" max="10">
+                    <input class="input-rep" id="nz" type="number" name="quantity" min="1" value="1" max="10">
+                </form>
 			</div>
 		</div>
 		<div class="flex-vibmol"     id="vibmol"    ></div>
 		<div class="flex-highcharts" id="highcharts"></div>
-		<div class="flex-item">			
-			<form>
-				Repetitions:<br>
-				<input class="input-rep" id="nx" type="number" name="quantity" min="1" value="1" max="10">
-				<input class="input-rep" id="ny" type="number" name="quantity" min="1" value="1" max="10">
-				<input class="input-rep" id="nz" type="number" name="quantity" min="1" value="1" max="10">
-			</form>
-		</div>
 	</div>
 </body>
 </html>

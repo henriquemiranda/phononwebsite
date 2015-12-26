@@ -1,4 +1,4 @@
-$(document).ready(function(){
+/*$(document).ready(function(){
 
     if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
@@ -11,16 +11,18 @@ $(document).ready(function(){
     init();
     animate();	
 	
-})
+})*/
 
-function init() {
-    container = $('#vibmol');
+function vibmol(phonon) {
+    /* Initialize the phonon animation */
+
 	var dimensions = containerDimensions();
-	
-    camera = new THREE.PerspectiveCamera( 60, dimensions.ratio, 0.1, 5000 );
-    camera.position.z = 500;
+	container = dimensions.container;
 
-    controls = new THREE.TrackballControls( camera );
+    camera = new THREE.PerspectiveCamera( 60, dimensions.ratio, 0.1, 5000 );
+    camera.position.z = 20;
+
+    controls = new THREE.TrackballControls( camera, container );
 
     controls.rotateSpeed = 1.0;
     controls.zoomSpeed = 1.2;
@@ -35,25 +37,14 @@ function init() {
     controls.addEventListener( 'change', render );
 
     // world
-
     scene = new THREE.Scene();
     
-    var map = THREE.ImageUtils.loadTexture( 'textures/me.jpg' );
-    map.wrapS = map.wrapT = THREE.RepeatWrapping;
-    map.anisotropy = 16;
-
-    var material = new THREE.MeshLambertMaterial( { map: map, side: THREE.DoubleSide } );
-
-    for (i=-5;i<5;i++) {
-        for (j=-5;j<5;j++) {   
-            object = new THREE.Mesh( new THREE.SphereGeometry( 50, 20, 10 ), material );
-            object.position.set( i*100, j*100, 0 );
-            scene.add( object );
-        }
+    var objects = phonon.getVibmolStructure();
+    for (i=0;i<objects.length;i++) {
+        scene.add( objects[i] );
     }
-
+    
     // lights
-
     light = new THREE.DirectionalLight( 0xffffff );
     light.position.set( 0, 0, 100 );
     scene.add( light );
@@ -62,34 +53,41 @@ function init() {
     scene.add( light );
 
     // renderer
-
     renderer = new THREE.WebGLRenderer( { antialias: true } );
     renderer.setClearColor( 0x000000 );
-    renderer.setPixelRatio( window.devicePixelRatio );
+    //renderer.setPixelRatio( window.devicePixelRatio );
     renderer.setSize( dimensions.width , dimensions.height );
 
-    container.get(0).appendChild( renderer.domElement );
+    container.appendChild( renderer.domElement );
 
     stats = new Stats();
-    stats.domElement.style.position = 'absolute';
-    stats.domElement.style.top = '0px';
+    stats.domElement.style.position = 'relative';
+    stats.domElement.style.top = '-52px';
     stats.domElement.style.zIndex = 100;
-    container.get(0).appendChild( stats.domElement );
-
-    //
+    container.appendChild( stats.domElement );
 
     window.addEventListener( 'resize', onWindowResize, false );
-    //
 
     render();
+}
 
+function updateObjects(phonon) {
+    var selectedObjects = scene.getObjectByName("atom");
+    scene.remove( selectedObjects );
+    var objects = phonon.getVibmolStructure();
+    for (i=0;i<objects.length;i++) {
+        scene.add( objects[i] );
+    }
+    animate();
 }
 
 function containerDimensions() {
-	var container = $('#vibmol');
-	var w = container.width(), h = container.height();
+    /* Obtain the dimensions of the container object */
+	container = $('#vibmol');
+	w = container.width(), h = container.height();
 
 	return {
+        container: container.get(0),
 		width: w,
 		height: h,
 		ratio: ( w / h )
@@ -109,6 +107,11 @@ function onWindowResize() {
 
 }
 
+function pause() {
+    var id = requestAnimationFrame( animate );
+    cancelAnimationFrame( id );
+}
+
 function animate() {
 
     requestAnimationFrame( animate );
@@ -118,6 +121,9 @@ function animate() {
 }
 
 function render() {
+    var timer = Date.now() % 1000 / 1000;
+
+    p.getVibmolVibrations(timer);
 
     renderer.render( scene, camera );
     stats.update();

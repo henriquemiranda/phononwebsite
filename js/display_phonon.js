@@ -1,5 +1,4 @@
 var pi = 3.14159265359;
-var nsteps = 20.0;
 //default folder
 folder="graphene";
 
@@ -7,24 +6,21 @@ $.ajaxSetup({
     async: false
 });
 
-updateMenu = function() {
-    $.getJSON('models.json', function(data) {
-        var nmodels = data["nmodels"];
-        var models = data["models"];
-        $('#mat').empty() //clean the atomic positions table
-        for (var i=0;i<nmodels;i++) {
-            $('#mat').append('<li></li>');
-            $('#mat li:last').append("<a href='#' onclick=\"folder=\'"+models[i]["folder"]+"\';"+
-                                     "p.updateAll(jmolApplet0);\">"+models[i]["name"]+"</a>");
-        }
-    });
-}
-
 //class
 Phonon = {
     k: 0,
     n: 0,
-    animcmd: "vectors on; vectors 0.15; color vectors green; axes on; axes POSITION [5 5 %]; animation on; animation mode loop 0 0; show data;",
+    nx: 1,
+    ny: 1,
+    nz: 1,
+
+    getRepetitions: function() {
+        var self = this;
+        self.nx = $('#nx').val();
+        self.ny = $('#ny').val();
+        self.nz = $('#nz').val();
+    },
+
     //This function reads the JSON data for the model 
     getModel: function() {
         var self = this;
@@ -44,67 +40,114 @@ Phonon = {
             self.highsym_qpts = data["highsym_qpts"]
             //repetitions
             self.repetitions = data["repetitions"];
-            $('#nx').val(self.repetitions[0]);
-            $('#ny').val(self.repetitions[1]);
-            $('#nz').val(self.repetitions[2]);
+            self.nx = $('#nx').val(self.repetitions[0]);
+            self.ny = $('#ny').val(self.repetitions[1]);
+            self.nz = $('#nz').val(self.repetitions[2]);
+            self.getRepetitions();
         });
     },
-
-    getJmolStructure: function() {
+    
+    getVibmolStructure: function() {
+        var self = this;
  		var i,j;
         var veckn = this.vec[this.k][this.n];
+        var r=0.5, lat=20, lon=10;
+        var pos = [0,0,0];
+        var objects = [];	
 
-		//get the number of repetitions
-		nx = $('#nx').val();
-		ny = $('#ny').val();
-		nz = $('#nz').val();
-		
+        var map = THREE.ImageUtils.loadTexture( 'textures/me.jpg' );
+        map.wrapS = map.wrapT = THREE.RepeatWrapping;
+        map.anisotropy = 16;
+        var material = new THREE.MeshLambertMaterial( { map: map, side: THREE.DoubleSide } );
+
 		//create jmol command
-		var cmd = "", cmdv = "";
-        for (var t=0;t<nsteps;t++) {
-		    var ni = 0;
-            cmdv += "frame "+t+";";
-            if (t == 0) { cmd += 	"data 'model'|"+this.natoms*nx*ny*nz+"|model|";  }
-            else        { cmd += 	"data 'append'|"+this.natoms*nx*ny*nz+"|model|"; }
-				
-            for (var ix=0;ix<nx;ix++) {
-                for (var iy=0;iy<ny;iy++) {
-                    for (var iz=0;iz<nz;iz++) {				
-                        for (i=0;i<this.natoms;i++) {
-                            ni+=1;
-                            cmd += this.atom_types[i]+" ";
-                            cmdv += "{atomno="+(ni)+" and thisModel}.vXyz = {";
-
-                            for (j=0;j<3;j++) {
-                                //postions of the atoms
-                                var kpt = this.kpoints[this.k];
-                                var sprod = kpt[0]*ix + kpt[1]*iy + kpt[2]*iz;
-                                pos = this.atom_pos_car[i][j] + ix*this.lat[0][j] + iy*this.lat[1][j] + iz*this.lat[2][j];
-                                var c = Complex(veckn[i][j][0],veckn[i][j][1]);
-                                dpos = c.mult(Complex.exp(Complex(0,(t/nsteps + sprod)*2.0*pi))).real();
-                                cmd += (pos+dpos*0.1) + " ";
-                                //vectors of the atoms
-                                cmdv += c.mult(Complex.exp(Complex(0,(t/nsteps + sprod)*2.0*pi))).real() + " ";
-                            }
-                            cmd += '|';
-                            cmdv += '};';
-                        }
+        for (var ix=0;ix<this.nx;ix++) {
+            for (var iy=0;iy<this.ny;iy++) {
+                for (var iz=0;iz<this.nz;iz++) {				
+                    for (i=0;i<this.natoms;i++) {
+                        
+                        //postions of the atoms
+                        for (j=0;j<3;j++) {
+                            pos[j] = self.atom_pos_car[i][j] + ix*self.lat[0][j]
+                                                             + iy*self.lat[1][j]
+                                                             + iz*self.lat[2][j];
+                        }                       
+ 
+                        object = new THREE.Mesh( new THREE.SphereGeometry(r,lat,lon), material );
+                        object.position.set(pos[0],pos[1],pos[2]);
+                        object.name = "atom";
+                        objects.push(object);
                     }
                 }
             }
-            
-            if (t == 0) { cmd += "end 'model'; ";  }
-            else        { cmd += "end 'append';"; }
         }
-        cmd += cmdv;
-        return cmd;
+        self.objects = objects;
+        return objects;
+    },
+
+    getVibmolVibrations: function(t) {
+        var self = this;
+ 		var i,j,n=0;
+        var veckn = self.vec[self.k][self.n];
+        var object;
+
+		//create jmol command
+        for (var ix=0;ix<self.nx;ix++) {
+            for (var iy=0;iy<self.ny;iy++) {
+                for (var iz=0;iz<self.nz;iz++) {
+                    for (i=0;i<self.natoms;i++) {
+                        object = self.objects[ n ];
+ 
+                        //Displacements of the atoms
+                        kpt = self.kpoints[self.k];
+                        sprod = kpt[0]*ix + kpt[1]*iy + kpt[2]*iz;
+                        
+                        x = Complex(veckn[i][0][0],veckn[i][0][1]);
+                        y = Complex(veckn[i][1][0],veckn[i][1][1]);
+                        z = Complex(veckn[i][2][0],veckn[i][2][1]);
+                        object.position.x += x.mult(Complex.exp(Complex(0,(t+sprod)*2.0*pi))).real();
+                        object.position.y += y.mult(Complex.exp(Complex(0,(t+sprod)*2.0*pi))).real();
+                        object.position.z += z.mult(Complex.exp(Complex(0,(t+sprod)*2.0*pi))).real();
+                        
+                        n+=1;
+                    }
+                }
+            }
+        }
     },
 
     updateHighcharts: function(applet) {
+        var HighchartsOptions = {
+            chart: { type: 'line'},
+            title: { text: 'Phonon dispersion' },
+            xAxis: { title: { text: 'q-point' },
+                     plotLines: [] },
+            yAxis: { min: 0, 
+                     title: { text: 'Frequency (cm-1)' },
+                     plotLines: [ {value: 0, color: '#808080' } ] },
+            tooltip: { valueSuffix: 'cm-1' },
+            plotOptions: {
+                series: {
+                    cursor: 'pointer',
+                    point: { events: {
+                         click: function(event) {
+                                    Phonon.k = this.x;
+                                    Phonon.n = this.series.name;
+                                    //update structure
+                                                }
+                        }
+                    }
+                }
+            },
+            legend: { enabled: false },
+            series: []
+        };
+
         HighchartsOptions.series = this.highcharts;
         HighchartsOptions.xAxis.plotLines = this.highsym_qpts;
         $('#highcharts').highcharts(HighchartsOptions);
     },
+
 
     updatePage: function() {
         //lattice vectors table
@@ -140,48 +183,43 @@ Phonon = {
     }
 };
 
-var HighchartsOptions = {
-	chart: { type: 'line'},
-  	title: { text: 'Phonon dispersion' },
-  	xAxis: { title: { text: 'q-point' },
-             plotLines: [] },
-	yAxis: { min: 0, 
-			 title: { text: 'Frequency (cm-1)' },
-			 plotLines: [ {value: 0, color: '#808080' } ] },
-	tooltip: { valueSuffix: 'cm-1' },
-	plotOptions: {
-		series: {
-			cursor: 'pointer',
-			point: { events: {
-				 click: function(event) {
-							Phonon.k = this.x;
-							Phonon.n = this.series.name;
-							//update structure
-                                        }
-				}
-			}
-		}
-	},
-	legend: { enabled: false },
-	series: []
-};
+function updateMenu() {
+    $.getJSON('models.json', function(data) {
+        var nmodels = data["nmodels"];
+        var models = data["models"];
+        $('#mat').empty() //clean the atomic positions table
+        for (var i=0;i<nmodels;i++) {
+            $('#mat').append('<li></li>');
+            $('#mat li:last').append("<a href='#' onclick=\"folder=\'"+models[i]["folder"]+"\';"+
+                                     "p.updateAll(jmolApplet0);\">"+models[i]["name"]+"</a>");
+        }
+    });
+}
 
 $(document).ready(function(){
-    //create the atom models menu
-    updateMenu();
 
     p = Phonon;
+
     p.getModel();
 
-    //update jsmol
+    if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+    var container, stats;
+    var camera, controls, scene, renderer;
+    var cross;
+    vibmol(p);
+    animate();
 
+    updateMenu();
     p.updateHighcharts();
     p.updatePage();
 
     //jquery to make an action once you change the number of repetitions
     $(".input-rep").keyup(function(event){
         if(event.keyCode == 13){
-            //update structure            
+            pause();
+            p.getRepetitions();
+            updateObjects(p);
+            animate();
         }
     });
  
