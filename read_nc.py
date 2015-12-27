@@ -7,13 +7,14 @@ from numpy import array
 from numpy.linalg import solve
 import numpy as np
 
-material_list = { "graphene":           [noswap, [ 5, 5, 1],  0.01, "Graphene"]}
-#"carbon_linearchain": [noswap, [ 1, 1, 10], 2, "C Linear Chain"], 
-#"mos2_bulk":		  [noswap, [ 5, 5, 1],  2, "Bulk MoS<sub>2</sub>"],
-#"mos2_singlelayer":	  [noswap, [ 5, 5, 1],  2, "Layer MoS<sub>2</sub>"],
-#"mote2_singlelayer":  [noswap, [ 5, 5, 1],  2, "Layer MoTe<sub>2</sub>"],
+material_list = { 
+"graphene":           [noswap, [ 5, 5, 1],  0.01, "Graphene"],
+"mos2_bulk":		  [noswap, [ 5, 5, 1],  0.01, "Bulk MoS<sub>2</sub>"],
+"mos2_singlelayer":	  [noswap, [ 5, 5, 1],  0.01, "Layer MoS<sub>2</sub>"],
+"mote2_singlelayer":  [noswap, [ 5, 5, 1],  0.01, "Layer MoTe<sub>2</sub>"],
+"mote2_bulk":         [noswap, [ 5, 5, 1],  0.01, "Bulk MoTe<sub>2</sub>"]}
 #"mote2_doublelayer":  [noswap, [ 5, 5, 1],  2, "Double Layer MoTe<sub>2</sub>"],
-#"mote2_bulk":         [noswap, [ 5, 5, 1],  2, "Bulk MoTe<sub>2</sub>"]
+#"carbon_linearchain": [noswap, [ 1, 1, 10], 2, "C Linear Chain"], 
         
 #create the models file
 models = {"nmodels": len(material_list),

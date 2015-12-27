@@ -76,7 +76,7 @@ Phonon = {
             }
         }
     },
-   
+
     getVibmolObjects: function() {
         var self = this;
  		var i,j;
@@ -88,7 +88,9 @@ Phonon = {
         var map = THREE.ImageUtils.loadTexture( 'textures/me.jpg' );
         map.wrapS = map.wrapT = THREE.RepeatWrapping;
         map.anisotropy = 16;
-        var material = new THREE.MeshLambertMaterial( { map: map, side: THREE.DoubleSide } );
+        //var material = new THREE.MeshLambertMaterial( { map: map, side: THREE.DoubleSide } );
+        var material = new THREE.MeshLambertMaterial( { color: 0xffaa00, 
+                                                      blending: THREE.AdditiveBlending } );
 
 		//create jmol command
         for (var ix=0;ix<this.nx;ix++) {
@@ -208,6 +210,7 @@ Phonon = {
     
     updateAll: function(jmolApplet0) {
         this.getModel();
+        updateObjects(p);
         this.updateHighcharts();
         this.updatePage();
     }
@@ -221,7 +224,7 @@ function updateMenu() {
         for (var i=0;i<nmodels;i++) {
             $('#mat').append('<li></li>');
             $('#mat li:last').append("<a href='#' onclick=\"folder=\'"+models[i]["folder"]+"\';"+
-                                     "p.updateAll(jmolApplet0);\">"+models[i]["name"]+"</a>");
+                                     "p.updateAll();\">"+models[i]["name"]+"</a>");
         }
     });
 }
@@ -235,7 +238,6 @@ $(document).ready(function(){
     if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
     var container, stats;
     var camera, controls, scene, renderer;
-    var cross;
     vibmol(p);
     animate();
 
@@ -249,7 +251,6 @@ $(document).ready(function(){
             pause();
             p.getRepetitions();
             updateObjects(p);
-            animate();
         }
     });
  

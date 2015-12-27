@@ -1,1 +1,1 @@
-{"models": [{"folder": "graphene", "name": "Graphene"}], "nmodels": 1}
+{"models": [{"folder": "mote2_bulk", "name": "Bulk MoTe<sub>2</sub>"}, {"folder": "graphene", "name": "Graphene"}, {"folder": "mos2_bulk", "name": "Bulk MoS<sub>2</sub>"}, {"folder": "mos2_singlelayer", "name": "Layer MoS<sub>2</sub>"}, {"folder": "mote2_singlelayer", "name": "Layer MoTe<sub>2</sub>"}], "nmodels": 5}

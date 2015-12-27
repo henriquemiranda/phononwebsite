@@ -6,7 +6,6 @@
 
     var camera, controls, scene, renderer;
 
-    var cross;
 
     init();
     animate();	
