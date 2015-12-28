@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>three.js webgl - geometry - cube</title>
+        <meta charset="utf-8">
+        <style>
+            body {
+                margin: 0px;
+                background-color: #000000;
+                overflow: hidden;
+            }
+        </style>
+    </head>
+    <body>
+
+        <script src="../js/three.min.js"></script>
+        <script src="../js/TrackballControls.js"></script>
+
+        <script>
+
+            var camera, scene, renderer, controls;
+            var cylinder, ball1, ball2;
+
+            init();
+            animate();
+
+            function init() {
+
+                camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
+                camera.position.z = 50;
+
+                controls = new THREE.TrackballControls( camera );
+                controls.rotateSpeed = 1.0;
+                controls.zoomSpeed = 1.2;
+                controls.panSpeed = 0.8;
+                controls.noZoom = false;
+                controls.noPan = false;
+                controls.staticMoving = true;
+                controls.dynamicDampingFactor = 0.3;
+
+                scene = new THREE.Scene();
+
+                var material = new THREE.MeshLambertMaterial( { color: 0xffaa00 } );
+
+                //arrow
+                var sourcePos = new THREE.Vector3(10, 0, 0);
+                var targetPos = new THREE.Vector3(30,40, 0);
+
+                var direction = new THREE.Vector3().subVectors(targetPos, sourcePos);
+                var arrow = new THREE.ArrowHelper(direction.clone().normalize(), sourcePos, direction.length(), 0x00ff00, 2, 2);
+                scene.add(cylinderMesh(sourcePos, targetPos, material));
+                scene.add(arrow);
+
+                //cylinder
+                cylinder = new THREE.Mesh( new THREE.CylinderGeometry( 1, 1, 20, 8, 2, true ),
+                                           material );
+                scene.add( cylinder );
+
+                //ball1
+                var ball1 = new THREE.Mesh( new THREE.SphereGeometry(5,8,8), material );
+                ball1.position.copy( sourcePos );
+
+                //ball2
+                var ball2 = new THREE.Mesh( new THREE.SphereGeometry(5,8,8), material );
+                ball2.position.copy( targetPos );
+
+                scene.add( ball1 );
+                scene.add( ball2 );
+
+
+                light = new THREE.AmbientLight( 0x222222 );
+                scene.add( light );
+
+                light = new THREE.DirectionalLight( 0xffffff );
+                light.position.set( 0, 0, 100 );
+                scene.add( light );
+
+                renderer = new THREE.WebGLRenderer();
+                renderer.setPixelRatio( window.devicePixelRatio );
+                renderer.setSize( window.innerWidth, window.innerHeight );
+                document.body.appendChild( renderer.domElement );
+
+                //
+
+                window.addEventListener( 'resize', onWindowResize, false );
+
+            }
+
+            function cylinderMesh( point1, point2, material ) {
+                /*
+                function to draw a cylinder along a line taken from:
+                http://stackoverflow.com/questions/15316127/three-js-line-vector-to-cylinder
+                */
+                // edge from X to Y
+                var direction = new THREE.Vector3().subVectors(point2, point1);
+                var arrow = new THREE.ArrowHelper(direction.clone().normalize(), point1);
+
+                var rotation = new THREE.Euler().setFromVector3(direction);
+
+                var edgeGeometry = new THREE.CylinderGeometry( 2, 2, direction.length(), 10, 4 );
+
+                var edge = new THREE.Mesh(edgeGeometry, material);
+                edge.setRotationFromQuaternion( arrow.quaternion );
+                edge.position.copy( point1.clone().add( direction.multiplyScalar(0.5) ) );
+
+                return edge;
+            }
+
+            function onWindowResize() {
+
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+
+                renderer.setSize( window.innerWidth, window.innerHeight );
+
+                controls.handleResize();
+
+            }
+
+            function animate() {
+
+                requestAnimationFrame( animate );
+
+                //mesh.rotation.x += 0.005;
+                //mesh.rotation.y += 0.01;
+
+                controls.update();
+
+                renderer.render( scene, camera );
+
+            }
+
+        </script>
+
+    </body>
+</html>
+

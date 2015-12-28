@@ -85,10 +85,6 @@ Phonon = {
         var pos = [0,0,0];
         var objects = [];	
 
-        var map = THREE.ImageUtils.loadTexture( 'textures/me.jpg' );
-        map.wrapS = map.wrapT = THREE.RepeatWrapping;
-        map.anisotropy = 16;
-        //var material = new THREE.MeshLambertMaterial( { map: map, side: THREE.DoubleSide } );
         var material = new THREE.MeshLambertMaterial( { color: 0xffaa00, 
                                                       blending: THREE.AdditiveBlending } );
 
