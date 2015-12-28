@@ -15,15 +15,14 @@ Phonon = {
     nz: 1,
 
     getRepetitions: function() {
-        var self = this;
-        self.nx = $('#nx').val();
-        self.ny = $('#ny').val();
-        self.nz = $('#nz').val();
+        this.nx = $('#nx').val();
+        this.ny = $('#ny').val();
+        this.nz = $('#nz').val();
     },
 
     //This function reads the JSON data for the model 
     getModel: function() {
-        var self = this;
+        self = this;
         this.k=0;
         this.n=0;
         $.getJSON(folder+'/data.json', function(data) {
@@ -40,15 +39,14 @@ Phonon = {
             self.highsym_qpts = data["highsym_qpts"]
             //repetitions
             self.repetitions = data["repetitions"];
-            self.nx = $('#nx').val(self.repetitions[0]);
-            self.ny = $('#ny').val(self.repetitions[1]);
-            self.nz = $('#nz').val(self.repetitions[2]);
+            $('#nx').val(self.repetitions[0]);
+            $('#ny').val(self.repetitions[1]);
+            $('#nz').val(self.repetitions[2]);
             self.getRepetitions();
         });
     },
  
     getVibmolStructure: function() {
-        var self = this;
  		var i,j,n=0;
         var veckn = this.vec[this.k][this.n];
         var r=0.5, lat=20, lon=10;
@@ -60,13 +58,13 @@ Phonon = {
             for (var iy=0;iy<this.ny;iy++) {
                 for (var iz=0;iz<this.nz;iz++) {				
                     for (i=0;i<this.natoms;i++) {
-                        object = self.objects[ n ];
+                        object = this.objects[ n ];
                         
                         //postions of the atoms
                         for (j=0;j<3;j++) {
-                            pos[j] = self.atom_pos_car[i][j] + ix*self.lat[0][j]
-                                                             + iy*self.lat[1][j]
-                                                             + iz*self.lat[2][j];
+                            pos[j] = this.atom_pos_car[i][j] + ix*this.lat[0][j]
+                                                             + iy*this.lat[1][j]
+                                                             + iz*this.lat[2][j];
                         }                       
  
                         object.position.set(pos[0],pos[1],pos[2]);
@@ -78,7 +76,6 @@ Phonon = {
     },
 
     getVibmolObjects: function() {
-        var self = this;
  		var i,j;
         var veckn = this.vec[this.k][this.n];
         var r=0.5, lat=20, lon=10;
@@ -96,9 +93,9 @@ Phonon = {
                         
                         //postions of the atoms
                         for (j=0;j<3;j++) {
-                            pos[j] = self.atom_pos_car[i][j] + ix*self.lat[0][j]
-                                                             + iy*self.lat[1][j]
-                                                             + iz*self.lat[2][j];
+                            pos[j] = this.atom_pos_car[i][j] + ix*this.lat[0][j]
+                                                             + iy*this.lat[1][j]
+                                                             + iz*this.lat[2][j];
                         }                       
  
                         object = new THREE.Mesh( new THREE.SphereGeometry(r,lat,lon), material );
@@ -109,25 +106,24 @@ Phonon = {
                 }
             }
         }
-        self.objects = objects;
+        this.objects = objects;
         return objects;
     },
 
     getVibmolVibrations: function(t) {
-        var self = this;
  		var i,j,n=0;
-        var veckn = self.vec[self.k][self.n];
+        var veckn = this.vec[this.k][this.n];
         var object;
 
 		//create jmol command
-        for (var ix=0;ix<self.nx;ix++) {
-            for (var iy=0;iy<self.ny;iy++) {
-                for (var iz=0;iz<self.nz;iz++) {
-                    for (i=0;i<self.natoms;i++) {
-                        object = self.objects[ n ];
+        for (var ix=0;ix<this.nx;ix++) {
+            for (var iy=0;iy<this.ny;iy++) {
+                for (var iz=0;iz<this.nz;iz++) {
+                    for (i=0;i<this.natoms;i++) {
+                        object = this.objects[ n ];
  
                         //Displacements of the atoms
-                        kpt = self.kpoints[self.k];
+                        kpt = this.kpoints[this.k];
                         sprod = kpt[0]*ix + kpt[1]*iy + kpt[2]*iz;
                         
                         x = Complex(veckn[i][0][0],veckn[i][0][1]);
@@ -202,15 +198,16 @@ Phonon = {
         
         //update title
         $('#t1').html(this.name);
-    },
-    
-    updateAll: function(jmolApplet0) {
-        this.getModel();
-        updateObjects(p);
-        this.updateHighcharts();
-        this.updatePage();
     }
+    
 };
+
+function updateAll() {
+    p.getModel();
+    p.updateHighcharts();
+    p.updatePage();
+    v.updateObjects(p);
+}
 
 function updateMenu() {
     $.getJSON('models.json', function(data) {
@@ -220,33 +217,33 @@ function updateMenu() {
         for (var i=0;i<nmodels;i++) {
             $('#mat').append('<li></li>');
             $('#mat li:last').append("<a href='#' onclick=\"folder=\'"+models[i]["folder"]+"\';"+
-                                     "p.updateAll();\">"+models[i]["name"]+"</a>");
+                                     "updateAll();\">"+models[i]["name"]+"</a>");
         }
     });
 }
 
 $(document).ready(function(){
 
+    updateMenu();
+
     p = Phonon;
+    v = VibCrystal;
 
     p.getModel();
 
     if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
-    var container, stats;
-    var camera, controls, scene, renderer;
-    vibmol(p);
-    animate();
+    v.init($('#vibcrystal'),p);
+    v.animate();
 
-    updateMenu();
     p.updateHighcharts();
     p.updatePage();
 
     //jquery to make an action once you change the number of repetitions
     $(".input-rep").keyup(function(event){
         if(event.keyCode == 13){
-            pause();
+            v.pause();
             p.getRepetitions();
-            updateObjects(p);
+            v.updateObjects(p);
         }
     });
  
