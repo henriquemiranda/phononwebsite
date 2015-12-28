@@ -31,6 +31,7 @@ Phonon = {
             self.name = data["name"];
             self.natoms = data["natoms"];
             self.atom_types = data["atom_types"];
+            self.atomic_numbers = data["atom_numbers"];
             self.atom_pos_car = data["atom_pos_car"];
             self.atom_pos_red = data["atom_pos_red"];
             self.lat = data["lattice"];

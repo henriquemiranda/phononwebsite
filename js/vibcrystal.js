@@ -18,8 +18,11 @@ VibCrystal = {
         this.container = container;
         var container0 = container.get(0);
         this.dimensions = this.getContainerDimensions();
-        this.atoms = phonon.atoms;
+
+        //obtain information from phonon structure
+        this.getAtypes(phonon);
         this.vibrations = phonon.vibrations;
+        this.atoms      = phonon.atoms;
 
         this.camera = new THREE.PerspectiveCamera( 60, this.dimensions.ratio, 0.1, 5000 );
         this.camera.position.z = 20;
@@ -58,9 +61,14 @@ VibCrystal = {
         this.stats.domElement.style.zIndex = 100;
         container0.appendChild( this.stats.domElement );
 
-        window.addEventListener( 'resize', this.onWindowResize, false );
+        window.addEventListener( 'resize', this.onWindowResize.bind(this), false );
 
         this.render();
+    },
+
+    getAtypes: function(phonon) {
+        this.atomic_numbers = phonon.atomic_numbers;
+        console.log(this.atomic_numbers);
     },
 
     addStructure: function(phonon) {
@@ -68,6 +76,7 @@ VibCrystal = {
         this.bondobjects = [];
         this.atompos = [];
         this.bonds = [];
+
         var material = new THREE.MeshLambertMaterial( { color: 0xffaa00, 
                                                         blending: THREE.AdditiveBlending } );
 
@@ -137,6 +146,7 @@ VibCrystal = {
     },
 
     updateObjects: function(phonon) {
+        this.getAtypes(phonon);
         this.vibrations = phonon.vibrations;
         this.atoms      = phonon.atoms;
         this.removeStructure();
@@ -155,8 +165,10 @@ VibCrystal = {
     },
 
     onWindowResize: function() {
-        camera.aspect = this.dimensions.ratio;
-        camera.updateProjectionMatrix();
+        this.dimensions = this.getContainerDimensions();
+
+        this.camera.aspect = this.dimensions.ratio;
+        this.camera.updateProjectionMatrix();
 
         this.renderer.setSize( this.dimensions.width, this.dimensions.height );
         this.controls.handleResize();

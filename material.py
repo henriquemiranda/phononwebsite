@@ -62,11 +62,12 @@ class material():
         self.kpoints =  pcfile.variables['qpoints'][:]    #reduced kpoints
         self.pos = pcfile.variables['reduced_atom_positions'][:]
         self.lat = pcfile.variables['primitive_vectors'][:]*bohr_angstroem
-        self.atom_types = pcfile.variables['atom_species'][:]
+        self.atypes = pcfile.variables['atom_species'][:]
         self.natoms = len(pcfile.dimensions['number_of_atoms'])
         self.nkpoints = len(pcfile.dimensions['number_of_qpoints'])
         self.nmodes = len(pcfile.dimensions['number_of_phonon_modes'])
         self.chemical_symbol = pcfile.variables['chemical_symbols'][:]
+        self.atomic_numbers = pcfile.variables['atomic_numbers'][:]
         pcfile.close()
 
         #transform the vectors
@@ -75,7 +76,8 @@ class material():
         self.eivec = vectors/np.linalg.norm(vectors[0,0])*self.scale
 
         self.chemical_symbol = ["".join(a).strip() for a in self.chemical_symbol]
-        self.atom_types = [self.chemical_symbol[a-1] for a in self.atom_types]
+        self.atom_types = [self.chemical_symbol[a-1] for a in self.atypes]
+        self.atom_numbers = [self.atomic_numbers[a-1] for a in self.atypes]
     
     def __str__(self):
         """ Write some information about the system
@@ -123,6 +125,7 @@ class material():
                 "natoms":       self.natoms,
                 "lattice":      swap_l(round_ll( self.lat ), self.swap),
                 "atom_types":   self.atom_types,
+                "atom_numbers": self.atom_numbers,
                 "formula":      "".join(self.atom_types),
                 "kpoints":      swap_l(self.kpoints.tolist(),self.swap),
                 "repetitions":  self.reps, 
