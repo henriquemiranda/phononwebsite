@@ -1,6 +1,7 @@
 /*
 Class to show phonon vibrations using Three.js and WebGl
 */
+
 VibCrystal = {
     container: null,
     container0: null,
@@ -17,6 +18,8 @@ VibCrystal = {
         this.container = container;
         var container0 = container.get(0);
         this.dimensions = this.getContainerDimensions();
+        this.atoms = phonon.atoms;
+        this.vibrations = phonon.vibrations;
 
         this.camera = new THREE.PerspectiveCamera( 60, this.dimensions.ratio, 0.1, 5000 );
         this.camera.position.z = 20;
@@ -62,24 +65,27 @@ VibCrystal = {
 
     addStructure: function(phonon) {
         this.atomobjects = [];
+        this.atompos = [];
         var material = new THREE.MeshLambertMaterial( { color: 0xffaa00, 
                                                         blending: THREE.AdditiveBlending } );
 
-        var atoms = this.atoms = phonon.atoms;
-        this.vibrations = phonon.vibrations;
-
         var r=0.5, lat=20, lon=10;
-        for (i=0;i<atoms.length;i++) {
+
+        //add a ball for each atom
+        for (i=0;i<this.atoms.length;i++) {
 
             object = new THREE.Mesh( new THREE.SphereGeometry(r,lat,lon), material );
-            pos = new THREE.Vector3(atoms[i][0],atoms[i][1], atoms[i][2]);
+            pos = new THREE.Vector3(this.atoms[i][0], this.atoms[i][1], this.atoms[i][2]);
 
             object.position.copy(pos);
             object.name = "atom";
 
             this.scene.add( object );
-            this.atomobjects.push(object.position);
+            this.atomobjects.push(object);
+            this.atompos.push( pos );
         }
+        
+        //add a cylinder for each bond
         
     },
 
@@ -103,6 +109,8 @@ VibCrystal = {
     },
 
     updateObjects: function(phonon) {
+        this.vibrations = phonon.vibrations;
+        this.atoms      = phonon.atoms;
         this.removeStructure();
         this.addStructure(phonon);
         this.animate();
@@ -136,17 +144,20 @@ VibCrystal = {
     },
 
     animate: function() {
-        var t = Date.now() % 1000 / 1000;
-        var vibrations = this.vibrations;
-        var scale = 0.01;
+        var t = Date.now() * 0.01;
+        var scale = 1;
+        var x,y,z;
+        var atom, atompos;
         requestAnimationFrame( this.animate.bind(this) );
 
         //update positions according to vibrational modes
         for (i=0;i<this.atomobjects.length;i++) {
-            x = vibrations[i][0].mult(Complex.exp(Complex(0,t*2*pi))).real()*scale;
-            y = vibrations[i][1].mult(Complex.exp(Complex(0,t*2*pi))).real()*scale;
-            z = vibrations[i][2].mult(Complex.exp(Complex(0,t*2*pi))).real()*scale;
-            this.atomobjects[i].add(new THREE.Vector3( x, y, z ));
+            atom    = this.atomobjects[i];
+            atompos = this.atompos[i];
+            x = atompos.x + Complex.Polar(scale,t).mult(this.vibrations[i][0]).real();
+            y = atompos.y + Complex.Polar(scale,t).mult(this.vibrations[i][1]).real();
+            z = atompos.z + Complex.Polar(scale,t).mult(this.vibrations[i][2]).real();
+            this.atomobjects[i].position.set(x,y,z);
         }
 
         this.controls.update();

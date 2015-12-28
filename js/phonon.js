@@ -80,25 +80,24 @@ Phonon = {
  		var i,j,n=0;
         var veckn = this.vec[this.k][this.n];
         var vibrations = [];
+        var kpt = this.kpoints[this.k];
 
 		//create jmol command
         for (var ix=0;ix<this.nx;ix++) {
             for (var iy=0;iy<this.ny;iy++) {
                 for (var iz=0;iz<this.nz;iz++) {
+
+                    var sprod = kpt[0]*ix + kpt[1]*iy + kpt[2]*iz;
+                    var phase = Complex.exp(Complex(0,sprod*2.0*pi));
+
                     for (i=0;i<this.natoms;i++) {
                         //Displacements of the atoms
-                        kpt = this.kpoints[this.k];
-                        sprod = kpt[0]*ix + kpt[1]*iy + kpt[2]*iz;
                         
-                        x = Complex(veckn[i][0][0],veckn[i][0][1]);
-                        y = Complex(veckn[i][1][0],veckn[i][1][1]);
-                        z = Complex(veckn[i][2][0],veckn[i][2][1]);
+                        x = Complex(veckn[i][0][0],veckn[i][0][1]).mult(phase);
+                        y = Complex(veckn[i][1][0],veckn[i][1][1]).mult(phase);
+                        z = Complex(veckn[i][2][0],veckn[i][2][1]).mult(phase);
 
-                        xc = x.mult(Complex.exp(Complex(0,sprod*2.0*pi)));
-                        yc = y.mult(Complex.exp(Complex(0,sprod*2.0*pi)));
-                        zc = z.mult(Complex.exp(Complex(0,sprod*2.0*pi)));
-
-                        vibrations.push( [xc,yc,zc] );
+                        vibrations.push( [x,y,z] );
                     }
                 }
             }
@@ -123,9 +122,9 @@ Phonon = {
                     cursor: 'pointer',
                     point: { events: {
                          click: function(event) {
-                                    Phonon.k = this.x;
-                                    Phonon.n = this.series.name;
-                                    Phonon.getVibrations();
+                                    p.k = this.x;
+                                    p.n = this.series.name;
+                                    p.getVibrations();
                                     v.updateObjects(p); 
                                                 }
                         }

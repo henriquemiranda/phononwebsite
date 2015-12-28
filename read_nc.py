@@ -7,7 +7,7 @@ from numpy import array
 from numpy.linalg import solve
 import numpy as np
 
-scale = 1
+scale = 0.1
 material_list = { 
 "graphene":           [noswap, [ 5, 5, 1],  scale, "Graphene"],
 "mos2_bulk":		  [noswap, [ 5, 5, 1],  scale, "Bulk MoS<sub>2</sub>"],
