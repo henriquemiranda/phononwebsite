@@ -88,7 +88,7 @@ Phonon = {
                 for (var iz=0;iz<this.nz;iz++) {
 
                     var sprod = kpt[0]*ix + kpt[1]*iy + kpt[2]*iz;
-                    var phase = Complex.exp(Complex(0,sprod*2.0*pi));
+                    var phase = Complex.Polar(1,sprod*2.0*pi);
 
                     for (i=0;i<this.natoms;i++) {
                         //Displacements of the atoms

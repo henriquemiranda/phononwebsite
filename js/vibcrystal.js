@@ -65,7 +65,9 @@ VibCrystal = {
 
     addStructure: function(phonon) {
         this.atomobjects = [];
+        this.bondobjects = [];
         this.atompos = [];
+        this.bonds = [];
         var material = new THREE.MeshLambertMaterial( { color: 0xffaa00, 
                                                         blending: THREE.AdditiveBlending } );
 
@@ -85,7 +87,33 @@ VibCrystal = {
             this.atompos.push( pos );
         }
         
-        //add a cylinder for each bond
+        //obtain combinations two by two of all the atoms
+        var combinations = getCombinations( this.atomobjects );
+        var a, b;
+        for (i=0;i<combinations.length;i++) {
+            a = combinations[i][0].position;
+            b = combinations[i][1].position;
+
+            //if the separation is smaller than the sum of the bonding radius create a bond
+            if (a.distanceTo(b) < 2.3 ) {
+                this.bonds.push( [a,b] );
+
+                //get transformations
+                var bond = getBond(a,b); 
+
+                //create cylinder mesh
+                var cylinderGeometry = new THREE.CylinderGeometry(0.1,0.1,bond.length,10,4);
+                var object = new THREE.Mesh(cylinderGeometry, material);
+                
+                object.setRotationFromQuaternion( bond.quaternion );
+                object.position.copy( bond.midpoint )
+                object.name = 'bond';
+
+                this.scene.add( object );
+                this.bondobjects.push( object );
+            }
+        }
+
         
     },
 
@@ -93,7 +121,7 @@ VibCrystal = {
         var nobjects = this.scene.children.length;
         var scene = this.scene
         for (i=nobjects-1;i>=0;i--) {
-            if (scene.children[i].name == "atom") {
+            if (scene.children[i].name == "atom" || scene.children[i].name == "bond") {
                 scene.remove(scene.children[i]);
             }
         }
@@ -131,9 +159,7 @@ VibCrystal = {
         camera.updateProjectionMatrix();
 
         this.renderer.setSize( this.dimensions.width, this.dimensions.height );
-
         this.controls.handleResize();
-
         this.render();
 
     },
@@ -144,25 +170,34 @@ VibCrystal = {
     },
 
     animate: function() {
-        var t = Date.now() * 0.01;
-        var scale = 1;
+        var t = Date.now() * 0.001;
+        var scale = 1.0;
         var x,y,z;
         var atom, atompos;
         requestAnimationFrame( this.animate.bind(this) );
 
         //update positions according to vibrational modes
-        for (i=0;i<this.atomobjects.length;i++) {
+        for (i=0; i<this.atomobjects.length; i++) {
             atom    = this.atomobjects[i];
             atompos = this.atompos[i];
-            x = atompos.x + Complex.Polar(scale,t).mult(this.vibrations[i][0]).real();
-            y = atompos.y + Complex.Polar(scale,t).mult(this.vibrations[i][1]).real();
-            z = atompos.z + Complex.Polar(scale,t).mult(this.vibrations[i][2]).real();
+            x = atompos.x + Complex.Polar(scale,t*2.0*pi).mult(this.vibrations[i][0]).real();
+            y = atompos.y + Complex.Polar(scale,t*2.0*pi).mult(this.vibrations[i][1]).real();
+            z = atompos.z + Complex.Polar(scale,t*2.0*pi).mult(this.vibrations[i][2]).real();
             this.atomobjects[i].position.set(x,y,z);
+        }
+
+        //update the bonds positions
+        for (i=0; i<this.bonds.length; i++) {
+            var a = this.bonds[i][0]; 
+            var b = this.bonds[i][1]; 
+            var bond = getBond(a,b);            
+
+            this.bondobjects[i].setRotationFromQuaternion( bond.quaternion );
+            this.bondobjects[i].position.copy( bond.midpoint );
         }
 
         this.controls.update();
         this.render();
-
     },
 
     render: function() {
@@ -172,3 +207,18 @@ VibCrystal = {
 
     }
 }
+
+function getBond( point1, point2, material ) {
+    /*
+    function to obtain a rotation matrix and the midpoint defined by two points
+    inspired in:
+    http://stackoverflow.com/questions/15316127/three-js-line-vector-to-cylinder
+    */
+    var direction = new THREE.Vector3().subVectors(point2, point1);
+    var arrow = new THREE.ArrowHelper(direction.clone().normalize(), point1);
+
+    return { quaternion: arrow.quaternion,
+             length: direction.length(),
+             midpoint: point1.clone().add( direction.multiplyScalar(0.5) ) };
+}
+
