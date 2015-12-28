@@ -18,6 +18,8 @@ Phonon = {
         this.nx = $('#nx').val();
         this.ny = $('#ny').val();
         this.nz = $('#nz').val();
+        this.getStructure() //calculate postions
+        this.getVibrations() //calculate vibrations
     },
 
     //This function reads the JSON data for the model 
@@ -37,53 +39,21 @@ Phonon = {
             self.formula = data["formula"];
             self.highcharts = data["highcharts"]
             self.highsym_qpts = data["highsym_qpts"]
-            //repetitions
             self.repetitions = data["repetitions"];
-            $('#nx').val(self.repetitions[0]);
-            $('#ny').val(self.repetitions[1]);
-            $('#nz').val(self.repetitions[2]);
-            self.getRepetitions();
         });
+        $('#nx').val(this.repetitions[0]);
+        $('#ny').val(this.repetitions[1]);
+        $('#nz').val(this.repetitions[2]);
+        this.getRepetitions();
     },
  
-    getVibmolStructure: function() {
- 		var i,j,n=0;
-        var veckn = this.vec[this.k][this.n];
-        var r=0.5, lat=20, lon=10;
-        var pos = [0,0,0];
-        var objects = [];	
-
-		//create jmol command
-        for (var ix=0;ix<this.nx;ix++) {
-            for (var iy=0;iy<this.ny;iy++) {
-                for (var iz=0;iz<this.nz;iz++) {				
-                    for (i=0;i<this.natoms;i++) {
-                        object = this.objects[ n ];
-                        
-                        //postions of the atoms
-                        for (j=0;j<3;j++) {
-                            pos[j] = this.atom_pos_car[i][j] + ix*this.lat[0][j]
-                                                             + iy*this.lat[1][j]
-                                                             + iz*this.lat[2][j];
-                        }                       
- 
-                        object.position.set(pos[0],pos[1],pos[2]);
-                        n+=1;
-                    }
-                }
-            }
-        }
-    },
-
-    getVibmolObjects: function() {
+    getStructure: function() {
  		var i,j;
         var veckn = this.vec[this.k][this.n];
-        var r=0.5, lat=20, lon=10;
-        var pos = [0,0,0];
-        var objects = [];	
-
-        var material = new THREE.MeshLambertMaterial( { color: 0xffaa00, 
-                                                      blending: THREE.AdditiveBlending } );
+        var x,y,z;
+        var lat = this.lat;
+        var apc = this.atom_pos_car;
+        var atoms = [];	
 
 		//create jmol command
         for (var ix=0;ix<this.nx;ix++) {
@@ -92,36 +62,30 @@ Phonon = {
                     for (i=0;i<this.natoms;i++) {
                         
                         //postions of the atoms
-                        for (j=0;j<3;j++) {
-                            pos[j] = this.atom_pos_car[i][j] + ix*this.lat[0][j]
-                                                             + iy*this.lat[1][j]
-                                                             + iz*this.lat[2][j];
-                        }                       
+                        x = apc[i][0] + ix*lat[0][0] + iy*lat[1][0] + iz*lat[2][0];
+                        y = apc[i][1] + ix*lat[0][1] + iy*lat[1][1] + iz*lat[2][1];
+                        z = apc[i][2] + ix*lat[0][2] + iy*lat[1][2] + iz*lat[2][2];
  
-                        object = new THREE.Mesh( new THREE.SphereGeometry(r,lat,lon), material );
-                        object.position.set(pos[0],pos[1],pos[2]);
-                        object.name = "atom";
-                        objects.push(object);
+                        atoms.push( [x,y,z] );
                     }
                 }
             }
         }
-        this.objects = objects;
-        return objects;
+
+        this.atoms = atoms;
+        return atoms;
     },
 
-    getVibmolVibrations: function(t) {
+    getVibrations: function() {
  		var i,j,n=0;
         var veckn = this.vec[this.k][this.n];
-        var object;
+        var vibrations = [];
 
 		//create jmol command
         for (var ix=0;ix<this.nx;ix++) {
             for (var iy=0;iy<this.ny;iy++) {
                 for (var iz=0;iz<this.nz;iz++) {
                     for (i=0;i<this.natoms;i++) {
-                        object = this.objects[ n ];
- 
                         //Displacements of the atoms
                         kpt = this.kpoints[this.k];
                         sprod = kpt[0]*ix + kpt[1]*iy + kpt[2]*iz;
@@ -129,15 +93,19 @@ Phonon = {
                         x = Complex(veckn[i][0][0],veckn[i][0][1]);
                         y = Complex(veckn[i][1][0],veckn[i][1][1]);
                         z = Complex(veckn[i][2][0],veckn[i][2][1]);
-                        object.position.x += x.mult(Complex.exp(Complex(0,(t+sprod)*2.0*pi))).real();
-                        object.position.y += y.mult(Complex.exp(Complex(0,(t+sprod)*2.0*pi))).real();
-                        object.position.z += z.mult(Complex.exp(Complex(0,(t+sprod)*2.0*pi))).real();
-                        
-                        n+=1;
+
+                        xc = x.mult(Complex.exp(Complex(0,sprod*2.0*pi)));
+                        yc = y.mult(Complex.exp(Complex(0,sprod*2.0*pi)));
+                        zc = z.mult(Complex.exp(Complex(0,sprod*2.0*pi)));
+
+                        vibrations.push( [xc,yc,zc] );
                     }
                 }
             }
         }
+
+        this.vibrations = vibrations;
+        return vibrations;
     },
 
     updateHighcharts: function(applet) {
@@ -157,7 +125,8 @@ Phonon = {
                          click: function(event) {
                                     Phonon.k = this.x;
                                     Phonon.n = this.series.name;
-                                    Phonon.getVibmolStructure();
+                                    Phonon.getVibrations();
+                                    v.updateObjects(p); 
                                                 }
                         }
                     }

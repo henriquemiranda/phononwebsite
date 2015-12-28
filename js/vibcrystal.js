@@ -35,15 +35,10 @@ VibCrystal = {
 
         this.controls.addEventListener( 'change', this.render.bind(this) );
         
-
         // world
         this.scene = new THREE.Scene();
         
-        var objects = phonon.getVibmolObjects();
-        for (i=0;i<objects.length;i++) {
-            this.scene.add( objects[i] );
-        }
-
+        this.addStructure(phonon);
         this.addLights();   
      
         // renderer
@@ -65,6 +60,39 @@ VibCrystal = {
         this.render();
     },
 
+    addStructure: function(phonon) {
+        this.atomobjects = [];
+        var material = new THREE.MeshLambertMaterial( { color: 0xffaa00, 
+                                                        blending: THREE.AdditiveBlending } );
+
+        var atoms = this.atoms = phonon.atoms;
+        this.vibrations = phonon.vibrations;
+
+        var r=0.5, lat=20, lon=10;
+        for (i=0;i<atoms.length;i++) {
+
+            object = new THREE.Mesh( new THREE.SphereGeometry(r,lat,lon), material );
+            pos = new THREE.Vector3(atoms[i][0],atoms[i][1], atoms[i][2]);
+
+            object.position.copy(pos);
+            object.name = "atom";
+
+            this.scene.add( object );
+            this.atomobjects.push(object.position);
+        }
+        
+    },
+
+    removeStructure: function() {
+        var nobjects = this.scene.children.length;
+        var scene = this.scene
+        for (i=nobjects-1;i>=0;i--) {
+            if (scene.children[i].name == "atom") {
+                scene.remove(scene.children[i]);
+            }
+        }
+    },
+
     addLights: function() {
         light = new THREE.DirectionalLight( 0xffffff );
         light.position.set( 0, 0, 100 );
@@ -75,25 +103,13 @@ VibCrystal = {
     },
 
     updateObjects: function(phonon) {
-        var nobjects = this.scene.children.length;
-        var scene = this.scene
-        for (i=nobjects-1;i>=0;i--) {
-            if (scene.children[i].name == "atom") {
-                scene.remove(scene.children[i]);
-            }
-        }
-
-        var objects = phonon.getVibmolObjects();
-        for (i=0;i<objects.length;i++) {
-            this.scene.add( objects[i] );
-        }
+        this.removeStructure();
+        this.addStructure(phonon);
         this.animate();
     },
 
     getContainerDimensions: function() {
-        self = this;
- 
-        w = self.container.width(), h = self.container.height();
+        w = this.container.width(), h = this.container.height();
 
         return {
             width: w,
@@ -120,17 +136,25 @@ VibCrystal = {
     },
 
     animate: function() {
-
+        var t = Date.now() % 1000 / 1000;
+        var vibrations = this.vibrations;
+        var scale = 0.01;
         requestAnimationFrame( this.animate.bind(this) );
+
+        //update positions according to vibrational modes
+        for (i=0;i<this.atomobjects.length;i++) {
+            x = vibrations[i][0].mult(Complex.exp(Complex(0,t*2*pi))).real()*scale;
+            y = vibrations[i][1].mult(Complex.exp(Complex(0,t*2*pi))).real()*scale;
+            z = vibrations[i][2].mult(Complex.exp(Complex(0,t*2*pi))).real()*scale;
+            this.atomobjects[i].add(new THREE.Vector3( x, y, z ));
+        }
+
         this.controls.update();
         this.render();
 
     },
 
     render: function() {
-        var timer = Date.now() % 1000 / 1000;
-
-        p.getVibmolVibrations(timer);
 
         this.renderer.render( this.scene, this.camera );
         this.stats.update();
