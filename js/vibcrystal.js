@@ -26,8 +26,9 @@ VibCrystal = {
         this.nndist     = phonon.nndist + 0.01;
         console.log(this.nndist);
 
-        this.camera = new THREE.PerspectiveCamera( 10, this.dimensions.ratio, 0.1, 5000 );
-        this.camera.position.z = 20;
+        this.camera = new THREE.PerspectiveCamera( 30, this.dimensions.ratio, 0.1, 5000 );
+        this.camera.position.z = 50;
+        this.camera.lookAt(new THREE.Vector3(30,30,0));
 
         this.controls = new THREE.TrackballControls( this.camera, container0 );
 
@@ -93,7 +94,7 @@ VibCrystal = {
         var material = new THREE.MeshLambertMaterial( { color: 0xffffff, 
                                                         blending: THREE.AdditiveBlending } );
 
-        var r=0.5, lat=20, lon=10;
+        var r=0.5, lat=10, lon=10;
 
         //add a ball for each atom
         for (i=0;i<this.atoms.length;i++) {
@@ -125,7 +126,7 @@ VibCrystal = {
                 var bond = getBond(a,b); 
 
                 //create cylinder mesh
-                var cylinderGeometry = new THREE.CylinderGeometry(0.1,0.1,bond.length,8);
+                var cylinderGeometry = new THREE.CylinderGeometry(0.1,0.1,bond.length,6);
                 var object = new THREE.Mesh(cylinderGeometry, material);
                 
                 object.setRotationFromQuaternion( bond.quaternion );
@@ -200,24 +201,23 @@ VibCrystal = {
         var t = Date.now() * 0.001;
         var scale = 1.0;
         var x,y,z;
-        var atom, atompos;
+        var bond, atom, atompos;
         requestAnimationFrame( this.animate.bind(this) );
 
+        phase = Complex.Polar(scale,t*2.0*pi);
         //update positions according to vibrational modes
         for (i=0; i<this.atomobjects.length; i++) {
             atom    = this.atomobjects[i];
             atompos = this.atompos[i];
-            x = atompos.x + Complex.Polar(scale,t*2.0*pi).mult(this.vibrations[i][0]).real();
-            y = atompos.y + Complex.Polar(scale,t*2.0*pi).mult(this.vibrations[i][1]).real();
-            z = atompos.z + Complex.Polar(scale,t*2.0*pi).mult(this.vibrations[i][2]).real();
+            x = atompos.x + phase.mult(this.vibrations[i][0]).real();
+            y = atompos.y + phase.mult(this.vibrations[i][1]).real();
+            z = atompos.z + phase.mult(this.vibrations[i][2]).real();
             this.atomobjects[i].position.set(x,y,z);
         }
 
         //update the bonds positions
         for (i=0; i<this.bonds.length; i++) {
-            var a = this.bonds[i][0]; 
-            var b = this.bonds[i][1]; 
-            var bond = getBond(a,b);            
+            bond = getBond(this.bonds[i][0],this.bonds[i][1]);            
 
             this.bondobjects[i].setRotationFromQuaternion( bond.quaternion );
             this.bondobjects[i].position.copy( bond.midpoint );
