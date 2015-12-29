@@ -31,9 +31,11 @@ Phonon = {
             self.name = data["name"];
             self.natoms = data["natoms"];
             self.atom_types = data["atom_types"];
-            self.atomic_numbers = data["atom_numbers"];
+            self.atom_numbers = data["atom_numbers"];
+            self.atomic_numbers = data["atomic_numbers"];
             self.atom_pos_car = data["atom_pos_car"];
             self.atom_pos_red = data["atom_pos_red"];
+            self.nndist = data["nndist"];
             self.lat = data["lattice"];
             self.vec = data["vectors"];
             self.kpoints = data["kpoints"];
@@ -67,7 +69,7 @@ Phonon = {
                         y = apc[i][1] + ix*lat[0][1] + iy*lat[1][1] + iz*lat[2][1];
                         z = apc[i][2] + ix*lat[0][2] + iy*lat[1][2] + iz*lat[2][2];
  
-                        atoms.push( [x,y,z] );
+                        atoms.push( [i,x,y,z] );
                     }
                 }
             }

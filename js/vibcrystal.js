@@ -23,15 +23,17 @@ VibCrystal = {
         this.getAtypes(phonon);
         this.vibrations = phonon.vibrations;
         this.atoms      = phonon.atoms;
+        this.nndist     = phonon.nndist + 0.01;
+        console.log(this.nndist);
 
-        this.camera = new THREE.PerspectiveCamera( 60, this.dimensions.ratio, 0.1, 5000 );
+        this.camera = new THREE.PerspectiveCamera( 10, this.dimensions.ratio, 0.1, 5000 );
         this.camera.position.z = 20;
 
         this.controls = new THREE.TrackballControls( this.camera, container0 );
 
         this.controls.rotateSpeed = 1.0;
-        this.controls.zoomSpeed = 1.2;
-        this.controls.panSpeed = 0.8;
+        this.controls.zoomSpeed = 1.0;
+        this.controls.panSpeed = 0.3;
 
         this.controls.noZoom = false;
         this.controls.noPan = false;
@@ -67,8 +69,19 @@ VibCrystal = {
     },
 
     getAtypes: function(phonon) {
-        this.atomic_numbers = phonon.atomic_numbers;
-        console.log(this.atomic_numbers);
+        this.materials = [];
+        this.atom_numbers = phonon.atom_numbers;
+        for (i=0;i<this.atom_numbers.length;i++) {
+            var n = this.atom_numbers[i];
+            r = jmol_colors[n][0];
+            g = jmol_colors[n][1];
+            b = jmol_colors[n][2];
+
+            var material = new THREE.MeshLambertMaterial( { blending: THREE.AdditiveBlending } );
+            material.color.setRGB (r, g, b);
+
+            this.materials.push( material );
+        }
     },
 
     addStructure: function(phonon) {
@@ -77,7 +90,7 @@ VibCrystal = {
         this.atompos = [];
         this.bonds = [];
 
-        var material = new THREE.MeshLambertMaterial( { color: 0xffaa00, 
+        var material = new THREE.MeshLambertMaterial( { color: 0xffffff, 
                                                         blending: THREE.AdditiveBlending } );
 
         var r=0.5, lat=20, lon=10;
@@ -85,8 +98,9 @@ VibCrystal = {
         //add a ball for each atom
         for (i=0;i<this.atoms.length;i++) {
 
-            object = new THREE.Mesh( new THREE.SphereGeometry(r,lat,lon), material );
-            pos = new THREE.Vector3(this.atoms[i][0], this.atoms[i][1], this.atoms[i][2]);
+            object = new THREE.Mesh( new THREE.SphereGeometry(r,lat,lon),
+                                     this.materials[this.atoms[i][0]] );
+            pos = new THREE.Vector3(this.atoms[i][1], this.atoms[i][2], this.atoms[i][3]);
 
             object.position.copy(pos);
             object.name = "atom";
@@ -104,14 +118,14 @@ VibCrystal = {
             b = combinations[i][1].position;
 
             //if the separation is smaller than the sum of the bonding radius create a bond
-            if (a.distanceTo(b) < 2.3 ) {
+            if (a.distanceTo(b) < this.nndist ) {
                 this.bonds.push( [a,b] );
 
                 //get transformations
                 var bond = getBond(a,b); 
 
                 //create cylinder mesh
-                var cylinderGeometry = new THREE.CylinderGeometry(0.1,0.1,bond.length,10,4);
+                var cylinderGeometry = new THREE.CylinderGeometry(0.1,0.1,bond.length,8);
                 var object = new THREE.Mesh(cylinderGeometry, material);
                 
                 object.setRotationFromQuaternion( bond.quaternion );
@@ -147,6 +161,7 @@ VibCrystal = {
 
     updateObjects: function(phonon) {
         this.getAtypes(phonon);
+        this.nndist     = phonon.nndist + 0.01;
         this.vibrations = phonon.vibrations;
         this.atoms      = phonon.atoms;
         this.removeStructure();

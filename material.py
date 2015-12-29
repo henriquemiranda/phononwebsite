@@ -2,6 +2,8 @@ import os
 from netCDF4 import Dataset
 import json
 import numpy as np
+from ase import Atoms
+from neighbours import *
 
 #conversion variables
 bohr_angstroem = 0.529177249
@@ -55,13 +57,15 @@ class material():
         if reorder:
             self.reorder_eigenvalues()
 
+        self.find_nn_distance()
+
     def read_abinit(self):
         pcfile = Dataset(self.filename, 'r', format='NETCDF4')
         self.eival = pcfile.variables['phfreqs'][:]
         vectors = pcfile.variables['phdispl_cart'][:]
         self.kpoints =  pcfile.variables['qpoints'][:]    #reduced kpoints
         self.pos = pcfile.variables['reduced_atom_positions'][:]
-        self.lat = pcfile.variables['primitive_vectors'][:]*bohr_angstroem
+        self.lat = pcfile.variables['primitive_vectors'][:]
         self.atypes = pcfile.variables['atom_species'][:]
         self.natoms = len(pcfile.dimensions['number_of_atoms'])
         self.nkpoints = len(pcfile.dimensions['number_of_qpoints'])
@@ -78,6 +82,15 @@ class material():
         self.chemical_symbol = ["".join(a).strip() for a in self.chemical_symbol]
         self.atom_types = [self.chemical_symbol[a-1] for a in self.atypes]
         self.atom_numbers = [self.atomic_numbers[a-1] for a in self.atypes]
+
+    def find_nn_distance(self):
+        """ Find and return the nearest neighbour distance
+        """
+        self.atoms = Atoms(self.atom_types, self.pos, pbc=[1,1,1])
+        self.atoms.set_cell(self.lat,scale_atoms=True)
+        self.nn = Neighbors(self.atoms)
+        neighbors = self.nn.get_nneighbors(0,1)-self.pos[0]
+        self.nndist = min([ np.linalg.norm(n) for n in red_car(neighbors,self.lat) ])
     
     def __str__(self):
         """ Write some information about the system
@@ -126,6 +139,9 @@ class material():
                 "lattice":      swap_l(round_ll( self.lat ), self.swap),
                 "atom_types":   self.atom_types,
                 "atom_numbers": self.atom_numbers,
+                "nndist":       self.nndist,
+                "chemical_symbol": self.chemical_symbol,
+                "atomic_numbers": self.atomic_numbers.tolist(),
                 "formula":      "".join(self.atom_types),
                 "kpoints":      swap_l(self.kpoints.tolist(),self.swap),
                 "repetitions":  self.reps, 
