@@ -25,16 +25,10 @@ VibCrystal = {
         this.atoms      = phonon.atoms;
         this.nndist     = phonon.nndist + 0.01;
 
-<<<<<<< HEAD
-        this.camera = new THREE.PerspectiveCamera( 30, this.dimensions.ratio, 0.1, 5000 );
-        this.camera.position.z = 50;
-        this.camera.lookAt(new THREE.Vector3(30,30,0));
-=======
         this.camera = new THREE.PerspectiveCamera( 10, this.dimensions.ratio, 0.1, 5000 );
         //this.camera.up.set(0,0,1);
         this.camera.position.set( 0, 0, 20);
         this.camera.lookAt(new THREE.Vector3(20,20,0));
->>>>>>> master
 
         this.controls = new THREE.TrackballControls( this.camera, container0 );
 
@@ -100,14 +94,7 @@ VibCrystal = {
         var sphereRadius=1.0, sphereLat=6, sphereLon=6;
         var bondRadius=0.2, bondSegments=6, bondVertical=1;
 
-<<<<<<< HEAD
-        var material = new THREE.MeshLambertMaterial( { color: 0xffffff, 
-                                                        blending: THREE.AdditiveBlending } );
-
-        var r=0.5, lat=10, lon=10;
-=======
         var sphereGeometry = new THREE.SphereGeometry(sphereRadius,sphereLat,sphereLon);
->>>>>>> master
 
         //add a ball for each atom
         for (i=0;i<this.atoms.length;i++) {
@@ -147,10 +134,6 @@ VibCrystal = {
                                                bondSegments,bondVertical,true);
 
                 //create cylinder mesh
-<<<<<<< HEAD
-                var cylinderGeometry = new THREE.CylinderGeometry(0.1,0.1,bond.length,6);
-=======
->>>>>>> master
                 var object = new THREE.Mesh(cylinderGeometry, material);
                 
                 object.setRotationFromQuaternion( bond.quaternion );
@@ -223,13 +206,6 @@ VibCrystal = {
     },
 
     animate: function() {
-<<<<<<< HEAD
-        var t = Date.now() * 0.001;
-        var scale = 1.0;
-        var x,y,z;
-        var bond, atom, atompos;
-=======
->>>>>>> master
         requestAnimationFrame( this.animate.bind(this) );
         this.controls.update();
         this.render();
@@ -243,16 +219,8 @@ VibCrystal = {
         var t = Date.now() * 0.001;
         var phase = Complex.Polar(1.0,t*2.0*pi);
 
-        phase = Complex.Polar(scale,t*2.0*pi);
         //update positions according to vibrational modes
         for (i=0; i<this.atomobjects.length; i++) {
-<<<<<<< HEAD
-            atom    = this.atomobjects[i];
-            atompos = this.atompos[i];
-            x = atompos.x + phase.mult(this.vibrations[i][0]).real();
-            y = atompos.y + phase.mult(this.vibrations[i][1]).real();
-            z = atompos.z + phase.mult(this.vibrations[i][2]).real();
-=======
             atom       = this.atomobjects[i];
             atompos    = this.atompos[i];
             vibrations = this.vibrations[i];
@@ -260,19 +228,14 @@ VibCrystal = {
             x = atompos.x + phase.mult(vibrations[0]).real();
             y = atompos.y + phase.mult(vibrations[1]).real();
             z = atompos.z + phase.mult(vibrations[2]).real();
->>>>>>> master
             this.atomobjects[i].position.set(x,y,z);
         }
 
         //update the bonds positions
         for (i=0; i<this.bonds.length; i++) {
-<<<<<<< HEAD
-            bond = getBond(this.bonds[i][0],this.bonds[i][1]);            
-=======
             bond       = this.bonds[i]; 
             bonddata   = getBond(bond[0],bond[1]); 
             bondobject = this.bondobjects[i];
->>>>>>> master
 
             bondobject.setRotationFromQuaternion( bonddata.quaternion );
             bondobject.scale.y = bond[0].distanceTo(bond[1])/bond[2];
