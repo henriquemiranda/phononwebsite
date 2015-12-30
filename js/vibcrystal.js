@@ -26,8 +26,7 @@ VibCrystal = {
         this.nndist     = phonon.nndist + 0.01;
 
         this.camera = new THREE.PerspectiveCamera( 10, this.dimensions.ratio, 0.1, 5000 );
-        //this.camera.up.set(0,0,1);
-        this.camera.position.set( 0, 0, 20);
+        this.camera.position.set( 0, 0, 300);
         this.camera.lookAt(new THREE.Vector3(20,20,0));
 
         this.controls = new THREE.TrackballControls( this.camera, container0 );
@@ -96,11 +95,20 @@ VibCrystal = {
 
         var sphereGeometry = new THREE.SphereGeometry(sphereRadius,sphereLat,sphereLon);
 
+        //get geometric center
+        geometricCenter = new THREE.Vector3(0,0,0);
+        for (i=0;i<this.atoms.length;i++) {
+            pos = new THREE.Vector3(this.atoms[i][1], this.atoms[i][2], this.atoms[i][3]);
+            geometricCenter.add(pos);
+        }
+        geometricCenter.multiplyScalar(1.0/this.atoms.length);
+
         //add a ball for each atom
         for (i=0;i<this.atoms.length;i++) {
 
             object = new THREE.Mesh( sphereGeometry, this.materials[this.atoms[i][0]] );
             pos = new THREE.Vector3(this.atoms[i][1], this.atoms[i][2], this.atoms[i][3]);
+            pos.sub(geometricCenter);
 
             object.position.copy(pos);
             object.name = "atom";
