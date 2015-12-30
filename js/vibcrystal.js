@@ -11,6 +11,7 @@ VibCrystal = {
     controls: null,
     scene: null,
     renderer: null,
+    cameraDistance: 300,
 
     /* Initialize the phonon animation */
     init: function(container,phonon) {
@@ -26,8 +27,7 @@ VibCrystal = {
         this.nndist     = phonon.nndist + 0.01;
 
         this.camera = new THREE.PerspectiveCamera( 10, this.dimensions.ratio, 0.1, 5000 );
-        this.camera.position.set( 0, 0, 300);
-        this.camera.lookAt(new THREE.Vector3(20,20,0));
+        this.setCameraDirection('z');
 
         this.controls = new THREE.TrackballControls( this.camera, container0 );
 
@@ -69,6 +69,21 @@ VibCrystal = {
         this.render();
     },
 
+    setCameraDirection: function(direction) {
+        if (direction == 'x') {
+            this.camera.position.set( this.cameraDistance, 0, 0);
+            this.camera.up.set( 0, 0, 1 );
+        }
+        if (direction == 'y') {
+            this.camera.position.set( 0, this.cameraDistance, 0);
+            this.camera.up.set( 0, 0, 1 );
+        }
+        if (direction == 'z') {
+            this.camera.position.set( 0, 0, this.cameraDistance);
+            this.camera.up.set( 0, 1, 0 );
+        }
+    },
+
     getAtypes: function(phonon) {
         this.materials = [];
         this.atom_numbers = phonon.atom_numbers;
@@ -90,7 +105,7 @@ VibCrystal = {
         this.bondobjects = [];
         this.atompos = [];
         this.bonds = [];
-        var sphereRadius=1.0, sphereLat=6, sphereLon=6;
+        var sphereRadius=1.0, sphereLat=12, sphereLon=12;
         var bondRadius=0.2, bondSegments=6, bondVertical=1;
 
         var sphereGeometry = new THREE.SphereGeometry(sphereRadius,sphereLat,sphereLon);

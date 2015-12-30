@@ -121,6 +121,9 @@ Phonon = {
                      plotLines: [ {value: 0, color: '#808080' } ] },
             tooltip: { valueSuffix: 'cm-1' },
             plotOptions: {
+                line: {
+                    animation: false
+                },
                 series: {
                     cursor: 'pointer',
                     point: { events: {
@@ -157,13 +160,14 @@ Phonon = {
         $('#uc_natoms').html( this.natoms );
         $('#uc_atypes').html( this.formula );
         
-        //atomic postions table
+        //atomic positions table
         var pos = this.atom_pos_red;
-        $('#ap').empty() //clean the atomic positions table
+        $('#atompos').empty() //clean the atomic positions table
         for (i=0;i<this.natoms;i++) {
-            $('#ap').append('<tr></tr>');
+            $('#atompos').append('<tr></tr>');
+            $('#atompos tr:last').append('<td class="ap">'+this.atom_types[i]+'</td>');
             for (j=0;j<3;j++) {
-                $('#ap tr:last').append('<td>'+pos[i][j]+'</td>');
+                $('#atompos tr:last').append('<td>'+pos[i][j]+'</td>');
             }
         }
         

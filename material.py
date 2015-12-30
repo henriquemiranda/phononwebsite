@@ -57,6 +57,9 @@ class material():
         if reorder:
             self.reorder_eigenvalues()
 
+        self.atoms = Atoms(self.atom_types, self.pos, pbc=[1,1,1])
+        self.atoms.set_cell(self.lat,scale_atoms=True)
+        self.chemical_formula = self.atoms.get_chemical_formula()
         self.find_nn_distance()
 
     def read_abinit(self):
@@ -86,8 +89,6 @@ class material():
     def find_nn_distance(self):
         """ Find and return the nearest neighbour distance
         """
-        self.atoms = Atoms(self.atom_types, self.pos, pbc=[1,1,1])
-        self.atoms.set_cell(self.lat,scale_atoms=True)
         self.nn = Neighbors(self.atoms)
         neighbors = self.nn.get_nneighbors(0,1)-self.pos[0]
         self.nndist = min([ np.linalg.norm(n) for n in red_car(neighbors,self.lat) ])
@@ -142,7 +143,7 @@ class material():
                 "nndist":       self.nndist,
                 "chemical_symbol": self.chemical_symbol,
                 "atomic_numbers": self.atomic_numbers.tolist(),
-                "formula":      "".join(self.atom_types),
+                "formula":      self.chemical_formula,
                 "kpoints":      swap_l(self.kpoints.tolist(),self.swap),
                 "repetitions":  self.reps, 
                 "atom_pos_car": swap_l( red_car(self.pos,self.lat).tolist(), self.swap ),
