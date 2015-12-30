@@ -7,14 +7,42 @@ html {
   height: 100%;
 }
 
+section {
+    margin-left: auto;
+    margin-right: auto;
+    width: 600px;
+}
+
 table {
   border-collapse: collapse;
   width: 100%;
 }
+
 th, td {
   padding: 0.25rem;
   text-align: left;
   border: 1px solid #ccc;
+}
+
+h1 {
+  font-size: 2em;
+  margin: 0.2em;
+}
+
+h3 {
+  font-size: 1em;
+  margin-top: 0.5em;
+  margin-bottom: 0.3em;
+}
+
+.positions {
+    width:"100%";
+    overflow: scroll;
+}
+
+.material-name {
+    text-align: center;
+    height: 2em;
 }
 
 .flex-container {
@@ -52,6 +80,40 @@ th, td {
 
 .input-rep {
   width: 20%;
+}
+
+.atypes-text { width: 80%; }
+.atypes-data { width: 20%; }
+
+.lattice td {
+  width: 20%;
+}
+
+#atompos td {
+  width: 20%;
+}
+
+ap {
+  width: 10%;
+}
+
+
+.materials {
+    list-style: none;
+    overflow: scroll;
+    margin: 0;
+    padding-left: 0;
+}
+
+.materials li a {
+  text-decoration: none;
+  margin-bottom: 0.2em;
+  display: block;
+  transition: font-size 0.3s ease, background-color 0.3s ease;
+}
+
+.materials li a:hover {
+  background: deepskyblue;
 }
 
 .navigation {
