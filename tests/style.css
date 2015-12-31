@@ -35,11 +35,12 @@ h3 {
 
 .container  {
     height:100vh;
+    background: gray;
 }
 
 .positions {
     width:"100%";
-    overflow: auto;
+    overflow: scroll;
 }
 
 .material-name {
@@ -53,35 +54,35 @@ h3 {
     list-style: none;
     justify-content: space-around;
  
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
     display: flex;
     height: 100%;
-    width: 100%;
+    background: black;
 
+    -webkit-flex-flow: row wrap;
     flex-flow: row wrap;
     align-items: stretch;
 }
 
 .flex-item {
-    max-height:700px;
-    width: 100%;
+    padding: 5px;
     flex: 1 0px;
-    order: 1;
+    background: red;
 }
 
 .flex-vibcrystal {
-    max-height:700px;
-    width: 100%;
+    padding: 5px;
     flex: 2 0px;
-    order: 2;
-    height: auto;
+    background: yellow;
 }
 
 .flex-highcharts {
-    max-height:700px;
-    width: 100%;
+    padding: 5px;
     flex: 2 0px;
-    order: 3;
-    height: auto;
+    background: blue;
 }
 
 .input-rep {
@@ -142,33 +143,50 @@ ap {
   color: white;
 }
 
-@media all and (max-width: 1000px) {
+@media all and (max-width: 800px) {
     .navigation {
         justify-content: space-around;
     }
 
     .flex-container {
-        padding: 0;
-        margin: 0;
-        list-style: none;
-
+        -webkit-flex-flow: column wrap;
         flex-flow: column wrap;
         height: auto;
-        width: 100%;
     }
 
     .flex-item {
-        min-height: 600px;
-    }
-
-    .flex-highcharts {
-        min-height: 600px;
-        order: 2
+        height: auto;
+        flex: 1 0px;
+        order: 1
     }
 
     .flex-vibcrystal {
-        min-height: 600px;
+        height: 600px;
+        flex: 1 0px;
         order: 3
     } 
+
+    .flex-highcharts {
+        height: 600px;
+        flex: 1 0px;
+        order: 2
+    }
+}
+
+@media all and (max-width: 600px) {
+    .navigation {
+        -webkit-flex-flow: column wrap;
+        flex-flow: column wrap;
+        padding: 0;
+    }
+
+    .navigation a { 
+        text-align: center; 
+        padding: 10px;
+    }
+
+    .navigation li:last-of-type a {
+        border-bottom: none;	
+    }
 
 }
