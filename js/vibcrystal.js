@@ -27,6 +27,7 @@ VibCrystal = {
         this.nndist     = phonon.nndist + 0.01;
 
         this.camera = new THREE.PerspectiveCamera( 10, this.dimensions.ratio, 0.1, 5000 );
+        this.camera.aspect = this.dimensions.ratio;
         this.setCameraDirection('z');
 
         this.controls = new THREE.TrackballControls( this.camera, container0 );
@@ -42,26 +43,27 @@ VibCrystal = {
         this.controls.dynamicDampingFactor = 0.3;
 
         this.controls.addEventListener( 'change', this.render.bind(this) );
-        
+
         // world
         this.scene = new THREE.Scene();
-        
+
         this.addStructure(phonon);
-        this.addLights();   
-     
+        this.addLights();
+
         // renderer
         this.renderer = new THREE.WebGLRenderer( { antialias: true } );
         this.renderer.setClearColor( 0x000000 );
         this.renderer.setPixelRatio( window.devicePixelRatio );
         this.renderer.shadowMap.enabled = false;
-        this.renderer.setSize( this.dimensions.width , this.dimensions.height );
+        this.renderer.setSize( this.dimensions.width , this.dimensions.height, false );
+        this.renderer.domElement.className = "vibcrystal-class";
 
         container0.appendChild( this.renderer.domElement );
 
         this.stats = new Stats();
-        this.stats.domElement.style.position = 'relative';
-        this.stats.domElement.style.top = '-52px';
-        this.stats.domElement.style.zIndex = 100;
+        //this.stats.domElement.style.position = 'relative';
+        //this.stats.domElement.style.bottom = '0px';
+        //this.stats.domElement.style.zIndex = 100;
         container0.appendChild( this.stats.domElement );
 
         window.addEventListener( 'resize', this.onWindowResize.bind(this), false );
@@ -132,7 +134,7 @@ VibCrystal = {
             this.atomobjects.push(object);
             this.atompos.push( pos );
         }
-        
+
         //obtain combinations two by two of all the atoms
         var combinations = getCombinations( this.atomobjects );
         var a, b, length;
@@ -150,15 +152,15 @@ VibCrystal = {
                 this.bonds.push( [a,b,length] );
 
                 //get transformations
-                var bond = getBond(a,b); 
+                var bond = getBond(a,b);
 
-                var cylinderGeometry = 
+                var cylinderGeometry =
                     new THREE.CylinderGeometry(bondRadius,bondRadius,length,
                                                bondSegments,bondVertical,true);
 
                 //create cylinder mesh
                 var object = new THREE.Mesh(cylinderGeometry, material);
-                
+
                 object.setRotationFromQuaternion( bond.quaternion );
                 object.position.copy( bond.midpoint )
                 object.name = "bond";
@@ -168,7 +170,7 @@ VibCrystal = {
             }
         }
 
-        
+
     },
 
     removeStructure: function() {
@@ -217,7 +219,7 @@ VibCrystal = {
         this.camera.aspect = this.dimensions.ratio;
         this.camera.updateProjectionMatrix();
 
-        this.renderer.setSize( this.dimensions.width, this.dimensions.height );
+        this.renderer.setSize( this.dimensions.width, this.dimensions.height, false );
         this.controls.handleResize();
         this.render();
 
@@ -256,8 +258,8 @@ VibCrystal = {
 
         //update the bonds positions
         for (i=0; i<this.bonds.length; i++) {
-            bond       = this.bonds[i]; 
-            bonddata   = getBond(bond[0],bond[1]); 
+            bond       = this.bonds[i];
+            bonddata   = getBond(bond[0],bond[1]);
             bondobject = this.bondobjects[i];
 
             bondobject.setRotationFromQuaternion( bonddata.quaternion );
@@ -278,4 +280,3 @@ function getBond( point1, point2 ) {
     return { quaternion: new THREE.Quaternion().setFromUnitVectors( vec_y, direction.clone().normalize() ),
              midpoint: point1.clone().add( direction.multiplyScalar(0.5) ) };
 }
-
