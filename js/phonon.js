@@ -22,7 +22,7 @@ Phonon = {
         this.getVibrations() //calculate vibrations
     },
 
-    //This function reads the JSON data for the model 
+    //This function reads the JSON data for the model
     getModel: function() {
         self = this;
         this.k=0;
@@ -49,26 +49,26 @@ Phonon = {
         $('#nz').val(this.repetitions[2]);
         this.getRepetitions();
     },
- 
+
     getStructure: function() {
  		var i,j;
         var veckn = this.vec[this.k][this.n];
         var x,y,z;
         var lat = this.lat;
         var apc = this.atom_pos_car;
-        var atoms = [];	
+        var atoms = [];
 
 		//create jmol command
         for (var ix=0;ix<this.nx;ix++) {
             for (var iy=0;iy<this.ny;iy++) {
-                for (var iz=0;iz<this.nz;iz++) {				
+                for (var iz=0;iz<this.nz;iz++) {
                     for (i=0;i<this.natoms;i++) {
-                        
+
                         //postions of the atoms
                         x = apc[i][0] + ix*lat[0][0] + iy*lat[1][0] + iz*lat[2][0];
                         y = apc[i][1] + ix*lat[0][1] + iy*lat[1][1] + iz*lat[2][1];
                         z = apc[i][2] + ix*lat[0][2] + iy*lat[1][2] + iz*lat[2][2];
- 
+
                         atoms.push( [i,x,y,z] );
                     }
                 }
@@ -85,7 +85,6 @@ Phonon = {
         var vibrations = [];
         var kpt = this.kpoints[this.k];
 
-		//create jmol command
         for (var ix=0;ix<this.nx;ix++) {
             for (var iy=0;iy<this.ny;iy++) {
                 for (var iz=0;iz<this.nz;iz++) {
@@ -94,8 +93,8 @@ Phonon = {
                     var phase = Complex.Polar(1,sprod*2.0*pi);
 
                     for (i=0;i<this.natoms;i++) {
+
                         //Displacements of the atoms
-                        
                         x = Complex(veckn[i][0][0],veckn[i][0][1]).mult(phase);
                         y = Complex(veckn[i][1][0],veckn[i][1][1]).mult(phase);
                         z = Complex(veckn[i][2][0],veckn[i][2][1]).mult(phase);
@@ -116,7 +115,7 @@ Phonon = {
             title: { text: 'Phonon dispersion' },
             xAxis: { title: { text: 'q-point' },
                      plotLines: [] },
-            yAxis: { min: 0, 
+            yAxis: { min: 0,
                      title: { text: 'Frequency (cm-1)' },
                      plotLines: [ {value: 0, color: '#808080' } ] },
             tooltip: { valueSuffix: 'cm-1' },
@@ -131,7 +130,7 @@ Phonon = {
                                     p.k = this.x;
                                     p.n = this.series.name;
                                     p.getVibrations();
-                                    v.updateObjects(p); 
+                                    v.updateObjects(p);
                                                 }
                         }
                     }
@@ -155,11 +154,11 @@ Phonon = {
                 $('#uc_'+i+j).html( this.lat[i][j] );
             }
         }
-        
+
         //unit cell table
         $('#uc_natoms').html( this.natoms );
         $('#uc_atypes').html( this.formula );
-        
+
         //atomic positions table
         var pos = this.atom_pos_red;
         $('#atompos').empty() //clean the atomic positions table
@@ -170,11 +169,11 @@ Phonon = {
                 $('#atompos tr:last').append('<td>'+pos[i][j]+'</td>');
             }
         }
-        
+
         //update title
         $('#t1').html(this.name);
     }
-    
+
 };
 
 function updateAll() {
@@ -221,5 +220,5 @@ $(document).ready(function(){
             v.updateObjects(p);
         }
     });
- 
+
 });

@@ -3,7 +3,7 @@
 <head>
 	<title>TSS Physics - Visualization of phonons</title>
 <!-- META TAGS about the Website-->
-	<meta name="author" content="Raoul Weber">	
+	<meta name="author" content="Raoul Weber">
 	<meta name="copyright" content="2014 Theoretical Solid-State Physics Group of University of Luxembourg">
 	<meta http-equiv="content-language" content="text/html; charset=utf-8; en">
 	<meta name="title" content="Theoretical Solid-State Physics: Phonon visualizations">
@@ -22,37 +22,37 @@
 
 <!-- jquery -->
 	<script src="js/jquery.min.js"></script>
-	
+
 <!-- highcharts script tags -->
-    <script src="highcharts/highcharts.js"></script>
+  <script src="highcharts/highcharts.js"></script>
 
 <!-- page javascript -->
-    <script src="js/three.min.js"></script>
-    <script src="js/TrackballControls.js"></script>
-    <script src="js/Detector.js"></script>
-    <script src="js/stats.min.js"></script>
-    <script src="js/complex.min.js"></script>
-    <script src="js/combinations.js"></script>
+  <script src="js/three.min.js"></script>
+  <script src="js/TrackballControls.js"></script>
+  <script src="js/Detector.js"></script>
+  <script src="js/stats.min.js"></script>
+  <script src="js/complex.min.js"></script>
+  <script src="js/combinations.js"></script>
 
-    <script src="js/atomic_data.js"></script>
-    <script src="js/vibcrystal.js"></script>	
+  <script src="js/atomic_data.js"></script>
+  <script src="js/vibcrystal.js"></script>
 	<script src="js/phonon.js"></script>
 
 </head>
 
 <body>
-   	<div class="container">	
-    <ul class="navigation">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="phonon.html">Phonons</a></li>
-    </ul>
-	<div class="material-name"><h1 id="t1">Material</h1></div>
-	<div class="flex-container">	
+	<div class="container">
+		<ul class="navigation">
+			    <li><a href="index.html">Home</a></li>
+			    <li><a href="phonon.html">Phonons</a></li>
+		</ul>
+		<div class="material-name"><h1 id="t1">Material</h1></div>
+		<div class="flex-container">
 		<div class="flex-item">
 			<div>
-            <h3>Materials:</h3>
+		    <h3>Materials:</h3>
 				<ul id="mat" class="materials">
-				    <li><a href="#" onclick="folder='graphene';          ">Graphene</a></li>
+				    <li><a href="#" onclick="folder='graphene';">Graphene</a></li>
 				</ul>
 			</div>
 
@@ -60,12 +60,12 @@
 			<h3>Unit cell:</h3>
 				<table>
 					<tr>
-                        <td class="atypes-text">Number of Atoms:</td>
-                        <td id="uc_natoms" class="atypes-data"></td>
-                    </tr>
-					<tr><td class="atypes-text">Atom Types:</td>     
-                        <td id="uc_atypes" class="atypes-data"></td>
-                    </tr>
+              <td class="atypes-text">Number of Atoms:</td>
+              <td id="uc_natoms" class="atypes-data"></td>
+          </tr>
+					<tr><td class="atypes-text">Atom Types:</td>
+		          <td id="uc_atypes" class="atypes-data"></td>
+		      </tr>
 				</table>
 			</div>
 
@@ -80,7 +80,7 @@
 			</div>
 
 			<div>
-            <h3>Atomic positions (reduced):</h3>
+		        <h3>Atomic positions (reduced):</h3>
 				<div class="positions">
 					<table id="atompos">
 						<tr></tr>
@@ -89,24 +89,24 @@
 			</div>
 
 			<div>
-            <h3>Repetitions:</h3>
-                <form>
-                    <input class="input-rep" id="nx" type="number" name="quantity" min="1" max="10">
-                    <input class="input-rep" id="ny" type="number" name="quantity" min="1" max="10">
-                    <input class="input-rep" id="nz" type="number" name="quantity" min="1" max="10">
-                </form>
+		  <h3>Repetitions:</h3>
+	          <form>
+	              <input class="input-rep" id="nx" type="number" name="quantity" min="1" max="10">
+	              <input class="input-rep" id="ny" type="number" name="quantity" min="1" max="10">
+	              <input class="input-rep" id="nz" type="number" name="quantity" min="1" max="10">
+	          </form>
 			</div>
 
-            <div>
-            <h3>Camera:</h3>
-                <button type="button" onclick="v.setCameraDirection('x')">x</button>
-                <button type="button" onclick="v.setCameraDirection('y')">y</button>
-                <button type="button" onclick="v.setCameraDirection('z')">z</button>
-            </div>
+      <div>
+      <h3>Camera:</h3>
+          <button type="button" onclick="v.setCameraDirection('x')">x</button>
+          <button type="button" onclick="v.setCameraDirection('y')">y</button>
+          <button type="button" onclick="v.setCameraDirection('z')">z</button>
+      </div>
 		</div>
-		<div class="flex-vibcrystal" id="vibcrystal"></div>
-		<div class="flex-highcharts" id="highcharts"></div>
+		<div class="flex-vibcrystal"><div id="vibcrystal"></div></div>
+		<div class="flex-highcharts"><div id="highcharts"></div></div>
 	</div>
-    </div>
+	</div>
 </body>
 </html>

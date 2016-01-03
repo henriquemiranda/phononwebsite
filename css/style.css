@@ -1,15 +1,20 @@
 html, body {
     font-family: Arial,helvetica,sans-serif;
-    margin:0;
-    padding:0;
-    height:100%;
+    margin: 0;
+    height: 100%;
+    width: 100%;
 }
 
 section {
     margin-left: auto;
     margin-right: auto;
-    width: 600px;
+    max-width: 600px;
 }
+
+/*canvas {
+    width: 100%;
+    height: 100%
+}*/
 
 table {
   border-collapse: collapse;
@@ -24,7 +29,7 @@ th, td {
 
 h1 {
   font-size: 2em;
-  margin: 0.2em;
+  margin: 0.1em;
 }
 
 h3 {
@@ -34,7 +39,54 @@ h3 {
 }
 
 .container  {
-    height:100vh;
+    height: 100%;
+    display: -webkit-flex;
+    display: flex;
+
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    justify-content: flex-start;
+
+}
+
+.navigation {
+    display: -webkit-flex;
+    display: flex;
+
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    justify-content: flex-start;
+
+    list-style: none;
+    margin: 0;
+
+    background: deepskyblue;
+    padding-left: 0;
+}
+
+.navigation a {
+  text-decoration: none;
+  display: block;
+  padding: 0.5em;
+  color: white;
+}
+
+#stats {
+    z-index: 100;
+    position: absolute;
+    bottom: 0;
+}
+
+#vibcrystal {
+    height: 100%;
+    width: 100%;
+	position: absolute;
+}
+
+#highcharts {
+    height: 100%;
+    width: 100%;
+	position: absolute;
 }
 
 .positions {
@@ -43,53 +95,57 @@ h3 {
 }
 
 .material-name {
+    vertical-align: middle;
     text-align: center;
-    height: 2.5em;
+    margin: 0;
 }
 
 .flex-container {
+    width: 100%;
+	height: 100%;
+    position: relative;
     padding: 0;
     margin: 0;
-    list-style: none;
     justify-content: space-around;
- 
-    display: flex;
-    height: 100%;
-    width: 100%;
 
+    flex: 1;
+    display: flex;
+    -webkit-flex-flow: row wrap;
     flex-flow: row wrap;
     align-items: stretch;
 }
 
 .flex-item {
-    max-height:700px;
     width: 100%;
-    flex: 1 0px;
+    flex: 1;
     order: 1;
 }
 
 .flex-vibcrystal {
-    max-height:700px;
     width: 100%;
-    flex: 2 0px;
+    flex: 2;
     order: 2;
-    height: auto;
+    position: relative;
 }
 
 .flex-highcharts {
-    max-height:700px;
     width: 100%;
-    flex: 2 0px;
+    flex: 2;
     order: 3;
-    height: auto;
+    position: relative;
 }
 
 .input-rep {
   width: 20%;
 }
 
-.atypes-text { width: 80%; }
-.atypes-data { width: 20%; }
+.atypes-text {
+	width: 80%;
+}
+
+.atypes-data {
+	width: 20%;
+}
 
 .lattice td {
   width: 20%;
@@ -103,7 +159,6 @@ ap {
   width: 10%;
 }
 
-
 .materials {
     list-style: none;
     overflow: auto;
@@ -112,34 +167,14 @@ ap {
 }
 
 .materials li a {
-  text-decoration: none;
-  margin-bottom: 0.2em;
-  display: block;
-  transition: font-size 0.3s ease, background-color 0.3s ease;
+    text-decoration: none;
+    margin-bottom: 0.2em;
+    display: block;
+    transition: font-size 0.3s ease, background-color 0.3s ease;
 }
 
 .materials li a:hover {
-  background: deepskyblue;
-}
-
-.navigation {
-    list-style: none;
-    margin: 0;
-
     background: deepskyblue;
-
-    display: -webkit-flex;
-    display: flex;
-
-    -webkit-flex-flow: row wrap;
-    justify-content: flex-start;
-}
-
-.navigation a {
-  text-decoration: none;
-  display: block;
-  padding: 1em;
-  color: white;
 }
 
 @media all and (max-width: 1000px) {
@@ -147,28 +182,33 @@ ap {
         justify-content: space-around;
     }
 
-    .flex-container {
-        padding: 0;
-        margin: 0;
-        list-style: none;
+    .container {
+      height: auto;
+    }
 
-        flex-flow: column wrap;
-        height: auto;
-        width: 100%;
+    .flex-container {
+	    -webkit-flex-flow: column wrap;
+	    flex-flow: column wrap;
+      height: auto;
     }
 
     .flex-item {
-        min-height: 600px;
-    }
-
-    .flex-highcharts {
-        min-height: 600px;
-        order: 2
+        flex: auto;
+        order: 1;
     }
 
     .flex-vibcrystal {
-        min-height: 600px;
-        order: 3
-    } 
+        flex: auto;
+        min-height: 500px;
+    }
 
+    .flex-highcharts {
+        flex: auto;
+        order: 3;
+        min-height: 500px;
+    }
+
+    body {
+      overflow: auto;
+    }
 }
