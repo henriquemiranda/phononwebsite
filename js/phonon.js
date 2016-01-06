@@ -141,6 +141,7 @@ Phonon = {
         };
 
         HighchartsOptions.series = this.highcharts;
+        console.log(HighchartsOptions.series);
         HighchartsOptions.xAxis.plotLines = this.highsym_qpts;
         $('#highcharts').highcharts(HighchartsOptions);
     },
