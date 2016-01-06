@@ -13,6 +13,19 @@ VibCrystal = {
     renderer: null,
     cameraDistance: 300,
 
+    //options
+    cameraViewAngle: 10,
+    cameraNear: 0.1,
+    cameraFar: 1000,
+
+    //balls
+    sphereRadius: 1.0,
+    sphereLat: 12,
+    sphereLon: 12,
+    bondRadius: 0.2,
+    bondSegments: 6,
+    bondVertical: 1,
+
     /* Initialize the phonon animation */
     init: function(container,phonon) {
 
@@ -26,8 +39,9 @@ VibCrystal = {
         this.atoms      = phonon.atoms;
         this.nndist     = phonon.nndist + 0.01;
 
-        this.camera = new THREE.PerspectiveCamera( 10, this.dimensions.ratio, 0.1, 5000 );
-        this.camera.aspect = this.dimensions.ratio;
+        this.camera = new THREE.PerspectiveCamera( this.cameraViewAngle,
+                    this.dimensions.ratio, this.cameraNear, this.cameraFar );
+        //this.camera.aspect = this.dimensions.ratio;
         this.setCameraDirection('z');
 
         this.controls = new THREE.TrackballControls( this.camera, container0 );
@@ -52,7 +66,7 @@ VibCrystal = {
 
         // renderer
         this.renderer = new THREE.WebGLRenderer( { antialias: true } );
-        this.renderer.setClearColor( 0x000000 );
+        this.renderer.setClearColor( 0xffffff );
         this.renderer.setPixelRatio( window.devicePixelRatio );
         this.renderer.shadowMap.enabled = false;
         this.renderer.setSize( this.dimensions.width , this.dimensions.height, false );
@@ -107,10 +121,8 @@ VibCrystal = {
         this.bondobjects = [];
         this.atompos = [];
         this.bonds = [];
-        var sphereRadius=1.0, sphereLat=12, sphereLon=12;
-        var bondRadius=0.2, bondSegments=6, bondVertical=1;
 
-        var sphereGeometry = new THREE.SphereGeometry(sphereRadius,sphereLat,sphereLon);
+        var sphereGeometry = new THREE.SphereGeometry(this.sphereRadius,this.sphereLat,this.sphereLon);
 
         //get geometric center
         geometricCenter = new THREE.Vector3(0,0,0);
@@ -155,8 +167,8 @@ VibCrystal = {
                 var bond = getBond(a,b);
 
                 var cylinderGeometry =
-                    new THREE.CylinderGeometry(bondRadius,bondRadius,length,
-                                               bondSegments,bondVertical,true);
+                    new THREE.CylinderGeometry(this.bondRadius,this.bondRadius,length,
+                                               this.bondSegments,this.bondVertical,true);
 
                 //create cylinder mesh
                 var object = new THREE.Mesh(cylinderGeometry, material);
