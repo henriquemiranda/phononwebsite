@@ -52,14 +52,12 @@ Phonon = {
 
     getStructure: function() {
  		var i,j;
-        var veckn = this.vec[this.k][this.n];
         var x,y,z;
         var lat = this.lat;
         var apc = this.atom_pos_car;
         var atoms = [];
 
-		//create jmol command
-        for (var ix=0;ix<this.nx;ix++) {
+		    for (var ix=0;ix<this.nx;ix++) {
             for (var iy=0;iy<this.ny;iy++) {
                 for (var iz=0;iz<this.nz;iz++) {
                     for (i=0;i<this.natoms;i++) {
@@ -111,7 +109,7 @@ Phonon = {
 
     updateHighcharts: function(applet) {
         var HighchartsOptions = {
-            chart: { type: 'line'},
+            chart: { type: 'line' },
             title: { text: 'Phonon dispersion' },
             xAxis: { title: { text: 'q-point' },
                      plotLines: [] },
