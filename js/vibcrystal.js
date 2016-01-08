@@ -45,14 +45,11 @@ VibCrystal = {
         this.setCameraDirection('z');
 
         this.controls = new THREE.TrackballControls( this.camera, container0 );
-
         this.controls.rotateSpeed = 1.0;
         this.controls.zoomSpeed = 1.0;
         this.controls.panSpeed = 0.3;
-
         this.controls.noZoom = false;
         this.controls.noPan = false;
-
         this.controls.staticMoving = true;
         this.controls.dynamicDampingFactor = 0.3;
 
