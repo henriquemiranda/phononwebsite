@@ -16,7 +16,7 @@ VibCrystal = {
     //options
     cameraViewAngle: 10,
     cameraNear: 0.1,
-    cameraFar: 1000,
+    cameraFar: 5000,
 
     //balls
     sphereRadius: 1.0,
