@@ -138,6 +138,7 @@ h3 {
     width: 100%;
     flex: 1;
     order: 1;
+    overflow: auto;
 }
 
 .flex-vibcrystal {
