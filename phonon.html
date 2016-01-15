@@ -103,7 +103,12 @@
 	              <input class="input-rep" id="nz" type="number" name="quantity">
 	          </form>
 			</div>
-
+			<div>
+			<h3>Amplitude:</h3>
+			<form>
+				<input class="input-displacement" type="range" name="points" step ="0.01" value="1.0" min="0.01" max="2" onchange="v.amplitude=this.value">
+			</form>
+		  </div>
       <div>
       <h3>Camera:</h3>
           <button type="button" onclick="v.setCameraDirection('x')">x</button>

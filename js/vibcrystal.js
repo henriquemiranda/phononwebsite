@@ -13,7 +13,7 @@ VibCrystal = {
     renderer: null,
     cameraDistance: 300,
 
-    //options
+    //camera options
     cameraViewAngle: 10,
     cameraNear: 0.1,
     cameraFar: 5000,
@@ -25,6 +25,9 @@ VibCrystal = {
     bondRadius: 0.2,
     bondSegments: 6,
     bondVertical: 1,
+
+    //options
+    amplitude: 1.0,
 
     /* Initialize the phonon animation */
     init: function(container,phonon) {
@@ -251,7 +254,7 @@ VibCrystal = {
         var vibrations;
 
         var t = Date.now() * 0.001;
-        var phase = Complex.Polar(1.0,t*2.0*pi);
+        var phase = Complex.Polar(this.amplitude,t*2.0*pi);
 
         //update positions according to vibrational modes
         for (i=0; i<this.atomobjects.length; i++) {
