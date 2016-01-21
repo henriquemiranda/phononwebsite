@@ -106,7 +106,7 @@
 			<div>
 			<h3>Amplitude:</h3>
 			<form>
-				<input class="input-displacement" type="range" name="points" step ="0.01" value="1.0" min="0.01" max="2" onchange="v.amplitude=this.value">
+				<input class="input-displacement" type="range" name="points" step ="0.01" value="1.0" min="0.01" max="2" onchange="v.amplitude=this.value; p.amplitude=this.value">
 			</form>
 		  </div>
       <div>
@@ -114,6 +114,10 @@
           <button type="button" onclick="v.setCameraDirection('x')">x</button>
           <button type="button" onclick="v.setCameraDirection('y')">y</button>
           <button type="button" onclick="v.setCameraDirection('z')">z</button>
+      </div>
+			<div>
+      <h3>Export:</h3>
+          <button type="button" onclick="p.exportXSF()">xsf</button>
       </div>
 		</div>
 		<div class="flex-vibcrystal"><div id="vibcrystal"></div></div>

@@ -1,5 +1,6 @@
 var pi = 3.14159265359;
 var thz2ev = 33.35641;
+var bohr2ang = 0.529177249;
 //default folder
 folder="graphene";
 
@@ -24,6 +25,7 @@ Phonon = {
     nx: 1,
     ny: 1,
     nz: 1,
+    amplitude: 1,
 
     getRepetitions: function() {
       this.nx = $('#nx').val();
@@ -167,11 +169,6 @@ Phonon = {
             }
           }
 
-          //round lattice values
-          lat[0] = lat[0].map(function(x){ return Math.round(x*1000)/1000 });
-          lat[1] = lat[1].map(function(x){ return Math.round(x*1000)/1000 });
-          lat[2] = lat[2].map(function(x){ return Math.round(x*1000)/1000 });
-
           self.addatomphase = true;
           self.atom_types = atom_types;
           self.atom_numbers = atom_numbers;
@@ -296,6 +293,38 @@ Phonon = {
         return vibrations;
     },
 
+    exportXSF: function () {
+      string = "CRYSTAL\n"
+      string += "PRIMVEC\n"
+
+      for (i=0; i<this.lat.length; i++) {
+        string += self.lat[i][0]*this.nx*bohr2ang + " " +
+                  self.lat[i][1]*this.ny*bohr2ang + " " +
+                  self.lat[i][2]*this.nz*bohr2ang + "\n";
+      }
+
+      string += "PRIMCOORD 1\n"
+      string += this.atoms.length + " 1\n"
+
+      for (i=0; i<this.atoms.length; i++) {
+        vibrations = this.vibrations[i];
+        string += self.atom_numbers[this.atoms[i][0]] + " ";
+        for (j=1; j<4; j++) {
+          string += this.atoms[i][j]*bohr2ang + this.amplitude*vibrations[j-1].real() + " ";
+        }
+        string += "\n";
+      }
+
+      var element = document.createElement('a');
+      element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(string));
+      element.setAttribute('download', this.k.toString()+'_'+this.n.toString()+'_displacement.xsf');
+      element.style.display = 'none';
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+
+    },
+
     updateHighcharts: function(applet) {
         var HighchartsOptions = {
             chart: { type: 'line' },
@@ -337,6 +366,11 @@ Phonon = {
 
         HighchartsOptions.series = this.highcharts;
         HighchartsOptions.xAxis.plotLines = this.highsym_qpts;
+        HighchartsOptions.yAxis.plotLines = [{
+            color: '#000000',
+            width: 2,
+            value: 0
+        }];
         $('#highcharts').highcharts(HighchartsOptions);
     },
 
@@ -346,7 +380,8 @@ Phonon = {
         var i, j;
         for (i=0;i<3;i++) {
             for (j=0;j<3;j++) {
-                $('#uc_'+i+j).html( this.lat[i][j] );
+              //round lattice values
+              $('#uc_'+i+j).html( Math.round(this.lat[i][j]*1000)/1000 );
             }
         }
 

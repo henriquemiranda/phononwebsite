@@ -42,6 +42,10 @@ function vec_norm(a) {
   return Math.sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);
 }
 
+function vec_scale(a) {
+  return [a[0],a[1],a[2]];
+}
+
 function red_car(a,lat) {
   var x=a[0]; y=a[1]; z=a[2];
   return [x*lat[0][0] + y*lat[1][0] + z*lat[2][0],
