@@ -311,8 +311,7 @@ Phonon = {
                      minorTickLength: 0,
                      tickLength: 0
                     },
-            yAxis: { min: 0,
-                     title: { text: 'Frequency (cm-1)' },
+            yAxis: { title: { text: 'Frequency (cm-1)' },
                      plotLines: [ {value: 0, color: '#808080' } ] },
             tooltip: { formatter: function(x) { return Math.round(this.y*100)/100+'cm-1' } },
             plotOptions: {
