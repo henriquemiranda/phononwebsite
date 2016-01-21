@@ -19,6 +19,8 @@ The user can visualize his own phonopy files by clicking on the ``Choose files``
     EIGENVECTORS = .TRUE.
     BAND = (x1,y1,z1) (x2,y2,z2) (x3,y3,z3)
 
+In the last section you can export the distorted lattice to a xsf file. If you don't want any displacement you can set the amplitude to zero.
+
 Authors
 =======
 
