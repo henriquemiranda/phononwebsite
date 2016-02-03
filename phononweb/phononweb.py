@@ -128,7 +128,6 @@ class Phonon():
     def save_netcdf(self):
         """ Save phonon data in a netCDF file
         """
-        self.chemical_symbols = np.unique(self.atom_types)
         natypes = len(self.chemical_symbols)
 
         #save all this stuff on a netcdf file
@@ -194,7 +193,7 @@ class Phonon():
                 "lattice":          self.cell.tolist(),
                 "atom_types":       self.atom_types,                 # atom type   for each atom in the system (string)
                 "atom_numbers":     self.atom_numbers,               # atom number for each atom in the system (integer)
-                "chemical_symbols": self.chemical_symbols.tolist(),  # unique atom types   (string) 
+                "chemical_symbols": self.chemical_symbols,           # unique atom types   (string) 
                 "atomic_numbers":   self.atomic_numbers.tolist(),    # unique atom numbers (integer)
                 "formula":          self.chemical_formula,
                 "qpoints":          self.qpoints.tolist(),
