@@ -3,23 +3,48 @@ Phonon website
 
 Visualize phonon vibrational modes.
 
-This project aims to provide a simple way to visualize the lattice vibrations of different materials. The temperature of a material is related to the agitation of its atoms. The atoms can move in any of the three cartesian directions. Combining the different possible ways the atoms can vibrate we obtain the eigenmodes. Each mode has associated a frequency of vibration that is related with the forces between the atoms.
+This project aims to provide a simple way to visualize the lattice vibrations of different materials. The temperature of a material is related to the agitation of its atoms. The atoms can move in any of the three cartesian directions. Combining the different possible ways the atoms can vibrate we obtain the eigenvectors. Each mode has associated a frequency of vibration that is related with the forces between the atoms.
 
 How to use?
 ===========
 
 In the phonon section you can click on any point in the dispersion relation and see an animation of how the atoms vibrate in that particular mode.
+By default you can visualize the phonon dispersion of some materials we calculated.
+If you want to see your own calculations, we currently support phonon calculations form `Abinit`, `Quantum Espresso` and `phononpy`.
 
-Currently you can find in the `scripts` folder a python script `read_anaddb_phonon.py` that reads a NetCDF output file from `anaddb` that is provided with the `abinit` package to a `.json` file that can be opened with the `Choose files` button.
-You might also find another python script `read_qe_phonon.py` to read the `.modes` file from `matdyn.x` output from Quantum Espresso and write it to the `.json` format.
-
-The user can visualize his own `phonopy` files by clicking on the `Choose files` button and selecting a `band.yaml` and a `disp.yaml`. The following options should be present in the `band.conf` file:
-
+phonopy
+-------
+You can visualize your own `phonopy` files by clicking on the `Choose files` button and selecting a `band.yaml` and a `disp.yaml`. The following options should be present in the `band.conf` file:
 
     EIGENVECTORS = .TRUE.
     BAND = (x1,y1,z1) (x2,y2,z2) (x3,y3,z3)
 
-In the last section you can export the distorted lattice to a `.xsf` or `POSCAR` file. The `phase` and `amplitude` sliders define a complex number that is multiplied by the phonon eigenvectors to obtain the displacements. If you don't want any displacement you can set the amplitude to zero.
+Abinit
+------
+To read a phonon dispersion form `Abinit` we provide some python scripts to convert the data to a .json format.
+To install the scripts in your computer you can run:
+
+    python setup.py install --user
+
+In the folder where you ran `anaddb` you will find a netCDF file with the name `anaddb.out_PHBST.nc`. To convert it to `.json` format just run:
+
+    read_anaddb_phonon.py anaddb.out_PHBST.nc <name_of_your_material>
+
+You can then select the resulting `.json` file with the `Choose files` button.
+
+Quantum Espresso
+----------------
+To read a Quantum Espresso calculation you need two files `<prefix>.scf` and `<prefix>.modes`. The first one is the input file for `pw.x` the second one can be generated with `dynmat.x`.
+After installing the python scripts (as in the case of an `Abinit` calculation) you can obtain the `.json` files:
+
+    read_qe_phonon.py prefix <name_of_your_material>
+
+You can then select the resulting `.json` file with the `Choose files` button.
+
+Features
+========
+You can export the lattice distorted according to the currently selected phonon mode to a `.xsf` or `POSCAR` file.
+The `phase` and `amplitude` sliders define a complex number that is multiplied by the phonon eigenvectors to obtain the displacements.
 
 Authors
 =======
@@ -43,7 +68,6 @@ miranda.henrique at gmail.com
 
 Contribute
 ==========
-
 The project is still under development!  
 
 You can leave your suggestions and feature requests here:  
@@ -52,11 +76,11 @@ You can leave your suggestions and feature requests here:
 If you would like to see some of your calculations published on this website please contact me.
 
 Software used for this project
-========
+==============================
 
 - The WebGL visualization is made using `Three.js`: <http://threejs.org/>
 - The phonon dispersion is plotted using `highcharts`: <http://www.highcharts.com/>  
 
-- `abinit`: <http://www.abinit.org/>
-- Quantum Espresso `ph.x`: <http://www.quantum-espresso.org/>
+- `Abinit`: <http://www.abinit.org/>
+- `Quantum Espresso`: <http://www.quantum-espresso.org/>
 - `phonopy`: <http://atztogo.github.io/phonopy/>
