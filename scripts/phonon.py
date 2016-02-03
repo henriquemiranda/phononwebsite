@@ -3,7 +3,6 @@ from netCDF4 import Dataset
 import json
 import numpy as np
 from ase import Atoms
-from neighbours import *
 
 #conversion variables
 bohr_angstroem = 0.529177249
@@ -41,7 +40,7 @@ def estimate_band_connection(prev_eigvecs, eigvecs, prev_band_order):
     return band_order
 
 
-class material():
+class Phonon():
     def __init__(self,filename,name,reps=(1,1,1),swap=noswap,reorder=True,scale=1.0):
         self.reps = reps
         self.name = name
@@ -60,7 +59,6 @@ class material():
         self.atoms = Atoms(self.atom_types, self.pos, pbc=[1,1,1])
         self.atoms.set_cell(self.lat,scale_atoms=True)
         self.chemical_formula = self.atoms.get_chemical_formula()
-        self.find_nn_distance()
 
     def read_abinit(self):
         pcfile = Dataset(self.filename, 'r', format='NETCDF4')
@@ -86,13 +84,6 @@ class material():
         self.atom_types = [self.chemical_symbol[a-1] for a in self.atypes]
         self.atom_numbers = [self.atomic_numbers[a-1] for a in self.atypes]
 
-    def find_nn_distance(self):
-        """ Find and return the nearest neighbour distance
-        """
-        self.nn = Neighbors(self.atoms)
-        neighbors = self.nn.get_nneighbors(0,1)-self.pos[0]
-        self.nndist = min([ np.linalg.norm(n) for n in red_car(neighbors,self.lat) ])
-    
     def __str__(self):
         """ Write some information about the system
         """
@@ -140,7 +131,6 @@ class material():
                 "lattice":      swap_l(round_ll( self.lat ), self.swap),
                 "atom_types":   self.atom_types,
                 "atom_numbers": self.atom_numbers,
-                "nndist":       self.nndist,
                 "chemical_symbol": self.chemical_symbol,
                 "atomic_numbers": self.atomic_numbers.tolist(),
                 "formula":      self.chemical_formula,

@@ -50,7 +50,7 @@ Phonon = {
       return min;
     },
 
-    getFromPhonopyFile: function(event) {
+    getFromFile: function(event) {
       //check which is which
       var file_band, file_disp;
       var disp_reader = new FileReader();
@@ -84,6 +84,7 @@ Phonon = {
         file = event.target.files[i]
         if (file.name == "disp.yaml") { disp_reader.readAsText(file); }
         if (file.name == "band.yaml") { band_reader.readAsText(file); }
+        if (file.name.indexOf(".json") > -1) { alert('Json file'); }
       }
 
       function onLoadEndHandler() {
@@ -131,6 +132,7 @@ Phonon = {
 
           var nqpointperpath = nqpoint/npath, p, index;
           var highcharts = [], highsym_qpts = [];
+          self.qindex = {};
           for (p=0; p<npath; p++) {
             //clean eivals array
             eivals = [];
@@ -140,7 +142,7 @@ Phonon = {
 
             //vertical lines
             if (p != 0) {
-              highsym_qpts.push({ "value": p*nqpointperpath-p, "color": 'black', "width": 1 });
+              highsym_qpts.push({ "value": phononi['distance'], "color": 'black', "width": 1 });
             }
 
             for (i=0; i<nqpointperpath; i++) {
@@ -152,7 +154,8 @@ Phonon = {
               phononiband = phononi['band'];
               eivec = [];
               for (n=0; n<nbands; n++) {
-                eivals[n].push([index-p,phononiband[n]['frequency']*thz2ev]);
+                eivals[n].push([phononi['distance'],phononiband[n]['frequency']*thz2ev]);
+                self.qindex[ phononi['distance'] ] = index-p;
                 eivec.push(phononiband[n]['eigenvector']);
               }
               eivecs.push(eivec);
@@ -208,7 +211,6 @@ Phonon = {
             self.atomic_numbers = data["atomic_numbers"];
             self.atom_pos_car = data["atom_pos_car"];
             self.atom_pos_red = data["atom_pos_red"];
-            self.nndist = data["nndist"];
             self.lat = data["lattice"];
             self.vec = data["vectors"];
             self.kpoints = data["kpoints"];
@@ -221,76 +223,85 @@ Phonon = {
         $('#ny').val(this.repetitions[1]);
         $('#nz').val(this.repetitions[2]);
         this.getRepetitions();
+
+        //get the bonding distance
+        self.nndist = self.getBondingDistance(this.atom_pos_car);
+        console.log(self.nndist);
+
+        self.qindex = {};
+        for (i=0; i<self.kpoints.length; i++) {
+          self.qindex[i] = i;
+        }
     },
 
     getStructure: function() {
- 		var i,j;
-        var x,y,z;
-        var lat = this.lat;
-        var apc = this.atom_pos_car;
-        var atoms = [];
+ 		  var i,j;
+      var x,y,z;
+      var lat = this.lat;
+      var apc = this.atom_pos_car;
+      var atoms = [];
 
-		    for (var ix=0;ix<this.nx;ix++) {
-            for (var iy=0;iy<this.ny;iy++) {
-                for (var iz=0;iz<this.nz;iz++) {
-                    for (i=0;i<this.natoms;i++) {
+	    for (var ix=0;ix<this.nx;ix++) {
+          for (var iy=0;iy<this.ny;iy++) {
+              for (var iz=0;iz<this.nz;iz++) {
+                  for (i=0;i<this.natoms;i++) {
 
-                        //postions of the atoms
-                        x = apc[i][0] + ix*lat[0][0] + iy*lat[1][0] + iz*lat[2][0];
-                        y = apc[i][1] + ix*lat[0][1] + iy*lat[1][1] + iz*lat[2][1];
-                        z = apc[i][2] + ix*lat[0][2] + iy*lat[1][2] + iz*lat[2][2];
+                      //postions of the atoms
+                      x = apc[i][0] + ix*lat[0][0] + iy*lat[1][0] + iz*lat[2][0];
+                      y = apc[i][1] + ix*lat[0][1] + iy*lat[1][1] + iz*lat[2][1];
+                      z = apc[i][2] + ix*lat[0][2] + iy*lat[1][2] + iz*lat[2][2];
 
-                        atoms.push( [i,x,y,z] );
-                    }
-                }
-            }
-        }
+                      atoms.push( [i,x,y,z] );
+                  }
+              }
+          }
+      }
 
-        this.atoms = atoms;
-        return atoms;
+      this.atoms = atoms;
+      return atoms;
     },
 
     getVibrations: function() {
- 		var i,j,n=0;
-        var veckn = this.vec[this.k][this.n];
-        var vibrations = [];
-        var kpt = this.kpoints[this.k];
-        var phase, sprod;
+      var i,j,n=0;
+      var veckn = this.vec[this.k][this.n];
+      var vibrations = [];
+      var kpt = this.kpoints[this.k];
+      var phase, sprod;
 
-        //additional phase in case necessary
-        var atom_phase = []
-        if (this.addatomphase) {
-          for (i=0;i<this.natoms;i++) {
-              atom_phase.push(kpt[0]*this.atom_pos_red[i][0] + kpt[1]*this.atom_pos_red[i][1] + kpt[2]*this.atom_pos_red[i][2]);
+      //additional phase in case necessary
+      var atom_phase = []
+      if (this.addatomphase) {
+        for (i=0;i<this.natoms;i++) {
+            atom_phase.push(kpt[0]*this.atom_pos_red[i][0] + kpt[1]*this.atom_pos_red[i][1] + kpt[2]*this.atom_pos_red[i][2]);
+        }
+      }
+      else {
+        for (i=0;i<this.natoms;i++) {
+            atom_phase.push(0);
+        }
+      }
+
+      for (var ix=0;ix<this.nx;ix++) {
+          for (var iy=0;iy<this.ny;iy++) {
+              for (var iz=0;iz<this.nz;iz++) {
+
+                  for (i=0;i<this.natoms;i++) {
+                      sprod = kpt[0]*ix + kpt[1]*iy + kpt[2]*iz + atom_phase[i];
+                      phase = Complex.Polar(1,sprod*2.0*pi);
+
+                      //Displacements of the atoms
+                      x = Complex(veckn[i][0][0],veckn[i][0][1]).mult(phase);
+                      y = Complex(veckn[i][1][0],veckn[i][1][1]).mult(phase);
+                      z = Complex(veckn[i][2][0],veckn[i][2][1]).mult(phase);
+
+                      vibrations.push( [x,y,z] );
+                  }
+              }
           }
-        }
-        else {
-          for (i=0;i<this.natoms;i++) {
-              atom_phase.push(0);
-          }
-        }
+      }
 
-        for (var ix=0;ix<this.nx;ix++) {
-            for (var iy=0;iy<this.ny;iy++) {
-                for (var iz=0;iz<this.nz;iz++) {
-
-                    for (i=0;i<this.natoms;i++) {
-                        sprod = kpt[0]*ix + kpt[1]*iy + kpt[2]*iz + atom_phase[i];
-                        phase = Complex.Polar(1,sprod*2.0*pi);
-
-                        //Displacements of the atoms
-                        x = Complex(veckn[i][0][0],veckn[i][0][1]).mult(phase);
-                        y = Complex(veckn[i][1][0],veckn[i][1][1]).mult(phase);
-                        z = Complex(veckn[i][2][0],veckn[i][2][1]).mult(phase);
-
-                        vibrations.push( [x,y,z] );
-                    }
-                }
-            }
-        }
-
-        this.vibrations = vibrations;
-        return vibrations;
+      this.vibrations = vibrations;
+      return vibrations;
     },
 
     exportXSF: function () {
@@ -298,9 +309,9 @@ Phonon = {
       string += "PRIMVEC\n"
 
       for (i=0; i<this.lat.length; i++) {
-        string += (self.lat[i][0]*this.nx*bohr2ang).toFixed(10) + " " +
-                  (self.lat[i][1]*this.ny*bohr2ang).toFixed(10) + " " +
-                  (self.lat[i][2]*this.nz*bohr2ang).toFixed(10) + "\n";
+        string += (self.lat[i][0]*this.nx*bohr2ang).toFixed(12) + " " +
+                  (self.lat[i][1]*this.ny*bohr2ang).toFixed(12) + " " +
+                  (self.lat[i][2]*this.nz*bohr2ang).toFixed(12) + "\n";
       }
 
       string += "PRIMCOORD 1\n"
@@ -312,7 +323,7 @@ Phonon = {
         vibrations = this.vibrations[i];
         string += self.atom_numbers[this.atoms[i][0]] + " ";
         for (j=1; j<4; j++) {
-          string += (this.atoms[i][j]*bohr2ang + phase.mult(vibrations[j-1]).real()).toFixed(10) + " ";
+          string += (this.atoms[i][j]*bohr2ang + phase.mult(vibrations[j-1]).real()).toFixed(12) + " ";
         }
         string += "\n";
       }
@@ -358,9 +369,9 @@ Phonon = {
       string += "1.0\n"
 
       for (i=0; i<this.lat.length; i++) {
-        string += (self.lat[i][0]*this.nx*bohr2ang).toFixed(10) + " " +
-                  (self.lat[i][1]*this.ny*bohr2ang).toFixed(10) + " " +
-                  (self.lat[i][2]*this.nz*bohr2ang).toFixed(10) + "\n";
+        string += (self.lat[i][0]*this.nx*bohr2ang).toFixed(12) + " " +
+                  (self.lat[i][1]*this.ny*bohr2ang).toFixed(12) + " " +
+                  (self.lat[i][2]*this.nz*bohr2ang).toFixed(12) + "\n";
       }
 
       for (i=0; i<order.length; i++) {
@@ -373,7 +384,7 @@ Phonon = {
       for (i=0; i<atoms.length; i++) {
         vibrations = this.vibrations[i];
         for (j=1; j<4; j++) {
-          string += (atoms[i][j]*bohr2ang + phase.mult(vibrations[j-1]).real()).toFixed(10) + " ";
+          string += (atoms[i][j]*bohr2ang + phase.mult(vibrations[j-1]).real()).toFixed(12) + " ";
         }
         string += "\n";
       }
@@ -389,52 +400,73 @@ Phonon = {
     },
 
     updateHighcharts: function(applet) {
-        var HighchartsOptions = {
-            chart: { type: 'line' },
-            title: { text: 'Phonon dispersion' },
-            xAxis: { title: { text: 'q-point' },
-                     plotLines: [],
-                     lineWidth: 0,
-                     minorGridLineWidth: 0,
-                     lineColor: 'transparent',
-                     labels: {
-                       enabled: false
-                     },
-                     minorTickLength: 0,
-                     tickLength: 0
-                    },
-            yAxis: { title: { text: 'Frequency (cm-1)' },
-                     plotLines: [ {value: 0, color: '#808080' } ] },
-            tooltip: { formatter: function(x) { return Math.round(this.y*100)/100+'cm-1' } },
-            plotOptions: {
-                line: {
-                    animation: false
-                },
-                series: {
-                    cursor: 'pointer',
-                    point: { events: {
-                         click: function(event) {
-                                    p.k = this.x;
-                                    p.n = this.series.name;
-                                    p.getVibrations();
-                                    v.updateObjects(p);
-                                                }
-                        }
-                    }
-                }
-            },
-            legend: { enabled: false },
-            series: []
-        };
+      qindex = this.qindex;
 
-        HighchartsOptions.series = this.highcharts;
-        HighchartsOptions.xAxis.plotLines = this.highsym_qpts;
-        HighchartsOptions.yAxis.plotLines = [{
-            color: '#000000',
-            width: 2,
-            value: 0
-        }];
-        $('#highcharts').highcharts(HighchartsOptions);
+      //function to set the minimum of the y axis as found in: http://stackoverflow.com/questions/16417124/set-highcharts-y-axis-min-value-to-0-unless-there-is-negative-data
+      var setMin = function () {
+        var chart = this,
+        ex = chart.yAxis[0].getExtremes();
+
+        // Sets the min value for the chart
+        var minVal = 0;
+
+        if (ex.dataMin < 0) {
+          minVal = ex.dataMin;
+        }
+
+        //set the min and return the values
+        chart.yAxis[0].setExtremes(minVal, null, true, false);
+      }
+
+      var HighchartsOptions = {
+          chart: { type: 'line',
+                   events: { load: setMin } },
+          title: { text: 'Phonon dispersion' },
+          xAxis: { title: { text: 'q-point' },
+                   plotLines: [],
+                   lineWidth: 0,
+                   minorGridLineWidth: 0,
+                   lineColor: 'transparent',
+                   labels: {
+                     enabled: false
+                   },
+                   minorTickLength: 0,
+                   tickLength: 0
+                  },
+          yAxis: { title: { text: 'Frequency (cm-1)' },
+                   plotLines: [ {value: 0, color: '#808080' } ] },
+          tooltip: { formatter: function(x) { return Math.round(this.y*100)/100+'cm-1' } },
+          plotOptions: {
+              line: {
+                  animation: false
+              },
+              series: {
+                  cursor: 'pointer',
+                  point: { events: {
+                       click: function(event) {
+                                  p.k = qindex[this.x];
+                                  console.log(this.x, qindex[this.x]);
+                                  p.n = this.series.name;
+                                  p.getVibrations();
+                                  v.updateObjects(p);
+                                              }
+                      }
+                  }
+              }
+          },
+          legend: { enabled: false },
+          series: []
+      };
+
+
+      HighchartsOptions.series = this.highcharts;
+      HighchartsOptions.xAxis.plotLines = this.highsym_qpts;
+      HighchartsOptions.yAxis.plotLines = [{
+          color: '#000000',
+          width: 2,
+          value: 0
+      }];
+      $('#highcharts').highcharts(HighchartsOptions);
     },
 
 
@@ -502,7 +534,7 @@ $(document).ready(function(){
     p = Phonon;
     v = VibCrystal;
 
-    $('#file-input')[0].addEventListener('change', p.getFromPhonopyFile.bind(p), false);
+    $('#file-input')[0].addEventListener('change', p.getFromFile.bind(p), false);
     $('#file-input')[0].addEventListener('click', function() { this.value = '';}, false);
     updateMenu();
 
