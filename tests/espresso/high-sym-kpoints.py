@@ -19,11 +19,11 @@ points = dict()
 npoints =40
 
 # Hexagonal
-points["G"] =  [   0,   0, 0       ]
-points["M"] =  [ 0.5,   0, 0        ]
-points["K"] =  [ 2./3., -1./3., 0.   ]
-points["A"] =  [0,0,0.5]
-points["L"] =  [ 0.5,  -0.5, 0.5    ]
+points["G"] =  [    0,     0, 0  ]
+points["M"] =  [  0.5,     0, 0  ]
+points["K"] =  [ 2./3, -1./3, 0  ]
+points["A"] =  [     0,      0, 0.5 ]
+points["L"] =  [   0.5,   -0.5, 0.5 ]
 points["H"] =  [ 2./3., -1./3., 0.5 ]
 """
 

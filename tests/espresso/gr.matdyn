@@ -1,39 +1,12 @@
-!Input file for the ifc code. Analysis of a restricted SiO2 DDB
-!Will use only the Gamma point information : compute
-!Compute LO-TO splitting for different directions,
-!as well as the dielectric tensor at zero frequency
-
-!Input file for the ifc code. Analysis of the BN-sheet DDB
-!Flags
- eivec     0
- ifcflag   1     ! Interatomic force constant flag
-     asr   1     ! Acoustic Sum Rule. 1 => imposed asymetrically
- symdynmat 1
-
-!Wavevector grid number 1 (coarse grid, from DDB)
-  brav    4         ! Bravais Lattice : 1-S.C., 2-F.C., 3-B.C., 4-Hex.)
-  ngqpt  12 12 1    ! Monkhorst-Pack indices
-  nqshft  1         ! number of q-points in repeated basic q-cell
-  q1shft  0 0 0.0
-
-!Interatomic force constant info
-!  dipdip  1            ! Dipole-dipole interaction treatment
-  ifcana  1            ! Analysis of the IFCs
-  ifcout  5000         ! Number of IFC's written in the output, per atom
-  natifc  1            ! Number of atoms in the cell for which ifc's are analysed
-   atifc  1            ! List of atoms
-  prt_ifc 1
-
-!prtdos 1
-!ng2qpt 100 100 1
-
-!Wavevector list number 1 (Reduced coordinates and normalization factor)
-  nph2l 1
-  qph2l
- 1.00000            0.00000        0.00000           0.00000
-
-nph1l 51 
-qph1l
+&input
+    asr='simple',
+    amass(1)=12.0107,
+    flfrc='gr.fc',
+    flfrq='gr.freq',
+    flvec='gr.modes',
+    q_in_cryst_coord=.true.,
+ /
+51
     0.000000     0.000000     0.000000 1.0
     0.025000     0.000000     0.000000 1.0
     0.050000     0.000000     0.000000 1.0

@@ -5,34 +5,30 @@
 
 !Input file for the ifc code. Analysis of the BN-sheet DDB
 !Flags
- eivec     0
+ eivec     1
  ifcflag   1     ! Interatomic force constant flag
      asr   1     ! Acoustic Sum Rule. 1 => imposed asymetrically
  symdynmat 1
 
+!print the inter-atomic forces
+ifcana  1    
+prt_ifc 1
+ifcout  120
+natifc  2
+atifc   1 2
+!nsphere 50
+
 !Wavevector grid number 1 (coarse grid, from DDB)
   brav    4         ! Bravais Lattice : 1-S.C., 2-F.C., 3-B.C., 4-Hex.)
-  ngqpt  12 12 1    ! Monkhorst-Pack indices
+  ngqpt   60 60 1   ! Monkhorst-Pack indices
   nqshft  1         ! number of q-points in repeated basic q-cell
-  q1shft  0 0 0.0
-
-!Interatomic force constant info
-!  dipdip  1            ! Dipole-dipole interaction treatment
-  ifcana  1            ! Analysis of the IFCs
-  ifcout  5000         ! Number of IFC's written in the output, per atom
-  natifc  1            ! Number of atoms in the cell for which ifc's are analysed
-   atifc  1            ! List of atoms
-  prt_ifc 1
+  q1shft  0 0 0
 
 !prtdos 1
-!ng2qpt 100 100 1
+!ng2qpt 300 300 1
 
 !Wavevector list number 1 (Reduced coordinates and normalization factor)
-  nph2l 1
-  qph2l
- 1.00000            0.00000        0.00000           0.00000
-
-nph1l 51 
+nph1l 51
 qph1l
     0.000000     0.000000     0.000000 1.0
     0.025000     0.000000     0.000000 1.0

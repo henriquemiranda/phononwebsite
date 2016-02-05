@@ -1,0 +1,40 @@
+ &control
+       calculation = 'scf',
+            prefix = 'gr',
+    pseudo_dir     = '.',
+    outdir         = '.',
+    verbosity      = 'high',
+    forc_conv_thr  = 1e-10,
+    etot_conv_thr  = 1e-14,
+/&end
+ &system
+    ibrav = 4,
+    celldm(1) = 4.5978084723,
+    celldm(3) = 2.6099390769,
+    nbnd = 12, 
+    nat = 2,
+    ntyp = 1,
+    ecutwfc = 70.0,
+    occupations='smearing',
+    smearing='fermi-dirac',
+    degauss=0.004,
+/&end
+ &electrons
+          conv_thr = 1.d-14,
+       mixing_beta = 0.7,
+/&end
+&ions
+          ion_dynamics = 'bfgs',
+/&end
+ &cell
+         press_conv_thr = 1e-8,
+          cell_dynamics = 'bfgs',
+            cell_dofree = '2Dxy',
+/&end
+ATOMIC_SPECIES
+  C   12.0107   C.pw-mt_fhi.UPF
+ATOMIC_POSITIONS { crystal }
+C   0.00000000000000   0.00000000000000   0.00000000000000
+C   0.66666666666666   0.33333333333333   0.00000000000000
+K_POINTS { automatic }
+60 60 1 0 0 0

@@ -22,15 +22,15 @@
 # ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-from scripts.phonon import *
+from phononweb import *
 
-scale = 1
+ana = 'anaddb.out_PHBST.nc'
 material_list = { 
-"graphene":           [noswap, [ 5, 5, 1],  scale, "Graphene"],
-"mos2_bulk":		  [noswap, [ 5, 5, 1],  scale, "Bulk MoS<sub>2</sub>"],
-"mos2_singlelayer":	  [noswap, [ 5, 5, 1],  scale, "Layer MoS<sub>2</sub>"],
-"mote2_singlelayer":  [noswap, [ 5, 5, 1],  scale, "Layer MoTe<sub>2</sub>"],
-"mote2_bulk":         [noswap, [ 5, 5, 1],  scale, "Bulk MoTe<sub>2</sub>"]}
+"graphene":           [ AnaddbPhonon,     ana, [ 5, 5, 1], "Graphene"],
+"mos2_bulk":		  [ AnaddbPhonon,     ana, [ 5, 5, 1], "Bulk MoS<sub>2</sub>"],
+"mos2_singlelayer":	  [ AnaddbPhonon,     ana, [ 5, 5, 1], "Layer MoS<sub>2</sub>"],
+"mote2_singlelayer":  [ QePhonon,     'mote2', [ 5, 5, 1], "Layer MoTe<sub>2</sub>"],
+"mote2_bulk":         [ QePhonon,     'mote2', [ 5, 5, 1], "Bulk MoTe<sub>2</sub>"]}
         
 #create the models file
 models = {"nmodels": len(material_list),
@@ -38,10 +38,10 @@ models = {"nmodels": len(material_list),
 
 #create the data.json files
 for folder in material_list.keys():
-    swap, reps, scale, name = material_list[folder]
+    reader, filename, reps, name = material_list[folder]
     print "#"*50+"\n",name+"\n","#"*50
-    m = Phonon(folder+'/anaddb.out_PHBST.nc',name,reps=reps,swap=swap,scale=scale)
-    m.write_json(folder+'/data.json')
+    m = reader(filename,name,reps=reps,folder=folder)
+    m.write_json(prefix='data', folder=folder)
     print m, "\n"
         
     models["models"].append({"folder":folder,"name":name})
