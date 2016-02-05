@@ -14,19 +14,20 @@ If you want to see your own calculations, we currently support phonon calculatio
 
 phonopy
 -------
-You can visualize your own `phonopy` files by clicking on the `Choose files` button and selecting a `band.yaml` and a `disp.yaml`. The following options should be present in the `band.conf` file:
+You can visualize your own `phonopy` files by clicking on the `Choose files` button and selecting a `band.yaml` and a `disp.yaml` files. The following options should be present in the `band.conf` file:
 
     EIGENVECTORS = .TRUE.
+    BAND_CONNECTION = .TRUE.
     BAND = (x1,y1,z1) (x2,y2,z2) (x3,y3,z3)
 
 Abinit
 ------
-To read a phonon dispersion form `Abinit` we provide some python scripts to convert the data to a .json format.
-To install the scripts in your computer you can run:
+To read a phonon dispersion form `Abinit` we provide some python scripts to convert the data to a `.json` format.
+You can obtain these scripts form the Github page. To install them just do:
 
     python setup.py install --user
 
-In the folder where you ran `anaddb` you will find a netCDF file with the name `anaddb.out_PHBST.nc`. To convert it to `.json` format just run:
+In the folder where you ran `anaddb` you will find a netCDF file (if your `Abinit` version has netCDF compiled) with the name `anaddb.out_PHBST.nc`. To convert it to `.json` format just run:
 
     read_anaddb_phonon.py anaddb.out_PHBST.nc <name_of_your_material>
 

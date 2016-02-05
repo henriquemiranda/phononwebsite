@@ -116,6 +116,7 @@ h3 {
 .material-name {
     vertical-align: middle;
     text-align: center;
+    height: 3em;
     margin: 0;
 }
 

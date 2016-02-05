@@ -12,15 +12,15 @@ import os
 import numpy as np
 
 class AnaddbPhonon(Phonon):
-    def __init__(self,filename,name,reps=(3,3,3),reorder=True,scale=1.0):
+    def __init__(self,filename,name,reps=(3,3,3),reorder=True,folder='.'):
         self.reps = reps
         self.name = name
-        self.scale = scale
-        self.filename = filename
+        self.folder = folder
+        self.filename = "%s/%s"%(folder,filename)
         self.highsym_qpts = None
 
         #if the file already exists then we read it
-        if os.path.isfile(filename):
+        if os.path.isfile(self.filename):
             self.read_anaddb()
 
         #reorder eigenvales
@@ -48,7 +48,7 @@ class AnaddbPhonon(Phonon):
         #transform the vectors
         vectors = vectors.reshape((self.nqpoints, self.nphons, self.natoms, 3, 2))
         #normalize the eigenvectors
-        self.eigenvectors = vectors/np.linalg.norm(vectors[0,0])*self.scale
+        self.eigenvectors = vectors/np.linalg.norm(vectors[0,0])
 
         self.chemical_symbols = ["".join(a).strip() for a in self.chemical_symbols]
         self.atom_types       = [self.chemical_symbols[a-1] for a in self.atypes]

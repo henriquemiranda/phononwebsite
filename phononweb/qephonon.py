@@ -9,6 +9,7 @@
 from qepy import *
 from phononweb import *
 import numpy as np
+from math import pi
 
 class QePhonon(Phonon):
     """ Class to read phonons from Quantum Espresso
@@ -17,19 +18,29 @@ class QePhonon(Phonon):
             prefix = prefix of the <prefix>.scf file where the structure is stored
                                the <prefix>.modes file that is the output of the matdyn.x or dynmat.x programs
     """
-    def __init__(self,prefix,name,reps=(3,3,3)):
+    def __init__(self,prefix,name,reps=(3,3,3),folder='.',reorder=True):
         self.prefix = prefix
         self.name = name
         self.reps = reps
+        self.folder = folder
+        self.highsym_qpts = None
+
+        #read
         self.read_atoms()
         self.read_modes()
-        self.highsym_qpts = None
+        c = [[1,0,0],[-0.5,sqrt(3)/2,0],[0,0,1]]
+        self.rec = rec_lat(c)
+        self.qpoints = car_red(self.qpoints,self.rec)
+
+        #reorder eigenvalues
+        if reorder:
+            self.reorder_eigenvalues()
 
     def read_modes(self):
         """
         Function to read the eigenvalues and eigenvectors from Quantum Expresso
         """
-        filename = "%s.modes"%self.prefix
+        filename = "%s/%s.modes"%(self.folder,self.prefix)
         f = open(filename,'r')
         file_list = f.readlines()
         file_str  = "".join(file_list)
@@ -75,7 +86,7 @@ class QePhonon(Phonon):
     def read_atoms(self):
         """ read the data from a quantum espresso input file
         """
-        pwin = PwIn(filename="%s.scf"%self.prefix)
+        pwin = PwIn(filename="%s/%s.scf"%(self.folder,self.prefix))
         self.cell, self.pos, self.atom_types = pwin.get_atoms()
         self.cell = np.array(self.cell)
         self.pos = np.array(self.pos)

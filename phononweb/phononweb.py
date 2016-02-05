@@ -50,6 +50,17 @@ def red_car(red,lat): return np.array(map( lambda coord: coord[0]*lat[0]+coord[1
 def car_red(car,lat): return np.array(map( lambda coord: np.linalg.solve(lat.T,coord), car))
 def map2(f,a):        return [[f(y) for y in x] for x in a] #apply a function to a list of lists
 
+def rec_lat(lat):
+    """
+    Calculate the reciprocal lattice vectors
+    """
+    a1,a2,a3 = lat
+    v = np.dot(a1,np.cross(a2,a3))
+    b1 = np.cross(a2,a3)/v
+    b2 = np.cross(a3,a1)/v
+    b3 = np.cross(a1,a2)/v
+    return np.array([b1,b2,b3])
+
 def estimate_band_connection(prev_eigvecs, eigvecs, prev_band_order):
     """ A function to order the phonon eigenvectors taken from phonopy
     """
@@ -162,7 +173,40 @@ class Phonon():
         ncfile.close()
 
     def get_highsym_qpts(self):
-        return [20,30]
+        """ Iterate over all the qpoints and obtain the high symmetry points as well as the distances between them
+        """
+       
+        #calculate reciprocal lattice
+        rec = rec_lat(self.cell)
+        #calculate qpoints in the reciprocal lattice
+        car_qpoints = red_car(self.qpoints,rec)
+
+        def collinear(a,b,c):
+            d = [[a[0],a[1],1],
+                 [b[0],b[1],1],
+                 [c[0],c[1],1]]
+            return np.isclose(np.linalg.det(d),0,atol=1e-5)
+
+        #iterate over qpoints
+        self.distances = []
+        self.highsym_qpts = []
+        distance = 0
+        for k in range(1,self.nqpoints-1):
+            #calculate distances
+            self.distances.append(distance);
+            
+            step = np.linalg.norm(car_qpoints[k]-car_qpoints[k-1])
+            distance += step
+
+            #detect high symmetry qpoints
+            if not collinear(car_qpoints[k-1],car_qpoints[k],car_qpoints[k+1]):
+                self.highsym_qpts.append(distance)
+        #calculate the last distances
+        self.distances.append(distance);
+        distance += np.linalg.norm(car_qpoints[k+1]-car_qpoints[k])
+        self.distances.append(distance);
+
+        return self.highsym_qpts
 
     def __str__(self):
         text = ""
@@ -177,32 +221,38 @@ class Phonon():
         text += str(self.atomic_numbers)+"\n"
         text += "chemical formula:\n"
         text += self.chemical_formula+"\n"
+        text += "nqpoints:\n"
+        text += str(self.nqpoints)
         return text
 
-    def write_json(self):
+    def write_json(self,prefix=None,folder='.'):
         """ Write a json file to be read by javascript
         """
-        f = open("%s.json"%self.name,"w")
+        if prefix: name = prefix
+        else:      name = self.name
+
+        f = open("%s/%s.json"%(folder,name),"w")
 
         if self.highsym_qpts == None:
             self.get_highsym_qpts()
 
         #create the datastructure to be put on the json file
-        data = {"name":             self.name,
-                "natoms":           self.natoms,
-                "lattice":          self.cell.tolist(),
+        data = {"name":             self.name,                       # name of the material that will be displayed on the website
+                "natoms":           self.natoms,                     # number of atoms
+                "lattice":          self.cell.tolist(),              # lattice vectors (bohr)
                 "atom_types":       self.atom_types,                 # atom type   for each atom in the system (string)
                 "atom_numbers":     self.atom_numbers,               # atom number for each atom in the system (integer)
                 "chemical_symbols": self.chemical_symbols,           # unique atom types   (string) 
                 "atomic_numbers":   self.atomic_numbers.tolist(),    # unique atom numbers (integer)
-                "formula":          self.chemical_formula,
-                "qpoints":          self.qpoints.tolist(),
-                "repetitions":      self.reps, 
-                "atom_pos_car":     red_car(self.pos,self.cell).tolist(),
-                "atom_pos_red":     self.pos.tolist(),
-                "eigenvalues":      self.eigenvalues.tolist(),
-                "highsym_qpts":     self.highsym_qpts,
-                "vectors":          self.eigenvectors.tolist() }
+                "formula":          self.chemical_formula,           # chemical formula
+                "qpoints":          self.qpoints.tolist(),           # list of point in the reciprocal space
+                "repetitions":      self.reps,                       # default value for the repetititions 
+                "atom_pos_car":     red_car(self.pos,self.cell).tolist(), # atomic positions in cartesian coordinates
+                "atom_pos_red":     self.pos.tolist(),                    # atomic positions in reduced coordinates
+                "eigenvalues":      self.eigenvalues.tolist(),            # eigenvalues (in units of cm-1)
+                "distances":        self.distances,                       # list distances between the qpoints 
+                "highsym_qpts":     self.highsym_qpts,                    # list of high symmetry qpoints
+                "vectors":          self.eigenvectors.tolist()}           # eigenvectors
 
         f.write(json.dumps(data))
         f.close()

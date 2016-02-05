@@ -18,24 +18,24 @@ $.ajaxSetup({
     async: false
 });
 
-//class
-Phonon = {
-    k: 0,
-    n: 0,
-    nx: 1,
-    ny: 1,
-    nz: 1,
-    amplitude: 1,
+//Phonon Class
+function Phonon() {
+    var k = 0;
+    var n = 0;
+    var nx = 1;
+    var ny = 1;
+    var nz = 1;
+    var amplitude = 1;
 
-    getRepetitions: function() {
+    this.getRepetitions = function() {
       this.nx = $('#nx').val();
       this.ny = $('#ny').val();
       this.nz = $('#nz').val();
       this.getStructure() //calculate postions
       this.getVibrations() //calculate vibrations
-    },
+    }
 
-    getBondingDistance: function(atoms) {
+    this.getBondingDistance = function(atoms) {
       var combinations = getCombinations( atoms );
       var min = 1e9;
       for (i=0; i<combinations.length; i++ ) {
@@ -48,44 +48,63 @@ Phonon = {
         }
       }
       return min;
-    },
+    }
 
-    getFromFile: function(event) {
-      //check which is which
-      var file_band, file_disp;
+    //find the type of file and call the corresponding function that will read it
+    //currently there are two formats available:
+    //phonopy files (band.yaml and disp.yaml) and a special .json format (description available in ./phononweb/phononweb.py)
+    this.loadCustomFile = function(event) {
+      var band = null;
+      var disp = null;
+      var json = null;
+
+      for (i=0; i<event.target.files.length; i++) {
+        file = event.target.files[i]
+        if (file.name == "disp.yaml")        { disp = file; }
+        if (file.name == "band.yaml")        { band = file; }
+        if (file.name.indexOf(".json") > -1) { json = file; }
+      }
+
+      if      (json)         { this.getFromJsonFile(json);          }
+      else if (band && disp) { this.getFromPhononpyFile(disp,band); }
+      else                   { alert("Ivalid file"); }
+    }
+
+    //disp and band are the content of "disp.yaml" and "band.yaml" files as a string
+    this.getFromPhononpyFile = function(disp,band) {
+      this.k = 0;
+      this.n = 0;
       var disp_reader = new FileReader();
       var band_reader = new FileReader();
       var processedFiles = 0;
       var supercell_lat, rec, lat, nqpoint, npath, phonon, sc_atoms;
       var self = this;
 
-      band_reader.onloadend = function(e) {
-                                            var phononyaml = jsyaml.load(band_reader.result);
+      band_reader.onloadend =
+        function(e) {
+          var phononyaml = jsyaml.load(band_reader.result);
 
-                                            rec = phononyaml['reciprocal_lattice'];
-                                            nqpoint = phononyaml['nqpoint'];
-                                            npath = phononyaml['npath'];
-                                            phonon = phononyaml['phonon'];
+          rec = phononyaml['reciprocal_lattice'];
+          nqpoint = phononyaml['nqpoint'];
+          npath = phononyaml['npath'];
+          phonon = phononyaml['phonon'];
 
-                                            onLoadEndHandler();
-                                          }
+          onLoadEndHandler();
+        };
 
-      disp_reader.onloadend = function(e) {
-                                            var phononyaml = jsyaml.load(disp_reader.result);
+      disp_reader.onloadend =
+        function(e) {
+          var phononyaml = jsyaml.load(disp_reader.result);
 
-                                            sc_atoms = phononyaml['atoms'];
-                                            supercell_lat = phononyaml['lattice'];
+          sc_atoms = phononyaml['atoms'];
+          supercell_lat = phononyaml['lattice'];
 
-                                            onLoadEndHandler();
-                                          }
+          onLoadEndHandler();
+        };
 
       //read the files
-      for (i=0; i<event.target.files.length; i++) {
-        file = event.target.files[i]
-        if (file.name == "disp.yaml") { disp_reader.readAsText(file); }
-        if (file.name == "band.yaml") { band_reader.readAsText(file); }
-        if (file.name.indexOf(".json") > -1) { alert('Json file'); }
-      }
+      disp_reader.readAsText(disp);
+      band_reader.readAsText(band);
 
       function onLoadEndHandler() {
         processedFiles++;
@@ -98,6 +117,9 @@ Phonon = {
           ny = Math.round(vec_norm(supercell_lat[1])/vec_norm(lat[1]));
           nz = Math.round(vec_norm(supercell_lat[2])/vec_norm(lat[2]));
 
+          console.log(supercell_lat);
+          console.log(lat);
+
           //get the atoms inside the unit cell
           var pos,x,y,z,atom_types = [], atom_numbers = [] ;
           var atomic_numbers = {}, pc_atoms_car = [], pc_atoms = [];
@@ -106,9 +128,9 @@ Phonon = {
             pos = sc_atoms[i].position;
 
             //round the components
-            x = Math.round(pos[0]*nx * places)/places;
-            y = Math.round(pos[1]*ny * places)/places;
-            z = Math.round(pos[2]*nz * places)/places;
+            x = pos[0]*nx;
+            y = pos[1]*ny;
+            z = pos[2]*nz;
 
             //get the atoms in the unit cell
             var n=0;
@@ -190,51 +212,103 @@ Phonon = {
           $('#ny').val(self.repetitions[1]);
           $('#nz').val(self.repetitions[2]);
           self.getRepetitions();
-
-          update();
         }
+
+        update();
       }
 
-    },
+    }
 
-    //This function reads the JSON data for the model
-    getModel: function() {
-        self = this;
+    //Read structure from model
+    this.getModel = function() {
+      $.get(folder+'/data.json', this.getFromJsonString, "html" );
+    }
+
+    this.getFromJsonFile = function(file) {
+      var json_reader = new FileReader();
+      self = this;
+
+      json_reader.readAsText(file);
+
+      json_reader.onloadend = function(e) {
+        self.getFromJsonString(json_reader.result);
+        update();
+      };
+    }
+
+    this.getFromJsonString = function(string) {
+      json = JSON.parse(string);
+      this.getFromJson.bind(this)(json);
+    }.bind(this)
+
+    // Read structure data from JSON format
+    // data is a string with the json file.
+    this.getFromJson = function(data) {
         this.k=0;
         this.n=0;
-        this.addatomphase=false;
-        $.getJSON(folder+'/data.json', function(data) {
-            self.name = data["name"];
-            self.natoms = data["natoms"];
-            self.atom_types = data["atom_types"];
-            self.atom_numbers = data["atom_numbers"];
-            self.atomic_numbers = data["atomic_numbers"];
-            self.atom_pos_car = data["atom_pos_car"];
-            self.atom_pos_red = data["atom_pos_red"];
-            self.lat = data["lattice"];
-            self.vec = data["vectors"];
-            self.kpoints = data["kpoints"];
-            self.formula = data["formula"];
-            self.highcharts = data["highcharts"];
-            self.highsym_qpts = data["highsym_qpts"]
-            self.repetitions = data["repetitions"];
-        });
+        this.addatomphase = false;
+
+        this.name = data["name"];
+        this.natoms = data["natoms"];
+        this.atom_types = data["atom_types"];
+        this.atom_numbers = data["atom_numbers"];
+        this.atomic_numbers = data["atomic_numbers"];
+        this.atom_pos_car = data["atom_pos_car"];
+        this.atom_pos_red = data["atom_pos_red"];
+        this.lat = data["lattice"];
+        this.vec = data["vectors"];
+        this.kpoints = data["qpoints"];
+        this.distances = data["distances"];
+        this.formula = data["formula"];
+        this.eigenvalues = data["eigenvalues"];
+        this.repetitions = data["repetitions"];
+
         $('#nx').val(this.repetitions[0]);
         $('#ny').val(this.repetitions[1]);
         $('#nz').val(this.repetitions[2]);
+
         this.getRepetitions();
 
-        //get the bonding distance
-        self.nndist = self.getBondingDistance(this.atom_pos_car);
-        console.log(self.nndist);
-
-        self.qindex = {};
-        for (i=0; i<self.kpoints.length; i++) {
-          self.qindex[i] = i;
+        //get the high symmetry qpoints for highcharts
+        var highsym_qpts;
+        highsym_qpts = data["highsym_qpts"];
+        this.highsym_qpts = [];
+        for ( i=0; i<highsym_qpts.length ; i++ ) {
+          this.highsym_qpts.push({ "value": highsym_qpts[i], "color": 'black', "width": 1 })
         }
-    },
 
-    getStructure: function() {
+        //go through the eigenvalues and create eivals list
+        eivals = this.eigenvalues;
+        var nbands = eivals[0].length;
+        var nqpoints = eivals.length;
+        this.highcharts = [];
+
+        for (n=0; n<nbands; n++) {
+          eig = [];
+          for (k=0; k<nqpoints; k++) {
+            eig.push([this.distances[k],eivals[k][n]]);
+          }
+
+          this.highcharts.push({
+                                  name:  n.toString(),
+                                  color: "#0066FF",
+                                  marker: { radius: 2,
+                                            symbol: "circle"},
+                                  data: eig
+                                });
+        }
+
+        //get the bonding distance
+        this.nndist = this.getBondingDistance(this.atom_pos_car);
+
+        //map qpoint to distance
+        this.qindex = {};
+        for (i=0; i<this.kpoints.length; i++) {
+          this.qindex[this.distances[i]] = i;
+        }
+    }
+
+    this.getStructure = function() {
  		  var i,j;
       var x,y,z;
       var lat = this.lat;
@@ -261,7 +335,7 @@ Phonon = {
       return atoms;
     },
 
-    getVibrations: function() {
+    this.getVibrations = function() {
       var i,j,n=0;
       var veckn = this.vec[this.k][this.n];
       var vibrations = [];
@@ -270,14 +344,17 @@ Phonon = {
 
       //additional phase in case necessary
       var atom_phase = []
+      console.log(kpt, this.addatomphase);
       if (this.addatomphase) {
         for (i=0;i<this.natoms;i++) {
-            atom_phase.push(kpt[0]*this.atom_pos_red[i][0] + kpt[1]*this.atom_pos_red[i][1] + kpt[2]*this.atom_pos_red[i][2]);
+          phase = kpt[0]*this.atom_pos_red[i][0] + kpt[1]*this.atom_pos_red[i][1] + kpt[2]*this.atom_pos_red[i][2]
+          atom_phase.push(phase);
+          console.log(this.atom_pos_red[i],phase);
         }
       }
       else {
         for (i=0;i<this.natoms;i++) {
-            atom_phase.push(0);
+          atom_phase.push(0);
         }
       }
 
@@ -302,9 +379,9 @@ Phonon = {
 
       this.vibrations = vibrations;
       return vibrations;
-    },
+    }
 
-    exportXSF: function () {
+    this.exportXSF = function () {
       string = "CRYSTAL\n"
       string += "PRIMVEC\n"
 
@@ -336,9 +413,9 @@ Phonon = {
       element.click();
       document.body.removeChild(element);
 
-    },
+    }
 
-    exportPOSCAR: function () {
+    this.exportPOSCAR = function () {
       //deep copy
       var atoms = jQuery.extend(true, [], this.atoms);
       var counter = {};
@@ -397,9 +474,9 @@ Phonon = {
       element.click();
       document.body.removeChild(element);
 
-    },
+    }
 
-    updateHighcharts: function(applet) {
+    this.updateHighcharts = function(self) { return function(applet) {
       qindex = this.qindex;
 
       //function to set the minimum of the y axis as found in: http://stackoverflow.com/questions/16417124/set-highcharts-y-axis-min-value-to-0-unless-there-is-negative-data
@@ -445,7 +522,6 @@ Phonon = {
                   point: { events: {
                        click: function(event) {
                                   p.k = qindex[this.x];
-                                  console.log(this.x, qindex[this.x]);
                                   p.n = this.series.name;
                                   p.getVibrations();
                                   v.updateObjects(p);
@@ -458,7 +534,6 @@ Phonon = {
           series: []
       };
 
-
       HighchartsOptions.series = this.highcharts;
       HighchartsOptions.xAxis.plotLines = this.highsym_qpts;
       HighchartsOptions.yAxis.plotLines = [{
@@ -467,16 +542,15 @@ Phonon = {
           value: 0
       }];
       $('#highcharts').highcharts(HighchartsOptions);
-    },
+    }}(this)
 
-
-    updatePage: function() {
+    this.updatePage = function() {
         //lattice vectors table
         var i, j;
         for (i=0;i<3;i++) {
             for (j=0;j<3;j++) {
               //round lattice values
-              $('#uc_'+i+j).html( Math.round(this.lat[i][j]*1000)/1000 );
+              $('#uc_'+i+j).html( this.lat[i][j].toPrecision(5) );
             }
         }
 
@@ -491,15 +565,14 @@ Phonon = {
             $('#atompos').append('<tr></tr>');
             $('#atompos tr:last').append('<td class="ap">'+this.atom_types[i]+'</td>');
             for (j=0;j<3;j++) {
-                $('#atompos tr:last').append('<td>'+pos[i][j]+'</td>');
+                $('#atompos tr:last').append('<td>'+pos[i][j].toFixed(4)+'</td>');
             }
         }
 
         //update title
         $('#t1').html(this.name);
     }
-
-};
+}
 
 function updateAll() {
     p.getModel();
@@ -509,11 +582,10 @@ function updateAll() {
 }
 
 function update() {
-    p.name = "Custom File"
     p.updateHighcharts();
     p.updatePage();
     v.updateObjects(p);
-    v.animate();
+    //v.animate();
 }
 
 function updateMenu() {
@@ -531,10 +603,10 @@ function updateMenu() {
 
 $(document).ready(function(){
 
-    p = Phonon;
+    p = new Phonon();
     v = VibCrystal;
 
-    $('#file-input')[0].addEventListener('change', p.getFromFile.bind(p), false);
+    $('#file-input')[0].addEventListener('change', p.loadCustomFile.bind(p), false);
     $('#file-input')[0].addEventListener('click', function() { this.value = '';}, false);
     updateMenu();
 
@@ -542,10 +614,8 @@ $(document).ready(function(){
 
     if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
     v.init($('#vibcrystal'),p);
-    v.animate();
 
-    p.updateHighcharts();
-    p.updatePage();
+    update();
 
     //jquery to make an action once you change the number of repetitions
     $(".input-rep").keyup(function(event){
@@ -555,7 +625,5 @@ $(document).ready(function(){
             v.updateObjects(p);
         }
     });
-
-
 
 });
