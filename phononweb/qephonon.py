@@ -78,7 +78,7 @@ class QePhonon(Phonon):
 
         self.nqpoints     = len(qpt)
         self.nphons       = nphons
-        self.eigenvalues  = eig*eV/hartree_cm1
+        self.eigenvalues  = eig#*eV/hartree_cm1
         self.eigenvectors = vec.view(dtype=float).reshape([self.nqpoints,nphons,nphons,2])
         self.qpoints      = qpt
         return self.eigenvalues, self.eigenvectors, self.qpoints
