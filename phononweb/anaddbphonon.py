@@ -12,12 +12,12 @@ import os
 import numpy as np
 
 class AnaddbPhonon(Phonon):
-    def __init__(self,filename,name,reps=(3,3,3),reorder=True,folder='.'):
+    def __init__(self,filename,name,reps=(3,3,3),reorder=True,highsym_qpts=None,folder='.'):
         self.reps = reps
         self.name = name
         self.folder = folder
         self.filename = "%s/%s"%(folder,filename)
-        self.highsym_qpts = None
+        self.highsym_qpts = highsym_qpts
 
         #if the file already exists then we read it
         if os.path.isfile(self.filename):
@@ -26,6 +26,7 @@ class AnaddbPhonon(Phonon):
         #reorder eigenvales
         if reorder:
             self.reorder_eigenvalues()
+        self.get_distances_qpts()
 
     def read_anaddb(self):
         """ read the netcdf file that results form anaddb

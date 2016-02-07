@@ -18,12 +18,12 @@ class QePhonon(Phonon):
             prefix = prefix of the <prefix>.scf file where the structure is stored
                                the <prefix>.modes file that is the output of the matdyn.x or dynmat.x programs
     """
-    def __init__(self,prefix,name,reps=(3,3,3),folder='.',reorder=True):
+    def __init__(self,prefix,name,reps=(3,3,3),folder='.',highsym_qpts=None,reorder=True):
         self.prefix = prefix
         self.name = name
         self.reps = reps
         self.folder = folder
-        self.highsym_qpts = None
+        self.highsym_qpts = highsym_qpts
 
         #read
         self.read_atoms()
@@ -35,6 +35,7 @@ class QePhonon(Phonon):
         #reorder eigenvalues
         if reorder:
             self.reorder_eigenvalues()
+        self.get_distances_qpts()
 
     def read_modes(self):
         """

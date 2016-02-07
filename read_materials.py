@@ -25,22 +25,25 @@
 from phononweb import *
 
 ana = 'anaddb.out_PHBST.nc'
-material_list = { 
-"graphene":           [ AnaddbPhonon,     ana, [ 5, 5, 1], "Graphene"],
-"mos2_bulk":		  [ AnaddbPhonon,     ana, [ 5, 5, 1], "Bulk MoS<sub>2</sub>"],
-"mos2_singlelayer":	  [ AnaddbPhonon,     ana, [ 5, 5, 1], "Layer MoS<sub>2</sub>"],
-"mote2_singlelayer":  [ QePhonon,     'mote2', [ 5, 5, 1], "Layer MoTe<sub>2</sub>"],
-"mote2_bulk":         [ QePhonon,     'mote2', [ 5, 5, 1], "Bulk MoTe<sub>2</sub>"]}
+hexagonal = [(0,'Gamma'),(20,'M'),(30,'K'),(50,'Gamma')]
+material_list = {
+"graphene":           [ AnaddbPhonon,     ana, hexagonal, [ 5, 5, 1], "Graphene"],
+"mos2_bulk":		  [ AnaddbPhonon,     ana, hexagonal, [ 5, 5, 1], "Bulk MoS<sub>2</sub>"],
+"mos2_singlelayer":	  [ AnaddbPhonon,     ana, hexagonal, [ 5, 5, 1], "Layer MoS<sub>2</sub>"],
+"mote2_singlelayer":  [ QePhonon,     'mote2', hexagonal, [ 5, 5, 1], "Layer MoTe<sub>2</sub>"],
+"mote2_bulk":         [ QePhonon,     'mote2', hexagonal, [ 5, 5, 1], "Bulk MoTe<sub>2</sub>"]}
         
 #create the models file
 models = {"nmodels": len(material_list),
           "models": []}
 
+separator = "#"*50+"\n"
+
 #create the data.json files
 for folder in material_list.keys():
-    reader, filename, reps, name = material_list[folder]
-    print "#"*50+"\n",name+"\n","#"*50
-    m = reader(filename,name,reps=reps,folder=folder)
+    reader, filename, highsym_qpts, reps, name = material_list[folder]
+    print separator,"%s\n"%name,separator
+    m = reader(filename,name,reps=reps,folder=folder,highsym_qpts=highsym_qpts)
     m.write_json(prefix='data', folder=folder)
     print m, "\n"
         

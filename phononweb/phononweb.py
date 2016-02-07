@@ -172,15 +172,30 @@ class Phonon():
 
         ncfile.close()
 
-    def get_highsym_qpts(self):
-        """ Iterate over all the qpoints and obtain the high symmetry points as well as the distances between them
-        """
-       
+    def get_distances_qpts(self):
+
         #calculate reciprocal lattice
         rec = rec_lat(self.cell)
         #calculate qpoints in the reciprocal lattice
         car_qpoints = red_car(self.qpoints,rec)
 
+        self.distances = []
+        distance = 0
+        #iterate over qpoints
+        for k in range(1,self.nqpoints):
+            self.distances.append(distance);
+
+            #calculate distances
+            step = np.linalg.norm(car_qpoints[k]-car_qpoints[k-1])
+            distance += step
+
+        #add the last distances
+        self.distances.append(distance)
+
+    def get_highsym_qpts(self):
+        """ Iterate over all the qpoints and obtain the high symmetry points as well as the distances between them
+        """
+       
         def collinear(a,b,c):
             d = [[a[0],a[1],1],
                  [b[0],b[1],1],
@@ -188,23 +203,12 @@ class Phonon():
             return np.isclose(np.linalg.det(d),0,atol=1e-5)
 
         #iterate over qpoints
-        self.distances = []
+        qpoints = self.qpoints;
         self.highsym_qpts = []
-        distance = 0
         for k in range(1,self.nqpoints-1):
-            #calculate distances
-            self.distances.append(distance);
-            
-            step = np.linalg.norm(car_qpoints[k]-car_qpoints[k-1])
-            distance += step
-
             #detect high symmetry qpoints
-            if not collinear(car_qpoints[k-1],car_qpoints[k],car_qpoints[k+1]):
-                self.highsym_qpts.append(distance)
-        #calculate the last distances
-        self.distances.append(distance);
-        distance += np.linalg.norm(car_qpoints[k+1]-car_qpoints[k])
-        self.distances.append(distance);
+            if not collinear(qpoints[k-1],qpoints[k],qpoints[k+1]):
+                self.highsym_qpts.append((k,''))
 
         return self.highsym_qpts
 

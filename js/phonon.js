@@ -77,7 +77,7 @@ function Phonon() {
       var disp_reader = new FileReader();
       var band_reader = new FileReader();
       var processedFiles = 0;
-      var supercell_lat, rec, lat, nqpoint, npath, phonon, sc_atoms;
+      var supercell_lat, rec, lat, nqpoint, npath, phonon, sc_atoms, segment_nqpoint;
       var self = this;
 
       band_reader.onloadend =
@@ -88,6 +88,15 @@ function Phonon() {
           nqpoint = phononyaml['nqpoint'];
           npath = phononyaml['npath'];
           phonon = phononyaml['phonon'];
+          if (phononyaml['segment_nqpoint']) {
+            segment_nqpoint = phononyaml['segment_nqpoint'];
+          }
+          else {
+            segment_nqpoint = []
+            for (i=0; i<npath; i++) {
+              segment_nqpoint.push(nqpoint/npath);
+            }
+          }
 
           onLoadEndHandler();
         };
@@ -116,9 +125,6 @@ function Phonon() {
           nx = Math.round(vec_norm(supercell_lat[0])/vec_norm(lat[0]));
           ny = Math.round(vec_norm(supercell_lat[1])/vec_norm(lat[1]));
           nz = Math.round(vec_norm(supercell_lat[2])/vec_norm(lat[2]));
-
-          console.log(supercell_lat);
-          console.log(lat);
 
           //get the atoms inside the unit cell
           var pos,x,y,z,atom_types = [], atom_numbers = [] ;
@@ -150,26 +156,27 @@ function Phonon() {
           //get the phonon dispersion
           var kpoints = [], eivals, eivecs = [];
           var nbands = self.natoms*3;
-          var n, phononi, phononiband;
+          var n, p, phononi, phononiband;
 
-          var nqpointperpath = nqpoint/npath, p, index;
-          var highcharts = [], highsym_qpts = [];
+          var highcharts = [];
+          self.highsym_qpts = [];
           self.qindex = {};
+          var qpoint = 0;
           for (p=0; p<npath; p++) {
+
             //clean eivals array
             eivals = [];
             for (i=0; i<nbands; i++) {
               eivals.push([]);
             }
 
-            //vertical lines
-            if (p != 0) {
-              highsym_qpts.push({ "value": phononi['distance'], "color": 'black', "width": 1 });
-            }
-
-            for (i=0; i<nqpointperpath; i++) {
-              index = p*nqpointperpath+i;
-              phononi = phonon[index];
+            for (i=0; i<segment_nqpoint[p]; i++) {
+              //check if a label is present
+              phononi = phonon[qpoint+i];
+              if (phononi['label']) {
+                self.highsym_qpts[phononi['distance']] = phononi['label'];
+              }
+              self.qindex[phononi['distance']] = kpoints.length;
               kpoints.push(phononi['q-position']);
 
               //create bands
@@ -177,11 +184,12 @@ function Phonon() {
               eivec = [];
               for (n=0; n<nbands; n++) {
                 eivals[n].push([phononi['distance'],phononiband[n]['frequency']*thz2ev]);
-                self.qindex[ phononi['distance'] ] = index-p;
                 eivec.push(phononiband[n]['eigenvector']);
               }
               eivecs.push(eivec);
             }
+
+            qpoint+=segment_nqpoint[p];
 
             for (i=0; i<nbands; i++) {
               highcharts.push({
@@ -205,7 +213,6 @@ function Phonon() {
           self.kpoints = kpoints;
           self.formula = atom_types.join('');
           self.highcharts = highcharts;
-          self.highsym_qpts = highsym_qpts;
           self.repetitions = [nx,ny,nz];
 
           $('#nx').val(self.repetitions[0]);
@@ -263,19 +270,25 @@ function Phonon() {
         this.eigenvalues = data["eigenvalues"];
         this.repetitions = data["repetitions"];
 
+        //get qindex
+        this.qindex = {};
+        for (i=0; i<this.distances.length; i++) {
+          this.qindex[this.distances[i]] = i;
+        }
+
+        //get high symmetry qpoints
+        this.highsym_qpts = {}
+        //"highsym_qpts":[[0,'Gamma'],[20,'M'],[30,'K'],[50,'Gamma']];
+        for (i=0; i<data["highsym_qpts"].length; i++) {
+          var dist = this.distances[data["highsym_qpts"][i][0]]
+          this.highsym_qpts[dist] = data["highsym_qpts"][i][1];
+        }
+
         $('#nx').val(this.repetitions[0]);
         $('#ny').val(this.repetitions[1]);
         $('#nz').val(this.repetitions[2]);
 
         this.getRepetitions();
-
-        //get the high symmetry qpoints for highcharts
-        var highsym_qpts;
-        highsym_qpts = data["highsym_qpts"];
-        this.highsym_qpts = [];
-        for ( i=0; i<highsym_qpts.length ; i++ ) {
-          this.highsym_qpts.push({ "value": highsym_qpts[i], "color": 'black', "width": 1 })
-        }
 
         //go through the eigenvalues and create eivals list
         eivals = this.eigenvalues;
@@ -300,12 +313,6 @@ function Phonon() {
 
         //get the bonding distance
         this.nndist = this.getBondingDistance(this.atom_pos_car);
-
-        //map qpoint to distance
-        this.qindex = {};
-        for (i=0; i<this.kpoints.length; i++) {
-          this.qindex[this.distances[i]] = i;
-        }
     }
 
     this.getStructure = function() {
@@ -344,12 +351,10 @@ function Phonon() {
 
       //additional phase in case necessary
       var atom_phase = []
-      console.log(kpt, this.addatomphase);
       if (this.addatomphase) {
         for (i=0;i<this.natoms;i++) {
           phase = kpt[0]*this.atom_pos_red[i][0] + kpt[1]*this.atom_pos_red[i][1] + kpt[2]*this.atom_pos_red[i][2]
           atom_phase.push(phase);
-          console.log(this.atom_pos_red[i],phase);
         }
       }
       else {
@@ -487,7 +492,7 @@ function Phonon() {
         // Sets the min value for the chart
         var minVal = 0;
 
-        if (ex.dataMin < 0) {
+        if (ex.dataMin < -1) {
           minVal = ex.dataMin;
         }
 
@@ -505,7 +510,17 @@ function Phonon() {
                    minorGridLineWidth: 0,
                    lineColor: 'transparent',
                    labels: {
-                     enabled: false
+                     style: { fontSize:'20px' },
+                     formatter: function() {
+                        if ( self.highsym_qpts[this.value] ) {
+                          var label = self.highsym_qpts[this.value];
+                          if (label.indexOf('Gamma') > -1) {
+                            label = "Γ";
+                          }
+                          return label;
+                        }
+                        return ''
+                     }
                    },
                    minorTickLength: 0,
                    tickLength: 0
@@ -522,6 +537,7 @@ function Phonon() {
                   point: { events: {
                        click: function(event) {
                                   p.k = qindex[this.x];
+                                  console.log(this.x,p.k);
                                   p.n = this.series.name;
                                   p.getVibrations();
                                   v.updateObjects(p);
@@ -534,13 +550,24 @@ function Phonon() {
           series: []
       };
 
+      //get positions of high symmetry qpoints
+      var ticks = [];
+      for(var k in this.highsym_qpts) ticks.push(k);
+
+      //get the high symmetry qpoints for highcharts
+      plotLines = []
+      for ( i=0; i<ticks.length ; i++ ) {
+        plotLines.push({ value: ticks[i],
+                         color: '#000000',
+                         width: 2 })
+      }
+
       HighchartsOptions.series = this.highcharts;
-      HighchartsOptions.xAxis.plotLines = this.highsym_qpts;
-      HighchartsOptions.yAxis.plotLines = [{
-          color: '#000000',
-          width: 2,
-          value: 0
-      }];
+      HighchartsOptions.xAxis.tickPositions = ticks;
+      HighchartsOptions.xAxis.plotLines = plotLines;
+      HighchartsOptions.yAxis.plotLines = [{ color: '#000000',
+                                             width: 2,
+                                             value: 0 }];
       $('#highcharts').highcharts(HighchartsOptions);
     }}(this)
 
