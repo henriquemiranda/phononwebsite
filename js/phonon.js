@@ -162,6 +162,17 @@ function Phonon() {
           self.highsym_qpts = [];
           self.qindex = {};
           var qpoint = 0;
+
+          var check_high_sym_qpoint = function(phononi) {
+            //check if a label is present
+            if (phononi['label']) {
+              self.highsym_qpts[phononi['distance']] = phononi['label'];
+            }
+            else {
+              self.highsym_qpts[phononi['distance']] = '';
+            }
+          }
+
           for (p=0; p<npath; p++) {
 
             //clean eivals array
@@ -170,12 +181,11 @@ function Phonon() {
               eivals.push([]);
             }
 
+            check_high_sym_qpoint(phonon[qpoint]);
+
             for (i=0; i<segment_nqpoint[p]; i++) {
-              //check if a label is present
               phononi = phonon[qpoint+i];
-              if (phononi['label']) {
-                self.highsym_qpts[phononi['distance']] = phononi['label'];
-              }
+
               self.qindex[phononi['distance']] = kpoints.length;
               kpoints.push(phononi['q-position']);
 
@@ -188,6 +198,7 @@ function Phonon() {
               }
               eivecs.push(eivec);
             }
+            check_high_sym_qpoint(phononi);
 
             qpoint+=segment_nqpoint[p];
 
