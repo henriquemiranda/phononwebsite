@@ -1,13 +1,19 @@
 nqpoint: 30     
 npath: 3      
+segment_nqpoint:
+- 10
+- 10
+- 10
 natom: 2      
 reciprocal_lattice:
 - [   0.23007705,   0.13283504,   0.00000000 ] # a*
 - [   0.00000000,   0.26567009,   0.00000000 ] # b*
 - [   0.00000000,   0.00000000,   0.03527848 ] # c*
+
 phonon:
 - q-position: [    0.0000000,    0.0000000,    0.0000000 ]
   distance:    0.0000000
+  label: '$\Gamma$'
   band:
   - # 1
     frequency:   -0.0011576799
@@ -638,6 +644,7 @@ phonon:
 
 - q-position: [    0.5000000,    0.0000000,    0.0000000 ]
   distance:    0.1328350
+  label: 'M'
   band:
   - # 1
     frequency:   38.3045254954
@@ -708,6 +715,7 @@ phonon:
 
 - q-position: [    0.5000000,    0.0000000,    0.0000000 ]
   distance:    0.1328350
+  label: 'M'
   band:
   - # 1
     frequency:   12.4314721778
@@ -1338,6 +1346,7 @@ phonon:
 
 - q-position: [    0.6666667,   -0.3333333,    0.0000000 ]
   distance:    0.2095274
+  label: 'K'
   band:
   - # 1
     frequency:   13.2785407326
@@ -1408,6 +1417,7 @@ phonon:
 
 - q-position: [    0.6666667,   -0.3333333,    0.0000000 ]
   distance:    0.2095274
+  label: 'K'
   band:
   - # 1
     frequency:   13.2785407326
@@ -2038,6 +2048,7 @@ phonon:
 
 - q-position: [    0.0000000,    0.0000000,    0.0000000 ]
   distance:    0.3629121
+  label: '$\Gamma$'
   band:
   - # 1
     frequency:    0.0008691503
