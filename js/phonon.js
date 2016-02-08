@@ -548,7 +548,6 @@ function Phonon() {
                   point: { events: {
                        click: function(event) {
                                   p.k = qindex[this.x];
-                                  console.log(this.x,p.k);
                                   p.n = this.series.name;
                                   p.getVibrations();
                                   v.updateObjects(p);
