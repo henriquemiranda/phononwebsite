@@ -37,6 +37,9 @@
 
   <script src="js/mat.js"></script>
   <script src="js/atomic_data.js"></script>
+	<script src="js/gif.js"></script>
+	<script src="js/gif.worker.js"></script>
+	<script src="js/CCapture.min.js"></script>
 	<script src="js/vibcrystal.js"></script>
 	<script src="js/phonon.js"></script>
 
@@ -128,10 +131,15 @@
           <button type="button" onclick="v.setCameraDirection('z')">z</button>
       </div>
 			<div>
-      <h3>Export:</h3>
+      <h3>Export displacement:</h3>
 					Phase (°): <input id="phase" type="number" value="0.0" min="0.0" max="360.0" step ="45">
           <button type="button" onclick="p.exportXSF()">xsf</button>
 					<button type="button" onclick="p.exportPOSCAR()">POSCAR</button>
+      </div>
+			<div>
+			<h3>Export movie:</h3>
+					<button type="button" onclick="console.log(v);v.capture()">gif</button>
+					<div id="progress"></div>
       </div>
 		</div>
 		<div class="flex-vibcrystal"><div id="vibcrystal"></div></div>

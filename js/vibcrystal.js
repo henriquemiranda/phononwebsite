@@ -28,6 +28,7 @@ VibCrystal = {
 
     //options
     amplitude: 1.0,
+    fps: 30,
 
     /* Initialize the phonon animation */
     init: function(container,phonon) {
@@ -35,6 +36,7 @@ VibCrystal = {
         this.container = container;
         var container0 = container.get(0);
         this.dimensions = this.getContainerDimensions();
+        this.capturing = false;
 
         //obtain information from phonon structure
         this.getAtypes(phonon);
@@ -73,6 +75,7 @@ VibCrystal = {
         this.renderer.domElement.className = "vibcrystal-class";
 
         container0.appendChild( this.renderer.domElement );
+        this.canvas = this.renderer.domElement;
 
         this.stats = new Stats();
         //this.stats.domElement.style.position = 'relative';
@@ -83,6 +86,36 @@ VibCrystal = {
         window.addEventListener( 'resize', this.onWindowResize.bind(this), false );
 
         this.render();
+    },
+
+    capture: function() {
+      var progress = document.getElementById( 'progress' );
+      capturer = new CCapture( { format: 'gif',
+                                 workersPath: 'js/',
+                                 verbose: false,
+                                 framerate: this.fps,
+                                 onProgress: function( p ) { progress.style.width = ( p * 100 ) + '%' }
+                                 } );
+      this.capturing = true;
+      this.frame=0;
+      capturer.start();
+
+      this.end = function(){
+        capturer.stop();
+        this.capture = false;
+        capturer.save( function( url ) {
+          var element = document.createElement('a');
+          element.setAttribute('href', url);
+          element.setAttribute('download', p.k.toString()+'_'+p.n.toString()+'.gif');
+          element.style.display = 'none';
+          document.body.appendChild(element);
+          element.click();
+          document.body.removeChild(element);
+
+          //remove progress bar
+          progress.style.width = 0;
+          } );
+      };
     },
 
     setCameraDirection: function(direction) {
@@ -282,6 +315,15 @@ VibCrystal = {
         this.renderer.render( this.scene, this.camera );
         this.stats.update();
 
+        //if capturing then capture
+
+        if (this.capturing) {
+          this.frame++;
+          capturer.capture( this.canvas );
+          if (this.frame == this.fps) {
+            this.end();
+          }
+        };
     }
 }
 

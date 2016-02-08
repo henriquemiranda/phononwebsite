@@ -46,6 +46,8 @@ Features
 ========
 You can export the lattice distorted according to the currently selected phonon mode to a `.xsf` or `POSCAR` file.
 The `phase` and `amplitude` sliders define a complex number that is multiplied by the phonon eigenvectors to obtain the displacements.
+You can export a animated gif with a particular mode using the `gif` button in the Export movie section.
+You are free to use the images in your publications/presentations as long as you cite this work (a link to the website is enough).
 
 Authors
 =======
@@ -81,6 +83,8 @@ Software used for this project
 
 - The WebGL visualization is made using `Three.js`: <http://threejs.org/>
 - The phonon dispersion is plotted using `highcharts`: <http://www.highcharts.com/>  
+- The export animation is provided using `CCapture.js`: <https://github.com/spite/ccapture.js>
+- The gif animation is uses `gif.js`: <http://jnordberg.github.io/gif.js/>
 
 - `Abinit`: <http://www.abinit.org/>
 - `Quantum Espresso`: <http://www.quantum-espresso.org/>
