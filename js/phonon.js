@@ -70,46 +70,36 @@ function Phonon() {
       else                   { alert("Ivalid file"); }
     }
 
-    //disp and band are the content of "disp.yaml" and "band.yaml" files as a string
+    this.loadURL = function(url_vars) {
+      var band = null;
+      var disp = null;
+      var json = null;
+
+      for (var key in url_vars) {
+        if ( key == "disp.yaml" ) { disp = $.get(url_vars[key]).responseText; }
+        if ( key == "band.yaml" ) { band = $.get(url_vars[key]).responseText; }
+        if ( key == "json" )      { json = $.get(url_vars[key]).responseText; }
+        if ( key == "name" )      { $('#t1').html(url_vars[key]); }
+        if ( key == "url" )       {
+          band = $.get(url_vars[key]+'/band.yaml').responseText;
+          disp = $.get(url_vars[key]+'/disp.yaml').responseText;
+        }
+      }
+
+      if      (json)         { this.getFromJsonString(json);          }
+      else if (band && disp) { this.getFromPhononpyString(disp,band); }
+      else                   { alert("Ivalid url"); }
+    }
+
+    //disp and band are the content of "disp.yaml" and "band.yaml" files as a file
     this.getFromPhononpyFile = function(disp,band) {
-      this.k = 0;
-      this.n = 0;
       var disp_reader = new FileReader();
       var band_reader = new FileReader();
       var processedFiles = 0;
-      var supercell_lat, rec, lat, nqpoint, npath, phonon, sc_atoms, segment_nqpoint;
-      var self = this;
+      self = this;
 
-      band_reader.onloadend =
-        function(e) {
-          var phononyaml = jsyaml.load(band_reader.result);
-
-          rec = phononyaml['reciprocal_lattice'];
-          nqpoint = phononyaml['nqpoint'];
-          npath = phononyaml['npath'];
-          phonon = phononyaml['phonon'];
-          if (phononyaml['segment_nqpoint']) {
-            segment_nqpoint = phononyaml['segment_nqpoint'];
-          }
-          else {
-            segment_nqpoint = []
-            for (i=0; i<npath; i++) {
-              segment_nqpoint.push(nqpoint/npath);
-            }
-          }
-
-          onLoadEndHandler();
-        };
-
-      disp_reader.onloadend =
-        function(e) {
-          var phononyaml = jsyaml.load(disp_reader.result);
-
-          sc_atoms = phononyaml['atoms'];
-          supercell_lat = phononyaml['lattice'];
-
-          onLoadEndHandler();
-        };
+      band_reader.onloadend = onLoadEndHandler;
+      disp_reader.onloadend = onLoadEndHandler;
 
       //read the files
       disp_reader.readAsText(disp);
@@ -118,124 +108,151 @@ function Phonon() {
       function onLoadEndHandler() {
         processedFiles++;
         if(processedFiles == 2){
-          //calculate the lattice
-          lat = matrix_transpose(matrix_inverse(rec));
-
-          //get the number of repetitions
-          nx = Math.round(vec_norm(supercell_lat[0])/vec_norm(lat[0]));
-          ny = Math.round(vec_norm(supercell_lat[1])/vec_norm(lat[1]));
-          nz = Math.round(vec_norm(supercell_lat[2])/vec_norm(lat[2]));
-
-          //get the atoms inside the unit cell
-          var pos,x,y,z,atom_types = [], atom_numbers = [] ;
-          var atomic_numbers = {}, pc_atoms_car = [], pc_atoms = [];
-          var places = 100000; //number of decimal places
-          for (i=0; i<sc_atoms.length; i++) {
-            pos = sc_atoms[i].position;
-
-            //round the components
-            x = pos[0]*nx;
-            y = pos[1]*ny;
-            z = pos[2]*nz;
-
-            //get the atoms in the unit cell
-            var n=0;
-            if (( x>=0 && x<1) && ( y>=0 && y<1) && ( z>=0 && z<1)) {
-              symbol = sc_atoms[i]['symbol'];
-              atom_numbers.push(atomic_number[sc_atoms[i]['symbol']]);
-              atom_types.push(sc_atoms[i]['symbol']);
-              pc_atoms.push([x,y,z]);
-              pc_atoms_car.push(red_car([x,y,z],lat));
-            }
-          }
-          self.natoms = pc_atoms.length;
-
-          //get the bonding distance
-          self.nndist = self.getBondingDistance(sc_atoms.map(function(x){ return red_car(x.position,supercell_lat) }));
-
-          //get the phonon dispersion
-          var kpoints = [], eivals, eivecs = [];
-          var nbands = self.natoms*3;
-          var n, p, phononi, phononiband;
-
-          var highcharts = [];
-          self.highsym_qpts = [];
-          self.qindex = {};
-          var qpoint = 0;
-
-          var check_high_sym_qpoint = function(phononi) {
-            //check if a label is present
-            if (phononi['label']) {
-              self.highsym_qpts[phononi['distance']] = phononi['label'];
-            }
-            else {
-              self.highsym_qpts[phononi['distance']] = '';
-            }
-          }
-
-          for (p=0; p<npath; p++) {
-
-            //clean eivals array
-            eivals = [];
-            for (i=0; i<nbands; i++) {
-              eivals.push([]);
-            }
-
-            check_high_sym_qpoint(phonon[qpoint]);
-
-            for (i=0; i<segment_nqpoint[p]; i++) {
-              phononi = phonon[qpoint+i];
-
-              self.qindex[phononi['distance']] = kpoints.length;
-              kpoints.push(phononi['q-position']);
-
-              //create bands
-              phononiband = phononi['band'];
-              eivec = [];
-              for (n=0; n<nbands; n++) {
-                eivals[n].push([phononi['distance'],phononiband[n]['frequency']*thz2ev]);
-                eivec.push(phononiband[n]['eigenvector']);
-              }
-              eivecs.push(eivec);
-            }
-            check_high_sym_qpoint(phononi);
-
-            qpoint+=segment_nqpoint[p];
-
-            for (i=0; i<nbands; i++) {
-              highcharts.push({
-                                name:  i.toString(),
-                                color: "#0066FF",
-                                marker: { radius: 2,
-                                          symbol: "circle"},
-                                data: eivals[i]
-                              });
-            }
-          }
-
-          self.addatomphase = true;
-          self.atom_types = atom_types;
-          self.atom_numbers = atom_numbers;
-          self.atomic_numbers = unique(atom_numbers).map(function(x) { return parseInt(x)});
-          self.atom_pos_car = pc_atoms_car;
-          self.atom_pos_red = pc_atoms;
-          self.lat = lat;
-          self.vec = eivecs;
-          self.kpoints = kpoints;
-          self.formula = atom_types.join('');
-          self.highcharts = highcharts;
-          self.repetitions = [nx,ny,nz];
-
-          $('#nx').val(self.repetitions[0]);
-          $('#ny').val(self.repetitions[1]);
-          $('#nz').val(self.repetitions[2]);
-          self.getRepetitions();
+          self.getFromPhononpyString(disp_reader.result,band_reader.result);
+          update();
         }
+      }
+    },
 
-        update();
+    //disp and band are the content of "disp.yaml" and "band.yaml" files as a string
+    this.getFromPhononpyString = function(disp,band) {
+      this.k = 0;
+      this.n = 0;
+      var supercell_lat, rec, lat, nqpoint, npath, phonon, sc_atoms, segment_nqpoint;
+
+      //read the yaml files
+      var phononyaml = jsyaml.load(disp);
+      sc_atoms = phononyaml['atoms'];
+      supercell_lat = phononyaml['lattice'];
+
+      var phononyaml = jsyaml.load(band);
+      rec = phononyaml['reciprocal_lattice'];
+      nqpoint = phononyaml['nqpoint'];
+      npath = phononyaml['npath'];
+      phonon = phononyaml['phonon'];
+      if (phononyaml['segment_nqpoint']) {
+        segment_nqpoint = phononyaml['segment_nqpoint'];
+      }
+      else {
+        segment_nqpoint = []
+        for (i=0; i<npath; i++) {
+          segment_nqpoint.push(nqpoint/npath);
+        }
       }
 
-    }
+      //calculate the lattice
+      lat = matrix_transpose(matrix_inverse(rec));
+
+      //get the number of repetitions
+      nx = Math.round(vec_norm(supercell_lat[0])/vec_norm(lat[0]));
+      ny = Math.round(vec_norm(supercell_lat[1])/vec_norm(lat[1]));
+      nz = Math.round(vec_norm(supercell_lat[2])/vec_norm(lat[2]));
+
+      //get the atoms inside the unit cell
+      var pos,x,y,z,atom_types = [], atom_numbers = [] ;
+      var atomic_numbers = {}, pc_atoms_car = [], pc_atoms = [];
+      var places = 100000; //number of decimal places
+      for (i=0; i<sc_atoms.length; i++) {
+        pos = sc_atoms[i].position;
+
+        //round the components
+        x = pos[0]*nx;
+        y = pos[1]*ny;
+        z = pos[2]*nz;
+
+        //get the atoms in the unit cell
+        var n=0;
+        if (( x>=0 && x<1) && ( y>=0 && y<1) && ( z>=0 && z<1)) {
+          symbol = sc_atoms[i]['symbol'];
+          atom_numbers.push(atomic_number[sc_atoms[i]['symbol']]);
+          atom_types.push(sc_atoms[i]['symbol']);
+          pc_atoms.push([x,y,z]);
+          pc_atoms_car.push(red_car([x,y,z],lat));
+        }
+      }
+      this.natoms = pc_atoms.length;
+
+      //get the bonding distance
+      this.nndist = this.getBondingDistance(sc_atoms.map(function(x){ return red_car(x.position,supercell_lat) }));
+
+      //get the phonon dispersion
+      var kpoints = [], eivals, eivecs = [];
+      var nbands = this.natoms*3;
+      var n, p, phononi, phononiband;
+
+      var highcharts = [];
+      this.highsym_qpts = {};
+      this.qindex = {};
+      var qpoint = 0;
+
+      var check_high_sym_qpoint = function(phononi,highsym_qpts) {
+        //check if a label is present
+        if (phononi['label']) {
+          highsym_qpts[phononi['distance']] = phononi['label'];
+        }
+        else {
+          highsym_qpts[phononi['distance']] = '';
+        }
+      }
+
+      for (p=0; p<npath; p++) {
+
+        //clean eivals array
+        eivals = [];
+        for (i=0; i<nbands; i++) {
+          eivals.push([]);
+        }
+
+        check_high_sym_qpoint(phonon[qpoint],this.highsym_qpts);
+
+        for (i=0; i<segment_nqpoint[p]; i++) {
+          phononi = phonon[qpoint+i];
+
+          this.qindex[phononi['distance']] = kpoints.length;
+          kpoints.push(phononi['q-position']);
+
+          //create bands
+          phononiband = phononi['band'];
+          eivec = [];
+          for (n=0; n<nbands; n++) {
+            eivals[n].push([phononi['distance'],phononiband[n]['frequency']*thz2ev]);
+            eivec.push(phononiband[n]['eigenvector']);
+          }
+          eivecs.push(eivec);
+        }
+        check_high_sym_qpoint(phononi,this.highsym_qpts);
+
+        qpoint+=segment_nqpoint[p];
+
+        for (i=0; i<nbands; i++) {
+          highcharts.push({
+                            name:  i.toString(),
+                            color: "#0066FF",
+                            marker: { radius: 2,
+                                      symbol: "circle"},
+                            data: eivals[i]
+                          });
+        }
+      }
+
+      this.addatomphase = true;
+      this.atom_types = atom_types;
+      this.atom_numbers = atom_numbers;
+      this.atomic_numbers = unique(atom_numbers).map(function(x) { return parseInt(x)});
+      this.atom_pos_car = pc_atoms_car;
+      this.atom_pos_red = pc_atoms;
+      this.lat = lat;
+      this.vec = eivecs;
+      this.kpoints = kpoints;
+      this.formula = atom_types.join('');
+      this.highcharts = highcharts;
+      this.repetitions = [nx,ny,nz];
+
+      $('#nx').val(this.repetitions[0]);
+      $('#ny').val(this.repetitions[1]);
+      $('#nz').val(this.repetitions[2]);
+      this.getRepetitions();
+    },
 
     //Read structure from model
     this.getModel = function() {
@@ -515,8 +532,7 @@ function Phonon() {
           chart: { type: 'line',
                    events: { load: setMin } },
           title: { text: 'Phonon dispersion' },
-          xAxis: { title: { text: 'q-point' },
-                   plotLines: [],
+          xAxis: { plotLines: [],
                    lineWidth: 0,
                    minorGridLineWidth: 0,
                    lineColor: 'transparent',
@@ -538,7 +554,7 @@ function Phonon() {
                   },
           yAxis: { title: { text: 'Frequency (cm-1)' },
                    plotLines: [ {value: 0, color: '#808080' } ] },
-          tooltip: { formatter: function(x) { return Math.round(this.y*100)/100+'cm-1' } },
+          tooltip: { formatter: function(x) { return Math.round(this.y*100)/100+' cm-1' } },
           plotOptions: {
               line: {
                   animation: false
@@ -638,6 +654,24 @@ function updateMenu() {
     });
 }
 
+// from http://stackoverflow.com/questions/4656843/jquery-get-querystring-from-url
+function getUrlVars()
+{
+    var vars = {}, hash;
+    if (location.search) {
+      var hashes = location.search.slice(1).split('&');
+      for(var i = 0; i < hashes.length; i++)
+      {
+          hash = hashes[i].split('=');
+          vars[hash[0]] = hash[1];
+      }
+      return vars;
+    }
+    else {
+      return null;
+    }
+}
+
 $(document).ready(function(){
 
     p = new Phonon();
@@ -647,7 +681,13 @@ $(document).ready(function(){
     $('#file-input')[0].addEventListener('click', function() { this.value = '';}, false);
     updateMenu();
 
-    p.getModel();
+    var url_vars = getUrlVars();
+    if (url_vars) {
+      p.loadURL(url_vars);
+    }
+    else {
+      p.getModel();
+    }
 
     if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
     v.init($('#vibcrystal'),p);
