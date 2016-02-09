@@ -18,6 +18,7 @@ You can visualize your own `phonopy` files by clicking on the `Choose files` but
 
     EIGENVECTORS = .TRUE.
     BAND_CONNECTION = .TRUE.
+    BAND_LABELS = Gamma M K
     BAND = (x1,y1,z1) (x2,y2,z2) (x3,y3,z3)
 
 Abinit
@@ -46,8 +47,25 @@ Features
 ========
 You can export the lattice distorted according to the currently selected phonon mode to a `.xsf` or `POSCAR` file.
 The `phase` and `amplitude` sliders define a complex number that is multiplied by the phonon eigenvectors to obtain the displacements.
-You can export a animated gif with a particular mode using the `gif` button in the Export movie section.
-You are free to use the images in your publications/presentations as long as you cite this work (a link to the website is enough).
+
+You can export a animated `.gif` with a particular mode using the `gif` button in the Export movie section.
+
+If you want to share your own data with someone else you can add to the url tags with the following format:
+
+    http://henriquemiranda.github.io/phononwebsite/phonon.html?tag1=a&tag2=b
+
+The available tags are:
+
+    json, band.yaml, disp.yaml = link to a file
+    name = name of the material
+    url = path where to find `band.yaml` and `disp.yaml` files.
+
+Here are some examples of what can be added to the website link:
+
+  - [?url=http://henriquemiranda.github.io/phononwebsite/tests/phonopy](http://henriquemiranda.github.io/phononwebsite/phonon.html?url=http://henriquemiranda.github.io/phononwebsite/tests/phonopy&name=Graphene)
+  - [?json=http://henriquemiranda.github.io/phononwebsite/graphene/data.json](http://henriquemiranda.github.io/phononwebsite/phonon.html?json=http://henriquemiranda.github.io/phononwebsite/graphene/data.json)
+
+You are free to use all the images generated with this website in your publications and presentations as long as you cite this work (a link to the website is enough).
 
 Authors
 =======
