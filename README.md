@@ -70,7 +70,7 @@ You are free to use all the images generated with this website in your publicati
 Authors
 =======
 
-This project is the continuation of the work of Raul Weber during and internship in the University of Luxembourg for 2 months in the Theoretical Solid State Physics group under the supervision of Ludger Wirtz and technical help from me.
+This project is the continuation of the work of Raoul Weber during an internship in the University of Luxembourg for 2 months in the Theoretical Solid State Physics group under the supervision of Ludger Wirtz and technical help from me.
 
 I decided to continue the project by optimizing the implementation, cleaning up the design and replacing JSmol by a self made applet using Three.js and WebGL called VibCrystal.
 Currently the website works also as a web application which means the user can visualize his own calculations made with `phonopy`.
