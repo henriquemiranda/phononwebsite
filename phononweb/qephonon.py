@@ -89,7 +89,7 @@ class QePhonon(Phonon):
         """
         pwin = PwIn(filename="%s/%s.scf"%(self.folder,self.prefix))
         self.cell, self.pos, self.atom_types = pwin.get_atoms()
-        self.cell = np.array(self.cell)
+        self.cell = np.array(self.cell)*bohr_angstroem
         self.pos = np.array(self.pos)
         self.atom_numbers = [atomic_numbers[x] for x in self.atom_types]
         self.atomic_numbers = np.unique(self.atom_numbers)

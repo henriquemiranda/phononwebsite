@@ -165,7 +165,7 @@ class Phonon():
         nc_atypes[:]         = np.array([np.where(self.chemical_symbols == a) for a in self.atom_types])
         nc_atomic_numbers[:] = self.atomic_numbers
         nc_qpoints[:]        = np.array(self.qpoints)
-        nc_primvecs[:]       = self.cell
+        nc_primvecs[:]       = self.cell/bohr_angstroem
         nc_atoms_pos[:]      = self.pos
         nc_eig[:]            = self.eigenvalues
         nc_eiv[:]            = self.eigenvectors

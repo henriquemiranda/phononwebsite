@@ -11,7 +11,7 @@ VibCrystal = {
     controls: null,
     scene: null,
     renderer: null,
-    cameraDistance: 300,
+    cameraDistance: 100,
 
     //camera options
     cameraViewAngle: 10,
@@ -19,15 +19,15 @@ VibCrystal = {
     cameraFar: 5000,
 
     //balls
-    sphereRadius: 1.0,
+    sphereRadius: 0.5,
     sphereLat: 12,
     sphereLon: 12,
-    bondRadius: 0.2,
+    bondRadius: 0.1,
     bondSegments: 6,
     bondVertical: 1,
 
     //options
-    amplitude: 1.0,
+    amplitude: 0.5,
     fps: 30,
 
     /* Initialize the phonon animation */
@@ -42,7 +42,7 @@ VibCrystal = {
         this.getAtypes(phonon);
         this.vibrations = phonon.vibrations;
         this.atoms      = phonon.atoms;
-        this.nndist     = phonon.nndist + 0.01;
+        this.nndist     = phonon.nndist + 0.2;
 
         this.camera = new THREE.PerspectiveCamera( this.cameraViewAngle,
                     this.dimensions.ratio, this.cameraNear, this.cameraFar );
@@ -240,7 +240,7 @@ VibCrystal = {
 
     updateObjects: function(phonon) {
         this.getAtypes(phonon);
-        this.nndist     = phonon.nndist + 0.01;
+        this.nndist     = phonon.nndist + 0.2;
         this.vibrations = phonon.vibrations;
         this.atoms      = phonon.atoms;
         this.removeStructure();

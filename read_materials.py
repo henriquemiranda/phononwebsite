@@ -25,7 +25,7 @@
 from phononweb import *
 
 ana = 'anaddb.out_PHBST.nc'
-hexagonal = [(0,'Gamma'),(20,'M'),(30,'K'),(50,'Gamma')]
+hexagonal = [(0,'\Gamma'),(20,'M'),(30,'K'),(50,'\Gamma')]
 material_list = {
 "graphene":           [ AnaddbPhonon,     ana, hexagonal, [ 5, 5, 1], "Graphene"],
 "mos2_bulk":		  [ AnaddbPhonon,     ana, hexagonal, [ 5, 5, 1], "Bulk MoS<sub>2</sub>"],

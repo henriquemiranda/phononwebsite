@@ -14,12 +14,14 @@ If you want to see your own calculations, we currently support phonon calculatio
 
 phonopy
 -------
-You can visualize your own `phonopy` files by clicking on the `Choose files` button and selecting a `band.yaml` and a `disp.yaml` files. The following options should be present in the `band.conf` file:
+You can visualize your own `phonopy` files by clicking on the `Choose files` button and selecting a `band.yaml` file. The following options should be present in the `band.conf` file:
 
     EIGENVECTORS = .TRUE.
     BAND_CONNECTION = .TRUE.
     BAND_LABELS = Gamma M K
     BAND = (x1,y1,z1) (x2,y2,z2) (x3,y3,z3)
+
+This only works with the newer version of phonopy as new tags were added to 'band.yaml' to have information about the atomic positions and the supercell.
 
 Abinit
 ------
@@ -56,13 +58,13 @@ If you want to share your own data with someone else you can add to the url tags
 
 The available tags are:
 
-    json, band.yaml, disp.yaml = link to a file
+    json = link to a json file
+    yaml = link to a yaml file
     name = name of the material
-    url = path where to find `band.yaml` and `disp.yaml` files.
 
 Here are some examples of what can be added to the website link:
 
-  - [?url=http://henriquemiranda.github.io/phononwebsite/tests/phonopy](http://henriquemiranda.github.io/phononwebsite/phonon.html?url=http://henriquemiranda.github.io/phononwebsite/tests/phonopy&name=Graphene)
+  - [?yaml=http://henriquemiranda.github.io/phononwebsite/tests/phonopy/band.yaml](http://henriquemiranda.github.io/phononwebsite/phonon.html?yaml=http://henriquemiranda.github.io/phononwebsite/tests/phonopy/band.yaml)
   - [?json=http://henriquemiranda.github.io/phononwebsite/graphene/data.json](http://henriquemiranda.github.io/phononwebsite/phonon.html?json=http://henriquemiranda.github.io/phononwebsite/graphene/data.json)
 
 You are free to use all the images generated with this website in your publications and presentations as long as you cite this work (a link to the website is enough).
