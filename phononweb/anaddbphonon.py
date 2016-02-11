@@ -37,7 +37,7 @@ class AnaddbPhonon(Phonon):
         vectors               = pcfile.variables['phdispl_cart'][:]
         self.qpoints          = pcfile.variables['qpoints'][:]    #reduced coordinates
         self.pos              = pcfile.variables['reduced_atom_positions'][:]
-        self.cell             = pcfile.variables['primitive_vectors'][:]
+        self.cell             = pcfile.variables['primitive_vectors'][:]*bohr_angstroem
         self.atypes           = pcfile.variables['atom_species'][:]
         self.natoms           = len(pcfile.dimensions['number_of_atoms'])
         self.nqpoints         = len(pcfile.dimensions['number_of_qpoints'])

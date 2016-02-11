@@ -47,11 +47,12 @@
 <h1 id="how-to-use">How to use?</h1>
 <p>In the phonon section you can click on any point in the dispersion relation and see an animation of how the atoms vibrate in that particular mode. By default you can visualize the phonon dispersion of some materials we calculated. If you want to see your own calculations, we currently support phonon calculations form <code>Abinit</code>, <code>Quantum Espresso</code> and <code>phononpy</code>.</p>
 <h2 id="phonopy">phonopy</h2>
-<p>You can visualize your own <code>phonopy</code> files by clicking on the <code>Choose files</code> button and selecting a <code>band.yaml</code> and a <code>disp.yaml</code> files. The following options should be present in the <code>band.conf</code> file:</p>
+<p>You can visualize your own <code>phonopy</code> files by clicking on the <code>Choose files</code> button and selecting a <code>band.yaml</code> file. The following options should be present in the <code>band.conf</code> file:</p>
 <pre><code>EIGENVECTORS = .TRUE.
 BAND_CONNECTION = .TRUE.
 BAND_LABELS = Gamma M K
 BAND = (x1,y1,z1) (x2,y2,z2) (x3,y3,z3)</code></pre>
+<p>This only works with the newer version of phonopy as new tags were added to 'band.yaml' to have information about the atomic positions and the supercell.</p>
 <h2 id="abinit">Abinit</h2>
 <p>To read a phonon dispersion form <code>Abinit</code> we provide some python scripts to convert the data to a <code>.json</code> format. You can obtain these scripts form the Github page. To install them just do:</p>
 <pre><code>python setup.py install --user</code></pre>
@@ -68,12 +69,12 @@ BAND = (x1,y1,z1) (x2,y2,z2) (x3,y3,z3)</code></pre>
 <p>If you want to share your own data with someone else you can add to the url tags with the following format:</p>
 <pre><code>http://henriquemiranda.github.io/phononwebsite/phonon.html?tag1=a&amp;tag2=b</code></pre>
 <p>The available tags are:</p>
-<pre><code>json, band.yaml, disp.yaml = link to a file
-name = name of the material
-url = path where to find `band.yaml` and `disp.yaml` files.</code></pre>
+<pre><code>json = link to a json file
+yaml = link to a yaml file
+name = name of the material</code></pre>
 <p>Here are some examples of what can be added to the website link:</p>
 <ul>
-<li><a href="http://henriquemiranda.github.io/phononwebsite/phonon.html?url=http://henriquemiranda.github.io/phononwebsite/tests/phonopy&amp;name=Graphene">?url=http://henriquemiranda.github.io/phononwebsite/tests/phonopy</a></li>
+<li><a href="http://henriquemiranda.github.io/phononwebsite/phonon.html?yaml=http://henriquemiranda.github.io/phononwebsite/tests/phonopy/band.yaml">?yaml=http://henriquemiranda.github.io/phononwebsite/tests/phonopy/band.yaml</a></li>
 <li><a href="http://henriquemiranda.github.io/phononwebsite/phonon.html?json=http://henriquemiranda.github.io/phononwebsite/graphene/data.json">?json=http://henriquemiranda.github.io/phononwebsite/graphene/data.json</a></li>
 </ul>
 <p>You are free to use all the images generated with this website in your publications and presentations as long as you cite this work (a link to the website is enough).</p>

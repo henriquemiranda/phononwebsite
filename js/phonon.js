@@ -25,110 +25,96 @@ function Phonon() {
     var nx = 1;
     var ny = 1;
     var nz = 1;
-    var amplitude = 1;
+    var amplitude = 0.5;
 
     this.getRepetitions = function() {
       this.nx = $('#nx').val();
       this.ny = $('#ny').val();
       this.nz = $('#nz').val();
-      this.getStructure() //calculate postions
+      this.getStructure(this.nx,this.ny,this.nz) //calculate postions
       this.getVibrations() //calculate vibrations
     }
 
-    this.getBondingDistance = function(atoms) {
+    this.getBondingDistance = function() {
+      //replicate the atoms two times in each direction
+      atoms = this.getStructure(2,2,2);
+
       var combinations = getCombinations( atoms );
       var min = 1e9;
       for (i=0; i<combinations.length; i++ ) {
         a = combinations[i][0];
         b = combinations[i][1];
 
-        distance = dist(a,b);
+        distance = dist(a.slice(1),b.slice(1));
         if (min > distance) {
           min = distance;
         }
       }
+      console.log(min);
       return min;
     }
 
     //find the type of file and call the corresponding function that will read it
     //currently there are two formats available:
-    //phonopy files (band.yaml and disp.yaml) and a special .json format (description available in ./phononweb/phononweb.py)
+    //phonopy files (band.yaml) and a special .json format (description available in ./phononweb/phononweb.py)
     this.loadCustomFile = function(event) {
-      var band = null;
-      var disp = null;
+      var yaml = null;
       var json = null;
 
       for (i=0; i<event.target.files.length; i++) {
-        file = event.target.files[i]
-        if (file.name == "disp.yaml")        { disp = file; }
-        if (file.name == "band.yaml")        { band = file; }
+        file = event.target.files[i];
+        if (file.name.indexOf(".yaml") > -1) { yaml = file; }
         if (file.name.indexOf(".json") > -1) { json = file; }
       }
 
-      if      (json)         { this.getFromJsonFile(json);          }
-      else if (band && disp) { this.getFromPhononpyFile(disp,band); }
-      else                   { alert("Ivalid file"); }
+      if      (json) { this.getFromJsonFile(json);     }
+      else if (yaml) { this.getFromPhononpyFile(yaml); }
+      else           { alert("Ivalid file"); }
     }
 
     this.loadURL = function(url_vars) {
-      var band = null;
-      var disp = null;
+      var yaml = null;
       var json = null;
 
       for (var key in url_vars) {
-        if ( key == "disp.yaml" ) { disp = $.get(url_vars[key]).responseText; }
-        if ( key == "band.yaml" ) { band = $.get(url_vars[key]).responseText; }
-        if ( key == "json" )      { json = $.get(url_vars[key]).responseText; }
-        if ( key == "name" )      { $('#t1').html(url_vars[key]); }
-        if ( key == "url" )       {
-          band = $.get(url_vars[key]+'/band.yaml').responseText;
-          disp = $.get(url_vars[key]+'/disp.yaml').responseText;
-        }
+        if ( key == "yaml" ) { yaml = $.get('http://cors.io/?u='+url_vars[key]).responseText; }
+        if ( key == "json" ) { json = $.get('http://cors.io/?u='+url_vars[key]).responseText; }
+        if ( key == "name" ) { $('#t1').html(url_vars[key]);                                  }
       }
 
-      if      (json)         { this.getFromJsonString(json);          }
-      else if (band && disp) { this.getFromPhononpyString(disp,band); }
+      if      (json)         { this.getFromJsonString(json);     }
+      else if (yaml)         { this.getFromPhononpyString(yaml); }
       else                   { alert("Ivalid url"); }
     }
 
-    //disp and band are the content of "disp.yaml" and "band.yaml" files as a file
-    this.getFromPhononpyFile = function(disp,band) {
-      var disp_reader = new FileReader();
-      var band_reader = new FileReader();
-      var processedFiles = 0;
+    //yaml is a file object with the "band.yaml" file
+    this.getFromPhononpyFile = function(yaml) {
+      var yaml_reader = new FileReader();
       self = this;
 
-      band_reader.onloadend = onLoadEndHandler;
-      disp_reader.onloadend = onLoadEndHandler;
-
       //read the files
-      disp_reader.readAsText(disp);
-      band_reader.readAsText(band);
+      yaml_reader.onloadend = onLoadEndHandler;
+      yaml_reader.readAsText(yaml);
 
       function onLoadEndHandler() {
-        processedFiles++;
-        if(processedFiles == 2){
-          self.getFromPhononpyString(disp_reader.result,band_reader.result);
-          update();
-        }
+        self.getFromPhononpyString(yaml_reader.result);
+        update();
       }
     },
 
-    //disp and band are the content of "disp.yaml" and "band.yaml" files as a string
-    this.getFromPhononpyString = function(disp,band) {
+    //yaml is the content of "band.yaml" file as a string
+    this.getFromPhononpyString = function(yaml) {
       this.k = 0;
       this.n = 0;
       var supercell_lat, rec, lat, nqpoint, npath, phonon, sc_atoms, segment_nqpoint;
 
       //read the yaml files
-      var phononyaml = jsyaml.load(disp);
-      sc_atoms = phononyaml['atoms'];
-      supercell_lat = phononyaml['lattice'];
-
-      var phononyaml = jsyaml.load(band);
-      rec = phononyaml['reciprocal_lattice'];
+      var phononyaml = jsyaml.load(yaml);
+      lat = phononyaml['lattice'];
       nqpoint = phononyaml['nqpoint'];
       npath = phononyaml['npath'];
+      tmat = phononyaml['supercell_matrix'];
+      pc_atoms = phononyaml['atoms'];
       phonon = phononyaml['phonon'];
       if (phononyaml['segment_nqpoint']) {
         segment_nqpoint = phononyaml['segment_nqpoint'];
@@ -140,40 +126,26 @@ function Phonon() {
         }
       }
 
-      //calculate the lattice
-      lat = matrix_transpose(matrix_inverse(rec));
-
       //get the number of repetitions
-      nx = Math.round(vec_norm(supercell_lat[0])/vec_norm(lat[0]));
-      ny = Math.round(vec_norm(supercell_lat[1])/vec_norm(lat[1]));
-      nz = Math.round(vec_norm(supercell_lat[2])/vec_norm(lat[2]));
+      pmat = matrix_multiply(lat,tmat);
+
+      //this will be changed
+      nx = 3;
+      ny = 3;
+      nz = 3;
 
       //get the atoms inside the unit cell
       var pos,x,y,z,atom_types = [], atom_numbers = [] ;
-      var atomic_numbers = {}, pc_atoms_car = [], pc_atoms = [];
-      var places = 100000; //number of decimal places
-      for (i=0; i<sc_atoms.length; i++) {
-        pos = sc_atoms[i].position;
-
-        //round the components
-        x = pos[0]*nx;
-        y = pos[1]*ny;
-        z = pos[2]*nz;
-
-        //get the atoms in the unit cell
-        var n=0;
-        if (( x>=0 && x<1) && ( y>=0 && y<1) && ( z>=0 && z<1)) {
-          symbol = sc_atoms[i]['symbol'];
-          atom_numbers.push(atomic_number[sc_atoms[i]['symbol']]);
-          atom_types.push(sc_atoms[i]['symbol']);
-          pc_atoms.push([x,y,z]);
-          pc_atoms_car.push(red_car([x,y,z],lat));
-        }
+      var atomic_numbers = {}, pc_atoms_car = [], pc_atoms_red = [];
+      for (i=0; i<pc_atoms.length; i++) {
+        var symbol = pc_atoms[i]['symbol'];
+        var position = pc_atoms[i]['position'];
+        atom_numbers.push(atomic_number[symbol]);
+        atom_types.push(symbol);
+        pc_atoms_red.push(position);
+        pc_atoms_car.push(red_car(position,lat));
       }
       this.natoms = pc_atoms.length;
-
-      //get the bonding distance
-      this.nndist = this.getBondingDistance(sc_atoms.map(function(x){ return red_car(x.position,supercell_lat) }));
 
       //get the phonon dispersion
       var kpoints = [], eivals, eivecs = [];
@@ -240,13 +212,15 @@ function Phonon() {
       this.atom_numbers = atom_numbers;
       this.atomic_numbers = unique(atom_numbers).map(function(x) { return parseInt(x)});
       this.atom_pos_car = pc_atoms_car;
-      this.atom_pos_red = pc_atoms;
+      this.atom_pos_red = pc_atoms_red;
       this.lat = lat;
       this.vec = eivecs;
       this.kpoints = kpoints;
       this.formula = atom_types.join('');
       this.highcharts = highcharts;
       this.repetitions = [nx,ny,nz];
+
+      this.nndist = this.getBondingDistance();
 
       $('#nx').val(this.repetitions[0]);
       $('#ny').val(this.repetitions[1]);
@@ -312,10 +286,12 @@ function Phonon() {
           this.highsym_qpts[dist] = data["highsym_qpts"][i][1];
         }
 
+        //get the bonding distance
+        this.nndist = this.getBondingDistance();
+
         $('#nx').val(this.repetitions[0]);
         $('#ny').val(this.repetitions[1]);
         $('#nz').val(this.repetitions[2]);
-
         this.getRepetitions();
 
         //go through the eigenvalues and create eivals list
@@ -338,21 +314,18 @@ function Phonon() {
                                   data: eig
                                 });
         }
-
-        //get the bonding distance
-        this.nndist = this.getBondingDistance(this.atom_pos_car);
     }
 
-    this.getStructure = function() {
+    this.getStructure = function(nx,ny,nz) {
  		  var i,j;
       var x,y,z;
       var lat = this.lat;
       var apc = this.atom_pos_car;
       var atoms = [];
 
-	    for (var ix=0;ix<this.nx;ix++) {
-          for (var iy=0;iy<this.ny;iy++) {
-              for (var iz=0;iz<this.nz;iz++) {
+	    for (var ix=0;ix<nx;ix++) {
+          for (var iy=0;iy<ny;iy++) {
+              for (var iz=0;iz<nz;iz++) {
                   for (i=0;i<this.natoms;i++) {
 
                       //postions of the atoms
@@ -419,9 +392,9 @@ function Phonon() {
       string += "PRIMVEC\n"
 
       for (i=0; i<this.lat.length; i++) {
-        string += (self.lat[i][0]*this.nx*bohr2ang).toFixed(12) + " " +
-                  (self.lat[i][1]*this.ny*bohr2ang).toFixed(12) + " " +
-                  (self.lat[i][2]*this.nz*bohr2ang).toFixed(12) + "\n";
+        string += (self.lat[i][0]*this.nx).toFixed(12) + " " +
+                  (self.lat[i][1]*this.ny).toFixed(12) + " " +
+                  (self.lat[i][2]*this.nz).toFixed(12) + "\n";
       }
 
       string += "PRIMCOORD 1\n"
@@ -433,7 +406,7 @@ function Phonon() {
         vibrations = this.vibrations[i];
         string += self.atom_numbers[this.atoms[i][0]] + " ";
         for (j=1; j<4; j++) {
-          string += (this.atoms[i][j]*bohr2ang + phase.mult(vibrations[j-1]).real()).toFixed(12) + " ";
+          string += (this.atoms[i][j] + phase.mult(vibrations[j-1]).real()).toFixed(12) + " ";
         }
         string += "\n";
       }
@@ -479,9 +452,9 @@ function Phonon() {
       string += "1.0\n"
 
       for (i=0; i<this.lat.length; i++) {
-        string += (self.lat[i][0]*this.nx*bohr2ang).toFixed(12) + " " +
-                  (self.lat[i][1]*this.ny*bohr2ang).toFixed(12) + " " +
-                  (self.lat[i][2]*this.nz*bohr2ang).toFixed(12) + "\n";
+        string += (self.lat[i][0]*this.nx).toFixed(12) + " " +
+                  (self.lat[i][1]*this.ny).toFixed(12) + " " +
+                  (self.lat[i][2]*this.nz).toFixed(12) + "\n";
       }
 
       for (i=0; i<order.length; i++) {
@@ -494,7 +467,7 @@ function Phonon() {
       for (i=0; i<atoms.length; i++) {
         vibrations = this.vibrations[i];
         for (j=1; j<4; j++) {
-          string += (atoms[i][j]*bohr2ang + phase.mult(vibrations[j-1]).real()).toFixed(12) + " ";
+          string += (atoms[i][j] + phase.mult(vibrations[j-1]).real()).toFixed(12) + " ";
         }
         string += "\n";
       }
@@ -541,9 +514,10 @@ function Phonon() {
                      formatter: function() {
                         if ( self.highsym_qpts[this.value] ) {
                           var label = self.highsym_qpts[this.value];
-                          if (label.indexOf('Gamma') > -1) {
-                            label = "Γ";
-                          }
+                          label = label.replace("$","").replace("$","");
+                          label = label.replace("\\Gamma","Γ");
+                          label = label.replace("\\Sigma","Σ");
+                          label = label.replace("_","");
                           return label;
                         }
                         return ''
