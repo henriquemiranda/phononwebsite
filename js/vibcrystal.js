@@ -36,7 +36,6 @@ VibCrystal = {
         this.container = container;
         var container0 = container.get(0);
         this.dimensions = this.getContainerDimensions();
-        this.capturing = false;
 
         //obtain information from phonon structure
         this.getAtypes(phonon);
@@ -88,25 +87,26 @@ VibCrystal = {
         this.render();
     },
 
-    capture: function() {
+    capture: function(format) {
       var progress = document.getElementById( 'progress' );
-      capturer = new CCapture( { format: 'gif',
-                                 workersPath: 'js/',
-                                 verbose: false,
-                                 framerate: this.fps,
-                                 onProgress: function( p ) { progress.style.width = ( p * 100 ) + '%' }
-                                 } );
-      this.capturing = true;
+
+      //get gifs
+      this.capturer = new CCapture( { format: format,
+                                      workersPath: 'js/',
+                                      verbose: false,
+                                      framerate: this.fps,
+                                      onProgress: function( p ) { progress.style.width = ( p * 100 ) + '%' }
+                                    } ),
+
       this.frame=0;
-      capturer.start();
+      this.capturer.start();
 
       this.end = function(){
-        capturer.stop();
-        this.capture = false;
-        capturer.save( function( url ) {
+        this.capturer.stop();
+        this.capturer.save( function( url ) {
           var element = document.createElement('a');
           element.setAttribute('href', url);
-          element.setAttribute('download', p.k.toString()+'_'+p.n.toString()+'.gif');
+          element.setAttribute('download', p.k.toString()+'_'+p.n.toString()+'.'+ format);
           element.style.display = 'none';
           document.body.appendChild(element);
           element.click();
@@ -286,7 +286,8 @@ VibCrystal = {
         var atom, bond, atompos, bondobject;
         var vibrations;
 
-        var t = Date.now() * 0.001;
+        var currentTime = Date.now();
+        var t = currentTime * 0.001;
         var phase = Complex.Polar(this.amplitude,t*2.0*pi);
 
         //update positions according to vibrational modes
@@ -313,17 +314,17 @@ VibCrystal = {
         }
 
         this.renderer.render( this.scene, this.camera );
-        this.stats.update();
 
-        //if capturing then capture
-
-        if (this.capturing) {
+        //if the capturer exists then capture
+        if (this.capturer) {
           this.frame++;
-          capturer.capture( this.canvas );
+          this.capturer.capture( this.canvas );
           if (this.frame == this.fps) {
             this.end();
           }
         };
+
+        this.stats.update();
     }
 }
 

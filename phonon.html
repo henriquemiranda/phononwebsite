@@ -27,21 +27,21 @@
   <script src="highcharts/highcharts.js"></script>
 
 <!-- page javascript -->
-  <script src="js/three.min.js"></script>
-  <script src="js/TrackballControls.js"></script>
-  <script src="js/Detector.js"></script>
-  <script src="js/stats.min.js"></script>
-  <script src="js/complex.min.js"></script>
-  <script src="js/combinations.js"></script>
-  <script src="js/js-yaml.min.js"></script>
+  <script type="text/javascript" src="js/three.min.js"></script>
+  <script type="text/javascript" src="js/TrackballControls.js"></script>
+  <script type="text/javascript" src="js/Detector.js"></script>
+  <script type="text/javascript" src="js/stats.min.js"></script>
+  <script type="text/javascript" src="js/complex.min.js"></script>
+  <script type="text/javascript" src="js/combinations.js"></script>
+  <script type="text/javascript" src="js/js-yaml.min.js"></script>
 
-  <script src="js/mat.js"></script>
-  <script src="js/atomic_data.js"></script>
-	<script src="js/gif.js"></script>
-	<script src="js/gif.worker.js"></script>
-	<script src="js/CCapture.min.js"></script>
-	<script src="js/vibcrystal.js"></script>
-	<script src="js/phonon.js"></script>
+  <script type="text/javascript" src="js/mat.js"></script>
+  <script type="text/javascript" src="js/atomic_data.js"></script>
+  <script type="text/javascript" src="js/Whammy.js"></script>
+	<script type="text/javascript" src="js/gif.js"></script>
+	<script type="text/javascript" src="js/CCapture.min.js"></script>
+	<script type="text/javascript" src="js/vibcrystal.js"></script>
+	<script type="text/javascript" src="js/phonon.js"></script>
 
 	<!-- google analytics-->
 	<script>
@@ -138,7 +138,8 @@
       </div>
 			<div>
 			<h3>Export movie:</h3>
-					<button type="button" onclick="v.capture()">gif</button>
+					<button type="button" onclick="v.capture('gif')">gif</button>
+					<button type="button" onclick="v.capture('webm')">webm</button>
 					<div id="progress"></div>
       </div>
 		</div>
