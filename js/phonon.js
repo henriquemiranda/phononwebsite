@@ -77,7 +77,7 @@ function Phonon() {
           type: "GET",
           crossDomain: true,
           success: function(data,textstatus,jqXHR) {
-            alert(data,textstatus,jqXHR);
+            return data;
           },
           error: function(jqXHR,textstatus,error) {
             alert(jqXHR,textstatus,error);
