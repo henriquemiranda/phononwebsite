@@ -77,7 +77,7 @@ function Phonon() {
           type: "GET",
           crossDomain: true,
           success: function(data,textstatus,jqXHR) {
-            return data;
+            alert(data,textstatus,jqXHR);
           },
           error: function(jqXHR,textstatus,error) {
             alert(jqXHR,textstatus,error);
@@ -90,8 +90,8 @@ function Phonon() {
       var json = null;
 
       for (var key in url_vars) {
-        if ( key == "yaml" ) { yaml = this.get(url_vars[key]); }
-        if ( key == "json" ) { json = this.get(url_vars[key]); }
+        if ( key == "yaml" ) { yaml = $.get(url_vars[key]); }
+        if ( key == "json" ) { json = $.get(url_vars[key]); }
         if ( key == "name" ) { $('#t1').html(url_vars[key]);   }
       }
 
