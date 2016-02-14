@@ -71,27 +71,13 @@ function Phonon() {
       else           { alert("Ivalid file"); }
     }
 
-    this.get = function(url,callback) {
-        $.ajax({
-          url: url,
-          type: "GET",
-          crossDomain: true,
-          success: function(data,textstatus,jqXHR) {
-            alert(data,textstatus,jqXHR);
-          },
-          error: function(jqXHR,textstatus,error) {
-            alert(jqXHR,textstatus,error);
-          }
-        });
-    },
-
     this.loadURL = function(url_vars) {
       var yaml = null;
       var json = null;
 
       for (var key in url_vars) {
-        if ( key == "yaml" ) { yaml = $.get(url_vars[key]); }
-        if ( key == "json" ) { json = $.get(url_vars[key]); }
+        if ( key == "yaml" ) { yaml = $.get(url_vars[key]).responseText; }
+        if ( key == "json" ) { json = $.get(url_vars[key]).responseText; }
         if ( key == "name" ) { $('#t1').html(url_vars[key]);   }
       }
 
