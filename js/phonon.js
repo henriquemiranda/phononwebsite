@@ -25,7 +25,7 @@ function Phonon() {
     var nx = 1;
     var ny = 1;
     var nz = 1;
-    var amplitude = 0.5;
+    var amplitude = 1.0;
 
     this.getRepetitions = function() {
       this.nx = $('#nx').val();
@@ -71,18 +71,9 @@ function Phonon() {
       else           { alert("Ivalid file"); }
     }
 
-    this.get = function(url,callback) {
-        $.ajax({
-          url: url,
-          type: "GET",
-          crossDomain: true,
-          success: function(data,textstatus,jqXHR) {
-            alert(data,textstatus,jqXHR);
-          },
-          error: function(jqXHR,textstatus,error) {
-            alert(jqXHR,textstatus,error);
-          }
-        });
+    this.loadId = function(id) {
+      this.loadURL({yaml:this.materials[id]});
+      update();
     },
 
     this.loadURL = function(url_vars) {
@@ -90,8 +81,8 @@ function Phonon() {
       var json = null;
 
       for (var key in url_vars) {
-        if ( key == "yaml" ) { yaml = this.get(url_vars[key]); }
-        if ( key == "json" ) { json = this.get(url_vars[key]); }
+        if ( key == "yaml" ) { yaml = $.get(url_vars[key]).responseText; }
+        if ( key == "json" ) { json = $.get(url_vars[key]).responseText; }
         if ( key == "name" ) { $('#t1').html(url_vars[key]);   }
       }
 
@@ -100,233 +91,14 @@ function Phonon() {
       else                   { alert("Ivalid url"); }
     }
 
-    //yaml is a file object with the "band.yaml" file
-    this.getFromPhononpyFile = function(yaml) {
-      var yaml_reader = new FileReader();
-      self = this;
-
-      //read the files
-      yaml_reader.onloadend = onLoadEndHandler;
-      yaml_reader.readAsText(yaml);
-
-      function onLoadEndHandler() {
-        self.getFromPhononpyString(yaml_reader.result);
-        update();
-      }
-    },
-
-    //yaml is the content of "band.yaml" file as a string
-    this.getFromPhononpyString = function(yaml) {
-      this.k = 0;
-      this.n = 0;
-      var supercell_lat, rec, lat, nqpoint, npath, phonon, sc_atoms, segment_nqpoint;
-
-      //read the yaml files
-      var phononyaml = jsyaml.load(yaml);
-      lat = phononyaml['lattice'];
-      nqpoint = phononyaml['nqpoint'];
-      npath = phononyaml['npath'];
-      tmat = phononyaml['supercell_matrix'];
-      pc_atoms = phononyaml['atoms'];
-      phonon = phononyaml['phonon'];
-      if (phononyaml['segment_nqpoint']) {
-        segment_nqpoint = phononyaml['segment_nqpoint'];
-      }
-      else {
-        segment_nqpoint = []
-        for (i=0; i<npath; i++) {
-          segment_nqpoint.push(nqpoint/npath);
-        }
-      }
-
-      //get the number of repetitions
-      pmat = matrix_multiply(lat,tmat);
-
-      //this will be changed
-      nx = 3;
-      ny = 3;
-      nz = 3;
-
-      //get the atoms inside the unit cell
-      var pos,x,y,z,atom_types = [], atom_numbers = [] ;
-      var atomic_numbers = {}, pc_atoms_car = [], pc_atoms_red = [];
-      for (i=0; i<pc_atoms.length; i++) {
-        var symbol = pc_atoms[i]['symbol'];
-        var position = pc_atoms[i]['position'];
-        atom_numbers.push(atomic_number[symbol]);
-        atom_types.push(symbol);
-        pc_atoms_red.push(position);
-        pc_atoms_car.push(red_car(position,lat));
-      }
-      this.natoms = pc_atoms.length;
-
-      //get the phonon dispersion
-      var kpoints = [], eivals, eivecs = [];
-      var nbands = this.natoms*3;
-      var n, p, phononi, phononiband;
-
-      var highcharts = [];
-      this.highsym_qpts = {};
-      this.qindex = {};
-      var qpoint = 0;
-
-      var check_high_sym_qpoint = function(phononi,highsym_qpts) {
-        //check if a label is present
-        if (phononi['label']) {
-          highsym_qpts[phononi['distance']] = phononi['label'];
-        }
-        else {
-          highsym_qpts[phononi['distance']] = '';
-        }
-      }
-
-      for (p=0; p<npath; p++) {
-
-        //clean eivals array
-        eivals = [];
-        for (i=0; i<nbands; i++) {
-          eivals.push([]);
-        }
-
-        check_high_sym_qpoint(phonon[qpoint],this.highsym_qpts);
-
-        for (i=0; i<segment_nqpoint[p]; i++) {
-          phononi = phonon[qpoint+i];
-
-          this.qindex[phononi['distance']] = kpoints.length;
-          kpoints.push(phononi['q-position']);
-
-          //create bands
-          phononiband = phononi['band'];
-          eivec = [];
-          for (n=0; n<nbands; n++) {
-            eivals[n].push([phononi['distance'],phononiband[n]['frequency']*thz2ev]);
-            eivec.push(phononiband[n]['eigenvector']);
-          }
-          eivecs.push(eivec);
-        }
-        check_high_sym_qpoint(phononi,this.highsym_qpts);
-
-        qpoint+=segment_nqpoint[p];
-
-        for (i=0; i<nbands; i++) {
-          highcharts.push({
-                            name:  i.toString(),
-                            color: "#0066FF",
-                            marker: { radius: 2,
-                                      symbol: "circle"},
-                            data: eivals[i]
-                          });
-        }
-      }
-
-      this.addatomphase = true;
-      this.atom_types = atom_types;
-      this.atom_numbers = atom_numbers;
-      this.atomic_numbers = unique(atom_numbers).map(function(x) { return parseInt(x)});
-      this.atom_pos_car = pc_atoms_car;
-      this.atom_pos_red = pc_atoms_red;
-      this.lat = lat;
-      this.vec = eivecs;
-      this.kpoints = kpoints;
-      this.formula = atom_types.join('');
-      this.highcharts = highcharts;
-      this.repetitions = [nx,ny,nz];
-
-      this.nndist = this.getBondingDistance();
-
-      $('#nx').val(this.repetitions[0]);
-      $('#ny').val(this.repetitions[1]);
-      $('#nz').val(this.repetitions[2]);
-      this.getRepetitions();
-    },
+    this.getFromPhononpyString = getFromPhononpyString.bind(this);
+    this.getFromPhononpyFile = getFromPhononpyFile.bind(this);
+    this.getFromJson = getFromJson.bind(this);
+    this.getFromJsonString = getFromJsonString.bind(this);
 
     //Read structure from model
     this.getModel = function() {
       $.get(folder+'/data.json', this.getFromJsonString, "html" );
-    }
-
-    this.getFromJsonFile = function(file) {
-      var json_reader = new FileReader();
-      self = this;
-
-      json_reader.readAsText(file);
-
-      json_reader.onloadend = function(e) {
-        self.getFromJsonString(json_reader.result);
-        update();
-      };
-    }
-
-    this.getFromJsonString = function(string) {
-      json = JSON.parse(string);
-      this.getFromJson.bind(this)(json);
-    }.bind(this)
-
-    // Read structure data from JSON format
-    // data is a string with the json file.
-    this.getFromJson = function(data) {
-        this.k=0;
-        this.n=0;
-        this.addatomphase = false;
-
-        this.name = data["name"];
-        this.natoms = data["natoms"];
-        this.atom_types = data["atom_types"];
-        this.atom_numbers = data["atom_numbers"];
-        this.atomic_numbers = data["atomic_numbers"];
-        this.atom_pos_car = data["atom_pos_car"];
-        this.atom_pos_red = data["atom_pos_red"];
-        this.lat = data["lattice"];
-        this.vec = data["vectors"];
-        this.kpoints = data["qpoints"];
-        this.distances = data["distances"];
-        this.formula = data["formula"];
-        this.eigenvalues = data["eigenvalues"];
-        this.repetitions = data["repetitions"];
-
-        //get qindex
-        this.qindex = {};
-        for (i=0; i<this.distances.length; i++) {
-          this.qindex[this.distances[i]] = i;
-        }
-
-        //get high symmetry qpoints
-        this.highsym_qpts = {}
-        //"highsym_qpts":[[0,'Gamma'],[20,'M'],[30,'K'],[50,'Gamma']];
-        for (i=0; i<data["highsym_qpts"].length; i++) {
-          var dist = this.distances[data["highsym_qpts"][i][0]]
-          this.highsym_qpts[dist] = data["highsym_qpts"][i][1];
-        }
-
-        //get the bonding distance
-        this.nndist = this.getBondingDistance();
-
-        $('#nx').val(this.repetitions[0]);
-        $('#ny').val(this.repetitions[1]);
-        $('#nz').val(this.repetitions[2]);
-        this.getRepetitions();
-
-        //go through the eigenvalues and create eivals list
-        eivals = this.eigenvalues;
-        var nbands = eivals[0].length;
-        var nqpoints = eivals.length;
-        this.highcharts = [];
-
-        for (n=0; n<nbands; n++) {
-          eig = [];
-          for (k=0; k<nqpoints; k++) {
-            eig.push([this.distances[k],eivals[k][n]]);
-          }
-
-          this.highcharts.push({
-                                  name:  n.toString(),
-                                  color: "#0066FF",
-                                  marker: { radius: 2,
-                                            symbol: "circle"},
-                                  data: eig
-                                });
-        }
     }
 
     this.getStructure = function(nx,ny,nz) {
@@ -377,13 +149,20 @@ function Phonon() {
         }
       }
 
+      //normalize displacements with masses
+      var norm = 0;
+      for (i=0;i<this.natoms;i++) {
+          norm += 1.0/Math.sqrt(atomic_mass[this.atom_numbers[i]]);
+      }
+
       for (var ix=0;ix<this.nx;ix++) {
           for (var iy=0;iy<this.ny;iy++) {
               for (var iz=0;iz<this.nz;iz++) {
 
                   for (i=0;i<this.natoms;i++) {
                       sprod = kpt[0]*ix + kpt[1]*iy + kpt[2]*iz + atom_phase[i];
-                      phase = Complex.Polar(1,sprod*2.0*pi);
+                      sqrt_mass = 1.0/Math.sqrt(atomic_mass[this.atom_numbers[i]])/norm;
+                      phase = Complex.Polar(sqrt_mass,sprod*2.0*pi);
 
                       //Displacements of the atoms
                       x = Complex(veckn[i][0][0],veckn[i][0][1]).mult(phase);
@@ -400,100 +179,8 @@ function Phonon() {
       return vibrations;
     }
 
-    this.exportXSF = function () {
-      string = "CRYSTAL\n"
-      string += "PRIMVEC\n"
-
-      for (i=0; i<this.lat.length; i++) {
-        string += (self.lat[i][0]*this.nx).toFixed(12) + " " +
-                  (self.lat[i][1]*this.ny).toFixed(12) + " " +
-                  (self.lat[i][2]*this.nz).toFixed(12) + "\n";
-      }
-
-      string += "PRIMCOORD 1\n"
-      string += this.atoms.length + " 1\n"
-
-      var phase = Complex.Polar(this.amplitude,parseFloat($("#phase").val())/360*2.0*pi);
-
-      for (i=0; i<this.atoms.length; i++) {
-        vibrations = this.vibrations[i];
-        string += self.atom_numbers[this.atoms[i][0]] + " ";
-        for (j=1; j<4; j++) {
-          string += (this.atoms[i][j] + phase.mult(vibrations[j-1]).real()).toFixed(12) + " ";
-        }
-        string += "\n";
-      }
-
-      var element = document.createElement('a');
-      element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(string));
-      element.setAttribute('download', this.k.toString()+'_'+this.n.toString()+'_displacement.xsf');
-      element.style.display = 'none';
-      document.body.appendChild(element);
-      element.click();
-      document.body.removeChild(element);
-
-    }
-
-    this.exportPOSCAR = function () {
-      //deep copy
-      var atoms = jQuery.extend(true, [], this.atoms);
-      var counter = {};
-      var order = [];
-
-      //set the first element to be the atomic number
-      for (i=0; i<atoms.length; i++) {
-        var atom = atoms[i];
-        atom[0] = self.atom_numbers[atom[0]];
-        if ( $.inArray(atom[0].toString(), Object.keys(counter)) == -1 ) {
-          order.push(atom[0]);
-          counter[atom[0]] = 0;
-        }
-      }
-
-      //we sort the atoms according to atom types (POSCAR format requires so)
-      for (i=0; i<atoms.length; i++) {
-        counter[atoms[i][0]] += 1;
-      }
-      atoms.sort();
-
-      string = "";
-      for (i=0; i<order.length; i++) {
-        string += atomic_symbol[order[i]] + " ";
-      }
-      string += "generated by phononwebsite: http://henriquemiranda.github.io/phononwebsite/\n";
-
-      string += "1.0\n"
-
-      for (i=0; i<this.lat.length; i++) {
-        string += (self.lat[i][0]*this.nx).toFixed(12) + " " +
-                  (self.lat[i][1]*this.ny).toFixed(12) + " " +
-                  (self.lat[i][2]*this.nz).toFixed(12) + "\n";
-      }
-
-      for (i=0; i<order.length; i++) {
-        string += counter[order[i]] + " ";
-      }
-      string += "\n";
-
-      string += "Cartesian\n"
-      var phase = Complex.Polar(this.amplitude,parseFloat($("#phase").val())/360*2.0*pi);
-      for (i=0; i<atoms.length; i++) {
-        vibrations = this.vibrations[i];
-        for (j=1; j<4; j++) {
-          string += (atoms[i][j] + phase.mult(vibrations[j-1]).real()).toFixed(12) + " ";
-        }
-        string += "\n";
-      }
-
-      var element = document.createElement('a');
-      element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(string));
-      element.setAttribute('download', this.k.toString()+'_'+this.n.toString()+'_displacement.POSCAR');
-      element.style.display = 'none';
-      document.body.appendChild(element);
-      element.click();
-      document.body.removeChild(element);
-
-    }
+    this.exportXSF = exportXSF.bind(this);
+    this.exportPOSCAR = exportPOSCAR.bind(this);
 
     this.updateHighcharts = function(self) { return function(applet) {
       qindex = this.qindex;
@@ -628,6 +315,20 @@ function update() {
     //v.animate();
 }
 
+function createPhonodbMenu(phonodb) {
+  $("#div-phonodb").css('display', 'inline')
+  var materials = jsyaml.load(phonodb);
+  var materials_ref = {}
+  $('#phonodb').empty()
+  for (i=0;i<materials.length;i++){
+    material = materials[i];
+    materials_ref[material['id']] = material['url']
+    $('#phonodb').append('<li></li>');
+    $('#phonodb li:last').append("<a href='#' onclick='p.loadId("+material['id']+")'>"+material['name']+"</a>");
+  }
+  p.materials = materials_ref;
+}
+
 function updateMenu() {
     $.getJSON('models.json', function(data) {
         var nmodels = data["nmodels"];
@@ -639,6 +340,10 @@ function updateMenu() {
                                      "updateAll();\">"+models[i]["name"]+"</a>");
         }
     });
+
+    //get a list of materials from phonodb
+    //$.get('http://phonondb.mtl.kyoto-u.ac.jp/v/phonondb.yaml', createPhonodbMenu);
+    $.get('phonondb.yaml', createPhonodbMenu);
 }
 
 // from http://stackoverflow.com/questions/4656843/jquery-get-querystring-from-url
