@@ -26,7 +26,7 @@ This only works with the newer version of phonopy as new tags were added to 'ban
 Abinit
 ------
 To read a phonon dispersion form `Abinit` we provide some python scripts to convert the data to a `.json` format.
-You can obtain these scripts form the Github page. To install them just do:
+You can obtain these scripts from the [Github](https://github.com/henriquemiranda/phononwebsite/) page. To install them just do:
 
     python setup.py install --user
 
@@ -88,6 +88,10 @@ My personal webpage:
 
 Contact me:  
 miranda.henrique at gmail.com
+
+Aknowledgments
+===============
+[Atsushi Togo](http://atztogo.github.io) the creator of [phonopy](http://atztogo.github.io/phonopy/) for providing phonon dispersion data from his [phonodb](http://phonondb.mtl.kyoto-u.ac.jp/) phonon database.
 
 Contribute
 ==========

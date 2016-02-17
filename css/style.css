@@ -110,6 +110,20 @@ h3 {
 	  position: absolute;
 }
 
+#div-phonodb {
+  display: none;
+}
+
+#phonodb {
+  overflow: scroll;
+  height: 200px;
+  width: 80%;
+}
+
+#mat {
+  width: 80%;
+}
+
 .positions {
     width:"100%";
     overflow: auto;
@@ -223,6 +237,7 @@ ap {
     .flex-vibcrystal {
         flex: auto;
         min-height: 500px;
+        width: 90%;
     }
 
     .flex-highcharts {

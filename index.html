@@ -54,7 +54,7 @@ BAND_LABELS = Gamma M K
 BAND = (x1,y1,z1) (x2,y2,z2) (x3,y3,z3)</code></pre>
 <p>This only works with the newer version of phonopy as new tags were added to 'band.yaml' to have information about the atomic positions and the supercell.</p>
 <h2 id="abinit">Abinit</h2>
-<p>To read a phonon dispersion form <code>Abinit</code> we provide some python scripts to convert the data to a <code>.json</code> format. You can obtain these scripts form the Github page. To install them just do:</p>
+<p>To read a phonon dispersion form <code>Abinit</code> we provide some python scripts to convert the data to a <code>.json</code> format. You can obtain these scripts from the <a href="https://github.com/henriquemiranda/phononwebsite/">Github</a> page. To install them just do:</p>
 <pre><code>python setup.py install --user</code></pre>
 <p>In the folder where you ran <code>anaddb</code> you will find a netCDF file (if your <code>Abinit</code> version has netCDF compiled) with the name <code>anaddb.out_PHBST.nc</code>. To convert it to <code>.json</code> format just run:</p>
 <pre><code>read_anaddb_phonon.py anaddb.out_PHBST.nc &lt;name_of_your_material&gt;</code></pre>
@@ -85,6 +85,8 @@ name = name of the material</code></pre>
 <p>The original implementation by Raoul Weber:<br /><a href="http://tssphysics.jpsfs.com">http://tssphysics.jpsfs.com</a></p>
 <p>My personal webpage:<br /><a href="http://henriquemiranda.github.io">http://henriquemiranda.github.io</a></p>
 <p>Contact me:<br />miranda.henrique at gmail.com</p>
+<h1 id="aknowledgments">Aknowledgments</h1>
+<p><a href="http://atztogo.github.io">Atsushi Togo</a> the creator of <a href="http://atztogo.github.io/phonopy/">phonopy</a> for providing phonon dispersion data from his <a href="http://phonondb.mtl.kyoto-u.ac.jp/">phonodb</a> phonon database.</p>
 <h1 id="contribute">Contribute</h1>
 <p>The project is still under development!</p>
 <p>You can leave your suggestions and feature requests here:<br /><a href="https://github.com/henriquemiranda/phononwebsite/issues">https://github.com/henriquemiranda/phononwebsite/issues</a></p>

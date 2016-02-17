@@ -27,7 +27,7 @@ VibCrystal = {
     bondVertical: 1,
 
     //options
-    amplitude: 0.5,
+    amplitude: 1.0,
     fps: 30,
 
     /* Initialize the phonon animation */
@@ -174,6 +174,7 @@ VibCrystal = {
 
             object.position.copy(pos);
             object.name = "atom";
+            object.atom_number = this.atom_numbers[this.atoms[i][0]];
 
             this.scene.add( object );
             this.atomobjects.push(object);
@@ -188,16 +189,19 @@ VibCrystal = {
 
 
         for (i=0;i<combinations.length;i++) {
-            a = combinations[i][0].position;
-            b = combinations[i][1].position;
+            a = combinations[i][0];
+            b = combinations[i][1];
+            ad = a.position;
+            bd = b.position;
 
             //if the separation is smaller than the sum of the bonding radius create a bond
-            length = a.distanceTo(b)
-            if (length < this.nndist ) {
-                this.bonds.push( [a,b,length] );
+            length = ad.distanceTo(bd)
+            if (length < covalent_radii[a.atom_number]+covalent_radii[b.atom_number] ) {
+            //if (length < this.nndist ) {
+                this.bonds.push( [ad,bd,length] );
 
                 //get transformations
-                var bond = getBond(a,b);
+                var bond = getBond(ad,bd);
 
                 var cylinderGeometry =
                     new THREE.CylinderGeometry(this.bondRadius,this.bondRadius,length,

@@ -41,6 +41,8 @@
 	<script type="text/javascript" src="js/gif.js"></script>
 	<script type="text/javascript" src="js/CCapture.min.js"></script>
 	<script type="text/javascript" src="js/vibcrystal.js"></script>
+	<script type="text/javascript" src="js/export.js"></script>
+	<script type="text/javascript" src="js/import.js"></script>
 	<script type="text/javascript" src="js/phonon.js"></script>
 
 	<!-- google analytics-->
@@ -69,6 +71,13 @@
 		    <h3>Materials:</h3>
 				<ul id="mat" class="materials">
 				    <li><a href="#" onclick="folder='graphene';">Graphene</a></li>
+				</ul>
+			</div>
+
+			<div id="div-phonodb">
+				<h3><a href="http://phonondb.mtl.kyoto-u.ac.jp/">Phonondb:</a></h3>
+				<ul id="phonodb" class="materials">
+						<li><a href="#" onclick="folder='graphene';">Graphene</a></li>
 				</ul>
 			</div>
 
@@ -120,8 +129,8 @@
 			<div>
 			<h3>Amplitude:</h3>
 			<form>
-				<input id="displacement" type="range"  step ="0.01" value="0.5" min="0.0" max="1.0" onchange="v.amplitude=this.value; p.amplitude=this.value; $('#phase').val(this.value)">
-				<input id="phase"        type="number" step ="0.01" value="0.5" min="0.0" max="1.0" onchange="v.amplitude=this.value; p.amplitude=this.value; $('#displacement').val(this.value)">
+				<input id="displacement" type="range"  step ="0.01" value="1.0" min="0.0" max="2.0" onchange="v.amplitude=this.value; p.amplitude=this.value; $('#phase').val(this.value)">
+				<input id="phase"        type="number" step ="0.01" value="1.0" min="0.0" max="2.0" onchange="v.amplitude=this.value; p.amplitude=this.value; $('#displacement').val(this.value)">
 			</form>
 		  </div>
       <div>
