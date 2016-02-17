@@ -72,8 +72,8 @@ function Phonon() {
     }
 
     this.loadId = function(id) {
-      console.log(id,{yaml:this.materials[id]});
-      this.loadURL({yaml:this.materials[id]});
+      console.log(id,{yaml:materials[id]});
+      this.loadURL({yaml:materials[id]});
     },
 
     this.loadURL = function(url_vars) {
