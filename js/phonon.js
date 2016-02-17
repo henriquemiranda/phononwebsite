@@ -72,8 +72,8 @@ function Phonon() {
     }
 
     this.loadId = function(id) {
-      console.log(id,{yaml:this.materials[id].url});
-      this.loadURL({yaml:this.materials[id].url});
+      this.loadURL({yaml:this.materials[id]});
+      update();
     },
 
     this.loadURL = function(url_vars) {
@@ -317,8 +317,8 @@ function update() {
 
 function createPhonodbMenu(phonodb) {
   $("#div-phonodb").css('display', 'inline')
-  materials = jsyaml.load(phonodb);
-  materials_ref = {}
+  var materials = jsyaml.load(phonodb);
+  var materials_ref = {}
   $('#phonodb').empty()
   for (i=0;i<materials.length;i++){
     material = materials[i];
@@ -342,7 +342,8 @@ function updateMenu() {
     });
 
     //get a list of materials from phonodb
-    $.get('http://phonondb.mtl.kyoto-u.ac.jp/v/phonondb.yaml', createPhonodbMenu);
+    //$.get('http://phonondb.mtl.kyoto-u.ac.jp/v/phonondb.yaml', createPhonodbMenu);
+    $.get('phonondb.yaml', createPhonodbMenu);
 }
 
 // from http://stackoverflow.com/questions/4656843/jquery-get-querystring-from-url

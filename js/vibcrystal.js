@@ -196,7 +196,7 @@ VibCrystal = {
 
             //if the separation is smaller than the sum of the bonding radius create a bond
             length = ad.distanceTo(bd)
-            if (length < covalent_radii[a.atom_number]+covalent_radii[b.atom_number] ) {
+            if (length < covalent_radii[a.atom_number]+covalent_radii[b.atom_number]+0.2 ) {
             //if (length < this.nndist ) {
                 this.bonds.push( [ad,bd,length] );
 

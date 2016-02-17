@@ -15,7 +15,6 @@ getFromPhononpyFile = function(yaml) {
 
 //yaml is the content of "band.yaml" file as a string
 getFromPhononpyString = function(yaml) {
-  console.log(yaml);
   this.k = 0;
   this.n = 0;
   var supercell_lat, rec, lat, nqpoint, npath, phonon, sc_atoms, segment_nqpoint;
