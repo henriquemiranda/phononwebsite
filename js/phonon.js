@@ -72,7 +72,8 @@ function Phonon() {
     }
 
     this.loadId = function(id) {
-      this.loadURL({yaml:this.materials[id]});
+      this.loadURL({yaml:this.materials[id]['url']});
+      this.name = this.materials[id]['name'];
       update();
     },
 
@@ -312,7 +313,6 @@ function update() {
     p.updateHighcharts();
     p.updatePage();
     v.updateObjects(p);
-    //v.animate();
 }
 
 function createPhonodbMenu(phonodb) {
@@ -322,7 +322,7 @@ function createPhonodbMenu(phonodb) {
   $('#phonodb').empty()
   for (i=0;i<materials.length;i++){
     material = materials[i];
-    materials_ref[material['id']] = material['url']
+    materials_ref[material['id']] = material
     $('#phonodb').append('<li></li>');
     $('#phonodb li:last').append("<a href='#' onclick='p.loadId("+material['id']+")'>"+material['name']+"</a>");
   }
