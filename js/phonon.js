@@ -67,7 +67,7 @@ function Phonon() {
       }
 
       if      (json) { this.getFromJsonFile(json);     }
-      else if (yaml) { this.getFromPhononpyFile(yaml); }
+      else if (yaml) { this.getFromPhononpyFile(yaml); this.name = "Custom file"}
       else           { alert("Ivalid file"); }
     }
 
