@@ -91,7 +91,11 @@ getFromPhononpyString = function(yaml) {
     for (i=0; i<segment_nqpoint[p]; i++) {
       phononi = phonon[qpoint+i];
 
-      this.qindex[phononi['distance']] = kpoints.length;
+      var dist = phononi['distance'];
+      console.log(dist);
+      if (!(dist in this.qindex)) {
+        this.qindex[dist] = kpoints.length;
+      }
       kpoints.push(phononi['q-position']);
 
       //create bands
