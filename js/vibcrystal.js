@@ -41,7 +41,6 @@ VibCrystal = {
         this.getAtypes(phonon);
         this.vibrations = phonon.vibrations;
         this.atoms      = phonon.atoms;
-        this.nndist     = phonon.nndist + 0.2;
 
         this.camera = new THREE.PerspectiveCamera( this.cameraViewAngle,
                     this.dimensions.ratio, this.cameraNear, this.cameraFar );
@@ -196,8 +195,7 @@ VibCrystal = {
 
             //if the separation is smaller than the sum of the bonding radius create a bond
             length = ad.distanceTo(bd)
-            if (length < covalent_radii[a.atom_number]+covalent_radii[b.atom_number]+0.2 ) {
-            //if (length < this.nndist ) {
+            if (length < covalent_radii[a.atom_number]+covalent_radii[b.atom_number]+0.05 ) {
                 this.bonds.push( [ad,bd,length] );
 
                 //get transformations
@@ -235,6 +233,13 @@ VibCrystal = {
     addLights: function() {
         light = new THREE.DirectionalLight( 0xffffff );
         light.position.set( 0, 0, 100 );
+        light.target.position.set(0, 0, 0);
+        light.castShadow = false;
+        this.scene.add( light );
+
+        light = new THREE.DirectionalLight( 0xffffff );
+        light.position.set( 0, 0, -100 );
+        light.target.position.set(0, 0, 0);
         light.castShadow = false;
         this.scene.add( light );
 
@@ -244,7 +249,6 @@ VibCrystal = {
 
     updateObjects: function(phonon) {
         this.getAtypes(phonon);
-        this.nndist     = phonon.nndist + 0.2;
         this.vibrations = phonon.vibrations;
         this.atoms      = phonon.atoms;
         this.removeStructure();
