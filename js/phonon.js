@@ -35,24 +35,6 @@ function Phonon() {
       this.getVibrations() //calculate vibrations
     }
 
-    this.getBondingDistance = function() {
-      //replicate the atoms two times in each direction
-      atoms = this.getStructure(2,2,2);
-
-      var combinations = getCombinations( atoms );
-      var min = 1e9;
-      for (i=0; i<combinations.length; i++ ) {
-        a = combinations[i][0];
-        b = combinations[i][1];
-
-        distance = dist(a.slice(1),b.slice(1));
-        if (min > distance) {
-          min = distance;
-        }
-      }
-      return min;
-    }
-
     //find the type of file and call the corresponding function that will read it
     //currently there are two formats available:
     //phonopy files (band.yaml) and a special .json format (description available in ./phononweb/phononweb.py)
@@ -71,9 +53,10 @@ function Phonon() {
       else           { alert("Ivalid file"); }
     }
 
+    //function to load a material from phonodb
     this.loadId = function(id) {
       this.loadURL({yaml:this.materials[id]['url']});
-      this.name = this.materials[id]['name'];
+      this.name = this.materials[id]['name'] +  " <a href='https://www.materialsproject.org/materials/mp-"+id+"'>mp-"+id+"</a>";
       update();
     },
 

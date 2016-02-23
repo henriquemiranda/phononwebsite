@@ -92,7 +92,6 @@ getFromPhononpyString = function(yaml) {
       phononi = phonon[qpoint+i];
 
       var dist = phononi['distance'];
-      console.log(dist);
       if (!(dist in this.qindex)) {
         this.qindex[dist] = kpoints.length;
       }
@@ -134,8 +133,6 @@ getFromPhononpyString = function(yaml) {
   this.formula = atom_types.join('');
   this.highcharts = highcharts;
   this.repetitions = [nx,ny,nz];
-
-  this.nndist = this.getBondingDistance();
 
   $('#nx').val(this.repetitions[0]);
   $('#ny').val(this.repetitions[1]);
@@ -195,9 +192,6 @@ getFromJson = function(data) {
       var dist = this.distances[data["highsym_qpts"][i][0]]
       this.highsym_qpts[dist] = data["highsym_qpts"][i][1];
     }
-
-    //get the bonding distance
-    this.nndist = this.getBondingDistance();
 
     $('#nx').val(this.repetitions[0]);
     $('#ny').val(this.repetitions[1]);
