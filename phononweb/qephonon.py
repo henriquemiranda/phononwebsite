@@ -6,7 +6,7 @@
 #
 # Read phonon dispersion from quantum espresso
 #
-from qepy import *
+from pw import *
 from phononweb import *
 import numpy as np
 from math import pi

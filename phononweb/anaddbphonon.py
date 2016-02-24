@@ -6,7 +6,11 @@
 #
 # Read phonon dispersion from anaddb
 #
-from netCDF4 import Dataset
+try:
+    from netCDF4 import Dataset
+    _has_netcdf = True
+except:
+    _has_netcdf = False
 from phononweb import *
 import os
 import numpy as np
@@ -31,6 +35,9 @@ class AnaddbPhonon(Phonon):
     def read_anaddb(self):
         """ read the netcdf file that results form anaddb
         """
+        if not _has_netcdf:
+            print "python netCDF4 needed to read anaddb.nc files not found."
+            exit(1)
         pcfile = Dataset(self.filename, 'r', format='NETCDF4')
 
         self.eigenvalues      = pcfile.variables['phfreqs'][:]*hartree_cm1/eV
