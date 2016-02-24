@@ -140,7 +140,7 @@ getFromPhononpyString = function(yaml) {
   this.getRepetitions();
 }
 
-this.getFromJsonFile = function(file) {
+getFromJsonFile = function(file) {
   var json_reader = new FileReader();
   self = this;
 

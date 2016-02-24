@@ -35,13 +35,14 @@ function Phonon() {
       this.getVibrations() //calculate vibrations
     }
 
+    this.getFromJsonFile = getFromJsonFile;
     //find the type of file and call the corresponding function that will read it
     //currently there are two formats available:
     //phonopy files (band.yaml) and a special .json format (description available in ./phononweb/phononweb.py)
     this.loadCustomFile = function(event) {
       var yaml = null;
       var json = null;
-
+      
       for (i=0; i<event.target.files.length; i++) {
         file = event.target.files[i];
         if (file.name.indexOf(".yaml") > -1) { yaml = file; }
