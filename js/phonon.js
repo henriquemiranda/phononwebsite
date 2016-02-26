@@ -42,7 +42,7 @@ function Phonon() {
     this.loadCustomFile = function(event) {
       var yaml = null;
       var json = null;
-      
+
       for (i=0; i<event.target.files.length; i++) {
         file = event.target.files[i];
         if (file.name.indexOf(".yaml") > -1) { yaml = file; }
@@ -60,6 +60,24 @@ function Phonon() {
       this.name = this.materials[id]['name'] +  " <a href='https://www.materialsproject.org/materials/mp-"+id+"'>mp-"+id+"</a>";
       update();
     },
+
+    this.getBondingDistance = function() {
+      //replicate the atoms two times in each direction
+      atoms = this.getStructure(2,2,2);
+
+      var combinations = getCombinations( atoms );
+      var min = 1e9;
+      for (i=0; i<combinations.length; i++ ) {
+        a = combinations[i][0];
+        b = combinations[i][1];
+
+        distance = dist(a.slice(1),b.slice(1));
+        if (min > distance) {
+          min = distance;
+        }
+      }
+      return min;
+    }
 
     this.loadURL = function(url_vars) {
       var yaml = null;

@@ -134,6 +134,8 @@ getFromPhononpyString = function(yaml) {
   this.highcharts = highcharts;
   this.repetitions = [nx,ny,nz];
 
+  this.nndist = this.getBondingDistance();
+
   $('#nx').val(this.repetitions[0]);
   $('#ny').val(this.repetitions[1]);
   $('#nz').val(this.repetitions[2]);
@@ -192,6 +194,8 @@ getFromJson = function(data) {
       var dist = this.distances[data["highsym_qpts"][i][0]]
       this.highsym_qpts[dist] = data["highsym_qpts"][i][1];
     }
+
+    this.nndist = this.getBondingDistance();
 
     $('#nx').val(this.repetitions[0]);
     $('#ny').val(this.repetitions[1]);
