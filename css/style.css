@@ -98,6 +98,12 @@ h3 {
     bottom: 0;
 }
 
+#menu {
+    height: 100%;
+    width: 100%;
+	  position: absolute;
+}
+
 #vibcrystal {
     height: 100%;
     width: 100%;
@@ -151,11 +157,12 @@ h3 {
     align-items: stretch;
 }
 
-.flex-item {
+.flex-menu {
     width: 100%;
     flex: 1;
     order: 1;
     overflow: auto;
+    position: relative;
 }
 
 .flex-vibcrystal {
@@ -229,7 +236,7 @@ ap {
       height: auto;
     }
 
-    .flex-item {
+    .flex-menu {
         flex: auto;
         order: 1;
     }
