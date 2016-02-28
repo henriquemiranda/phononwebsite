@@ -236,9 +236,15 @@ ap {
       height: auto;
     }
 
+    #menu {
+        height: auto;
+        position: relative;
+    }
+
     .flex-menu {
         flex: auto;
         order: 1;
+        height: initial;
     }
 
     .flex-vibcrystal {
