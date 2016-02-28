@@ -237,6 +237,16 @@ function Phonon() {
                   animation: false
               },
               series: {
+                  allowPointSelect: true,
+                  marker: {
+                      states: {
+                          select: {
+                              fillColor: 'red',
+                              radius: 5,
+                              lineWidth: 0
+                          }
+                      }
+                  },
                   cursor: 'pointer',
                   point: { events: {
                        click: function(event) {
