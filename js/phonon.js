@@ -20,12 +20,12 @@ $.ajaxSetup({
 
 //Phonon Class
 function Phonon() {
-    var k = 0;
-    var n = 0;
-    var nx = 1;
-    var ny = 1;
-    var nz = 1;
-    var amplitude = 1.0;
+    this.k = 0;
+    this.n = 0;
+    this.nx = 1;
+    this.ny = 1;
+    this.nz = 1;
+    this.amplitude = 1.0;
 
     this.getRepetitions = function() {
       this.nx = $('#nx').val();

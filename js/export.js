@@ -74,7 +74,9 @@ exportPOSCAR = function () {
   string += "\n";
 
   string += "Cartesian\n"
-  var phase = Complex.Polar(this.amplitude,parseFloat($("#phase").val())/360*2.0*pi);
+  this.phase = parseFloat($("#phase").val())/360*2.0*pi;
+  var phase = Complex.Polar(this.amplitude,this.phase);
+
   for (i=0; i<atoms.length; i++) {
     vibrations = this.vibrations[i];
     for (j=1; j<4; j++) {
@@ -90,5 +92,4 @@ exportPOSCAR = function () {
   document.body.appendChild(element);
   element.click();
   document.body.removeChild(element);
-
 }
