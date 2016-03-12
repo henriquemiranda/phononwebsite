@@ -39,7 +39,7 @@
   <script type="text/javascript" src="js/atomic_data.js"></script>
   <script type="text/javascript" src="js/Whammy.js"></script>
 	<script type="text/javascript" src="js/gif.js"></script>
-	<script type="text/javascript" src="js/CCapture.min.js"></script>
+	<script type="text/javascript" src="js/CCapture.js"></script>
 	<script type="text/javascript" src="js/vibcrystal.js"></script>
 	<script type="text/javascript" src="js/export.js"></script>
 	<script type="text/javascript" src="js/import.js"></script>
@@ -130,8 +130,8 @@
 			<div>
 			<h3>Amplitude:</h3>
 			<form>
-				<input id="displacement" type="range"  step ="0.01" value="1.0" min="0.0" max="2.0" onchange="v.amplitude=this.value; p.amplitude=this.value; $('#phase').val(this.value)">
-				<input id="phase"        type="number" step ="0.01" value="1.0" min="0.0" max="2.0" onchange="v.amplitude=this.value; p.amplitude=this.value; $('#displacement').val(this.value)">
+				<input id="displacement" type="range"  step ="0.01" value="1.0" min="0.0" max="4.0" onchange="v.amplitude=this.value; p.amplitude=this.value; $('#phase').val(this.value)">
+				<input id="phase"        type="number" step ="0.01" value="1.0" min="0.0" max="4.0" onchange="v.amplitude=this.value; p.amplitude=this.value; $('#displacement').val(this.value)">
 			</form>
 		  </div>
       <div>
@@ -148,8 +148,8 @@
       </div>
 			<div>
 			<h3>Export movie:</h3>
-					<button type="button" onclick="v.capture('gif')">gif</button>
-					<button type="button" onclick="v.capture('webm')">webm</button>
+					<button type="button" onclick="v.capturestart('gif')">gif</button>
+					<button type="button" onclick="v.capturestart('webm')">webm</button>
 					<div id="progress"></div>
       </div>
 			</div>

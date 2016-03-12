@@ -67,7 +67,9 @@ Here are some examples of what can be added to the website link:
   - [?yaml=http://henriquemiranda.github.io/phononwebsite/tests/phonopy/band.yaml](http://henriquemiranda.github.io/phononwebsite/phonon.html?yaml=http://henriquemiranda.github.io/phononwebsite/tests/phonopy/band.yaml)
   - [?json=http://henriquemiranda.github.io/phononwebsite/graphene/data.json](http://henriquemiranda.github.io/phononwebsite/phonon.html?json=http://henriquemiranda.github.io/phononwebsite/graphene/data.json)
 
-You are free to use all the images generated with this website in your publications and presentations as long as you cite this work (a link to the website is enough).
+You are free to use all the images generated with this website in your publications and presentations as long as you cite this work (a link to the website is enough). For the license terms of the data from [phonodb](http://phonondb.mtl.kyoto-u.ac.jp/) please refer to their website.
+
+In polar materials the LO-TO splitting is missing, we are working on adding these corrections.
 
 Authors
 =======
@@ -91,7 +93,7 @@ miranda.henrique at gmail.com
 
 Aknowledgments
 ===============
-[Ludger Wirtz](http://wwwen.uni.lu/recherche/fstc/physics_and_materials_science_research_unit/research_areas/theoretical_solid_state_physics) for the original idea and and important scientific advices.
+[Ludger Wirtz](http://wwwen.uni.lu/recherche/fstc/physics_and_materials_science_research_unit/research_areas/theoretical_solid_state_physics) for the original idea and important scientific advices.
 [Atsushi Togo](http://atztogo.github.io) the creator of [phonopy](http://atztogo.github.io/phonopy/) for providing phonon dispersion data from his [phonodb](http://phonondb.mtl.kyoto-u.ac.jp/) phonon database.
 [José Pedro Silva](http://jpsfs.com/) for very helpful advices on technical issues and the best web technologies to use.
 
