@@ -221,7 +221,7 @@ ap {
     background: deepskyblue;
 }
 
-@media all and (max-width: 1000px) {
+@media all and (max-width: 700px) {
     .navigation {
         justify-content: space-around;
     }
