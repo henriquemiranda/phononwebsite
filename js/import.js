@@ -1,3 +1,13 @@
+//check if the tags are present
+getYaml = function(tag,object) {
+  if (!(tag in object)) {
+    alert(tag + " not found in the file! Please generate the file again with the lastest version of phonopy!");
+  }
+  else {
+    return object[tag];
+  }
+}
+
 //yaml is a file object with the "band.yaml" file
 getFromPhononpyFile = function(yaml) {
   var yaml_reader = new FileReader();
@@ -21,13 +31,13 @@ getFromPhononpyString = function(yaml) {
 
   //read the yaml files
   var phononyaml = jsyaml.load(yaml);
-  lat = phononyaml['lattice'];
-  nqpoint = phononyaml['nqpoint'];
-  npath = phononyaml['npath'];
-  tmat = phononyaml['supercell_matrix'];
-  pc_atoms = phononyaml['atoms'];
-  phonon = phononyaml['phonon'];
-  if (phononyaml['segment_nqpoint']) {
+  lat      = getYaml('lattice',phononyaml);
+  nqpoint  = getYaml('nqpoint',phononyaml);
+  npath    = getYaml('npath',phononyaml);
+  tmat     = getYaml('supercell_matrix',phononyaml);
+  pc_atoms = getYaml('atoms',phononyaml);
+  phonon   = getYaml('phonon',phononyaml);
+  if ('segment_nqpoint' in phononyaml) {
     segment_nqpoint = phononyaml['segment_nqpoint'];
   }
   else {
