@@ -7,6 +7,31 @@
 import os
 import re
 from math import sqrt
+import numpy as np
+
+def red_car(red,lat):
+    """
+    Convert reduced coordinates to cartesian
+    """
+    return np.array(map( lambda coord: coord[0]*lat[0]+coord[1]*lat[1]+coord[2]*lat[2], red))
+
+def car_red(car,lat):
+    """
+    Convert cartesian coordinates to reduced
+    """
+    return np.array(map( lambda coord: np.linalg.solve(np.array(lat).T,coord), car))
+
+def rec_lat(lat):
+    """
+    Calculate the reciprocal lattice vectors
+    """
+    a1,a2,a3 = np.array(lat)
+    v = np.dot(a1,np.cross(a2,a3))
+    b1 = np.cross(a2,a3)/v
+    b2 = np.cross(a3,a1)/v
+    b3 = np.cross(a1,a2)/v
+    return np.array([b1,b2,b3])
+
 
 class PwIn():
     """ A class to generate an manipulate quantum espresso input files
@@ -41,6 +66,7 @@ class PwIn():
             self.store(self.electrons,"electrons")   #read &electrons
             self.store(self.ions,"ions")        #read &ions
             self.store(self.cell,"cell")        #read &ions
+            print self.system
             #read ATOMIC_SPECIES
             self.read_atomicspecies()
             #read ATOMIC_POSITIONS
@@ -63,7 +89,11 @@ class PwIn():
         """ Get the lattice parameters, postions of the atoms and chemical symbols
         """
         cell = self.cell_parameters
-        pos = [atom[1] for atom in self.atoms]
+        if self.atomic_pos_type == 'bohr':
+            pos = [atom[1] for atom in self.atoms]
+            pos = car_red(pos,cell)
+        else:
+            pos = [atom[1] for atom in self.atoms]
         sym = [atom[0] for atom in self.atoms]
         return cell, pos, sym
 
@@ -120,6 +150,12 @@ class PwIn():
             self.cell_parameters = [[ -a/2,   0, a/2],
                                     [    0, a/2, a/2],
                                     [ -a/2, a/2,   0]]
+        elif ibrav == 6:
+            a = float(self.system['celldm(1)'])
+            c = float(self.system['celldm(3)'])
+            self.cell_parameters = [[  a,   0,   0],
+                                    [  0,   a,   0],
+                                    [  0,   0, c*a]]
         else:
             print 'ibrav = %d not implemented'%ibrav
             exit(1)

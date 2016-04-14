@@ -188,25 +188,18 @@ function Phonon() {
     this.updateHighcharts = function(self) { return function(applet) {
       qindex = this.qindex;
 
-      //function to set the minimum of the y axis as found in: http://stackoverflow.com/questions/16417124/set-highcharts-y-axis-min-value-to-0-unless-there-is-negative-data
-      var setMin = function () {
-        var chart = this,
-        ex = chart.yAxis[0].getExtremes();
-
-        // Sets the min value for the chart
-        var minVal = 0;
-
-        if (ex.dataMin < -1) {
-          minVal = ex.dataMin;
+      var minVal = 0;
+      for (i=0; i<this.eigenvalues.length; i++) {
+        min = Math.min.apply(null, this.eigenvalues[i])
+        if ( minVal > min ) {
+          minVal = min;
         }
-
-        //set the min and return the values
-        chart.yAxis[0].setExtremes(minVal, null, true, false);
       }
 
       var HighchartsOptions = {
           chart: { type: 'line',
-                   events: { load: setMin } },
+                   zoomType: 'xy'
+                 },
           title: { text: 'Phonon dispersion' },
           xAxis: { plotLines: [],
                    lineWidth: 0,
@@ -230,7 +223,9 @@ function Phonon() {
                    tickLength: 0
                   },
           yAxis: { title: { text: 'Frequency (cm-1)' },
-                   plotLines: [ {value: 0, color: '#808080' } ] },
+                   plotLines: [ {value: 0, color: '#808080' } ],
+                   min: minVal
+                 },
           tooltip: { formatter: function(x) { return Math.round(this.y*100)/100+' cm-1' } },
           plotOptions: {
               line: {
@@ -361,19 +356,25 @@ function updateMenu() {
 // from http://stackoverflow.com/questions/4656843/jquery-get-querystring-from-url
 function getUrlVars()
 {
-    var vars = {}, hash;
-    if (location.search) {
-      var hashes = location.search.slice(1).split('&');
-      for(var i = 0; i < hashes.length; i++)
-      {
-          hash = hashes[i].split('=');
-          vars[hash[0]] = hash[1];
-      }
-      return vars;
+  var vars = {}, hash;
+  if (location.search) {
+    var hashes = location.search.slice(1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+        hash = hashes[i].split('=');
+        vars[hash[0]] = hash[1];
     }
-    else {
-      return null;
-    }
+    return vars;
+  }
+  else {
+    return null;
+  }
+}
+
+function updateRepetitions() {
+  v.pause();
+  p.getRepetitions();
+  v.updateObjects(p);
 }
 
 $(document).ready(function(){
@@ -400,11 +401,8 @@ $(document).ready(function(){
 
     //jquery to make an action once you change the number of repetitions
     $(".input-rep").keyup(function(event){
-        if(event.keyCode == 13){
-            v.pause();
-            p.getRepetitions();
-            v.updateObjects(p);
-        }
+        if(event.keyCode == 13) updateRepetitions();
     });
+
 
 });
