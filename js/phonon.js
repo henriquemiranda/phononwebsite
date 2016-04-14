@@ -196,6 +196,8 @@ function Phonon() {
         }
       }
 
+      if (minVal > -1) minVal = 0;
+
       var HighchartsOptions = {
           chart: { type: 'line',
                    zoomType: 'xy'
