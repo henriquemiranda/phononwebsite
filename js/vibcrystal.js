@@ -159,7 +159,7 @@ VibCrystal = {
         this.atompos = [];
         this.bonds = [];
         this.nndist = phonon.nndist+0.05;
-        
+
         var sphereGeometry = new THREE.SphereGeometry(this.sphereRadius,this.sphereLat,this.sphereLon);
 
         //get geometric center
@@ -201,7 +201,7 @@ VibCrystal = {
 
             //if the separation is smaller than the sum of the bonding radius create a bond
             length = ad.distanceTo(bd)
-            if (length < covalent_radii[a.atom_number]+covalent_radii[b.atom_number]+0.2 || length < this.nndist ) {
+            if (length < covalent_radii[a.atom_number]+covalent_radii[b.atom_number] || length < this.nndist ) {
                 this.bonds.push( [ad,bd,length] );
 
                 //get transformations
