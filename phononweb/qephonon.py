@@ -48,7 +48,7 @@ class QePhonon(Phonon):
         f.close()
 
         #determine the numer of atoms
-        nphons = max([int(x) for x in re.findall( 'freq \((.+)\)', file_str )])
+        nphons = max([int(x) for x in re.findall( 'freq|omega\((.+)\)', file_str )])
         atoms = nphons/3
 
         #check if the number fo atoms is the same

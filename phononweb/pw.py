@@ -9,6 +9,8 @@ import re
 from math import sqrt
 import numpy as np
 
+ang2bohr = 1.889725989
+
 def red_car(red,lat):
     """
     Convert reduced coordinates to cartesian
@@ -91,6 +93,10 @@ class PwIn():
         cell = self.cell_parameters
         if self.atomic_pos_type == 'bohr':
             pos = [atom[1] for atom in self.atoms]
+            pos = car_red(pos,cell)
+        if self.atomic_pos_type == 'angstrom':
+            pos = [atom[1] for atom in self.atoms]
+            pos = [[x*ang2bohr for x in a] for a in pos]
             pos = car_red(pos,cell)
         else:
             pos = [atom[1] for atom in self.atoms]
