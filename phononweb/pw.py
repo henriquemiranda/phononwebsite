@@ -62,6 +62,7 @@ class PwIn():
         if filename:
             f = open(filename,"r")
             self.file_name = filename #set filename
+            #self.file_lines = [ line.lower() for line in f.readlines()] #set file lines
             self.file_lines = f.readlines() #set file lines
             self.store(self.control,"control")     #read &control
             self.store(self.system,"system")      #read &system
@@ -192,7 +193,7 @@ class PwIn():
                         exit()
 
     def slicefile(self, keyword):
-        lines = re.findall('&%s(?:.?)+\n((?:.+\n)+?)(?:\s+)?\/'%keyword,"".join(self.file_lines),re.MULTILINE)
+        lines = re.findall('&%s(?:.?)+\n((?:.+\n)+?)(?:\s+)?\/'%keyword,"".join(self.file_lines),re.MULTILINE and re.IGNORECASE)
         return lines
     
     def store(self,group,name):
