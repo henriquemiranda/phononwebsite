@@ -27,6 +27,8 @@ class AnaddbPhonon(Phonon):
         #if the file already exists then we read it
         if os.path.isfile(self.filename):
             self.read_anaddb()
+        else:
+            raise ValueError('File {} does not exist.'.format(self.filename))
 
         #reorder eigenvales
         if reorder:
