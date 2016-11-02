@@ -14,6 +14,7 @@ except:
 from phononweb import *
 import os
 import numpy as np
+from math import sqrt
 
 class AnaddbPhonon(Phonon):
     def __init__(self,filename,name,reps=(3,3,3),reorder=True,highsym_qpts=None,folder='.'):
@@ -55,6 +56,15 @@ class AnaddbPhonon(Phonon):
 
         #transform the vectors
         vectors = vectors.reshape((self.nqpoints, self.nphons, self.natoms, 3, 2))
+
+        #the abinit eigenvectors are scaled with the atomic masses but the phonopy ones are not
+        #so we always scale the eigenvectors with the atomic masses in the javascript of the website
+        #here we scale then with sqrt(m) so that we recover the correct scalling on the website
+        for na in xrange(self.natoms):
+            atomic_specie = self.atypes[na]-1
+            atomic_number = self.atomic_numbers[atomic_specie]
+            vectors[:,:,na,:,:] *= sqrt(atomic_mass[atomic_number])       
+ 
         #normalize the eigenvectors
         self.eigenvectors = vectors/np.linalg.norm(vectors[0,0])
 
