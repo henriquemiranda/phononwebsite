@@ -35,7 +35,7 @@ getFromPhononpyString = function(yaml) {
   nqpoint  = getYaml('nqpoint',phononyaml);
   npath    = getYaml('npath',phononyaml);
   tmat     = getYaml('supercell_matrix',phononyaml);
-  pc_atoms = getYaml('atoms',phononyaml);
+  pc_atoms = getYaml('points',phononyaml);
   phonon   = getYaml('phonon',phononyaml);
   if ('segment_nqpoint' in phononyaml) {
     segment_nqpoint = phononyaml['segment_nqpoint'];

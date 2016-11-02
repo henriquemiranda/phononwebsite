@@ -144,8 +144,14 @@ class PwIn():
                     self.cell_parameters = [[1,0,0],[0,1,0],[0,0,1]]
                     for i in xrange(3):
                         self.cell_parameters[i] = [ float(x)*a for x in lines.next().split() ]
-            if self.cell_units == 'angstrom' or self.cell_units == 'bohr':
-                del self.system['celldm(1)']
+                    self.cell_parameters = np.array(self.cell_parameters)
+            if self.cell_units == 'angstrom':
+                self.cell_parameters *= ang2bohr
+                if 'celldm(1)' in self.system:
+                    del self.system['celldm(1)']
+            if self.cell_units == 'bohr':
+                if 'celldm(1)' in self.system:
+                    del self.system['celldm(1)']
         elif ibrav == 4:
             a = float(self.system['celldm(1)'])
             c = float(self.system['celldm(3)'])
