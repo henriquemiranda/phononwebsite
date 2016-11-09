@@ -2,6 +2,7 @@
 getYaml = function(tags,object) {
   var ntags = tags.length;
   for (var i = 0; i < ntags; i++) {
+      var tag = tags[i];
       if ((tag in object)) {
         return object[tag];
       }
