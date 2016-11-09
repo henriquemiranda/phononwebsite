@@ -32,12 +32,12 @@ getFromPhononpyString = function(yaml) {
 
   //read the yaml files
   var phononyaml = jsyaml.load(yaml);
-  lat      = getYaml({'lattice'},phononyaml);
-  nqpoint  = getYaml({'nqpoint'},phononyaml);
-  npath    = getYaml({'npath'},phononyaml);
-  tmat     = getYaml({'supercell_matrix'},phononyaml);
-  pc_atoms = getYaml({'points','atoms'},phononyaml);
-  phonon   = getYaml({'phonon'},phononyaml);
+  lat      = getYaml(['lattice'],phononyaml);
+  nqpoint  = getYaml(['nqpoint'],phononyaml);
+  npath    = getYaml(['npath'],phononyaml);
+  tmat     = getYaml(['supercell_matrix'],phononyaml);
+  pc_atoms = getYaml(['points','atoms'],phononyaml);
+  phonon   = getYaml(['phonon'],phononyaml);
   if ('segment_nqpoint' in phononyaml) {
     segment_nqpoint = phononyaml['segment_nqpoint'];
   }
@@ -60,8 +60,8 @@ getFromPhononpyString = function(yaml) {
   var pos,x,y,z,atom_types = [], atom_numbers = [] ;
   var atomic_numbers = {}, pc_atoms_car = [], pc_atoms_red = [];
   for (i=0; i<pc_atoms.length; i++) {
-    var symbol = getYaml({'symbol'},pc_atoms[i]);
-    var position = getYaml({'position','coordinates'},pc_atoms[i]);
+    var symbol = getYaml(['symbol'],pc_atoms[i]);
+    var position = getYaml(['position','coordinates'],pc_atoms[i]);
     atom_numbers.push(atomic_number[symbol]);
     atom_types.push(symbol);
     pc_atoms_red.push(position);
