@@ -60,7 +60,7 @@ getFromPhononpyString = function(yaml) {
   var atomic_numbers = {}, pc_atoms_car = [], pc_atoms_red = [];
   for (i=0; i<pc_atoms.length; i++) {
     var symbol = pc_atoms[i]['symbol'];
-    var position = pc_atoms[i]['position'];
+    var position = pc_atoms[i]['coordinates'];
     atom_numbers.push(atomic_number[symbol]);
     atom_types.push(symbol);
     pc_atoms_red.push(position);
