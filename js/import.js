@@ -7,7 +7,8 @@ getYaml = function(tags,object) {
         return object[tag];
       }
   }
-  alert(tags + " not found in the file! Please generate the file again with the lastest version of phonopy!");
+  alert(tags + " not found in the file. Please generate the file again with the lastest version of phonopy.");
+  throw new Error(tags + " not found in the file.");
 }
 
 //yaml is a file object with the "band.yaml" file
@@ -114,7 +115,7 @@ getFromPhononpyString = function(yaml) {
       eivec = [];
       for (n=0; n<nbands; n++) {
         eivals[n].push([phononi['distance'],phononiband[n]['frequency']*thz2ev]);
-        eivec.push(phononiband[n]['eigenvector']);
+        eivec.push(getYaml(['eigenvector'],phononiband[n]));
       }
       eivecs.push(eivec);
     }
