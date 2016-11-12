@@ -69,7 +69,6 @@ class PwIn():
             self.store(self.electrons,"electrons")   #read &electrons
             self.store(self.ions,"ions")        #read &ions
             self.store(self.cell,"cell")        #read &ions
-            print self.system
             #read ATOMIC_SPECIES
             self.read_atomicspecies()
             #read ATOMIC_POSITIONS
@@ -199,7 +198,7 @@ class PwIn():
                         exit()
 
     def slicefile(self, keyword):
-        lines = re.findall('&%s(?:.?)+\n((?:.+\n)+?)(?:\s+)?\/'%keyword,"".join(self.file_lines),re.MULTILINE and re.IGNORECASE)
+        lines = re.findall('&%s(?:.?)+\n((?:.+\n)+?)(?:\s+)?[\/&]'%keyword,"".join(self.file_lines),re.MULTILINE and re.IGNORECASE)
         return lines
     
     def store(self,group,name):

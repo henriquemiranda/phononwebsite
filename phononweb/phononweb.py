@@ -231,9 +231,9 @@ class Phonon():
         text += "atoms:\n"
         for a in range(self.natoms):
             text += "%3s %3d"%(self.atom_types[a],self.atom_numbers[a])+("%12.8lf "*3)%tuple(self.pos[a])+"\n"
-        text += "chemical symbols:\n"
-        text += str(self.chemical_symbols)+"\n"
-        text += str(self.atomic_numbers)+"\n"
+        text += "atypes:\n"
+        for cs,an in zip(self.chemical_symbols,self.atomic_numbers):
+            text += "%3s %d\n"%(cs,an)
         text += "chemical formula:\n"
         text += self.chemical_formula+"\n"
         text += "nqpoints:\n"

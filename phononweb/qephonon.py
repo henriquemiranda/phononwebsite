@@ -97,6 +97,13 @@ class QePhonon(Phonon):
         self.natoms = len(self.pos)
         self.chemical_formula = self.get_chemical_formula()
 
-        #convert to reduced coordinates
-        if pwin.atomic_pos_type.lower() == "cartesian":
+        pos_type = pwin.atomic_pos_type.lower()
+        if pos_type == "cartesian":
+            #convert to reduced coordinates
             self.pos = car_red(self.pos,self.cell)
+        else if pos_type == "crystal":
+            pass
+        else:
+            print "Coordinate format %s in input file not known"%pos_type
+            exit(1)
+
