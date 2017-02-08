@@ -1,8 +1,11 @@
 /*
 Class to show phonon vibrations using Three.js and WebGl
 */
+var vec_y = new THREE.Vector3( 0, 1, 0 );
+var vec_0 = new THREE.Vector3( 0, 0, 0 );
 
 VibCrystal = {
+    arrows: false,
     container: null,
     container0: null,
     dimensions: null,
@@ -22,9 +25,16 @@ VibCrystal = {
     sphereRadius: 0.5,
     sphereLat: 12,
     sphereLon: 12,
+    //bonds
     bondRadius: 0.1,
     bondSegments: 6,
     bondVertical: 1,
+    //arrows
+    arrowHeadRadiusRatio: 2,
+    arrowHeadLengthRatio: .25,
+    arrowRadius: 0.15,
+    arrowLength: 1.0,
+    arrowScale: 2.0,
 
     capturer: null,
 
@@ -154,13 +164,20 @@ VibCrystal = {
     },
 
     addStructure: function(phonon) {
-        this.atomobjects = [];
-        this.bondobjects = [];
+        this.atomobjects  = [];
+        this.bondobjects  = [];
+        this.arrowobjects = []; 
         this.atompos = [];
+        this.atomvel = [];
         this.bonds = [];
         this.nndist = phonon.nndist+0.05;
 
+        //atoms balls geometry
         var sphereGeometry = new THREE.SphereGeometry(this.sphereRadius,this.sphereLat,this.sphereLon);
+        //arrow geometry
+        var arrowGeometry = new THREE.CylinderGeometry( 0, this.arrowHeadRadiusRatio*this.arrowRadius, this.arrowLength * this.arrowHeadLengthRatio );
+        var axisGeometry  = new THREE.CylinderGeometry( this.arrowRadius, this.arrowRadius, this.arrowLength);
+        var AxisMaterial  = new THREE.MeshLambertMaterial( { color: 0xbbffbb, blending: THREE.AdditiveBlending } );
 
         //get geometric center
         geometricCenter = new THREE.Vector3(0,0,0);
@@ -170,9 +187,9 @@ VibCrystal = {
         }
         geometricCenter.multiplyScalar(1.0/this.atoms.length);
 
-        //add a ball for each atom
         for (i=0;i<this.atoms.length;i++) {
-
+            
+            //add a ball for each atom
             object = new THREE.Mesh( sphereGeometry, this.materials[this.atoms[i][0]] );
             pos = new THREE.Vector3(this.atoms[i][1], this.atoms[i][2], this.atoms[i][3]);
             pos.sub(geometricCenter);
@@ -180,10 +197,25 @@ VibCrystal = {
             object.position.copy(pos);
             object.name = "atom";
             object.atom_number = this.atom_numbers[this.atoms[i][0]];
+            object.velocity = vec_0.clone();
 
             this.scene.add( object );
-            this.atomobjects.push(object);
+            this.atomobjects.push( object );
             this.atompos.push( pos );
+
+            if (this.arrows) {
+                //add an arrow for each atom
+                ArrowMesh     = new THREE.Mesh( arrowGeometry, AxisMaterial );
+                ArrowMesh.position.y = (this.arrowLength+this.arrowLength*this.arrowHeadLengthRatio)/2;
+                //merge from of the arrow with cylinder
+                ArrowMesh.updateMatrix();
+                axisGeometry.merge(ArrowMesh.geometry,ArrowMesh.matrix);
+                AxisMesh      = new THREE.Mesh( axisGeometry, AxisMaterial );
+                AxisMesh.position.copy(pos);
+                
+                this.scene.add( AxisMesh );
+                this.arrowobjects.push( AxisMesh );
+            }
         }
 
         //obtain combinations two by two of all the atoms
@@ -207,11 +239,8 @@ VibCrystal = {
                 //get transformations
                 var bond = getBond(ad,bd);
 
-                var cylinderGeometry =
-                    new THREE.CylinderGeometry(this.bondRadius,this.bondRadius,length,
-                                               this.bondSegments,this.bondVertical,true);
-
                 //create cylinder mesh
+                var cylinderGeometry = new THREE.CylinderGeometry(this.bondRadius,this.bondRadius,length,this.bondSegments,this.bondVertical,true);
                 var object = new THREE.Mesh(cylinderGeometry, material);
 
                 object.setRotationFromQuaternion( bond.quaternion );
@@ -309,6 +338,8 @@ VibCrystal = {
         var currentTime = Date.now();
         var t = currentTime * 0.001;
         var phase = Complex.Polar(this.amplitude,t*2.0*pi);
+        var v = new THREE.Vector3();
+        var vlength;
 
         //update positions according to vibrational modes
         for (i=0; i<this.atomobjects.length; i++) {
@@ -316,10 +347,25 @@ VibCrystal = {
             atompos    = this.atompos[i];
             vibrations = this.vibrations[i];
 
-            x = atompos.x + phase.mult(vibrations[0]).real();
-            y = atompos.y + phase.mult(vibrations[1]).real();
-            z = atompos.z + phase.mult(vibrations[2]).real();
-            this.atomobjects[i].position.set(x,y,z);
+            x  = atompos.x + phase.mult(vibrations[0]).real();
+            y  = atompos.y + phase.mult(vibrations[1]).real();
+            z  = atompos.z + phase.mult(vibrations[2]).real();
+            this.atomobjects[i].position.set( x, y, z);
+
+            if (this.arrows) {
+                vx = phase.mult(vibrations[0]).real();
+                vy = phase.mult(vibrations[1]).real();
+                vz = phase.mult(vibrations[2]).real();
+
+                //velocity vector
+                v.set(vx,vy,vz);
+                vlength = v.length()/this.amplitude;
+                s = .5*this.arrowScale/this.amplitude;
+ 
+                this.arrowobjects[i].position.set(x+vx*s,y+vy*s,z+vz*s);
+                this.arrowobjects[i].scale.y = vlength*this.arrowScale;
+                this.arrowobjects[i].quaternion.setFromUnitVectors(vec_y,v.normalize());
+            }
         }
 
         //update the bonds positions
@@ -344,7 +390,9 @@ VibCrystal = {
     }
 }
 
-var vec_y = new THREE.Vector3( 0, 1, 0 );
+//with position and velocity get the velocity vector
+
+//get a quarternion and midpoint that links two points
 function getBond( point1, point2 ) {
     var direction = new THREE.Vector3().subVectors(point2, point1);
 

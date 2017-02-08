@@ -428,7 +428,6 @@ function CCapture( settings ) {
 		if( _capturing ) {
 			_encoder.add( canvas );
 			_frameN++;
-			console.log(_time);
 			//if _frameCount > totalframes stop
 			if ( _frameN > _frameMax) {
 				_end();
