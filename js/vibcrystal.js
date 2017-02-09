@@ -5,7 +5,10 @@ var vec_y = new THREE.Vector3( 0, 1, 0 );
 var vec_0 = new THREE.Vector3( 0, 0, 0 );
 
 VibCrystal = {
+    time:0,
     arrows: false,
+    paused: false,
+
     container: null,
     container0: null,
     dimensions: null,
@@ -14,9 +17,9 @@ VibCrystal = {
     controls: null,
     scene: null,
     renderer: null,
-    cameraDistance: 100,
 
     //camera options
+    cameraDistance: 100,
     cameraViewAngle: 10,
     cameraNear: 0.1,
     cameraFar: 5000,
@@ -32,14 +35,15 @@ VibCrystal = {
     //arrows
     arrowHeadRadiusRatio: 2,
     arrowHeadLengthRatio: .25,
-    arrowRadius: 0.15,
+    arrowRadius: 0.1,
     arrowLength: 1.0,
-    arrowScale: 2.0,
+    arrowScale: 4.0,
 
     capturer: null,
 
     //options
     amplitude: 1.0,
+    speed: 1.0,
     fps: 60,
 
     /* Initialize the phonon animation */
@@ -313,6 +317,16 @@ VibCrystal = {
 
     },
 
+    playpause: function() {
+        if (this.paused) {
+            this.paused = false;
+        }
+        else {
+            this.paused = true;
+        }
+        this.time
+    },
+
     pause: function() {
         var id = requestAnimationFrame( this.animate.bind(this) );
         cancelAnimationFrame( id );
@@ -335,11 +349,13 @@ VibCrystal = {
         var atom, bond, atompos, bondobject;
         var vibrations;
 
-        var currentTime = Date.now();
-        var t = currentTime * 0.001;
+        var currentTime = Date.now()/1000.0; //get the current time in miuliseconds and convert to seconds
+        var t = currentTime * this.speed;
         var phase = Complex.Polar(this.amplitude,t*2.0*pi);
         var v = new THREE.Vector3();
         var vlength;
+
+        if (this.paused) return;
 
         //update positions according to vibrational modes
         for (i=0; i<this.atomobjects.length; i++) {
