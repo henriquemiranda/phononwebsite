@@ -149,8 +149,8 @@
 
             <div>
             <h3>Vectors:</h3>
-                <input id="vamplitude_range" type="range"  step ="0.5" value="4.0" min="0.0" max="10.0" onchange="v.arrowScale=this.value">
-                <input type="checkbox" onclick="v.arrows = this.checked; updateRepetitions()">on</input>
+                <input id="vamplitude_range" type="range" step ="1.0" value="4.0" min="0.0" max="50.0" onchange="v.arrowScale=this.value">
+                <input id="drawvectors" type="checkbox" onclick="v.arrows = this.checked; updateRepetitions()">on</input>
             </div>
             <div>
             <h3>Export displacement:</h3>
@@ -163,7 +163,7 @@
             <div>
             <h3>Export movie:</h3>
                 <button type="button" onclick="v.capturestart('gif')">gif</button>
-                <button type="button" onclick="v.capturestart('webm')">webm</button>
+                <button id="webmbutton" type="button" onclick="v.capturestart('webm')">webm</button>
                 <div id="progress"></div>
             </div>
             <div>

@@ -384,6 +384,17 @@ $(document).ready(function(){
     p = new Phonon();
     v = VibCrystal;
 
+    //check if its chrome http://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
+    // Chrome 1+
+    var isChrome = !!window.chrome && !!window.chrome.webstore;
+
+    // only show webm for chrome
+    if (!isChrome) {
+        $('#webmbutton')[0].style.visibility = 'hidden';
+    }
+
+    //get if the draw vectors option is activated
+    v.arrows = $('#drawvectors')[0].checked;
     $('#file-input')[0].addEventListener('change', p.loadCustomFile.bind(p), false);
     $('#file-input')[0].addEventListener('click', function() { this.value = '';}, false);
     updateMenu();

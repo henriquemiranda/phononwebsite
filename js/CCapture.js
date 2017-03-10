@@ -269,7 +269,6 @@ function CCapture( settings ) {
 
 	_settings.framerate = _settings.framerate || 60;
 	_frameMax = _settings.frameMax;
-	console.log(settings);
 	_end = _settings.end || function(){};
 	_verbose = _settings.verbose || false;
 	_settings.step = 1000.0 / _settings.framerate;
@@ -424,7 +423,6 @@ function CCapture( settings ) {
 	}
 
 	function _capture( canvas ) {
-
 		if( _capturing ) {
 			_encoder.add( canvas );
 			_frameN++;

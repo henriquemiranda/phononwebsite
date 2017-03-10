@@ -122,17 +122,15 @@ VibCrystal = {
     capturestart: function(format) {
       var progress = document.getElementById( 'progress' );
 
-      //get gifs
       this.capturer = new CCapture( { format: format,
                                       workersPath: 'js/',
-                                      verbose: false,
+                                      verbose: true,
                                       frameMax: this.fps,
                                       end: this.captureend.bind(this,format),
                                       framerate: this.fps,
                                       onProgress: function( p ) { progress.style.width = ( p * 100 ) + '%' }
                                     } ),
 
-      this.frame=0;
       this.capturer.start();
     },
 
@@ -338,7 +336,7 @@ VibCrystal = {
 
           requestAnimationFrame( this.animate.bind(this) );
 
-        }.bind(this), 1000 / 30 );
+        }.bind(this), 1000 / 60 );
 
         this.controls.update();
         this.render();
@@ -349,7 +347,7 @@ VibCrystal = {
         var atom, bond, atompos, bondobject;
         var vibrations;
 
-        var currentTime = Date.now()/1000.0; //get the current time in miuliseconds and convert to seconds
+        var currentTime = Date.now()/1000.0; //get the current time in miliseconds and convert to seconds
         var t = currentTime * this.speed;
         var phase = Complex.Polar(this.amplitude,t*2.0*pi);
         var v = new THREE.Vector3();
