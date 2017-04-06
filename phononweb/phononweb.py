@@ -6,7 +6,6 @@
 # Generic class to hold phonon dispersion data
 #
 import os
-from netCDF4 import Dataset
 import json
 import numpy as np
 from collections import Counter
@@ -150,6 +149,8 @@ class Phonon():
     def save_netcdf(self):
         """ Save phonon data in a netCDF file
         """
+        from netCDF4 import Dataset
+
         natypes = len(self.chemical_symbols)
 
         #save all this stuff on a netcdf file

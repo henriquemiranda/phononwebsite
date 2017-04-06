@@ -101,7 +101,7 @@ class QePhonon(Phonon):
         if pos_type == "cartesian":
             #convert to reduced coordinates
             self.pos = car_red(self.pos,self.cell)
-        elif pos_type == "crystal":
+        elif pos_type == "crystal" or pos_type == 'alat':
             pass
         else:
             print "Coordinate format %s in input file not known"%pos_type
