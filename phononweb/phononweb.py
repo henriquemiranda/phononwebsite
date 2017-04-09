@@ -205,7 +205,8 @@ class Phonon():
         self.distances.append(distance)
 
     def get_highsym_qpts(self):
-        """ Iterate over all the qpoints and obtain the high symmetry points as well as the distances between them
+        """ 
+        Iterate over all the qpoints and obtain the high symmetry points as well as the distances between them
         """
        
         def collinear(a,b,c):
@@ -216,13 +217,38 @@ class Phonon():
 
         #iterate over qpoints
         qpoints = self.qpoints;
-        self.highsym_qpts = []
+        self.highsym_qpts = [[0,'']]
         for k in range(1,self.nqpoints-1):
             #detect high symmetry qpoints
             if not collinear(qpoints[k-1],qpoints[k],qpoints[k+1]):
                 self.highsym_qpts.append((k,''))
-
+        #add final k-point
+        self.highsym_qpts.append((self.nqpoints-1,''))
+    
+        #if the labels are defined, assign them to the detected kpoints
+        if self.labels_qpts:
+            nhiqpts = len(self.highsym_qpts)
+            nlabels = len(self.labels_qpts)
+            if nlabels == nhiqpts:
+                #fill in the symbols
+                self.highsym_qpts = [(q,s) for (q,l),s in zip(self.highsym_qpts,self.labels_qpts)] 
+            else:
+                print "Wrong number of q-points specified. Found %d high symmetry qpoints but got %d labels"%(nhiqpts,nlabels)
+                exit()
+        else:
+            print "The labels of the high symmetry k-points are not known. They can be changed in the .json file manualy." 
         return self.highsym_qpts
+
+    def set_labels(self,labels):
+        """
+        Use a string to set the names of the k-points.
+        There are two modes:
+            1 the string is a list of caracters and each caracter corresponds to one k-point
+            2 the string is a set of words comma or space separated.
+        """
+        if   ',' in labels: self.labels_qpts = labels.split(',')
+        elif ' ' in labels: self.labels_qpts = labels.split(' ')
+        else:               self.labels_qpts = labels
 
     def __str__(self):
         text = ""
@@ -242,7 +268,8 @@ class Phonon():
         return text
 
     def write_json(self,prefix=None,folder='.'):
-        """ Write a json file to be read by javascript
+        """
+        Write a json file to be read by javascript
         """
         if prefix: name = prefix
         else:      name = self.name

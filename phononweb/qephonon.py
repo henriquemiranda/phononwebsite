@@ -12,11 +12,12 @@ import numpy as np
 from math import pi
 
 class QePhonon(Phonon):
-    """ Class to read phonons from Quantum Espresso
+    """
+    Class to read phonons from Quantum Espresso
 
-        Input:
-            prefix = prefix of the <prefix>.scf file where the structure is stored
-                               the <prefix>.modes file that is the output of the matdyn.x or dynmat.x programs
+    Input:
+        prefix = prefix of the <prefix>.scf file where the structure is stored
+                           the <prefix>.modes file that is the output of the matdyn.x or dynmat.x programs
     """
     def __init__(self,prefix,name,reps=(3,3,3),folder='.',highsym_qpts=None,reorder=True):
         self.prefix = prefix

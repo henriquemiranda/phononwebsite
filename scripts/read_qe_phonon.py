@@ -14,8 +14,10 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Read <prefix>.modes and <prefix>.scf files from quantum espresso and write a .json file to use in the phononwebsite.')
     parser.add_argument('prefix', help='the prefix used in the pw.x and ph.x calculation')
     parser.add_argument('name', default='name', help='name of the material')
+    parser.add_argument('-l','--labels', help='A string with the labels of the kpoints.')
     args = parser.parse_args()
 
     q = QePhonon(args.prefix,args.name)
+    if args.labels: q.set_labels(args.labels)
     print q
     q.write_json()
