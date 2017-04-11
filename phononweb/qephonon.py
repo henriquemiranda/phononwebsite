@@ -19,30 +19,34 @@ class QePhonon(Phonon):
         prefix = prefix of the <prefix>.scf file where the structure is stored
                            the <prefix>.modes file that is the output of the matdyn.x or dynmat.x programs
     """
-    def __init__(self,prefix,name,reps=(3,3,3),folder='.',highsym_qpts=None,reorder=True):
+    def __init__(self,prefix,name,reps=(3,3,3),folder='.',highsym_qpts=None,reorder=True,scf=None,modes=None):
         self.prefix = prefix
         self.name = name
         self.reps = reps
         self.folder = folder
         self.highsym_qpts = highsym_qpts
 
-        #read
-        self.read_atoms()
-        self.read_modes()
-        c = [[1,0,0],[-0.5,sqrt(3)/2,0],[0,0,1]]
-        self.rec = rec_lat(c)
-        self.qpoints = car_red(self.qpoints,self.rec)
+        #read atoms
+        if scf:   filename = "%s/%s"%(self.folder,scf)
+        else :    filename = "%s/%s.scf"%(self.folder,self.prefix)
+        self.read_atoms(filename)
+        
+        #read modes
+        if modes: filename = "%s/%s"%(self.folder,modes)
+        else :    filename = "%s/%s.modes"%(self.folder,self.prefix)
+        self.read_modes(filename)
+        
 
         #reorder eigenvalues
         if reorder:
             self.reorder_eigenvalues()
         self.get_distances_qpts()
+        self.labels_qpts = None
 
-    def read_modes(self):
+    def read_modes(self,filename):
         """
         Function to read the eigenvalues and eigenvectors from Quantum Expresso
         """
-        filename = "%s/%s.modes"%(self.folder,self.prefix)
         f = open(filename,'r')
         file_list = f.readlines()
         file_str  = "".join(file_list)
@@ -83,14 +87,17 @@ class QePhonon(Phonon):
         self.eigenvalues  = eig#*eV/hartree_cm1
         self.eigenvectors = vec.view(dtype=float).reshape([self.nqpoints,nphons,nphons,2])
         self.qpoints      = qpt
+        #convert to cartesian coordinates
+        self.qpoints = car_red(self.qpoints,self.rec)
         return self.eigenvalues, self.eigenvectors, self.qpoints
 
-    def read_atoms(self):
+    def read_atoms(self,filename):
         """ read the data from a quantum espresso input file
         """
-        pwin = PwIn(filename="%s/%s.scf"%(self.folder,self.prefix))
+        pwin = PwIn(filename=filename)
         self.cell, self.pos, self.atom_types = pwin.get_atoms()
         self.cell = np.array(self.cell)*bohr_angstroem
+        self.rec = rec_lat(self.cell)*2*pi
         self.pos = np.array(self.pos)
         self.atom_numbers = [atomic_numbers[x] for x in self.atom_types]
         self.atomic_numbers = np.unique(self.atom_numbers)

@@ -239,6 +239,15 @@ class Phonon():
             print "The labels of the high symmetry k-points are not known. They can be changed in the .json file manualy." 
         return self.highsym_qpts
 
+    def set_repetitions(self,reps):
+        """
+        Get the number of repetitions based from a string
+        """
+        if   ',' in reps: reps = reps.split(',')
+        elif ' ' in reps: reps = reps.split(' ')
+        self.reps = [int(r) for r in reps]       
+        print self.reps
+
     def set_labels(self,labels):
         """
         Use a string to set the names of the k-points.
@@ -252,6 +261,7 @@ class Phonon():
 
     def __str__(self):
         text = ""
+        text += "name: %s\n"%self.name
         text += "cell:\n"
         for i in range(3):
             text += ("%12.8lf "*3)%tuple(self.cell[i])+"\n"

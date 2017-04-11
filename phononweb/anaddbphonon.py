@@ -34,6 +34,7 @@ class AnaddbPhonon(Phonon):
         if reorder:
             self.reorder_eigenvalues()
         self.get_distances_qpts()
+        self.labels_qpts = None
 
     def read_anaddb(self):
         """ read the netcdf file that results form anaddb
