@@ -63,10 +63,10 @@ class AnaddbPhonon(Phonon):
         #the abinit eigenvectors are scaled with the atomic masses but the phonopy ones are not
         #so we always scale the eigenvectors with the atomic masses in the javascript of the website
         #here we scale then with sqrt(m) so that we recover the correct scalling on the website
-        for na in xrange(self.natoms):
-            atomic_specie = self.atypes[na]-1
-            atomic_number = self.atomic_numbers[atomic_specie]
-            vectors[:,:,na,:,:] *= sqrt(atomic_mass[atomic_number])       
+        #for na in xrange(self.natoms):
+        #    atomic_specie = self.atypes[na]-1
+        #    atomic_number = self.atomic_numbers[atomic_specie]
+        #    vectors[:,:,na,:,:] *= sqrt(atomic_mass[atomic_number])       
  
         #normalize the eigenvectors
         self.eigenvectors = vectors/np.linalg.norm(vectors[0,0])

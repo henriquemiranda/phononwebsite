@@ -62,6 +62,10 @@ VibCrystal = {
                     this.dimensions.ratio, this.cameraNear, this.cameraFar );
         //this.camera.aspect = this.dimensions.ratio;
         this.setCameraDirection('z');
+        //add lights to the camera
+        pointLight = new THREE.PointLight( 0xdddddd );
+        pointLight.position.set(1,1,2);
+        this.camera.add(pointLight);
 
         this.controls = new THREE.TrackballControls( this.camera, container0 );
         this.controls.rotateSpeed = 1.0;
@@ -268,19 +272,9 @@ VibCrystal = {
     },
 
     addLights: function() {
-        light = new THREE.DirectionalLight( 0xffffff );
-        light.position.set( 0, 0, 100 );
-        light.target.position.set(0, 0, 0);
-        light.castShadow = false;
-        this.scene.add( light );
+        this.scene.add(this.camera);
 
-        light = new THREE.DirectionalLight( 0xffffff );
-        light.position.set( 0, 0, -100 );
-        light.target.position.set(0, 0, 0);
-        light.castShadow = false;
-        this.scene.add( light );
-
-        light = new THREE.AmbientLight( 0x222222 );
+        light = new THREE.AmbientLight( 0x333333 );
         this.scene.add( light );
     },
 

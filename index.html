@@ -60,7 +60,7 @@ BAND = (x1,y1,z1) (x2,y2,z2) (x3,y3,z3)</code></pre>
 <pre><code>read_anaddb_phonon.py anaddb.out_PHBST.nc &lt;name_of_your_material&gt;</code></pre>
 <p>You can then select the resulting <code>.json</code> file with the <code>Choose files</code> button.</p>
 <h2 id="quantum-espresso">Quantum Espresso</h2>
-<p>To read a Quantum Espresso calculation you need two files <code>&lt;prefix&gt;.scf</code> and <code>&lt;prefix&gt;.modes</code>. The first one is the input file for <code>pw.x</code> the second one can be generated with <code>dynmat.x</code>. After installing the python scripts (as in the case of an <code>Abinit</code> calculation) you can obtain the <code>.json</code> files:</p>
+<p>To read a Quantum Espresso calculation you need two files <code>&lt;prefix&gt;.scf</code> and <code>&lt;prefix&gt;.modes</code>. The first one is the input file for <code>pw.x</code> the second one can be generated with <code>dynmat.x</code>. The file that should be used is the one set with the <code>'filout'</code> tag in the dynmat input file as in it the modes are normalized with the atomic masses. After installing the python scripts (as in the case of an <code>Abinit</code> calculation) you can obtain the <code>.json</code> files:</p>
 <pre><code>read_qe_phonon.py prefix &lt;name_of_your_material&gt;</code></pre>
 <p>You can then select the resulting <code>.json</code> file with the <code>Choose files</code> button.</p>
 <h1 id="features">Features</h1>
@@ -88,11 +88,6 @@ name = name of the material</code></pre>
 <p>Contact me:<br />miranda.henrique at gmail.com</p>
 <h1 id="aknowledgments">Aknowledgments</h1>
 <p><a href="http://wwwen.uni.lu/recherche/fstc/physics_and_materials_science_research_unit/research_areas/theoretical_solid_state_physics">Ludger Wirtz</a> for the original idea and important scientific advices. <a href="http://atztogo.github.io">Atsushi Togo</a> the creator of <a href="http://atztogo.github.io/phonopy/">phonopy</a> for providing phonon dispersion data from his <a href="http://phonondb.mtl.kyoto-u.ac.jp/">phonodb</a> phonon database. <a href="http://jpsfs.com/">José Pedro Silva</a> for very helpful advices on technical issues and the best web technologies to use.</p>
-<div align="center">
-<img src="figures/unilu.png" alt="University of Luxembourg" style="width:20%; margin: 0.5em;">
-<img src="figures/fnr.jpg" alt="Fonds National de la Recherche" style="width:70%; margin: 0.5em;">
-</div>
-<p></p>
 <h1 id="contribute">Contribute</h1>
 <p>The project is still under development!</p>
 <p>You can leave your suggestions and feature requests here:<br /><a href="https://github.com/henriquemiranda/phononwebsite/issues">https://github.com/henriquemiranda/phononwebsite/issues</a></p>

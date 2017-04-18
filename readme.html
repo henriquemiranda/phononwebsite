@@ -17,7 +17,7 @@ BAND = (x1,y1,z1) (x2,y2,z2) (x3,y3,z3)</code></pre>
 <pre><code>read_anaddb_phonon.py anaddb.out_PHBST.nc &lt;name_of_your_material&gt;</code></pre>
 <p>You can then select the resulting <code>.json</code> file with the <code>Choose files</code> button.</p>
 <h2 id="quantum-espresso">Quantum Espresso</h2>
-<p>To read a Quantum Espresso calculation you need two files <code>&lt;prefix&gt;.scf</code> and <code>&lt;prefix&gt;.modes</code>. The first one is the input file for <code>pw.x</code> the second one can be generated with <code>dynmat.x</code>. After installing the python scripts (as in the case of an <code>Abinit</code> calculation) you can obtain the <code>.json</code> files:</p>
+<p>To read a Quantum Espresso calculation you need two files <code>&lt;prefix&gt;.scf</code> and <code>&lt;prefix&gt;.modes</code>. The first one is the input file for <code>pw.x</code> the second one can be generated with <code>dynmat.x</code>. The file that should be used is the one set with the <code>'filout'</code> tag in the dynmat input file as in it the modes are normalized with the atomic masses. After installing the python scripts (as in the case of an <code>Abinit</code> calculation) you can obtain the <code>.json</code> files:</p>
 <pre><code>read_qe_phonon.py prefix &lt;name_of_your_material&gt;</code></pre>
 <p>You can then select the resulting <code>.json</code> file with the <code>Choose files</code> button.</p>
 <h1 id="features">Features</h1>

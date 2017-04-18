@@ -82,11 +82,21 @@ class QePhonon(Phonon):
                     z = map(float,re.findall('([+-]?\d+(?:\.\d+)?(?:[eE][-+]?\d+)?)',file_list[eig_idx+1+i]))
                     vec[k][n][i] = np.array( [complex(z[0],z[1]),complex(z[2],z[3]),complex(z[4],z[5])], dtype=complex )
 
+        #the quantum espresso eigenvectors are already scaled with the atomic masses
+        #if the file comes from dynmat.eig they are not scaled with the atomic masses
+        #here we scale then with sqrt(m) so that we recover the correct scalling on the website
+        #we check if the eigenvectors are orthogonal or not
+        #for na in xrange(self.natoms):
+        #    atomic_specie = self.atypes[na]-1
+        #    atomic_number = self.atomic_numbers[atomic_specie]
+        #    vectors[:,:,na,:,:] *= sqrt(atomic_mass[atomic_number])
+
         self.nqpoints     = len(qpt)
         self.nphons       = nphons
         self.eigenvalues  = eig#*eV/hartree_cm1
         self.eigenvectors = vec.view(dtype=float).reshape([self.nqpoints,nphons,nphons,2])
         self.qpoints      = qpt
+
         #convert to cartesian coordinates
         self.qpoints = car_red(self.qpoints,self.rec)
         return self.eigenvalues, self.eigenvectors, self.qpoints

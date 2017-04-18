@@ -38,7 +38,7 @@ You can then select the resulting `.json` file with the `Choose files` button.
 
 Quantum Espresso
 ----------------
-To read a Quantum Espresso calculation you need two files `<prefix>.scf` and `<prefix>.modes`. The first one is the input file for `pw.x` the second one can be generated with `dynmat.x`.
+To read a Quantum Espresso calculation you need two files `<prefix>.scf` and `<prefix>.modes`. The first one is the input file for `pw.x` the second one can be generated with `dynmat.x`. The file that should be used is the one set with the `'filout'` tag in the dynmat input file as in it the modes are normalized with the atomic masses.
 After installing the python scripts (as in the case of an `Abinit` calculation) you can obtain the `.json` files:
 
     read_qe_phonon.py prefix <name_of_your_material>
