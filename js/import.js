@@ -154,17 +154,22 @@ getFromPhononpyString = function(yaml) {
     //normalize the phonon modes with the masses
     nqpoints = eivecs.length;
     for (q=0; q<nqpoints; q++) {
-        eivecq = eivec[q];
+        eivecq = eivecs[q];
         for (n=0; n<nmodes; n++) {
             eivecqn = eivecq[n];
+            console.log(eivecqn);
             for (i=0;i<this.natoms;i++) {
                 norm = sqrt_average_mass/sqrt_atom_masses[i];
-                eivecqn[i*3+0] *= norm;
-                eivecqn[i*3+1] *= norm;
-                eivecqn[i*3+2] *= norm;
+                eivecqn[i][0][0] *= norm;
+                eivecqn[i][1][0] *= norm;
+                eivecqn[i][2][0] *= norm;
+                eivecqn[i][0][1] *= norm;
+                eivecqn[i][1][1] *= norm;
+                eivecqn[i][2][1] *= norm;
             }
         }
     }
+    console.log(norm);
 
     this.addatomphase = true;
     this.atom_types = atom_types;
