@@ -42,7 +42,7 @@ VibCrystal = {
     capturer: null,
 
     //options
-    amplitude: 1.0,
+    amplitude: 0.5,
     speed: 1.0,
     fps: 60,
 
