@@ -91,11 +91,19 @@ My personal webpage:
 Contact me:  
 miranda.henrique at gmail.com
 
-Aknowledgments
-===============
+Aknowledgments & Funding
+==========================
 [Ludger Wirtz](http://wwwen.uni.lu/recherche/fstc/physics_and_materials_science_research_unit/research_areas/theoretical_solid_state_physics) for the original idea and important scientific advices.
 [Atsushi Togo](http://atztogo.github.io) the creator of [phonopy](http://atztogo.github.io/phonopy/) for providing phonon dispersion data from his [phonodb](http://phonondb.mtl.kyoto-u.ac.jp/) phonon database.
 [José Pedro Silva](http://jpsfs.com/) for very helpful advices on technical issues and the best web technologies to use.
+
+Fonds National de la Recherche Luxembourg (2013-present): <http://www.fnr.lu/>
+
+<img src="figures/fnr.jpg" style="width:60%;">
+
+University of Luxembourg (2013-present): <http://wwwen.uni.lu/>
+
+<img src="figures/unilu.png" style="width:20%;">
 
 Contribute
 ==========
