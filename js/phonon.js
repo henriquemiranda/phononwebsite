@@ -182,6 +182,7 @@ function Phonon() {
     this.updateHighcharts = function(self) { return function(applet) {
         qindex = this.qindex;
 
+        //set the minimum of the plot with the smallest phonon frequency
         var minVal = 0;
         for (i=0; i<this.eigenvalues.length; i++) {
             min = Math.min.apply(null, this.eigenvalues[i])
@@ -189,7 +190,6 @@ function Phonon() {
                 minVal = min;
             }
         }
-
         if (minVal > -1) minVal = 0;
 
         var labels_formatter = function() {

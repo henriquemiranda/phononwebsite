@@ -93,6 +93,8 @@ getFromPhononpyString = function(yaml) {
     }
 
     //iterate over the different segments of the path
+    this.eigenvalues = [];
+    this.distances   = [];
     for (p=0; p<npath; p++) {
 
         //clean eivals array
@@ -112,11 +114,16 @@ getFromPhononpyString = function(yaml) {
             }
             kpoints.push(phononi['q-position']);
 
-            //create bands
             phononiband = phononi['band'];
+            //get distances
+            this.distances.push( phononi['distance'] );
+
+            //create bands
+            eig   = [];
             eivec = [];
             for (n=0; n<nmodes; n++) {
                 //get eigenvalues
+                eig.push( phononiband[n]['frequency']*thz2ev );
                 eivals[n].push([phononi['distance'],phononiband[n]['frequency']*thz2ev]);
 
                 //get eigenvectors
@@ -124,6 +131,7 @@ getFromPhononpyString = function(yaml) {
                 eivec.push(vec);
             }
             eivecs.push(eivec);
+            this.eigenvalues.push(eig);
         }
         check_high_sym_qpoint(phononi,this.highsym_qpts);
 
@@ -157,7 +165,6 @@ getFromPhononpyString = function(yaml) {
         eivecq = eivecs[q];
         for (n=0; n<nmodes; n++) {
             eivecqn = eivecq[n];
-            console.log(eivecqn);
             for (i=0;i<this.natoms;i++) {
                 norm = sqrt_average_mass/sqrt_atom_masses[i];
                 eivecqn[i][0][0] *= norm;
@@ -169,7 +176,6 @@ getFromPhononpyString = function(yaml) {
             }
         }
     }
-    console.log(norm);
 
     this.addatomphase = true;
     this.atom_types = atom_types;
