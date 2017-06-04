@@ -7,6 +7,7 @@ var vec_0 = new THREE.Vector3( 0, 0, 0 );
 VibCrystal = {
     time:0,
     arrows: false,
+    cell: false,
     paused: false,
 
     container: null,
@@ -37,12 +38,12 @@ VibCrystal = {
     arrowHeadLengthRatio: .25,
     arrowRadius: 0.1,
     arrowLength: 1.0,
-    arrowScale: 4.0,
+    arrowScale: 2.0,
 
     capturer: null,
 
     //options
-    amplitude: 0.5,
+    amplitude: 0.2,
     speed: 1.0,
     fps: 60,
 
@@ -82,6 +83,7 @@ VibCrystal = {
         this.scene = new THREE.Scene();
 
         this.addStructure(phonon);
+        this.addCell(phonon);
         this.addLights();
 
         // renderer
@@ -169,6 +171,61 @@ VibCrystal = {
         }
     },
 
+    addCell: function(phonon) {
+        if (this.cell) {
+          lat = phonon.lat;
+          o = this.geometricCenter;
+          zero = new THREE.Vector3(0,0,0);
+          c = new THREE.Vector3(0,0,0);
+          x = new THREE.Vector3(lat[0][0], lat[0][1], lat[0][2]);
+          y = new THREE.Vector3(lat[1][0], lat[1][1], lat[1][2]);
+          z = new THREE.Vector3(lat[2][0], lat[2][1], lat[2][2]);
+          
+          //lower part
+          var geometry = new THREE.Geometry();
+          c.copy(zero);
+          c.sub(o); geometry.vertices.push(c.clone());
+          c.add(x); geometry.vertices.push(c.clone());
+          c.add(y); geometry.vertices.push(c.clone());
+          c.sub(x); geometry.vertices.push(c.clone());
+          c.sub(y); geometry.vertices.push(c.clone());
+          var material = new THREE.LineBasicMaterial({ color: 0x000000 });
+          var line = new THREE.Line(geometry, material);
+          this.scene.add(line);
+                 
+          //upper part
+          var geometry = new THREE.Geometry();
+          c.copy(zero); c.add(z);
+          c.sub(o); geometry.vertices.push(c.clone());
+          c.add(x); geometry.vertices.push(c.clone());
+          c.add(y); geometry.vertices.push(c.clone());
+          c.sub(x); geometry.vertices.push(c.clone());
+          c.sub(y); geometry.vertices.push(c.clone());
+          var material = new THREE.LineBasicMaterial({ color: 0x000000 });
+          var line = new THREE.Line(geometry, material);
+          this.scene.add(line);
+          
+          //vertical lines
+          var geometry = new THREE.Geometry();
+          c.copy(zero); 
+          c.sub(o); geometry.vertices.push(c.clone());
+          c.add(z); geometry.vertices.push(c.clone());
+          
+          c.add(x); geometry.vertices.push(c.clone());
+          c.sub(z); geometry.vertices.push(c.clone());
+          
+          c.add(y); geometry.vertices.push(c.clone());
+          c.add(z); geometry.vertices.push(c.clone());
+          
+          c.sub(x); geometry.vertices.push(c.clone());
+          c.sub(z); geometry.vertices.push(c.clone());
+          var material = new THREE.LineBasicMaterial({ color: 0x000000 });
+          var line = new THREE.Line(geometry, material);
+          this.scene.add(line);
+        }
+        
+    },
+
     addStructure: function(phonon) {
         this.atomobjects  = [];
         this.bondobjects  = [];
@@ -192,6 +249,7 @@ VibCrystal = {
             geometricCenter.add(pos);
         }
         geometricCenter.multiplyScalar(1.0/this.atoms.length);
+        this.geometricCenter = geometricCenter;
 
         for (i=0;i<this.atoms.length;i++) {
             
@@ -284,6 +342,7 @@ VibCrystal = {
         this.atoms      = phonon.atoms;
         this.removeStructure();
         this.addStructure(phonon);
+        this.addCell(phonon);
         this.animate();
     },
 
