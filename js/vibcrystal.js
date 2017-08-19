@@ -59,10 +59,10 @@ VibCrystal = {
         this.vibrations = phonon.vibrations;
         this.atoms      = phonon.atoms;
 
-        this.camera = new THREE.PerspectiveCamera( this.cameraViewAngle,
-                    this.dimensions.ratio, this.cameraNear, this.cameraFar );
-        //this.camera.aspect = this.dimensions.ratio;
+        this.camera = new THREE.PerspectiveCamera( this.cameraViewAngle, this.dimensions.ratio, 
+                                                   this.cameraNear, this.cameraFar );
         this.setCameraDirection('z');
+
         //add lights to the camera
         pointLight = new THREE.PointLight( 0xdddddd );
         pointLight.position.set(1,1,2);
@@ -109,35 +109,39 @@ VibCrystal = {
     },
 
     captureend: function(format) {
-      this.capturer.stop();
-      this.capturer.save( function( url ) {
-        var element = document.createElement('a');
-        element.setAttribute('href', url);
-        element.setAttribute('download', p.k.toString()+'_'+p.n.toString()+'.'+ format);
-        element.style.display = 'none';
-        document.body.appendChild(element);
-        element.click();
-        document.body.removeChild(element);
+        this.capturer.stop();
 
-        //remove progress bar
-        progress.style.width = 0;
-        } );
-      this.capturer = null;
+        callback_captureend = function( url ) {
+            var element = document.createElement('a');
+            element.setAttribute('href', url);
+            element.setAttribute('download', p.k.toString()+'_'+p.n.toString()+'.'+ format);
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+
+            //remove progress bar
+            progress.style.width = 0;
+        }
+
+        this.capturer.save( callback_captureend );
+        this.capturer = null;
     },
 
     capturestart: function(format) {
-      var progress = document.getElementById( 'progress' );
+        var progress = document.getElementById( 'progress' );
 
-      this.capturer = new CCapture( { format: format,
-                                      workersPath: 'js/',
-                                      verbose: true,
-                                      frameMax: this.fps,
-                                      end: this.captureend.bind(this,format),
-                                      framerate: this.fps,
-                                      onProgress: function( p ) { progress.style.width = ( p * 100 ) + '%' }
-                                    } ),
+        options = { format: format,
+                    workersPath: 'js/',
+                    verbose: true,
+                    frameMax: this.fps,
+                    end: this.captureend.bind(this,format),
+                    framerate: this.fps,
+                    onProgress: function( p ) { progress.style.width = ( p * 100 ) + '%' }
+                  }
 
-      this.capturer.start();
+        this.capturer = new CCapture( options ),
+        this.capturer.start();
     },
 
     setCameraDirection: function(direction) {
@@ -166,7 +170,6 @@ VibCrystal = {
 
             var material = new THREE.MeshLambertMaterial( { blending: THREE.AdditiveBlending } );
             material.color.setRGB (r, g, b);
-
             this.materials.push( material );
         }
     },
@@ -236,23 +239,30 @@ VibCrystal = {
         this.nndist = phonon.nndist+0.05;
 
         //atoms balls geometry
-        var sphereGeometry = new THREE.SphereGeometry(this.sphereRadius,this.sphereLat,this.sphereLon);
+        var sphereGeometry = new THREE.SphereGeometry( this.sphereRadius, this.sphereLat, 
+                                                       this.sphereLon);
         //arrow geometry
-        var arrowGeometry = new THREE.CylinderGeometry( 0, this.arrowHeadRadiusRatio*this.arrowRadius, this.arrowLength * this.arrowHeadLengthRatio );
-        var axisGeometry  = new THREE.CylinderGeometry( this.arrowRadius, this.arrowRadius, this.arrowLength);
-        var AxisMaterial  = new THREE.MeshLambertMaterial( { color: 0xbbffbb, blending: THREE.AdditiveBlending } );
+        var arrowGeometry = new THREE.CylinderGeometry( 0, 
+                                                        this.arrowHeadRadiusRatio*this.arrowRadius, 
+                                                        this.arrowLength*this.arrowHeadLengthRatio );
+
+        var axisGeometry  = new THREE.CylinderGeometry( this.arrowRadius, this.arrowRadius, 
+                                                        this.arrowLength);
+
+        var AxisMaterial  = new THREE.MeshLambertMaterial( { color: 0xbbffbb, 
+                                                             blending: THREE.AdditiveBlending } );
 
         //get geometric center
         geometricCenter = new THREE.Vector3(0,0,0);
-        for (i=0;i<this.atoms.length;i++) {
+        for (i=0; i<this.atoms.length; i++) {
             pos = new THREE.Vector3(this.atoms[i][1], this.atoms[i][2], this.atoms[i][3]);
             geometricCenter.add(pos);
         }
         geometricCenter.multiplyScalar(1.0/this.atoms.length);
         this.geometricCenter = geometricCenter;
 
-        for (i=0;i<this.atoms.length;i++) {
-            
+        for (i=0; i<this.atoms.length; i++) {
+             
             //add a ball for each atom
             object = new THREE.Mesh( sphereGeometry, this.materials[this.atoms[i][0]] );
             pos = new THREE.Vector3(this.atoms[i][1], this.atoms[i][2], this.atoms[i][3]);
@@ -267,11 +277,17 @@ VibCrystal = {
             this.atomobjects.push( object );
             this.atompos.push( pos );
 
-            if (this.arrows) {
+        }
+        
+        if (this.arrows) {
+            for (i=0; i<this.atoms.length; i++) {
+
                 //add an arrow for each atom
                 ArrowMesh     = new THREE.Mesh( arrowGeometry, AxisMaterial );
-                ArrowMesh.position.y = (this.arrowLength+this.arrowLength*this.arrowHeadLengthRatio)/2;
-                //merge from of the arrow with cylinder
+                length = (this.arrowLength+this.arrowLength*this.arrowHeadLengthRatio)/2;
+                ArrowMesh.position.y = length; 
+
+                //merge form of the arrow with cylinder
                 ArrowMesh.updateMatrix();
                 axisGeometry.merge(ArrowMesh.geometry,ArrowMesh.matrix);
                 AxisMesh      = new THREE.Mesh( axisGeometry, AxisMaterial );
@@ -280,7 +296,7 @@ VibCrystal = {
                 this.scene.add( AxisMesh );
                 this.arrowobjects.push( AxisMesh );
             }
-        }
+        }        
 
         //obtain combinations two by two of all the atoms
         var combinations = getCombinations( this.atomobjects );
@@ -289,7 +305,7 @@ VibCrystal = {
                                                         blending: THREE.AdditiveBlending } );
 
 
-        for (i=0;i<combinations.length;i++) {
+        for (i=0; i<combinations.length; i++) {
             a = combinations[i][0];
             b = combinations[i][1];
             ad = a.position;
@@ -297,14 +313,18 @@ VibCrystal = {
 
             //if the separation is smaller than the sum of the bonding radius create a bond
             length = ad.distanceTo(bd)
-            if (length < covalent_radii[a.atom_number]+covalent_radii[b.atom_number] || length < this.nndist + 0.2 ) {
+            cra = covalent_radii[a.atom_number]
+            crb = covalent_radii[b.atom_number]
+            if (length < cra + crb || length < this.nndist + 0.2 ) {
                 this.bonds.push( [ad,bd,length] );
 
                 //get transformations
                 var bond = getBond(ad,bd);
 
                 //create cylinder mesh
-                var cylinderGeometry = new THREE.CylinderGeometry(this.bondRadius,this.bondRadius,length,this.bondSegments,this.bondVertical,true);
+                var cylinderGeometry = new THREE.CylinderGeometry( this.bondRadius, this.bondRadius,
+                                                                   length, this.bondSegments,
+                                                                   this.bondVertical, true);
                 var object = new THREE.Mesh(cylinderGeometry, material);
 
                 object.setRotationFromQuaternion( bond.quaternion );
@@ -323,7 +343,7 @@ VibCrystal = {
         var nobjects = this.scene.children.length;
         var scene = this.scene
         //just remove everything and then add the lights
-        for (i=nobjects-1;i>=0;i--) {
+        for (i=nobjects-1; i>=0; i--) {
             scene.remove(scene.children[i]);
         }
         this.addLights();
@@ -331,7 +351,6 @@ VibCrystal = {
 
     addLights: function() {
         this.scene.add(this.camera);
-
         light = new THREE.AmbientLight( 0x333333 );
         this.scene.add( light );
     },
@@ -348,12 +367,10 @@ VibCrystal = {
 
     getContainerDimensions: function() {
         w = this.container.width(), h = this.container.height();
-
-        return {
-            width: w,
-            height: h,
-            ratio: ( w / h )
-        };
+        dimensions = { width: w,
+                       height: h,
+                       ratio: ( w / h ) };
+        return dimensions;
     },
 
     onWindowResize: function() {
@@ -365,7 +382,6 @@ VibCrystal = {
         this.renderer.setSize( this.dimensions.width, this.dimensions.height, false );
         this.controls.handleResize();
         this.render();
-
     },
 
     playpause: function() {
@@ -384,11 +400,8 @@ VibCrystal = {
     },
 
     animate: function() {
-
         setTimeout( function() {
-
           requestAnimationFrame( this.animate.bind(this) );
-
         }.bind(this), 1000 / 60 );
 
         this.controls.update();
@@ -400,50 +413,53 @@ VibCrystal = {
         var atom, bond, atompos, bondobject;
         var vibrations;
 
-        var currentTime = Date.now()/1000.0; //get the current time in miliseconds and convert to seconds
+        //get the current time in miliseconds and convert to seconds
+        var currentTime = Date.now()/1000.0;
         var t = currentTime * this.speed;
         var phase = Complex.Polar(this.amplitude,t*2.0*pi);
         var v = new THREE.Vector3();
         var vlength;
 
-        if (this.paused) return;
+        if (!this.paused) {
 
-        //update positions according to vibrational modes
-        for (i=0; i<this.atomobjects.length; i++) {
-            atom       = this.atomobjects[i];
-            atompos    = this.atompos[i];
-            vibrations = this.vibrations[i];
+            //update positions according to vibrational modes
+            for (i=0; i<this.atomobjects.length; i++) {
+                atom       = this.atomobjects[i];
+                atompos    = this.atompos[i];
+                vibrations = this.vibrations[i];
 
-            x  = atompos.x + phase.mult(vibrations[0]).real();
-            y  = atompos.y + phase.mult(vibrations[1]).real();
-            z  = atompos.z + phase.mult(vibrations[2]).real();
-            this.atomobjects[i].position.set( x, y, z);
+                x  = atompos.x + phase.mult(vibrations[0]).real();
+                y  = atompos.y + phase.mult(vibrations[1]).real();
+                z  = atompos.z + phase.mult(vibrations[2]).real();
+                this.atomobjects[i].position.set( x, y, z);
 
-            if (this.arrows) {
-                vx = phase.mult(vibrations[0]).real();
-                vy = phase.mult(vibrations[1]).real();
-                vz = phase.mult(vibrations[2]).real();
+                if (this.arrows) {
+                    vx = phase.mult(vibrations[0]).real();
+                    vy = phase.mult(vibrations[1]).real();
+                    vz = phase.mult(vibrations[2]).real();
 
-                //velocity vector
-                v.set(vx,vy,vz);
-                vlength = v.length()/this.amplitude;
-                s = .5*this.arrowScale/this.amplitude;
- 
-                this.arrowobjects[i].position.set(x+vx*s,y+vy*s,z+vz*s);
-                this.arrowobjects[i].scale.y = vlength*this.arrowScale;
-                this.arrowobjects[i].quaternion.setFromUnitVectors(vec_y,v.normalize());
+                    //velocity vector
+                    v.set(vx,vy,vz);
+                    vlength = v.length()/this.amplitude;
+                    s = .5*this.arrowScale/this.amplitude;
+     
+                    this.arrowobjects[i].position.set(x+vx*s,y+vy*s,z+vz*s);
+                    this.arrowobjects[i].scale.y = vlength*this.arrowScale;
+                    this.arrowobjects[i].quaternion.setFromUnitVectors(vec_y,v.normalize());
+                }
             }
-        }
 
-        //update the bonds positions
-        for (i=0; i<this.bonds.length; i++) {
-            bond       = this.bonds[i];
-            bonddata   = getBond(bond[0],bond[1]);
-            bondobject = this.bondobjects[i];
+            //update the bonds positions
+            for (i=0; i<this.bonds.length; i++) {
+                bond       = this.bonds[i];
+                bonddata   = getBond(bond[0],bond[1]);
+                bondobject = this.bondobjects[i];
 
-            bondobject.setRotationFromQuaternion( bonddata.quaternion );
-            bondobject.scale.y = bond[0].distanceTo(bond[1])/bond[2];
-            bondobject.position.copy( bonddata.midpoint );
+                bondobject.setRotationFromQuaternion( bonddata.quaternion );
+                bondobject.scale.y = bond[0].distanceTo(bond[1])/bond[2];
+                bondobject.position.copy( bonddata.midpoint );
+            }
+
         }
 
         this.renderer.render( this.scene, this.camera );
@@ -457,12 +473,13 @@ VibCrystal = {
     }
 }
 
-//with position and velocity get the velocity vector
-
 //get a quarternion and midpoint that links two points
 function getBond( point1, point2 ) {
     var direction = new THREE.Vector3().subVectors(point2, point1);
 
-    return { quaternion: new THREE.Quaternion().setFromUnitVectors( vec_y, direction.clone().normalize() ),
+    quarternion = new THREE.Quaternion().setFromUnitVectors( vec_y, direction.clone().normalize() );
+    return { quaternion: quarternion,
              midpoint: point1.clone().add( direction.multiplyScalar(0.5) ) };
 }
+
+

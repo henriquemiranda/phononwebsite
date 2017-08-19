@@ -37,9 +37,10 @@ function Phonon() {
     }
 
     this.getFromJsonFile = getFromJsonFile;
-    //find the type of file and call the corresponding function that will read it
-    //currently there are two formats available:
-    //phonopy files (band.yaml) and a special .json format (description available in ./phononweb/phononweb.py)
+    // find the type of file and call the corresponding function that will read it
+    // currently there are two formats available:
+    // phonopy files (band.yaml) and a special .json format
+    // description available in ./phononweb/phononweb.py
     this.loadCustomFile = function(event) {
         var yaml = null;
         var json = null;
@@ -50,13 +51,14 @@ function Phonon() {
             if (file.name.indexOf(".json") > -1) { json = file; }
         }
 
+        this.name = "Custom file"
         if      (json) { this.getFromJsonFile(json);     }
-        else if (yaml) { this.getFromPhononpyFile(yaml); this.name = "Custom file"}
+        else if (yaml) { this.getFromPhononpyFile(yaml); }
         else           { alert("Ivalid file"); }
     }
 
-    //function to load a material from phonodb
     this.loadId = function(id) {
+        //function to load a material from phonodb
         this.loadURL({yaml:this.materials[id]['url']});
         this.name = this.materials[id]['name'] +  " <a href='https://www.materialsproject.org/materials/mp-"+id+"'>mp-"+id+"</a>";
         update();
@@ -80,7 +82,8 @@ function Phonon() {
         return min;
     }
 
-    this.loadURL = function(url_vars) {
+    this.loadURL = function(url_vars) {  
+        //load file from post request in the url
         var yaml = null;
         var json = null;
 
@@ -143,7 +146,9 @@ function Phonon() {
         var atom_phase = []
         if (this.addatomphase) {
             for (i=0;i<this.natoms;i++) {
-                phase = kpt[0]*this.atom_pos_red[i][0] + kpt[1]*this.atom_pos_red[i][1] + kpt[2]*this.atom_pos_red[i][2]
+                phase = kpt[0]*this.atom_pos_red[i][0] + 
+                        kpt[1]*this.atom_pos_red[i][1] + 
+                        kpt[2]*this.atom_pos_red[i][2];
                 atom_phase.push(phase);
         }
         }
@@ -262,8 +267,8 @@ function Phonon() {
         HighchartsOptions.xAxis.tickPositions = ticks;
         HighchartsOptions.xAxis.plotLines = plotLines;
         HighchartsOptions.yAxis.plotLines = [{ color: '#000000',
-                                             width: 2,
-                                             value: 0 }];
+                                               width: 2,
+                                               value: 0 }];
         $('#highcharts').highcharts(HighchartsOptions);
     }}(this)
 
@@ -365,12 +370,13 @@ function updateRepetitions() {
   v.updateObjects(p);
 }
 
-$(document).ready(function(){
+$(document).ready(function() {
 
     p = new Phonon();
     v = VibCrystal;
 
-    //check if its chrome http://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
+    //check if its chrome from
+    //http://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
     // Chrome 1+
     var isChrome = !!window.chrome && !!window.chrome.webstore;
 

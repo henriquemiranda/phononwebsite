@@ -202,6 +202,7 @@ getFromJsonFile = function(file) {
     var json_reader = new FileReader();
     self = this;
 
+    console.log(file);
     json_reader.readAsText(file);
 
     json_reader.onloadend = function(e) {
