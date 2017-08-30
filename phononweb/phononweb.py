@@ -72,7 +72,8 @@ def rec_lat(lat):
     return np.array([b1,b2,b3])
 
 def estimate_band_connection(prev_eigvecs, eigvecs, prev_band_order):
-    """ A function to order the phonon eigenvectors taken from phonopy
+    """ 
+    A function to order the phonon eigenvectors taken from phonopy
     """
     metric = np.abs(np.dot(prev_eigvecs.conjugate().T, eigvecs))
     connection_order = []
@@ -94,10 +95,15 @@ def estimate_band_connection(prev_eigvecs, eigvecs, prev_band_order):
 
 
 class Phonon():
-    """ Class to hold and manipulate generic phonon dispersions data
+    """ 
+    Class to hold and manipulate generic phonon dispersions data 
+    output .json files to be read by the phononwebsite
     """
-
     def reorder_eigenvalues(self):
+        """
+        compare the eigenvectors that correspond to the different eigenvalues
+        to re-order the eigenvalues and solve the band-crossings
+        """
         #vector transformations
         vectors = self.eigenvectors.view(complex).reshape((self.nqpoints, self.nphons, self.nphons))
         
@@ -118,7 +124,9 @@ class Phonon():
         self.eigenvectors = eiv.view(float).reshape((self.nqpoints,self.nphons,self.natoms,3,2))
 
     def get_chemical_formula(self):
-        #from ase https://wiki.fysik.dtu.dk/ase/
+        """
+        from ase https://wiki.fysik.dtu.dk/ase/
+        """
         numbers = self.atom_numbers
         elements = np.unique(numbers)
         symbols = np.array([chemical_symbols[e] for e in elements])
@@ -147,7 +155,8 @@ class Phonon():
         #end from ase
 
     def save_netcdf(self):
-        """ Save phonon data in a netCDF file
+        """ 
+        Save phonon data in a netCDF file
         """
         from netCDF4 import Dataset
 
@@ -164,15 +173,16 @@ class Phonon():
         ncfile.createDimension('number_of_phonon_modes', self.nphons)
         ncfile.createDimension('symbol_length',2)
 
-        nc_primvecs     = ncfile.createVariable('primitive_vectors','f8',('number_of_cartesian_dimensions','number_of_cartesian_dimensions'))
-        nc_atoms_pos      = ncfile.createVariable('reduced_atom_positions','f8',('number_of_atoms','number_of_cartesian_dimensions'))
-        nc_chem_sym       = ncfile.createVariable('chemical_symbols','S1',('number_of_atom_species','symbol_length'))
-        nc_qpoints        = ncfile.createVariable('qpoints','f8',('number_of_qpoints','number_of_reduced_dimensions'))
-        nc_eig            = ncfile.createVariable('phfreqs','f8',('number_of_qpoints','number_of_phonon_modes'))
-        nc_atypes         = ncfile.createVariable('atom_species','i4',('number_of_atoms'))
-        nc_atomic_numbers = ncfile.createVariable('atomic_numbers','f8',('number_of_atom_species'))
-        nc_eiv            = ncfile.createVariable('phdispl_cart','f8',('number_of_qpoints','number_of_phonon_modes',
-                                                                       'number_of_phonon_modes','complex'))
+        nccv = ncfile.createVariable
+        nc_primvecs       = nccv('primitive_vectors','f8',('number_of_cartesian_dimensions','number_of_cartesian_dimensions'))
+        nc_atoms_pos      = nccv('reduced_atom_positions','f8',('number_of_atoms','number_of_cartesian_dimensions'))
+        nc_chem_sym       = nccv('chemical_symbols','S1',('number_of_atom_species','symbol_length'))
+        nc_qpoints        = nccv('qpoints','f8',('number_of_qpoints','number_of_reduced_dimensions'))
+        nc_eig            = nccv('phfreqs','f8',('number_of_qpoints','number_of_phonon_modes'))
+        nc_atypes         = nccv('atom_species','i4',('number_of_atoms'))
+        nc_atomic_numbers = nccv('atomic_numbers','f8',('number_of_atom_species'))
+        nc_eiv            = nccv('phdispl_cart','f8',('number_of_qpoints','number_of_phonon_modes',
+                                                      'number_of_phonon_modes','complex'))
         nc_chem_sym[:]       = np.array([ "%2s"%a for a in self.chemical_symbols ],dtype=np.dtype(('S10', 2)))
         nc_atypes[:]         = np.array([np.where(self.chemical_symbols == a) for a in self.atom_types])
         nc_atomic_numbers[:] = self.atomic_numbers
@@ -210,6 +220,9 @@ class Phonon():
         """
        
         def collinear(a,b,c):
+            """
+            checkkk if three points are collinear
+            """
             d = [[a[0],a[1],1],
                  [b[0],b[1],1],
                  [c[0],c[1],1]]
@@ -259,6 +272,93 @@ class Phonon():
         elif ' ' in labels: self.labels_qpts = labels.split(' ')
         else:               self.labels_qpts = labels
 
+    def write_json(self,prefix=None,folder='.'):
+        """
+        Write a json file to be read by javascript
+        """
+        if prefix: name = prefix
+        else:      name = self.name
+
+        f = open("%s/%s.json"%(folder,name),"w")
+
+        if self.highsym_qpts == None:
+            self.get_highsym_qpts()
+
+        #create the datastructure to be put on the json file
+        data = {"name":             self.name,                            # name of the material that will be displayed on the website
+                "natoms":           self.natoms,                          # number of atoms
+                "lattice":          self.cell.tolist(),                   # lattice vectors (bohr)
+                "atom_types":       self.atom_types,                      # atom type   for each atom in the system (string)
+                "atom_numbers":     self.atom_numbers,                    # atom number for each atom in the system (integer)
+                "chemical_symbols": self.chemical_symbols,                # unique atom types   (string) 
+                "atomic_numbers":   self.atomic_numbers.tolist(),         # unique atom numbers (integer)
+                "formula":          self.chemical_formula,                # chemical formula
+                "qpoints":          self.qpoints.tolist(),                # list of point in the reciprocal space
+                "repetitions":      self.reps,                            # default value for the repetititions 
+                "atom_pos_car":     red_car(self.pos,self.cell).tolist(), # atomic positions in cartesian coordinates
+                "atom_pos_red":     self.pos.tolist(),                    # atomic positions in reduced coordinates
+                "eigenvalues":      self.eigenvalues.tolist(),            # eigenvalues (in units of cm-1)
+                "distances":        self.distances,                       # list distances between the qpoints 
+                "highsym_qpts":     self.highsym_qpts,                    # list of high symmetry qpoints
+                "vectors":          self.eigenvectors.tolist()}           # eigenvectors
+
+        f.write(json.dumps(data))
+        f.close()
+
+    def open_json(self,prefix=None,folder='.',host='localhost',port=8000):
+        """
+        Create a json file and open it on the webbrowser
+        
+        1. Create json file
+        2. Create a thread with HTTP server on localhost to provide the file to the page
+        3. Open the webpage indicating it to open the file from the localhost
+        4. Wait for user to kill HTTP server (TODO: once the file is served the server can shutdown automatically)
+        """
+
+        #python 2 and 3 http server
+        from http.server import SimpleHTTPRequestHandler
+        from http.server import HTTPServer
+
+        #create threads python
+        from threading import Thread
+
+        import webbrowser
+        import signal
+        import sys
+
+        if prefix: name = prefix
+        else:      name = self.name
+        filename = "%s/%s.json"%(folder,name)
+    
+        # Add CORS header to the website
+        class CORSRequestHandler (SimpleHTTPRequestHandler):
+            def end_headers (self):
+                self.send_header('Access-Control-Allow-Origin', 'http://henriquemiranda.github.io')
+                SimpleHTTPRequestHandler.end_headers(self)
+            def log_message(self, format, *args):
+                return
+
+        # Quit application when SIGINT is received
+        def signal_handler(signal, frame):
+            sys.exit(0)
+
+        #initialize http server thread
+        print('Starting HTTP server...')
+        server = HTTPServer(('', port), CORSRequestHandler)
+        server.url = 'http://{}:{}'.format(host,server.server_port)
+        t = Thread(target=server.serve_forever)
+        t.daemon = True
+        t.start()
+
+        #open website with the file
+        filename = 'http://{}:{}/{}'.format(host,server.server_port,filename)
+        url = 'http://henriquemiranda.github.io/phononwebsite/phonon.html?json=%s'%filename
+        webbrowser.open_new(url)
+
+        print('Press Ctrl+C to terminate HTTP server')
+        signal.signal(signal.SIGINT, signal_handler)
+        signal.pause()
+
     def __str__(self):
         text = ""
         text += "name: %s\n"%self.name
@@ -275,37 +375,7 @@ class Phonon():
         text += self.chemical_formula+"\n"
         text += "nqpoints:\n"
         text += str(self.nqpoints)
+        text += "\n"
         return text
 
-    def write_json(self,prefix=None,folder='.'):
-        """
-        Write a json file to be read by javascript
-        """
-        if prefix: name = prefix
-        else:      name = self.name
 
-        f = open("%s/%s.json"%(folder,name),"w")
-
-        if self.highsym_qpts == None:
-            self.get_highsym_qpts()
-
-        #create the datastructure to be put on the json file
-        data = {"name":             self.name,                       # name of the material that will be displayed on the website
-                "natoms":           self.natoms,                     # number of atoms
-                "lattice":          self.cell.tolist(),              # lattice vectors (bohr)
-                "atom_types":       self.atom_types,                 # atom type   for each atom in the system (string)
-                "atom_numbers":     self.atom_numbers,               # atom number for each atom in the system (integer)
-                "chemical_symbols": self.chemical_symbols,           # unique atom types   (string) 
-                "atomic_numbers":   self.atomic_numbers.tolist(),    # unique atom numbers (integer)
-                "formula":          self.chemical_formula,           # chemical formula
-                "qpoints":          self.qpoints.tolist(),           # list of point in the reciprocal space
-                "repetitions":      self.reps,                       # default value for the repetititions 
-                "atom_pos_car":     red_car(self.pos,self.cell).tolist(), # atomic positions in cartesian coordinates
-                "atom_pos_red":     self.pos.tolist(),                    # atomic positions in reduced coordinates
-                "eigenvalues":      self.eigenvalues.tolist(),            # eigenvalues (in units of cm-1)
-                "distances":        self.distances,                       # list distances between the qpoints 
-                "highsym_qpts":     self.highsym_qpts,                    # list of high symmetry qpoints
-                "vectors":          self.eigenvectors.tolist()}           # eigenvectors
-
-        f.write(json.dumps(data))
-        f.close()
