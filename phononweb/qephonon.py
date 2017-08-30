@@ -102,7 +102,8 @@ class QePhonon(Phonon):
         return self.eigenvalues, self.eigenvectors, self.qpoints
 
     def read_atoms(self,filename):
-        """ read the data from a quantum espresso input file
+        """ 
+        read the data from a quantum espresso input file
         """
         pwin = PwIn(filename=filename)
         self.cell, self.pos, self.atom_types = pwin.get_atoms()
