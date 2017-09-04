@@ -1,33 +1,40 @@
-class PhononJson() { 
+class PhononJson { 
 
-    getFromJsonFile = function(file) {
-        var json_reader = new FileReader();
-        self = this;
-
-        console.log(file);
-        json_reader.readAsText(file);
-
-        json_reader.onloadend = function(e) {
-            self.getFromJsonString(json_reader.result);
-            update();
-        };
-    }
-
-    getFromJsonString = function(string) {
-        json = JSON.parse(string);
-        this.getFromJson.bind(this)(json);
-    }
-
-    getFromJson = function(data) {
+    getFromFile(file) {
         /*
-        Read structure data from JSON format
-        data is a string with the json file.
+        file is a javasccript file object with the ".json" file
         */
 
-        this.k=0;
-        this.n=0;
-        this.addatomphase = false;
+        let json_reader = new FileReader();
 
+        function onLoadEndHandler() {
+            this.getFromJsonString(json_reader.result);
+            update();
+        };
+
+        //read the files
+        json_reader.onloadend = onLoadEndHandler.bind(this);
+        json_reader.readAsText(file);
+
+    }
+
+    getFromString(string,callback) {
+        /*
+        string is the content of the ".json" file as a string
+        */
+
+        let json = JSON.parse(string);
+        this.getFromJson(json);
+        callback();
+    }
+
+    getFromJson(data) {
+        /*
+        Read structure data from JSON format
+        data is a json object
+        */
+
+        this.addatomphase = false;
         this.name = data["name"];
         this.natoms = data["natoms"];
         this.atom_types = data["atom_types"];
@@ -43,6 +50,8 @@ class PhononJson() {
         this.eigenvalues = data["eigenvalues"];
         this.repetitions = data["repetitions"];
 
+        let i,n,k;
+
         //get qindex
         this.qindex = {};
         for (i=0; i<this.distances.length; i++) {
@@ -52,25 +61,18 @@ class PhononJson() {
         //get high symmetry qpoints
         this.highsym_qpts = {}
         for (i=0; i<data["highsym_qpts"].length; i++) {
-            var dist = this.distances[data["highsym_qpts"][i][0]]
+            let dist = this.distances[data["highsym_qpts"][i][0]]
             this.highsym_qpts[dist] = data["highsym_qpts"][i][1];
         }
 
-        this.nndist = this.getBondingDistance();
-
-        $('#nx').val(this.repetitions[0]);
-        $('#ny').val(this.repetitions[1]);
-        $('#nz').val(this.repetitions[2]);
-        this.getRepetitions();
-
         //go through the eigenvalues and create eivals list
-        eivals = this.eigenvalues;
-        var nbands = eivals[0].length;
-        var nqpoints = eivals.length;
+        let eivals = this.eigenvalues;
+        let nbands = eivals[0].length;
+        let nqpoints = eivals.length;
         this.highcharts = [];
 
         for (n=0; n<nbands; n++) {
-            eig = [];
+            let eig = [];
             for (k=0; k<nqpoints; k++) {
                 eig.push([this.distances[k],eivals[k][n]]);
             }
@@ -81,7 +83,17 @@ class PhononJson() {
                                   marker: { radius: 2,
                                             symbol: "circle"},
                                   data: eig
-                                });
+                                 });
         }
+
+        /*
+        this.nndist = this.getBondingDistance();
+
+        $('#nx').val(this.repetitions[0]);
+        $('#ny').val(this.repetitions[1]);
+        $('#nz').val(this.repetitions[2]);
+        this.getRepetitions();
+        */
+
     }
 }

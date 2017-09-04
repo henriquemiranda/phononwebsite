@@ -4,71 +4,74 @@ Class to show phonon vibrations using Three.js and WebGl
 var vec_y = new THREE.Vector3( 0, 1, 0 );
 var vec_0 = new THREE.Vector3( 0, 0, 0 );
 
-VibCrystal = {
-    time:0,
-    arrows: false,
-    cell: false,
-    paused: false,
+class VibCrystal {
 
-    container: null,
-    container0: null,
-    dimensions: null,
-    stats: null,
-    camera: null,
-    controls: null,
-    scene: null,
-    renderer: null,
-
-    //camera options
-    cameraDistance: 100,
-    cameraViewAngle: 10,
-    cameraNear: 0.1,
-    cameraFar: 5000,
-
-    //balls
-    sphereRadius: 0.5,
-    sphereLat: 12,
-    sphereLon: 12,
-    //bonds
-    bondRadius: 0.1,
-    bondSegments: 6,
-    bondVertical: 1,
-    //arrows
-    arrowHeadRadiusRatio: 2,
-    arrowHeadLengthRatio: .25,
-    arrowRadius: 0.1,
-    arrowLength: 1.0,
-    arrowScale: 2.0,
-
-    capturer: null,
-
-    //options
-    amplitude: 0.2,
-    speed: 1.0,
-    fps: 60,
-
-    /* Initialize the phonon animation */
-    init: function(container,phonon) {
+    constructor(container) {
+        this.time = 0,
+        this.arrows = false;
+        this.cell = false;
+        this.paused = false;
+        this.initialized = false;
 
         this.container = container;
-        var container0 = container.get(0);
+        this.container0 = container.get(0);
         this.dimensions = this.getContainerDimensions();
 
+        this.stats = null;
+        this.camera = null;
+        this.controls = null;
+        this.scene = null;
+        this.renderer = null;
+
+        //camera options
+        this.cameraDistance = 100;
+        this.cameraViewAngle = 10;
+        this.cameraNear = 0.1;
+        this.cameraFar = 5000;
+
+        //balls
+        this.sphereRadius = 0.5;
+        this.sphereLat = 12;
+        this.sphereLon = 12;
+        //bonds
+        this.bondRadius = 0.1;
+        this.bondSegments = 6;
+        this.bondVertical = 1;
+        //arrows
+        this.arrowHeadRadiusRatio = 2;
+        this.arrowHeadLengthRatio = .25;
+        this.arrowRadius = 0.1;
+        this.arrowLength = 1.0;
+        this.arrowScale = 2.0;
+
+        this.capturer = null;
+
+        //options
+        this.amplitude = 0.2;
+        this.speed = 1.0;
+        this.fps = 60;
+    }
+
+    init(phononweb) {
+        /* 
+        Initialize the phonon animation 
+        */
+
         //obtain information from phonon structure
-        this.getAtypes(phonon);
-        this.vibrations = phonon.vibrations;
-        this.atoms      = phonon.atoms;
+        this.getAtypes(phononweb);
+        this.vibrations = phononweb.vibrations;
+        this.atoms      = phononweb.atoms;
 
         this.camera = new THREE.PerspectiveCamera( this.cameraViewAngle, this.dimensions.ratio, 
                                                    this.cameraNear, this.cameraFar );
         this.setCameraDirection('z');
 
         //add lights to the camera
-        pointLight = new THREE.PointLight( 0xdddddd );
+        let pointLight = new THREE.PointLight( 0xdddddd );
         pointLight.position.set(1,1,2);
         this.camera.add(pointLight);
 
-        this.controls = new THREE.TrackballControls( this.camera, container0 );
+        this.controls = new THREE.TrackballControls( this.camera, this.container0 );
         this.controls.rotateSpeed = 1.0;
         this.controls.zoomSpeed = 1.0;
         this.controls.panSpeed = 0.3;
@@ -82,8 +85,8 @@ VibCrystal = {
         // world
         this.scene = new THREE.Scene();
 
-        this.addStructure(phonon);
-        this.addCell(phonon);
+        this.addStructure(phononweb.phonon);
+        this.addCell(phononweb);
         this.addLights();
 
         // renderer
@@ -94,21 +97,21 @@ VibCrystal = {
         this.renderer.setSize( this.dimensions.width , this.dimensions.height, false );
         this.renderer.domElement.className = "vibcrystal-class";
 
-        container0.appendChild( this.renderer.domElement );
+        this.container0.appendChild( this.renderer.domElement );
         this.canvas = this.renderer.domElement;
 
         this.stats = new Stats();
         //this.stats.domElement.style.position = 'relative';
         //this.stats.domElement.style.bottom = '0px';
         //this.stats.domElement.style.zIndex = 100;
-        container0.appendChild( this.stats.domElement );
+        this.container0.appendChild( this.stats.domElement );
 
         window.addEventListener( 'resize', this.onWindowResize.bind(this), false );
 
         this.render();
-    },
+    }
 
-    captureend: function(format) {
+    captureend(format) {
         this.capturer.stop();
 
         callback_captureend = function( url ) {
@@ -126,9 +129,9 @@ VibCrystal = {
 
         this.capturer.save( callback_captureend );
         this.capturer = null;
-    },
+    }
 
-    capturestart: function(format) {
+    capturestart(format) {
         var progress = document.getElementById( 'progress' );
 
         options = { format: format,
@@ -142,9 +145,9 @@ VibCrystal = {
 
         this.capturer = new CCapture( options ),
         this.capturer.start();
-    },
+    }
 
-    setCameraDirection: function(direction) {
+    setCameraDirection(direction) {
         if (direction == 'x') {
             this.camera.position.set( this.cameraDistance, 0, 0);
             this.camera.up.set( 0, 0, 1 );
@@ -157,24 +160,27 @@ VibCrystal = {
             this.camera.position.set( 0, 0, this.cameraDistance);
             this.camera.up.set( 0, 1, 0 );
         }
-    },
+    }
 
-    getAtypes: function(phonon) {
+    getAtypes(phononweb) {
         this.materials = [];
-        this.atom_numbers = phonon.atom_numbers;
-        for (i=0;i<this.atom_numbers.length;i++) {
-            var n = this.atom_numbers[i];
-            r = jmol_colors[n][0];
-            g = jmol_colors[n][1];
-            b = jmol_colors[n][2];
+        this.atom_numbers = phononweb.phonon.atom_numbers;
+        for (let i=0; i < this.atom_numbers.length; i++) {
+            let n = this.atom_numbers[i];
+            let r = jmol_colors[n][0];
+            let g = jmol_colors[n][1];
+            let b = jmol_colors[n][2];
 
-            var material = new THREE.MeshLambertMaterial( { blending: THREE.AdditiveBlending } );
+            let material = new THREE.MeshLambertMaterial( { blending: THREE.AdditiveBlending } );
             material.color.setRGB (r, g, b);
             this.materials.push( material );
         }
-    },
+    }
 
-    addCell: function(phonon) {
+    addCell(phononweb) {
+        /*
+        Represent the unit cell
+        */
         if (this.cell) {
           lat = phonon.lat;
           o = this.geometricCenter;
@@ -227,9 +233,12 @@ VibCrystal = {
           this.scene.add(line);
         }
         
-    },
+    }
 
-    addStructure: function(phonon) {
+    addStructure(phonon) {
+        /*
+        Add the atoms from the phononweb object
+        */
         this.atomobjects  = [];
         this.bondobjects  = [];
         this.arrowobjects = []; 
@@ -237,6 +246,8 @@ VibCrystal = {
         this.atomvel = [];
         this.bonds = [];
         this.nndist = phonon.nndist+0.05;
+
+        console.log(phonon);
 
         //atoms balls geometry
         var sphereGeometry = new THREE.SphereGeometry( this.sphereRadius, this.sphereLat, 
@@ -252,25 +263,27 @@ VibCrystal = {
         var AxisMaterial  = new THREE.MeshLambertMaterial( { color: 0xbbffbb, 
                                                              blending: THREE.AdditiveBlending } );
 
+        console.log(phonon.atoms);
+
         //get geometric center
-        geometricCenter = new THREE.Vector3(0,0,0);
-        for (i=0; i<this.atoms.length; i++) {
-            pos = new THREE.Vector3(this.atoms[i][1], this.atoms[i][2], this.atoms[i][3]);
+        let geometricCenter = new THREE.Vector3(0,0,0);
+        for (let i=0; i<phonon.atoms.length; i++) {
+            let pos = new THREE.Vector3(phonon.atoms[i][1], phonon.atoms[i][2], phonon.atoms[i][3]);
             geometricCenter.add(pos);
         }
-        geometricCenter.multiplyScalar(1.0/this.atoms.length);
+        geometricCenter.multiplyScalar(1.0/phonon.atoms.length);
         this.geometricCenter = geometricCenter;
 
-        for (i=0; i<this.atoms.length; i++) {
+        for (let i=0; i<phonon.atoms.length; i++) {
              
             //add a ball for each atom
-            object = new THREE.Mesh( sphereGeometry, this.materials[this.atoms[i][0]] );
-            pos = new THREE.Vector3(this.atoms[i][1], this.atoms[i][2], this.atoms[i][3]);
+            let object = new THREE.Mesh( sphereGeometry, this.materials[phonon.atoms[i][0]] );
+            let pos = new THREE.Vector3(phonon.atoms[i][1], phonon.atoms[i][2], phonon.atoms[i][3]);
             pos.sub(geometricCenter);
 
             object.position.copy(pos);
             object.name = "atom";
-            object.atom_number = this.atom_numbers[this.atoms[i][0]];
+            object.atom_number = phonon.atom_numbers[phonon.atoms[i][0]];
             object.velocity = vec_0.clone();
 
             this.scene.add( object );
@@ -280,7 +293,7 @@ VibCrystal = {
         }
         
         if (this.arrows) {
-            for (i=0; i<this.atoms.length; i++) {
+            for (let i=0; i<this.atoms.length; i++) {
 
                 //add an arrow for each atom
                 ArrowMesh     = new THREE.Mesh( arrowGeometry, AxisMaterial );
@@ -299,22 +312,22 @@ VibCrystal = {
         }        
 
         //obtain combinations two by two of all the atoms
-        var combinations = getCombinations( this.atomobjects );
-        var a, b, length;
-        var material = new THREE.MeshLambertMaterial( { color: 0xffffff,
+        let combinations = getCombinations( this.atomobjects );
+        let a, b, length;
+        let material = new THREE.MeshLambertMaterial( { color: 0xffffff,
                                                         blending: THREE.AdditiveBlending } );
 
 
-        for (i=0; i<combinations.length; i++) {
+        for (let i=0; i<combinations.length; i++) {
             a = combinations[i][0];
             b = combinations[i][1];
-            ad = a.position;
-            bd = b.position;
+            let ad = a.position;
+            let bd = b.position;
 
             //if the separation is smaller than the sum of the bonding radius create a bond
             length = ad.distanceTo(bd)
-            cra = covalent_radii[a.atom_number]
-            crb = covalent_radii[b.atom_number]
+            let cra = covalent_radii[a.atom_number]
+            let crb = covalent_radii[b.atom_number]
             if (length < cra + crb || length < this.nndist + 0.2 ) {
                 this.bonds.push( [ad,bd,length] );
 
@@ -337,25 +350,32 @@ VibCrystal = {
         }
 
 
-    },
+    }
 
-    removeStructure: function() {
+    removeStructure() {
         var nobjects = this.scene.children.length;
         var scene = this.scene
         //just remove everything and then add the lights
-        for (i=nobjects-1; i>=0; i--) {
+        for (let i=nobjects-1; i>=0; i--) {
             scene.remove(scene.children[i]);
         }
         this.addLights();
-    },
+    }
 
-    addLights: function() {
+    addLights() {
         this.scene.add(this.camera);
-        light = new THREE.AmbientLight( 0x333333 );
+        let light = new THREE.AmbientLight( 0x333333 );
         this.scene.add( light );
-    },
+    }
 
-    updateObjects: function(phonon) {
+    updateObjects(phonon) {
+        
+        //check if it is initialized
+        if (!this.initialized) {
+            this.init(phonon)
+            this.initialized = true;
+        }
+
         this.getAtypes(phonon);
         this.vibrations = phonon.vibrations;
         this.atoms      = phonon.atoms;
@@ -363,17 +383,18 @@ VibCrystal = {
         this.addStructure(phonon);
         this.addCell(phonon);
         this.animate();
-    },
+    }
 
-    getContainerDimensions: function() {
-        w = this.container.width(), h = this.container.height();
-        dimensions = { width: w,
-                       height: h,
-                       ratio: ( w / h ) };
+    getContainerDimensions() {
+        let w = this.container.width(); 
+        let h = this.container.height();
+        let dimensions = { width: w,
+                           height: h,
+                           ratio: ( w / h ) };
         return dimensions;
-    },
+    }
 
-    onWindowResize: function() {
+    onWindowResize() {
         this.dimensions = this.getContainerDimensions();
 
         this.camera.aspect = this.dimensions.ratio;
@@ -382,9 +403,9 @@ VibCrystal = {
         this.renderer.setSize( this.dimensions.width, this.dimensions.height, false );
         this.controls.handleResize();
         this.render();
-    },
+    }
 
-    playpause: function() {
+    playpause() {
         if (this.paused) {
             this.paused = false;
         }
@@ -392,26 +413,26 @@ VibCrystal = {
             this.paused = true;
         }
         this.time
-    },
+    }
 
-    pause: function() {
+    pause() {
         var id = requestAnimationFrame( this.animate.bind(this) );
         cancelAnimationFrame( id );
-    },
+    }
 
-    animate: function() {
+    animate() {
         setTimeout( function() {
           requestAnimationFrame( this.animate.bind(this) );
         }.bind(this), 1000 / 60 );
 
         this.controls.update();
         this.render();
-    },
+    }
 
-    render: function() {
-        var x,y,z,i;
-        var atom, bond, atompos, bondobject;
-        var vibrations;
+    render() {
+        let x,y,z,i;
+        let atom, bond, atompos, bondobject;
+        let vibrations;
 
         //get the current time in miliseconds and convert to seconds
         var currentTime = Date.now()/1000.0;
@@ -467,14 +488,16 @@ VibCrystal = {
         //if the capturer exists then capture
         if (this.capturer) {
             this.capturer.capture( this.canvas );
-        };
+        }
 
         this.stats.update();
     }
 }
 
-//get a quarternion and midpoint that links two points
 function getBond( point1, point2 ) {
+    /*
+    get a quarternion and midpoint that links two points
+    */
     var direction = new THREE.Vector3().subVectors(point2, point1);
 
     quarternion = new THREE.Quaternion().setFromUnitVectors( vec_y, direction.clone().normalize() );

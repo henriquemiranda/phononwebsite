@@ -1,41 +1,40 @@
-class PhononYaml() {
+class PhononYaml {
 
-    getYaml = function(tags,object) {
+    static getYaml(tags,object) {
         /*
         check if the tags are present and if so return their value 
         */
 
-        var ntags = tags.length;
+        let ntags = tags.length;
         for (var i = 0; i < ntags; i++) {
-            var tag = tags[i];
-            if ((tag in object)) {
+            let tag = tags[i];
+            if (tag in object) {
                 return object[tag];
             }
         }
-        alert(tags + " not found in the file."
-              "Please generate the file again with the lastest version of phonopy.");
+        alert(tags + " not found in the file. Please generate the file again with the lastest version of phonopy.");
         throw new Error(tags + " not found in the file.");
     }
 
-    getFromPhononpyFile = function(yaml) {
+    getFromFile(file) {
         /*
-        yaml is a file object with the "band.yaml" file
+        file is a javascript file object with the "band.yaml" file
         */
-
-        var yaml_reader = new FileReader();
-        self = this;
-
-        //read the files
-        yaml_reader.onloadend = onLoadEndHandler;
-        yaml_reader.readAsText(yaml);
+ 
+        let yaml_reader = new FileReader();
 
         function onLoadEndHandler() {
-        self.getFromPhononpyString(yaml_reader.result);
-        update();
+            this.getFromPhononpyString(yaml_reader.result);
+            update();
         }
-    },
+ 
+        //read the files
+        yaml_reader.onloadend = onLoadEndHandler.bind(this);
+        yaml_reader.readAsText(file);
 
-    getFromPhononpyString = function(yaml) {
+    }
+
+    getFromString(string) {
         /*
         yaml is the content of "band.yaml" file as a string
         */
@@ -45,13 +44,13 @@ class PhononYaml() {
         var supercell_lat, rec, lat, nqpoint, npath, phonon, sc_atoms, segment_nqpoint;
 
         //read the yaml files
-        var phononyaml = jsyaml.load(yaml);
-        lat      = getYaml(['lattice'],phononyaml);
-        nqpoint  = getYaml(['nqpoint'],phononyaml);
-        npath    = getYaml(['npath'],phononyaml);
-        tmat     = getYaml(['supercell_matrix'],phononyaml);
-        pc_atoms = getYaml(['points','atoms'],phononyaml);
-        phonon   = getYaml(['phonon'],phononyaml);
+        var phononyaml = jsyaml.load(string);
+        lat      = this.getYaml(['lattice'],phononyaml);
+        nqpoint  = this.getYaml(['nqpoint'],phononyaml);
+        npath    = this.getYaml(['npath'],phononyaml);
+        tmat     = this.getYaml(['supercell_matrix'],phononyaml);
+        pc_atoms = this.getYaml(['points','atoms'],phononyaml);
+        phonon   = this.getYaml(['phonon'],phononyaml);
         if ('segment_nqpoint' in phononyaml) {
             segment_nqpoint = phononyaml['segment_nqpoint'];
         }
@@ -65,18 +64,13 @@ class PhononYaml() {
         //get the number of repetitions
         pmat = matrix_multiply(lat,tmat);
 
-        //this will be changed
-        nx = 3;
-        ny = 3;
-        nz = 3;
-
         //get the atoms inside the unit cell
-        var pos,x,y,z,atom_types = [], atom_numbers = [] ;
-        var atomic_numbers = {}, pc_atoms_car = [], pc_atoms_red = [];
+        let pos,x,y,z,atom_types = [], atom_numbers = [] ;
+        let atomic_numbers = {}, pc_atoms_car = [], pc_atoms_red = [];
 
         for (i=0; i<pc_atoms.length; i++) {
-            var symbol = getYaml(['symbol'],pc_atoms[i]);
-            var position = getYaml(['position','coordinates'],pc_atoms[i]);
+            let symbol   = this.getYaml(['symbol'],pc_atoms[i]);
+            let position = this.getYaml(['position','coordinates'],pc_atoms[i]);
             atom_numbers.push(atomic_number[symbol]);
             atom_types.push(symbol);
             pc_atoms_red.push(position);
@@ -85,11 +79,11 @@ class PhononYaml() {
         this.natoms = pc_atoms.length;
 
         //get the phonon dispersion
-        var kpoints = [], eivals, eivecs = [];
-        var nmodes = this.natoms*3;
-        var n, p, phononi, phononiband;
+        let kpoints = [], eivals, eivecs = [];
+        let nmodes = this.natoms*3;
+        let n, p, phononi, phononiband;
 
-        var highcharts = [];
+        let highcharts = [];
         this.highsym_qpts = {};
         this.qindex = {};
         var qpoint = 0;
@@ -139,7 +133,7 @@ class PhononYaml() {
                     eivals[n].push([phononi['distance'],phononiband[n]['frequency']*thz2ev]);
 
                     //get eigenvectors
-                    vec = getYaml(['eigenvector'],phononiband[n])
+                    vec = this.getYaml(['eigenvector'],phononiband[n])
                     eivec.push(vec);
                 }
                 eivecs.push(eivec);
@@ -194,7 +188,7 @@ class PhononYaml() {
         this.addatomphase = true;
         this.atom_types = atom_types;
         this.atom_numbers = atom_numbers;
-        this.atomic_numbers = unique(atom_numbers).map(function(x) { return parseInt(x)});
+        this.atomic_numbers = unique(atom_numbers).map(parseInt(x));
         this.atom_pos_car = pc_atoms_car;
         this.atom_pos_red = pc_atoms_red;
         this.lat = lat;
@@ -202,13 +196,16 @@ class PhononYaml() {
         this.kpoints = kpoints;
         this.formula = atom_types.join('');
         this.highcharts = highcharts;
-        this.repetitions = [nx,ny,nz];
+        //TODO: change this
+        this.repetitions = [3,3,3];
 
+        /*
         this.nndist = this.getBondingDistance();
 
         $('#nx').val(this.repetitions[0]);
         $('#ny').val(this.repetitions[1]);
         $('#nz').val(this.repetitions[2]);
         this.getRepetitions();
+        */
     }
 }
