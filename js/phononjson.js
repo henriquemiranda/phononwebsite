@@ -86,14 +86,5 @@ class PhononJson {
                                  });
         }
 
-        /*
-        this.nndist = this.getBondingDistance();
-
-        $('#nx').val(this.repetitions[0]);
-        $('#ny').val(this.repetitions[1]);
-        $('#nz').val(this.repetitions[2]);
-        this.getRepetitions();
-        */
-
     }
 }

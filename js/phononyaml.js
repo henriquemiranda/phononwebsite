@@ -196,16 +196,7 @@ class PhononYaml {
         this.kpoints = kpoints;
         this.formula = atom_types.join('');
         this.highcharts = highcharts;
-        //TODO: change this
         this.repetitions = [3,3,3];
 
-        /*
-        this.nndist = this.getBondingDistance();
-
-        $('#nx').val(this.repetitions[0]);
-        $('#ny').val(this.repetitions[1]);
-        $('#nz').val(this.repetitions[2]);
-        this.getRepetitions();
-        */
     }
 }

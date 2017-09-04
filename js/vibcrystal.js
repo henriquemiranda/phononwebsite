@@ -56,17 +56,12 @@ class VibCrystal {
         this.atomobjects = [];
         this.bondobjects = [];
         this.bonds = [];
-}
+    }
 
     init(phonon) {
         /* 
         Initialize the phonon animation 
         */
-
-        //obtain information from phonon structure
-        /*this.vibrations = phonon.vibrations;
-        this.atoms      = phonon.atoms;
-        this.getAtypes(phonon.atom_numbers);*/
 
         //add camera
         this.camera = new THREE.PerspectiveCamera( this.cameraViewAngle, this.dimensions.ratio, 
@@ -91,9 +86,6 @@ class VibCrystal {
 
         // world
         this.scene = new THREE.Scene();
-        /*this.addStructure(this.phonon);
-        this.addCell(this.phonon.lat);
-        this.addLights();*/
 
         // renderer
         this.renderer = new THREE.WebGLRenderer( { antialias: true } );
@@ -111,8 +103,6 @@ class VibCrystal {
 
         //resizer
         window.addEventListener( 'resize', this.onWindowResize.bind(this), false );
-
-        //this.render();
     }
 
     captureend(format) {
@@ -286,7 +276,7 @@ class VibCrystal {
                                                             this.arrowLength*this.arrowHeadLengthRatio );
 
             let axisGeometry  = new THREE.CylinderGeometry( this.arrowRadius, this.arrowRadius, 
-                                                            this.arrowLength);
+                                                            this.arrowLength );
 
             let AxisMaterial  = new THREE.MeshLambertMaterial( { color: 0xbbffbb, 
                                                                  blending: THREE.AdditiveBlending } );
@@ -302,7 +292,6 @@ class VibCrystal {
                 ArrowMesh.updateMatrix();
                 axisGeometry.merge(ArrowMesh.geometry,ArrowMesh.matrix);
                 let object = new THREE.Mesh( axisGeometry, AxisMaterial );
-                //object.position.copy(pos);
                 object.position.copy( geometricCenter );
  
                 this.scene.add( object );
@@ -331,13 +320,13 @@ class VibCrystal {
                 this.bonds.push( [ad,bd,length] );
 
                 //get transformations
-                var bond = getBond(ad,bd);
+                let bond = getBond(ad,bd);
 
                 //create cylinder mesh
-                var cylinderGeometry = new THREE.CylinderGeometry( this.bondRadius, this.bondRadius,
+                let cylinderGeometry = new THREE.CylinderGeometry( this.bondRadius, this.bondRadius,
                                                                    length, this.bondSegments,
                                                                    this.bondVertical, true);
-                var object = new THREE.Mesh(cylinderGeometry, material);
+                let object = new THREE.Mesh(cylinderGeometry, material);
 
                 object.setRotationFromQuaternion( bond.quaternion );
                 object.position.copy( bond.midpoint )
@@ -351,8 +340,8 @@ class VibCrystal {
     }
 
     removeStructure() {
-        var nobjects = this.scene.children.length;
-        var scene = this.scene
+        let nobjects = this.scene.children.length;
+        let scene = this.scene
 
         //remove everything
         for (let i=nobjects-1; i>=0; i--) {
@@ -421,7 +410,7 @@ class VibCrystal {
     }
 
     pause() {
-        var id = requestAnimationFrame( this.animate.bind(this) );
+        let id = requestAnimationFrame( this.animate.bind(this) );
         cancelAnimationFrame( id );
     }
 
@@ -506,5 +495,4 @@ function getBond( point1, point2 ) {
     return { quaternion: quarternion,
              midpoint: point1.clone().add( direction.multiplyScalar(0.5) ) };
 }
-
 

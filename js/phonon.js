@@ -30,7 +30,7 @@ class PhononWebpage {
         //select dispersion
         this.dispersion = dispersion;
 
-        //bind some functions
+        //bind some functions (TODO: improve this)
         this.exportXSF    = exportXSF.bind(this);
         this.exportPOSCAR = exportPOSCAR.bind(this);
     }
@@ -42,6 +42,15 @@ class PhononWebpage {
         this.nx = $('#nx').val();
         this.ny = $('#ny').val();
         this.nz = $('#nz').val();
+    }
+
+    setRepetitions() {
+        /*
+        set the number of repetitions
+        */
+        $('#nx').val(this.nx);
+        $('#ny').val(this.ny);
+        $('#nz').val(this.nz);
     }
 
     loadCustomFile(event) {
@@ -108,7 +117,7 @@ class PhononWebpage {
 
         this.loadURL( { yaml: this.materials[id]['url'] } );
         this.name = this.materials[id]['name'] +  " <a href='https://www.materialsproject.org/materials/mp-"+id+"'>mp-"+id+"</a>";
-        update();
+        this.update();
     }
 
     loadLocal() {
@@ -118,7 +127,18 @@ class PhononWebpage {
  
         let readJson = function(string) {
             this.phonon = new PhononJson();
-            this.phonon.getFromString(string, function() { this.update() }.bind(this) );
+
+            this.phonon.getFromString(string, function() { 
+
+                //set repetitions
+                let repetitions = this.phonon.repetitions;
+                this.nx = repetitions[0];
+                this.ny = repetitions[1];
+                this.nz = repetitions[2];
+                this.setRepetitions();
+
+                this.update() }.bind(this) );
+
         }
 
         $.get(folder+'/data.json', readJson.bind(this), "html" );
@@ -216,6 +236,10 @@ class PhononWebpage {
         return vibrations;
     }
 
+    setVibrations() {
+        this.vibrations = this.getVibrations(this.nx,this.ny,this.nz);
+    }
+
     updatePage() {
         /*
         lattice vectors table
@@ -233,11 +257,11 @@ class PhononWebpage {
         $('#uc_atypes').html( this.phonon.formula );
 
         //atomic positions table
-        let pos = this.atom_pos_red;
+        let pos = this.phonon.atom_pos_red;
         $('#atompos').empty() //clean the atomic positions table
-        for (i=0;i<this.natoms;i++) {
+        for (i=0;i<this.phonon.natoms;i++) {
             $('#atompos').append('<tr></tr>');
-            $('#atompos tr:last').append('<td class="ap">'+this.atom_types[i]+'</td>');
+            $('#atompos tr:last').append('<td class="ap">'+this.phonon.atom_types[i]+'</td>');
             for (j=0;j<3;j++) {
                 $('#atompos tr:last').append('<td>'+pos[i][j].toFixed(4)+'</td>');
             }
@@ -330,13 +354,6 @@ class PhononWebpage {
         }
     }
 
-    updateRepetitions() {
-        this.visualizer.pause();
-        this.getRepetitions();
-        this.atoms = this.getStructure(this.nx,this.ny,this.nz);
-        this.vibrations = this.getVibrations(this.nx,this.ny,this.nz);
-        this.visualizer.update(this);
-    }
 }
 
 $(document).ready(function() {
@@ -375,7 +392,7 @@ $(document).ready(function() {
 
     //jquery to make an action once you change the number of repetitions
     $(".input-rep").keyup(function(event){
-        if(event.keyCode == 13) p.updateRepetitions();
+        if(event.keyCode == 13) p.update();
     });
 
 });

@@ -22,8 +22,8 @@ class PhononHighcharts {
         let click_event = function(event) {
             p.k = p.phonon.qindex[this.x];
             p.n = this.series.name;
-            p.getVibrations();
-            v.update(p);
+            p.setVibrations();
+            p.visualizer.update(p);
         }
 
         this.HighchartsOptions = {
