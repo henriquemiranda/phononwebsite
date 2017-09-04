@@ -1,6 +1,6 @@
-var pi = 3.14159265359;
-var thz2ev = 33.35641;
-var bohr2ang = 0.529177249;
+const pi = 3.14159265359;
+const thz2ev = 33.35641;
+const bohr2ang = 0.529177249;
 
 //default folder
 var folder = "graphene";
@@ -42,12 +42,6 @@ class PhononWebpage {
         this.nx = $('#nx').val();
         this.ny = $('#ny').val();
         this.nz = $('#nz').val();
-        
-        //calculate positions
-        this.getStructure(this.nx, this.ny, this.nz);
-
-        //calculate vibrations
-        this.getVibrations();
     }
 
     loadCustomFile(event) {
@@ -151,7 +145,6 @@ class PhononWebpage {
             }
         }
 
-        this.phonon.atoms = atoms;
         return atoms;
     }
 
@@ -175,7 +168,7 @@ class PhononWebpage {
         return min;
     }
 
-    getVibrations() {
+    getVibrations(nx,ny,nz) {
         /*
         Calculate the vibration patterns for all the atoms
         */
@@ -196,14 +189,14 @@ class PhononWebpage {
             }
         }
         else {
-            for (i=0; i<this.natoms; i++) {
+            for (i=0; i<phonon.natoms; i++) {
                 atom_phase.push(0);
             }
         }
 
-        for (var ix=0; ix<this.nx; ix++) {
-            for (var iy=0; iy<this.ny; iy++) {
-                for (var iz=0; iz<this.nz; iz++) {
+        for (var ix=0; ix<nx; ix++) {
+            for (var iy=0; iy<ny; iy++) {
+                for (var iz=0; iz<nz; iz++) {
 
                     for (i=0;i<phonon.natoms;i++) {
                         let sprod = kpt[0]*ix + kpt[1]*iy + kpt[2]*iz + atom_phase[i];
@@ -220,8 +213,6 @@ class PhononWebpage {
             }
         }
 
-        console.log(vibrations);
-        this.vibrations = vibrations;
         return vibrations;
     }
 
@@ -260,12 +251,19 @@ class PhononWebpage {
         /*
         Update all the aspects fo the webpage
         */
-        this.getStructure(this.nx,this.ny,this.nz);
-        this.getVibrations();
+        this.getRepetitions();
+        this.atoms = this.getStructure(this.nx,this.ny,this.nz);
+        this.vibrations = this.getVibrations(this.nx,this.ny,this.nz);
         this.phonon.nndist = this.getBondingDistance();
-        this.dispersion.update(this.phonon);
+
+        //update page
         this.updatePage();
-        this.visualizer.updateObjects(this);
+
+        //update dispersion
+        this.dispersion.update(this.phonon);
+
+        //update visualizer
+        this.visualizer.update(this);
     }
 
     createPhonodbMenu(phonodb) {
@@ -335,7 +333,9 @@ class PhononWebpage {
     updateRepetitions() {
         this.visualizer.pause();
         this.getRepetitions();
-        this.visualizer.updateObjects(p);
+        this.atoms = this.getStructure(this.nx,this.ny,this.nz);
+        this.vibrations = this.getVibrations(this.nx,this.ny,this.nz);
+        this.visualizer.update(this);
     }
 }
 
@@ -372,8 +372,6 @@ $(document).ready(function() {
     if ( ! Detector.webgl ) {
         Detector.addGetWebGLMessage();
     }
-    //v.init($('#vibcrystal'),p);
-    //p.update();
 
     //jquery to make an action once you change the number of repetitions
     $(".input-rep").keyup(function(event){

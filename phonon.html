@@ -125,10 +125,10 @@
             <div>
             <h3>Repetitions:</h3>
                 <form>
-                    <input class="input-rep" id="nx" type="number" name="quantity">
-                    <input class="input-rep" id="ny" type="number" name="quantity">
-                    <input class="input-rep" id="nz" type="number" name="quantity">
-                    <button type="button" onclick="updateRepetitions()">update</button>
+                    <input class="input-rep" id="nx" value="3" type="number" name="quantity">
+                    <input class="input-rep" id="ny" value="3" type="number" name="quantity">
+                    <input class="input-rep" id="nz" value="3" type="number" name="quantity">
+                    <button type="button" onclick="p.updateRepetitions()">update</button>
                 </form>
             </div>
 
@@ -152,11 +152,11 @@
             <div>
             <h3>Vectors:</h3>
                 <input id="vamplitude_range" type="range" step ="1.0" value="2.0" min="0.0" max="10.0" onchange="v.arrowScale=this.value">
-                <input id="drawvectors" type="checkbox" onclick="v.arrows = this.checked; updateRepetitions()">on</input>
+                <input id="drawvectors" type="checkbox" onclick="v.arrows = this.checked; p.updateRepetitions()">on</input>
             </div>
             <div>
             <h3>Cell:</h3>
-                <input id="drawcell"    type="checkbox" onclick="v.cell   = this.checked; updateRepetitions()">on</input>
+                <input id="drawcell"    type="checkbox" onclick="v.cell   = this.checked; p.updateRepetitions()">on</input>
             </div>
             <div>
             <h3>Export displacement:</h3>

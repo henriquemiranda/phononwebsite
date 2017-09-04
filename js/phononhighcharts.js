@@ -7,7 +7,7 @@ class PhononHighcharts {
         this.phonon = { highsym_qpts: [] }
         let phonon = this.phonon;
 
-        var labels_formatter = function() {
+        let labels_formatter = function() {
             if ( phonon.highsym_qpts[this.value] ) {
                 let label = phonon.highsym_qpts[this.value];
                 label = label.replace("$","").replace("$","");
@@ -19,11 +19,11 @@ class PhononHighcharts {
             return ''
         }
 
-        var click_event = function(event) {
-            p.k = phonon.qindex[this.x];
+        let click_event = function(event) {
+            p.k = p.phonon.qindex[this.x];
             p.n = this.series.name;
             p.getVibrations();
-            v.updateObjects(p);
+            v.update(p);
         }
 
         this.HighchartsOptions = {

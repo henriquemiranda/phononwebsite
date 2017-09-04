@@ -22,6 +22,7 @@ class VibCrystal {
         this.controls = null;
         this.scene = null;
         this.renderer = null;
+        this.capturer = null;
 
         //camera options
         this.cameraDistance = 100;
@@ -33,10 +34,12 @@ class VibCrystal {
         this.sphereRadius = 0.5;
         this.sphereLat = 12;
         this.sphereLon = 12;
+
         //bonds
         this.bondRadius = 0.1;
         this.bondSegments = 6;
         this.bondVertical = 1;
+
         //arrows
         this.arrowHeadRadiusRatio = 2;
         this.arrowHeadLengthRatio = .25;
@@ -44,24 +47,28 @@ class VibCrystal {
         this.arrowLength = 1.0;
         this.arrowScale = 2.0;
 
-        this.capturer = null;
-
         //options
         this.amplitude = 0.2;
         this.speed = 1.0;
         this.fps = 60;
-    }
 
-    init(phononweb) {
+        this.arrowobjects = [];
+        this.atomobjects = [];
+        this.bondobjects = [];
+        this.bonds = [];
+}
+
+    init(phonon) {
         /* 
         Initialize the phonon animation 
         */
 
         //obtain information from phonon structure
-        this.getAtypes(phononweb);
-        this.vibrations = phononweb.vibrations;
-        this.atoms      = phononweb.atoms;
+        /*this.vibrations = phonon.vibrations;
+        this.atoms      = phonon.atoms;
+        this.getAtypes(phonon.atom_numbers);*/
 
+        //add camera
         this.camera = new THREE.PerspectiveCamera( this.cameraViewAngle, this.dimensions.ratio, 
                                                    this.cameraNear, this.cameraFar );
         this.setCameraDirection('z');
@@ -71,6 +78,7 @@ class VibCrystal {
         pointLight.position.set(1,1,2);
         this.camera.add(pointLight);
 
+        //controls
         this.controls = new THREE.TrackballControls( this.camera, this.container0 );
         this.controls.rotateSpeed = 1.0;
         this.controls.zoomSpeed = 1.0;
@@ -79,15 +87,13 @@ class VibCrystal {
         this.controls.noPan = false;
         this.controls.staticMoving = true;
         this.controls.dynamicDampingFactor = 0.3;
-
         this.controls.addEventListener( 'change', this.render.bind(this) );
 
         // world
         this.scene = new THREE.Scene();
-
-        this.addStructure(phononweb.phonon);
-        this.addCell(phononweb);
-        this.addLights();
+        /*this.addStructure(this.phonon);
+        this.addCell(this.phonon.lat);
+        this.addLights();*/
 
         // renderer
         this.renderer = new THREE.WebGLRenderer( { antialias: true } );
@@ -96,26 +102,24 @@ class VibCrystal {
         this.renderer.shadowMap.enabled = false;
         this.renderer.setSize( this.dimensions.width , this.dimensions.height, false );
         this.renderer.domElement.className = "vibcrystal-class";
-
         this.container0.appendChild( this.renderer.domElement );
         this.canvas = this.renderer.domElement;
 
+        //frame counter
         this.stats = new Stats();
-        //this.stats.domElement.style.position = 'relative';
-        //this.stats.domElement.style.bottom = '0px';
-        //this.stats.domElement.style.zIndex = 100;
         this.container0.appendChild( this.stats.domElement );
 
+        //resizer
         window.addEventListener( 'resize', this.onWindowResize.bind(this), false );
 
-        this.render();
+        //this.render();
     }
 
     captureend(format) {
         this.capturer.stop();
 
         callback_captureend = function( url ) {
-            var element = document.createElement('a');
+            let element = document.createElement('a');
             element.setAttribute('href', url);
             element.setAttribute('download', p.k.toString()+'_'+p.n.toString()+'.'+ format);
             element.style.display = 'none';
@@ -132,7 +136,7 @@ class VibCrystal {
     }
 
     capturestart(format) {
-        var progress = document.getElementById( 'progress' );
+        let progress = document.getElementById( 'progress' );
 
         options = { format: format,
                     workersPath: 'js/',
@@ -162,11 +166,12 @@ class VibCrystal {
         }
     }
 
-    getAtypes(phononweb) {
+    getAtypes(atom_numbers) {
         this.materials = [];
-        this.atom_numbers = phononweb.phonon.atom_numbers;
-        for (let i=0; i < this.atom_numbers.length; i++) {
-            let n = this.atom_numbers[i];
+        this.atom_numbers = atom_numbers;
+
+        for (let i=0; i < atom_numbers.length; i++) {
+            let n = atom_numbers[i];
             let r = jmol_colors[n][0];
             let g = jmol_colors[n][1];
             let b = jmol_colors[n][2];
@@ -177,45 +182,38 @@ class VibCrystal {
         }
     }
 
-    addCell(phononweb) {
+    addCell(lat) {
         /*
         Represent the unit cell
         */
         if (this.cell) {
-          lat = phonon.lat;
-          o = this.geometricCenter;
-          zero = new THREE.Vector3(0,0,0);
-          c = new THREE.Vector3(0,0,0);
-          x = new THREE.Vector3(lat[0][0], lat[0][1], lat[0][2]);
-          y = new THREE.Vector3(lat[1][0], lat[1][1], lat[1][2]);
-          z = new THREE.Vector3(lat[2][0], lat[2][1], lat[2][2]);
+          let material = new THREE.LineBasicMaterial({ color: 0x000000 });
+          let geometry = new THREE.Geometry();
+
+          let o = this.geometricCenter;
+          let zero = new THREE.Vector3(0,0,0);
+          let c = new THREE.Vector3(0,0,0);
+          let x = new THREE.Vector3(lat[0][0], lat[0][1], lat[0][2]);
+          let y = new THREE.Vector3(lat[1][0], lat[1][1], lat[1][2]);
+          let z = new THREE.Vector3(lat[2][0], lat[2][1], lat[2][2]);
           
           //lower part
-          var geometry = new THREE.Geometry();
           c.copy(zero);
           c.sub(o); geometry.vertices.push(c.clone());
           c.add(x); geometry.vertices.push(c.clone());
           c.add(y); geometry.vertices.push(c.clone());
           c.sub(x); geometry.vertices.push(c.clone());
           c.sub(y); geometry.vertices.push(c.clone());
-          var material = new THREE.LineBasicMaterial({ color: 0x000000 });
-          var line = new THREE.Line(geometry, material);
-          this.scene.add(line);
                  
           //upper part
-          var geometry = new THREE.Geometry();
           c.copy(zero); c.add(z);
           c.sub(o); geometry.vertices.push(c.clone());
           c.add(x); geometry.vertices.push(c.clone());
           c.add(y); geometry.vertices.push(c.clone());
           c.sub(x); geometry.vertices.push(c.clone());
           c.sub(y); geometry.vertices.push(c.clone());
-          var material = new THREE.LineBasicMaterial({ color: 0x000000 });
-          var line = new THREE.Line(geometry, material);
-          this.scene.add(line);
           
           //vertical lines
-          var geometry = new THREE.Geometry();
           c.copy(zero); 
           c.sub(o); geometry.vertices.push(c.clone());
           c.add(z); geometry.vertices.push(c.clone());
@@ -228,14 +226,14 @@ class VibCrystal {
           
           c.sub(x); geometry.vertices.push(c.clone());
           c.sub(z); geometry.vertices.push(c.clone());
-          var material = new THREE.LineBasicMaterial({ color: 0x000000 });
-          var line = new THREE.Line(geometry, material);
+
+          let line = new THREE.Line(geometry, material);
           this.scene.add(line);
         }
         
     }
 
-    addStructure(phonon) {
+    addStructure(atoms,atom_numbers) {
         /*
         Add the atoms from the phononweb object
         */
@@ -245,45 +243,32 @@ class VibCrystal {
         this.atompos = [];
         this.atomvel = [];
         this.bonds = [];
-        this.nndist = phonon.nndist+0.05;
-
-        console.log(phonon);
-
-        //atoms balls geometry
-        var sphereGeometry = new THREE.SphereGeometry( this.sphereRadius, this.sphereLat, 
-                                                       this.sphereLon);
-        //arrow geometry
-        var arrowGeometry = new THREE.CylinderGeometry( 0, 
-                                                        this.arrowHeadRadiusRatio*this.arrowRadius, 
-                                                        this.arrowLength*this.arrowHeadLengthRatio );
-
-        var axisGeometry  = new THREE.CylinderGeometry( this.arrowRadius, this.arrowRadius, 
-                                                        this.arrowLength);
-
-        var AxisMaterial  = new THREE.MeshLambertMaterial( { color: 0xbbffbb, 
-                                                             blending: THREE.AdditiveBlending } );
-
-        console.log(phonon.atoms);
+        this.nndist = this.phonon.nndist+0.05;
 
         //get geometric center
         let geometricCenter = new THREE.Vector3(0,0,0);
-        for (let i=0; i<phonon.atoms.length; i++) {
-            let pos = new THREE.Vector3(phonon.atoms[i][1], phonon.atoms[i][2], phonon.atoms[i][3]);
+        for (let i=0; i<atoms.length; i++) {
+            let pos = new THREE.Vector3(atoms[i][1], atoms[i][2], atoms[i][3]);
             geometricCenter.add(pos);
         }
-        geometricCenter.multiplyScalar(1.0/phonon.atoms.length);
+        geometricCenter.multiplyScalar(1.0/atoms.length);
         this.geometricCenter = geometricCenter;
 
-        for (let i=0; i<phonon.atoms.length; i++) {
-             
-            //add a ball for each atom
-            let object = new THREE.Mesh( sphereGeometry, this.materials[phonon.atoms[i][0]] );
-            let pos = new THREE.Vector3(phonon.atoms[i][1], phonon.atoms[i][2], phonon.atoms[i][3]);
+        //atoms balls geometry
+        let sphereGeometry = new THREE.SphereGeometry( this.sphereRadius, this.sphereLat, 
+                                                       this.sphereLon);
+
+        //add a ball for each atom
+        for (let i=0; i<atoms.length; i++) {
+           
+            let object = new THREE.Mesh( sphereGeometry, this.materials[atoms[i][0]] );
+            let pos = new THREE.Vector3(atoms[i][1], atoms[i][2], atoms[i][3]);
             pos.sub(geometricCenter);
 
             object.position.copy(pos);
             object.name = "atom";
-            object.atom_number = phonon.atom_numbers[phonon.atoms[i][0]];
+            object.atom_number = atom_numbers[atoms[i][0]];
+
             object.velocity = vec_0.clone();
 
             this.scene.add( object );
@@ -291,25 +276,39 @@ class VibCrystal {
             this.atompos.push( pos );
 
         }
-        
+
+        //add arrows
         if (this.arrows) {
-            for (let i=0; i<this.atoms.length; i++) {
+
+            //arrow geometry
+            let arrowGeometry = new THREE.CylinderGeometry( 0, 
+                                                            this.arrowHeadRadiusRatio*this.arrowRadius, 
+                                                            this.arrowLength*this.arrowHeadLengthRatio );
+
+            let axisGeometry  = new THREE.CylinderGeometry( this.arrowRadius, this.arrowRadius, 
+                                                            this.arrowLength);
+
+            let AxisMaterial  = new THREE.MeshLambertMaterial( { color: 0xbbffbb, 
+                                                                 blending: THREE.AdditiveBlending } );
+
+            for (let i=0; i<atoms.length; i++) {
 
                 //add an arrow for each atom
-                ArrowMesh     = new THREE.Mesh( arrowGeometry, AxisMaterial );
-                length = (this.arrowLength+this.arrowLength*this.arrowHeadLengthRatio)/2;
+                let ArrowMesh = new THREE.Mesh( arrowGeometry, AxisMaterial );
+                let length = (this.arrowLength+this.arrowLength*this.arrowHeadLengthRatio)/2;
                 ArrowMesh.position.y = length; 
 
                 //merge form of the arrow with cylinder
                 ArrowMesh.updateMatrix();
                 axisGeometry.merge(ArrowMesh.geometry,ArrowMesh.matrix);
-                AxisMesh      = new THREE.Mesh( axisGeometry, AxisMaterial );
-                AxisMesh.position.copy(pos);
-                
-                this.scene.add( AxisMesh );
-                this.arrowobjects.push( AxisMesh );
+                let object = new THREE.Mesh( axisGeometry, AxisMaterial );
+                //object.position.copy(pos);
+                object.position.copy( geometricCenter );
+ 
+                this.scene.add( object );
+                this.arrowobjects.push( object );
             }
-        }        
+        }
 
         //obtain combinations two by two of all the atoms
         let combinations = getCombinations( this.atomobjects );
@@ -317,7 +316,7 @@ class VibCrystal {
         let material = new THREE.MeshLambertMaterial( { color: 0xffffff,
                                                         blending: THREE.AdditiveBlending } );
 
-
+        //add bonds
         for (let i=0; i<combinations.length; i++) {
             a = combinations[i][0];
             b = combinations[i][1];
@@ -349,17 +348,16 @@ class VibCrystal {
             }
         }
 
-
     }
 
     removeStructure() {
         var nobjects = this.scene.children.length;
         var scene = this.scene
-        //just remove everything and then add the lights
+
+        //remove everything
         for (let i=nobjects-1; i>=0; i--) {
             scene.remove(scene.children[i]);
         }
-        this.addLights();
     }
 
     addLights() {
@@ -368,20 +366,31 @@ class VibCrystal {
         this.scene.add( light );
     }
 
-    updateObjects(phonon) {
+    update(phononweb) {
+        /*
+        this is the entry point of the phononweb 
+        structure.
+        It must contain:
+            1. atoms
+            2. vibrations
+            3. phonon
+        */
         
+        this.phonon     = phononweb.phonon;
+        this.vibrations = phononweb.vibrations;
+        this.atoms      = phononweb.atoms;
+
         //check if it is initialized
         if (!this.initialized) {
-            this.init(phonon)
+            this.init(phononweb)
             this.initialized = true;
         }
 
-        this.getAtypes(phonon);
-        this.vibrations = phonon.vibrations;
-        this.atoms      = phonon.atoms;
         this.removeStructure();
-        this.addStructure(phonon);
-        this.addCell(phonon);
+        this.addLights();
+        this.getAtypes(this.phonon.atom_numbers);
+        this.addStructure(this.atoms,this.phonon.atom_numbers);
+        this.addCell(this.phonon.lat);
         this.animate();
     }
 
@@ -406,12 +415,8 @@ class VibCrystal {
     }
 
     playpause() {
-        if (this.paused) {
-            this.paused = false;
-        }
-        else {
-            this.paused = true;
-        }
+        if (this.paused) { this.paused = false; }
+        else             { this.paused = true;  }
         this.time
     }
 
@@ -430,39 +435,36 @@ class VibCrystal {
     }
 
     render() {
-        let x,y,z,i;
-        let atom, bond, atompos, bondobject;
-        let vibrations;
-
         //get the current time in miliseconds and convert to seconds
-        var currentTime = Date.now()/1000.0;
-        var t = currentTime * this.speed;
-        var phase = Complex.Polar(this.amplitude,t*2.0*pi);
-        var v = new THREE.Vector3();
-        var vlength;
+        let currentTime = Date.now()/1000.0;
+        let t = currentTime * this.speed;
+        let phase = Complex.Polar(this.amplitude,t*2.0*pi);
+        let v = new THREE.Vector3();
 
         if (!this.paused) {
-
+            
             //update positions according to vibrational modes
-            for (i=0; i<this.atomobjects.length; i++) {
-                atom       = this.atomobjects[i];
-                atompos    = this.atompos[i];
-                vibrations = this.vibrations[i];
+            for (let i=0; i<this.atomobjects.length; i++) {
+                let atom       = this.atomobjects[i];
+                let atompos    = this.atompos[i];
+                let vibrations = this.vibrations[i];
 
-                x  = atompos.x + phase.mult(vibrations[0]).real();
-                y  = atompos.y + phase.mult(vibrations[1]).real();
-                z  = atompos.z + phase.mult(vibrations[2]).real();
+                let vx = phase.mult(vibrations[0]).real();
+                let vy = phase.mult(vibrations[1]).real();
+                let vz = phase.mult(vibrations[2]).real();
+
+                let x  = atompos.x + vx;
+                let y  = atompos.y + vy;
+                let z  = atompos.z + vz;
+
                 this.atomobjects[i].position.set( x, y, z);
 
                 if (this.arrows) {
-                    vx = phase.mult(vibrations[0]).real();
-                    vy = phase.mult(vibrations[1]).real();
-                    vz = phase.mult(vibrations[2]).real();
 
                     //velocity vector
                     v.set(vx,vy,vz);
-                    vlength = v.length()/this.amplitude;
-                    s = .5*this.arrowScale/this.amplitude;
+                    let vlength = v.length()/this.amplitude;
+                    let s = .5*this.arrowScale/this.amplitude;
      
                     this.arrowobjects[i].position.set(x+vx*s,y+vy*s,z+vz*s);
                     this.arrowobjects[i].scale.y = vlength*this.arrowScale;
@@ -471,10 +473,10 @@ class VibCrystal {
             }
 
             //update the bonds positions
-            for (i=0; i<this.bonds.length; i++) {
-                bond       = this.bonds[i];
-                bonddata   = getBond(bond[0],bond[1]);
-                bondobject = this.bondobjects[i];
+            for (let i=0; i<this.bonds.length; i++) {
+                let bond       = this.bonds[i];
+                let bonddata   = getBond(bond[0],bond[1]);
+                let bondobject = this.bondobjects[i];
 
                 bondobject.setRotationFromQuaternion( bonddata.quaternion );
                 bondobject.scale.y = bond[0].distanceTo(bond[1])/bond[2];
@@ -498,7 +500,7 @@ function getBond( point1, point2 ) {
     /*
     get a quarternion and midpoint that links two points
     */
-    var direction = new THREE.Vector3().subVectors(point2, point1);
+    let direction = new THREE.Vector3().subVectors(point2, point1);
 
     quarternion = new THREE.Quaternion().setFromUnitVectors( vec_y, direction.clone().normalize() );
     return { quaternion: quarternion,

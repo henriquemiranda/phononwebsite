@@ -30,7 +30,10 @@ This class provides the interface between the webpage and all the other componen
 
 Contains:
     - phonon structure provided by Input (see bellow)
-
+    
+Creates:
+    - vibrations (vibrational patterns repeated n times)
+    - atoms object (unit cell repeated n times)
 
 
 Visualizer
@@ -66,6 +69,10 @@ All the actions from this class should call a function from the PhononWebsite cl
 
 Input
 ===================================
+
+Must read phonon structure which contains:
+    - structure
+    - vibrational patterns
 
 class PhononYaml
 -----------------
