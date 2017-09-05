@@ -7,19 +7,21 @@ class PhononHighcharts {
         this.phonon = { highsym_qpts: [] }
         let phonon = this.phonon;
 
-        let labels_formatter = function() {
-            if ( phonon.highsym_qpts[this.value] ) {
-                let label = phonon.highsym_qpts[this.value];
-                label = label.replace("$","").replace("$","");
-                label = label.replace("\\Gamma","Γ");
-                label = label.replace("\\Sigma","Σ");
-                label = label.replace("_","");
-                return label;
+        this.labels_formatter = function(phonon) {
+            return function() {
+                if ( phonon.highsym_qpts[this.value] ) {
+                    let label = phonon.highsym_qpts[this.value];
+                    label = label.replace("$","").replace("$","");
+                    label = label.replace("\\Gamma","Γ");
+                    label = label.replace("\\Sigma","Σ");
+                    label = label.replace("_","");
+                    return label;
+                }
+                return ''
             }
-            return ''
         }
 
-        let click_event = function(event) {
+        let click_event = function() {
             p.k = p.phonon.qindex[this.x];
             p.n = this.series.name;
             p.setVibrations();
@@ -37,15 +39,14 @@ class PhononHighcharts {
                      minorTickLength: 0,
                      tickLength: 0,
                      labels: {
-                        style: { fontSize:'20px' },
-                        formatter: labels_formatter
+                        style: { fontSize:'20px' }
                      }
                    },
             yAxis: { plotLines: [],
-                     title: { text: 'Frequency (cm-1)' },
+                     title: { text: 'Frequency (cm<sup>-1</sup>)' },
                      plotLines: [ {value: 0, color: '#000000', width: 2} ]
                    },
-            tooltip: { formatter: function(x) { return Math.round(this.y*100)/100+' cm-1' } },
+            tooltip: { formatter: function(x) { return Math.round(this.y*100)/100+' cm<sup>-1</sup>' } },
             legend: { enabled: false },
             series: [],
             plotOptions: { line:   { animation: false },
@@ -98,6 +99,7 @@ class PhononHighcharts {
         this.HighchartsOptions.series = this.highcharts;
         this.HighchartsOptions.xAxis.tickPositions = ticks;
         this.HighchartsOptions.xAxis.plotLines = plotLines;
+        this.HighchartsOptions.xAxis.labels.formatter = this.labels_formatter(phonon)
         this.HighchartsOptions.yAxis.min = minVal;
         this.container.highcharts(this.HighchartsOptions);
     }

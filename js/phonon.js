@@ -1,18 +1,8 @@
 const pi = 3.14159265359;
-const thz2ev = 33.35641;
 const bohr2ang = 0.529177249;
 
 //default folder
 var folder = "graphene";
-
-//auxiliary functions
-function unique(a) {
-    let i, b = {};
-    for (i=0; i<a.length; i++) {
-        b[a[i]] = 0;
-    }
-    return Object.keys(b);
-}
 
 class PhononWebpage {
 
@@ -44,10 +34,17 @@ class PhononWebpage {
         this.nz = $('#nz').val();
     }
 
-    setRepetitions() {
+    setRepetitions(repetitions) {
         /*
-        set the number of repetitions
+        set the number of repetitions on the interface
         */
+    
+        if (repetitions) {
+            this.nx = repetitions[0];
+            this.ny = repetitions[1];
+            this.nz = repetitions[2];
+        }
+
         $('#nx').val(this.nx);
         $('#ny').val(this.ny);
         $('#nz').val(this.nz);
@@ -65,16 +62,34 @@ class PhononWebpage {
         let yaml = null;
         let json = null;
 
-        for (i=0; i<event.target.files.length; i++) {
-            file = event.target.files[i];
+        for (let i=0; i<event.target.files.length; i++) {
+            let file = event.target.files[i];
             if (file.name.indexOf(".yaml") > -1) { yaml = file; }
             if (file.name.indexOf(".json") > -1) { json = file; }
         }
 
         this.name = "Custom file"
-        if      (json) { this.getFromJsonFile(json);     }
-        else if (yaml) { this.getFromPhononpyFile(yaml); }
-        else           { alert("Ivalid file"); }
+        if      (json) { 
+            this.phonon = new PhononJson();
+            this.phonon.getFromFile(json,
+                function() { 
+                    this.setRepetitions(this.phonon.repetitions);
+                    this.update() 
+                }.bind(this) 
+                                   );
+        }
+        else if (yaml) { 
+            this.phonon = new PhononYaml();
+            this.phonon.getFromFile(yaml,
+                function() { 
+                    this.setRepetitions(this.phonon.repetitions);
+                    this.update() 
+                }.bind(this) 
+                                   );
+        }
+        else { 
+            alert("Ivalid file"); 
+        }
     }
 
     loadURL(url_vars) {  
@@ -98,11 +113,21 @@ class PhononWebpage {
         this.name = "Custom file"
         if      (json) { 
             this.phonon = new PhononJson();
-            this.phonon.getFromString(json);
+            this.phonon.getFromString(json,
+                function() { 
+                    this.setRepetitions(this.phonon.repetitions);
+                    this.update() 
+                }.bind(this) 
+            );
         }
         else if (yaml) { 
             this.phonon = new PhononYaml();
-            this.phonon.getFromString(yaml); 
+            this.phonon.getFromString(yaml,
+                 function() { 
+                    this.setRepetitions(this.phonon.repetitions);
+                    this.update() 
+                }.bind(this) 
+           );
         }
         else { 
             alert("Ivalid url"); 
@@ -128,16 +153,12 @@ class PhononWebpage {
         let readJson = function(string) {
             this.phonon = new PhononJson();
 
-            this.phonon.getFromString(string, function() { 
-
-                //set repetitions
-                let repetitions = this.phonon.repetitions;
-                this.nx = repetitions[0];
-                this.ny = repetitions[1];
-                this.nz = repetitions[2];
-                this.setRepetitions();
-
-                this.update() }.bind(this) );
+            this.phonon.getFromString(string, 
+                function() { 
+                    this.setRepetitions(this.phonon.repetitions);
+                    this.update() 
+                }.bind(this) 
+            );
 
         }
 
@@ -192,7 +213,6 @@ class PhononWebpage {
         /*
         Calculate the vibration patterns for all the atoms
         */
-        let i,j;
         let phonon = this.phonon;
         let veckn = phonon.vec[this.k][this.n];
         let vibrations = [];
@@ -201,15 +221,15 @@ class PhononWebpage {
         //additional phase if necessary
         let atom_phase = []
         if (phonon.addatomphase) {
-            for (i=0; i<phonon.natoms; i++) {
-                phase = kpt[0]*phonon.atom_pos_red[i][0] + 
+            for (let i=0; i<phonon.natoms; i++) {
+                let phase = kpt[0]*phonon.atom_pos_red[i][0] + 
                         kpt[1]*phonon.atom_pos_red[i][1] + 
                         kpt[2]*phonon.atom_pos_red[i][2];
                 atom_phase.push(phase);
             }
         }
         else {
-            for (i=0; i<phonon.natoms; i++) {
+            for (let i=0; i<phonon.natoms; i++) {
                 atom_phase.push(0);
             }
         }
@@ -218,7 +238,7 @@ class PhononWebpage {
             for (var iy=0; iy<ny; iy++) {
                 for (var iz=0; iz<nz; iz++) {
 
-                    for (i=0;i<phonon.natoms;i++) {
+                    for (let i=0; i<phonon.natoms; i++) {
                         let sprod = kpt[0]*ix + kpt[1]*iy + kpt[2]*iz + atom_phase[i];
                         let phase = Complex.Polar(1.0,sprod*2.0*pi);
 
@@ -244,9 +264,9 @@ class PhononWebpage {
         /*
         lattice vectors table
         */
-        let i, j;
-        for (i=0;i<3;i++) {
-            for (j=0;j<3;j++) {
+
+        for (let i=0; i<3; i++) {
+            for (let j=0; j<3; j++) {
                 //round lattice values
                 $('#uc_'+i+j).html( this.phonon.lat[i][j].toPrecision(5) );
             }
@@ -259,10 +279,10 @@ class PhononWebpage {
         //atomic positions table
         let pos = this.phonon.atom_pos_red;
         $('#atompos').empty() //clean the atomic positions table
-        for (i=0;i<this.phonon.natoms;i++) {
+        for (let i=0; i<this.phonon.natoms; i++) {
             $('#atompos').append('<tr></tr>');
             $('#atompos tr:last').append('<td class="ap">'+this.phonon.atom_types[i]+'</td>');
-            for (j=0;j<3;j++) {
+            for (let j=0; j<3; j++) {
                 $('#atompos tr:last').append('<td>'+pos[i][j].toFixed(4)+'</td>');
             }
         }
@@ -275,6 +295,7 @@ class PhononWebpage {
         /*
         Update all the aspects fo the webpage
         */
+
         this.getRepetitions();
         this.atoms = this.getStructure(this.nx,this.ny,this.nz);
         this.vibrations = this.getVibrations(this.nx,this.ny,this.nz);
@@ -291,6 +312,10 @@ class PhononWebpage {
     }
 
     createPhonodbMenu(phonodb) {
+        /*
+        Create the phonondb menu
+        */
+
         $("#div-phonodb").css('display', 'inline')
         let materials = jsyaml.load(phonodb);
         let materials_ref = {}

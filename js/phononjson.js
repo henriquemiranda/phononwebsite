@@ -1,6 +1,6 @@
 class PhononJson { 
 
-    getFromFile(file) {
+    getFromFile(file,callback) {
         /*
         file is a javasccript file object with the ".json" file
         */
@@ -8,8 +8,7 @@ class PhononJson {
         let json_reader = new FileReader();
 
         function onLoadEndHandler() {
-            this.getFromJsonString(json_reader.result);
-            update();
+            this.getFromString(json_reader.result,callback);
         };
 
         //read the files
@@ -50,40 +49,17 @@ class PhononJson {
         this.eigenvalues = data["eigenvalues"];
         this.repetitions = data["repetitions"];
 
-        let i,n,k;
-
         //get qindex
         this.qindex = {};
-        for (i=0; i<this.distances.length; i++) {
+        for (let i=0; i<this.distances.length; i++) {
             this.qindex[this.distances[i]] = i;
         }
 
         //get high symmetry qpoints
         this.highsym_qpts = {}
-        for (i=0; i<data["highsym_qpts"].length; i++) {
-            let dist = this.distances[data["highsym_qpts"][i][0]]
+        for (let i=0; i<data["highsym_qpts"].length; i++) {
+            let dist = this.distances[data["highsym_qpts"][i][0]];
             this.highsym_qpts[dist] = data["highsym_qpts"][i][1];
-        }
-
-        //go through the eigenvalues and create eivals list
-        let eivals = this.eigenvalues;
-        let nbands = eivals[0].length;
-        let nqpoints = eivals.length;
-        this.highcharts = [];
-
-        for (n=0; n<nbands; n++) {
-            let eig = [];
-            for (k=0; k<nqpoints; k++) {
-                eig.push([this.distances[k],eivals[k][n]]);
-            }
-
-            this.highcharts.push({
-                                  name:  n.toString(),
-                                  color: "#0066FF",
-                                  marker: { radius: 2,
-                                            symbol: "circle"},
-                                  data: eig
-                                 });
         }
 
     }
