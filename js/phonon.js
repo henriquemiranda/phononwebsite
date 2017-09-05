@@ -71,21 +71,11 @@ class PhononWebpage {
         this.name = "Custom file"
         if      (json) { 
             this.phonon = new PhononJson();
-            this.phonon.getFromFile(json,
-                function() { 
-                    this.setRepetitions(this.phonon.repetitions);
-                    this.update() 
-                }.bind(this) 
-                                   );
+            this.phonon.getFromFile(json, this.loadCallback.bind(this) );
         }
         else if (yaml) { 
             this.phonon = new PhononYaml();
-            this.phonon.getFromFile(yaml,
-                function() { 
-                    this.setRepetitions(this.phonon.repetitions);
-                    this.update() 
-                }.bind(this) 
-                                   );
+            this.phonon.getFromFile(yaml, this.loadCallback.bind(this) );
         }
         else { 
             alert("Ivalid file"); 
@@ -113,21 +103,11 @@ class PhononWebpage {
         this.name = "Custom file"
         if      (json) { 
             this.phonon = new PhononJson();
-            this.phonon.getFromString(json,
-                function() { 
-                    this.setRepetitions(this.phonon.repetitions);
-                    this.update() 
-                }.bind(this) 
-            );
+            this.phonon.getFromString(json, this.loadCallback.bind(this) );
         }
         else if (yaml) { 
             this.phonon = new PhononYaml();
-            this.phonon.getFromString(yaml,
-                 function() { 
-                    this.setRepetitions(this.phonon.repetitions);
-                    this.update() 
-                }.bind(this) 
-           );
+            this.phonon.getFromString(yaml, this.loadCallback.bind(this) );
         }
         else { 
             alert("Ivalid url"); 
@@ -152,17 +132,18 @@ class PhononWebpage {
  
         let readJson = function(string) {
             this.phonon = new PhononJson();
-
-            this.phonon.getFromString(string, 
-                function() { 
-                    this.setRepetitions(this.phonon.repetitions);
-                    this.update() 
-                }.bind(this) 
-            );
-
+            this.phonon.getFromString(string, this.loadCallback.bind(this) );
         }
 
         $.get(folder+'/data.json', readJson.bind(this), "html" );
+    }
+
+    loadCallback() {
+        /*
+        Fuunction to be called once the file is loaded
+        */
+        this.setRepetitions(this.phonon.repetitions);
+        this.update() 
     }
 
     getStructure(nx,ny,nz) {

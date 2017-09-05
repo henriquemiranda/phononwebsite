@@ -108,7 +108,7 @@ class VibCrystal {
     captureend(format) {
         this.capturer.stop();
 
-        callback_captureend = function( url ) {
+        function callback_captureend( url ) {
             let element = document.createElement('a');
             element.setAttribute('href', url);
             element.setAttribute('download', p.k.toString()+'_'+p.n.toString()+'.'+ format);
@@ -128,14 +128,14 @@ class VibCrystal {
     capturestart(format) {
         let progress = document.getElementById( 'progress' );
 
-        options = { format: format,
-                    workersPath: 'js/',
-                    verbose: true,
-                    frameMax: this.fps,
-                    end: this.captureend.bind(this,format),
-                    framerate: this.fps,
-                    onProgress: function( p ) { progress.style.width = ( p * 100 ) + '%' }
-                  }
+        let options = { format: format,
+                        workersPath: 'js/',
+                        verbose: true,
+                        frameMax: this.fps,
+                        end: this.captureend.bind(this,format),
+                        framerate: this.fps,
+                        onProgress: function( p ) { progress.style.width = ( p * 100 ) + '%' }
+                      }
 
         this.capturer = new CCapture( options ),
         this.capturer.start();
