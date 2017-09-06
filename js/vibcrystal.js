@@ -3,6 +3,8 @@ Class to show phonon vibrations using Three.js and WebGl
 */
 var vec_y = new THREE.Vector3( 0, 1, 0 );
 var vec_0 = new THREE.Vector3( 0, 0, 0 );
+var direction = new THREE.Vector3( 0, 0, 0 );
+var quarternion = new THREE.Quaternion();
 
 class VibCrystal {
 
@@ -489,9 +491,9 @@ function getBond( point1, point2 ) {
     /*
     get a quarternion and midpoint that links two points
     */
-    let direction = new THREE.Vector3().subVectors(point2, point1);
+    direction.subVectors(point2, point1);
+    quarternion.setFromUnitVectors( vec_y, direction.clone().normalize() );
 
-    quarternion = new THREE.Quaternion().setFromUnitVectors( vec_y, direction.clone().normalize() );
     return { quaternion: quarternion,
              midpoint: point1.clone().add( direction.multiplyScalar(0.5) ) };
 }
