@@ -23,6 +23,18 @@ The comunication between the PhononWebsite class and the other classes depends
 on a well defined set of rules.
 
 
+PhononnWeb
+===================================
+
+This class provides the interface between the webpage and all the other components.
+
+Contains:
+    - phonon structure provided by Input (see bellow)
+    
+Creates:
+    - vibrations (vibrational patterns repeated n times)
+    - atoms object (unit cell repeated n times)
+
 
 Visualizer
 ===================================
@@ -30,6 +42,11 @@ Visualizer
 class VibCrystal
 -------------------------
 This is the implementation of the visualizer class made using Three.js
+
+
+
+
+
 
 
 
@@ -44,8 +61,18 @@ All the actions from this class should call a function from the PhononWebsite cl
 
 
 
+
+
+
+
+
+
 Input
 ===================================
+
+Must read phonon structure which contains:
+    - structure
+    - vibrational patterns
 
 class PhononYaml
 -----------------
