@@ -1,9 +1,6 @@
 const pi = 3.14159265359;
 const bohr2ang = 0.529177249;
 
-//default folder
-var folder = "graphene";
-
 class PhononWebpage {
 
     constructor(visualizer, dispersion) {
@@ -91,27 +88,30 @@ class PhononWebpage {
             internal .json format (*.json) description available in ./phononweb/phononweb.py
         */
 
-        let yaml = null;
-        let json = null;
+        console.log(url_vars);
 
+        function onReadJson(text) {
+            this.phonon = new PhononJson();
+            this.phonon.getFromString(text, this.loadCallback.bind(this) );
+        }
+
+        function onReadYaml(text) {
+            this.phonon = new PhononYaml();
+            this.phonon.getFromString(text, this.loadCallback.bind(this) );
+        }
+
+        if (!("yaml" in url_vars) && !("json" in url_vars)) {
+            alert("Ivalid url"); 
+        }
+
+
+        this.name = "Custom file";
         for (let key in url_vars) {
-            if ( key == "yaml" ) { yaml = $.get(url_vars[key]).responseText; }
-            if ( key == "json" ) { json = $.get(url_vars[key]).responseText; }
+            if ( key == "yaml" ) { $.get(url_vars[key], onReadYaml); }
+            if ( key == "json" ) { $.get(url_vars[key], onReadJson); }
             if ( key == "name" ) { $('#t1').html(url_vars[key]);     }
         }
 
-        this.name = "Custom file"
-        if      (json) { 
-            this.phonon = new PhononJson();
-            this.phonon.getFromString(json, this.loadCallback.bind(this) );
-        }
-        else if (yaml) { 
-            this.phonon = new PhononYaml();
-            this.phonon.getFromString(yaml, this.loadCallback.bind(this) );
-        }
-        else { 
-            alert("Ivalid url"); 
-        }
     }
 
     loadId(id) {
@@ -125,7 +125,7 @@ class PhononWebpage {
         this.update();
     }
 
-    loadLocal() {
+    loadLocal(folder='graphene') {
         /*
         read structure from a local file distributed with the repository
         */
