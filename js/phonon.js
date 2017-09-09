@@ -272,11 +272,12 @@ class PhononWebpage {
         $('#t1').html(this.name);
     }
 
-    update() {
+    update(dispersion=true) {
         /*
         Update all the aspects fo the webpage
         */
 
+        //update structure       
         this.getRepetitions();
         this.atoms = this.getStructure(this.nx,this.ny,this.nz);
         this.vibrations = this.getVibrations(this.nx,this.ny,this.nz);
@@ -286,7 +287,7 @@ class PhononWebpage {
         this.updatePage();
 
         //update dispersion
-        this.dispersion.update(this.phonon);
+        if (dispersion) { this.dispersion.update(this.phonon); }
 
         //update visualizer
         this.visualizer.update(this);
@@ -297,20 +298,20 @@ class PhononWebpage {
         Create the phonondb menu
         */
 
-        $("#div-phonodb").css('display', 'inline')
+        $("#div-phonodb").css('display', 'inline');
         let materials = jsyaml.load(phonodb);
-        let materials_ref = {}
-        $('#phonodb').empty()
+        let materials_ref = {};
+        $('#phonodb').empty();
         for (let i=0;i<materials.length;i++) {
             let material = materials[i];
-            materials_ref[material['id']] = material
+            materials_ref[material['id']] = material;
             $('#phonodb').append('<li></li>');
             $('#phonodb li:last').append("<a href='#' onclick='p.loadId("+material['id']+")'>"+material['name']+"</a>");
         }
         this.materials = materials_ref;
     }
 
-    static updateMenu() {
+    updateMenu() {
         /*
         create menu with:
             local files (files distributed with the website)
@@ -331,7 +332,7 @@ class PhononWebpage {
         });
 
         //get a list of materials from phonodb
-        $.get('phonondb.yaml', PhononWebpage.createPhonodbMenu);
+        $.get('phonondb.yaml', this.createPhonodbMenu);
     }
 
     static getUrlVars() {
@@ -385,7 +386,7 @@ $(document).ready(function() {
     v.arrows = $('#drawvectors')[0].checked;
     $('#file-input')[0].addEventListener('change', p.loadCustomFile.bind(p), false);
     $('#file-input')[0].addEventListener('click', function() { this.value = '';}, false);
-    PhononWebpage.updateMenu();
+    p.updateMenu();
 
     let url_vars = PhononWebpage.getUrlVars();
     if (url_vars) { p.loadURL(url_vars); }
@@ -398,7 +399,7 @@ $(document).ready(function() {
 
     //jquery to make an action once you change the number of repetitions
     $(".input-rep").keyup(function(event){
-        if(event.keyCode == 13) p.update();
+        if(event.keyCode == 13) p.update(dispersion=false);
     });
 
 });
