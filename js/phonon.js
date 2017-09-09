@@ -308,6 +308,7 @@ class PhononWebpage {
             $('#phonodb').append('<li></li>');
             $('#phonodb li:last').append("<a href='#' onclick='p.loadId("+material['id']+")'>"+material['name']+"</a>");
         }
+
         this.materials = materials_ref;
     }
 
@@ -332,7 +333,7 @@ class PhononWebpage {
         });
 
         //get a list of materials from phonodb
-        $.get('phonondb.yaml', this.createPhonodbMenu);
+        $.get('phonondb.yaml', this.createPhonodbMenu.bind(this));
     }
 
     static getUrlVars() {
