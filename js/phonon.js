@@ -88,8 +88,6 @@ class PhononWebpage {
             internal .json format (*.json) description available in ./phononweb/phononweb.py
         */
 
-        console.log(url_vars);
-
         function onReadJson(text) {
             this.phonon = new PhononJson();
             this.phonon.getFromString(text, this.loadCallback.bind(this) );

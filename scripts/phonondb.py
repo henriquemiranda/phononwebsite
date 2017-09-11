@@ -18,7 +18,7 @@ import json
 import re
 from HTMLParser import HTMLParser
 
-band_points = 15
+band_points = 5
 
 class ParseHTML(HTMLParser):
     materials = []
@@ -59,11 +59,23 @@ class Phonondb():
    
 
 class MaterialsProjectPhonon():
-    """ Obtain the bandstrcture from the materials project
+    """ 
+    Obtain the bandstrcture from the materials project
     """
     def __init__(self,material_id):
-        self.mprester = MPRester("MATERIALSPROJECTID")
+        mpid = self.get_mp_id()
+        self.mprester = MPRester(mpid)
         self.material_id = material_id
+
+    def get_mp_id(self):
+        """
+        Get the materials project id
+        """
+        home = os.path.expanduser("~")
+        path = "%s/.materialsproject/key"%home
+        with open(path,'r') as f:
+            return f.read().strip()
+        return
 
     def get_bandstructure(self):
         a = self.mprester
@@ -92,8 +104,8 @@ class MaterialsProjectPhonon():
 
     def get_phonons(self):
         # calculate the phonon dispersion
-        folder = '%s/gruneisen-00'%material_id
-        ph_yaml = phonopyYaml('%s/phonon.yaml'%folder)
+        folder = material_id
+        ph_yaml = PhonopyYaml('%s/phonon.yaml'%folder)
         atoms = ph_yaml.get_atoms()
         supercell_matrix = ph_yaml._data['supercell_matrix']
 
@@ -118,14 +130,15 @@ class MaterialsProjectPhonon():
         # export a json file with the data
         self.phonon.write_yaml_band_structure()# get structures from the phonondb page
 
-# from here we can get all the ids of the materials in the phonondb page
-p = Phonondb()
-print p
+if __name__ == "__main__":
+    # from here we can get all the ids of the materials in the phonondb page
+    #p = Phonondb()
+    #print p
 
-#here is an example of how to plo the data for one of the materials
-material_id = "mp-5760"
-mpp = MaterialsProjectPhonon(material_id)
-mpp.get_bandstructure()
-mpp.get_phonons()
-mpp.write_disp_yaml()
-mpp.write_band_yaml()
+    #here is an example of how to plo the data for one of the materials
+    material_id = "mp-10096"
+    mpp = MaterialsProjectPhonon(material_id)
+    mpp.get_bandstructure()
+    mpp.get_phonons()
+    mpp.write_disp_yaml()
+    mpp.write_band_yaml()
