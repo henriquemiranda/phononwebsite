@@ -23,11 +23,10 @@ class PhononJson {
         */
 
         let json = JSON.parse(string);
-        this.getFromJson(json);
-        callback();
+        this.getFromJson(json,callback);
     }
 
-    getFromJson(data) {
+    getFromJson(data,callback) {
         /*
         Read structure data from JSON format
         data is a json object
@@ -62,5 +61,6 @@ class PhononJson {
             this.highsym_qpts[dist] = data["highsym_qpts"][i][1];
         }
 
+        callback();
     }
 }
