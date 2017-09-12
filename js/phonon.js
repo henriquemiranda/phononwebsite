@@ -325,8 +325,7 @@ class PhononWebpage {
 
             for (let i=0; i<nmodels; i++) {
                 $('#mat').append('<li></li>');
-                $('#mat li:last').append("<a href='#' onclick=\"folder=\'"+models[i]["folder"]+"\';"+
-                                         "p.loadLocal(); p.update();\">"+models[i]["name"]+"</a>");
+                $('#mat li:last').append("<a href='#' onclick=\"p.loadLocal(folder=\'"+models[i]["folder"]+"\');\">"+models[i]["name"]+"</a>");
             }
         });
 
