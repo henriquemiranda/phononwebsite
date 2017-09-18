@@ -65,7 +65,7 @@ class PhononWebpage {
             if (file.name.indexOf(".json") > -1) { json = file; }
         }
 
-        this.name = "Custom file"
+        this.phonon.name = "Custom file"
         if      (json) { 
             this.phonon = new PhononJson();
             this.phonon.getFromFile(json, this.loadCallback.bind(this) );
@@ -103,7 +103,7 @@ class PhononWebpage {
         }
 
 
-        this.name = "Custom file";
+        this.phonon.name = "Custom file";
         for (let key in url_vars) {
             if ( key == "yaml" ) { $.get(url_vars[key], onReadYaml.bind(this)); }
             if ( key == "json" ) { $.get(url_vars[key], onReadJson.bind(this)); }
@@ -119,7 +119,7 @@ class PhononWebpage {
         */
 
         this.loadURL( { yaml: this.materials[id]['url'] } );
-        this.name = this.materials[id]['name'] +  " <a href='https://www.materialsproject.org/materials/mp-"+id+"'>mp-"+id+"</a>";
+        this.phonon.name = this.materials[id]['name'] +  " <a href='https://www.materialsproject.org/materials/mp-"+id+"'>mp-"+id+"</a>";
         this.update();
     }
 
@@ -267,7 +267,7 @@ class PhononWebpage {
         }
 
         //update title
-        $('#t1').html(this.name);
+        $('#t1').html(this.phonon.name);
     }
 
     update(dispersion=true) {
