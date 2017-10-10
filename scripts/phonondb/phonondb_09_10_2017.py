@@ -17,17 +17,7 @@ import os
 import json
 import re
 import multiprocessing
-from HTMLParser import HTMLParser
-
-band_points = 15
-
-class ParseHTML(HTMLParser):
-    materials = []
-
-    def handle_data(self, data):
-        if "Materials id" in data and '-' not in data:
-            print data
-            self.materials.append(re.findall('([0-9]+)\s+\/\s+(.+?)\s+\/\s+(.+)',data)[0])
+from phonopy.units import Hartree, Bohr
 
 class Phonondb():
     _url = "http://phonondb.mtl.kyoto-u.ac.jp/database-mp.html"
@@ -65,9 +55,9 @@ class MaterialsProjectPhonon():
     def __init__(self,material_id):
         self.material_id = material_id
         
-        ph_yaml = PhonopyYaml()
+        ph_yaml = PhonopyYaml(calculator='vasp')
         ph_yaml.read('%s/phonon.yaml'%material_id)
-        atoms = ph_yaml._unitcell
+        atoms            = ph_yaml._unitcell
         supercell_matrix = ph_yaml._data['supercell_matrix']
         phonon = Phonopy(atoms,supercell_matrix)
 
@@ -80,25 +70,43 @@ class MaterialsProjectPhonon():
                  self.atoms.get_scaled_positions(),
                  self.atoms.get_atomic_numbers() )
     
-    def get_bandstructure(self,reference_distance=0.05):
+    def get_bandstructure(self,reference_distance=0.2):
         import seekpath
         path = seekpath.get_explicit_k_path(self.get_cell(),reference_distance=reference_distance)
-        kpath = path['explicit_kpoints_rel']
+        kpath  = path['explicit_kpoints_rel']
+        explicit_labels = path['explicit_kpoints_labels']
         bands = []
+        labels = []
         for segment in path['segments']:
             start_k, end_k = segment
+            labels.append(explicit_labels[start_k])
             bands.append(kpath[start_k:end_k])
+        labels.append(explicit_labels[-1])
         self.bands = bands
+        self.labels = labels
 
     def get_phonons(self):
         """
         Calculate the phonon bandstructures along a path
         """
         phonon = self.phonon
+
+        #get forces
         force_sets = file_IO.parse_FORCE_SETS(filename='%s/FORCE_SETS'%self.material_id)
         phonon.set_displacement_dataset(force_sets)
+
+        #get force constants
         phonon.produce_force_constants()
         phonon.symmetrize_force_constants_by_space_group()
+
+        #get NAC       
+        nac_params = file_IO.parse_BORN(phonon.get_primitive(), filename="%s/BORN"%self.material_id)
+        nac_factor = Hartree * Bohr
+        if nac_params['factor'] == None:
+            nac_params['factor'] = nac_factor
+        phonon.set_nac_params(nac_params)
+ 
+        #get band-structure
         phonon.set_band_structure(self.bands, is_eigenvectors=True, is_band_connection=True)
         phonon.get_band_structure()
 
@@ -111,8 +119,10 @@ class MaterialsProjectPhonon():
         file_IO.write_disp_yaml(displacements, supercell, directions=directions, filename="%s/%s"%(self.material_id,filename))
 
     def write_band_yaml(self,filename='band.yaml'):
-        # export a json file with the data
-        self.phonon.write_yaml_band_structure(filename="%s/%s"%(self.material_id,filename))
+        """ export a json file with the data 
+        """
+        path_filename = "%s/%s"%(self.material_id,filename)
+        self.phonon.write_yaml_band_structure(labels=self.labels,filename=path_filename)
 
 if __name__ == "__main__":
     nthreads = 2
@@ -141,8 +151,11 @@ if __name__ == "__main__":
     #list all the materials
     jobs = [ filename for filename in os.listdir('.') if 'lzma' in filename ]
     
-    p = multiprocessing.Pool(nthreads)
-    p.map(run_job, jobs)
+    #paralllel
+    #p = multiprocessing.Pool(nthreads)
+    #p.map(run_job, jobs)
 
+    #serial
+    map(run_job,jobs)
 
 
