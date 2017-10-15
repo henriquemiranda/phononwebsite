@@ -1,53 +1,17 @@
 #
-# 1 February 2016
-#
-# Obtain phonondb structures  from
-# http://phonondb.mtl.kyoto-u.ac.jp
-# and plot the pohnon dispersion on the path obtained from the materials project API
+# 9 October 2017
+# Calculate the phonon disperions from phonondb using seekpath
 #
 
 from phonopy import Phonopy
 from phonopy.interface.vasp import read_vasp
 from phonopy.interface.phonopy_yaml import *
-from pymatgen.matproj.rest import MPRester
 from phonopy.structure.atoms import Atoms
+from phonopy.units import Hartree, Bohr
 import phonopy.file_IO as file_IO
-import urllib2
 import os
-import json
 import re
 import multiprocessing
-from phonopy.units import Hartree, Bohr
-
-class Phonondb():
-    _url = "http://phonondb.mtl.kyoto-u.ac.jp/database-mp.html"
-    _savefile = "phonondb.json"
-    def __init__(self):
-        if os.path.isfile(self._savefile):
-            print("reading from %s"%self._savefile)
-            f = open(self._savefile,'r')
-            self.materials = json.load(f)
-            f.close()
-        else:
-            print("making http request...")
-            self.page = urllib2.urlopen(self._url).read()
-            self.get_materials()
-            #save materials in a json file
-            f = open(self._savefile,'w')
-            json.dump(self.materials,f)
-            f.close()
-
-    def get_materials(self):
-        parser = ParseHTML()
-        parser.feed(self.page)
-        self.materials = parser.materials
-
-    def __str__(self):
-        text = "        id       name   data\n"
-        for material in self.materials:
-            text += "%10s %10s %6s\n"%tuple(material)
-        return text
-   
 
 class MaterialsProjectPhonon():
     """ Obtain the bandstrcture from seekpath and calculate it using phonopy
