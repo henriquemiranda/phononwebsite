@@ -81,7 +81,22 @@ name = name of the material</code></pre>
 <p>In polar materials the LO-TO splitting is missing, we are working on adding these corrections.</p>
 <h1 id="file-format">File Format</h1>
 <p>Here you can find a short description of the internal .json format used to show the phonon dispersions and animations on the website.</p>
-<p>name: name of the material that will be displayed on the website (string) natoms: number of atoms (integer) lattice: lattice vectors (3x3 float array) atom_types: atom type for each atom in the system (array strings) atom_numbers: atom number for each atom in the system (array integers) chemical_symbols: unique atom types (array strings) atomic_numbers: unique atom numbers (integer) formula: chemical formula (string) repetitions: default value for the repetititions (array 3 integers) atom_pos_car: atomic positions in cartesian coordinates (Nx3 float array) atom_pos_red: atomic positions in reduced coordinates (Nx3 float array) highsym_qpts: list of high symmetry qpoints (Nx3 float arraay) qpoints: list of q-point in the reciprocal space (Nx3 float array) distances: list distances between the qpoints (Nq float array) eigenvalues: eigenvalues in units of cm-1 (Nqx(N*3)) vectors: eigenvectors (NqxN)</p>
+<pre><code>name:             name of the material that will be displayed on the website (string)
+natoms:           number of atoms (integer)
+lattice:          lattice vectors (3x3 float array)
+atom_types:       atom type   for each atom in the system (array strings)
+atom_numbers:     atom number for each atom in the system (array integers)
+chemical_symbols: unique atom types   (array strings)
+atomic_numbers:   unique atom numbers (integer)
+formula:          chemical formula (string)
+repetitions:      default value for the repetititions (array 3 integers)
+atom_pos_car:     atomic positions in cartesian coordinates (Nx3 float array)
+atom_pos_red:     atomic positions in reduced coordinates (Nx3 float array)
+highsym_qpts:     list of high symmetry qpoints (Nx3 float arraay)
+qpoints:          list of q-point in the reciprocal space (Nx3 float array)
+distances:        list distances between the qpoints (Nq float array)
+eigenvalues:      eigenvalues in units of cm-1 (Nqx(N\*3))
+vectors:          eigenvectors (NqxN)</code></pre>
 <h1 id="authors">Authors</h1>
 <p>This project is the continuation of the work of Raoul Weber during an internship in the University of Luxembourg for 2 months in the Theoretical Solid State Physics group under the supervision of Ludger Wirtz and technical help from me.</p>
 <p>I decided to continue the project by optimizing the implementation, cleaning up the design and replacing JSmol by a self made applet using Three.js and WebGL called VibCrystal. Currently the website works also as a web application which means the user can visualize his own calculations made with <code>phonopy</code>.</p>
@@ -101,10 +116,10 @@ name = name of the material</code></pre>
 <p>If you would like to see some of your calculations published on this website please contact me.</p>
 <h1 id="software-used-for-this-project">Software used for this project</h1>
 <ul>
-<li>The WebGL visualization is made using <code>Three.js</code>: <a href="http://threejs.org/">http://threejs.org/</a></li>
-<li>The phonon dispersion is plotted using <code>highcharts</code>: <a href="http://www.highcharts.com/">http://www.highcharts.com/</a><br /></li>
-<li>The export animation is provided using <code>CCapture.js</code>: <a href="https://github.com/spite/ccapture.js">https://github.com/spite/ccapture.js</a></li>
-<li><p>The gif animation is uses <code>gif.js</code>: <a href="http://jnordberg.github.io/gif.js/">http://jnordberg.github.io/gif.js/</a></p></li>
+<li>WebGL visualization using <code>Three.js</code>: <a href="http://threejs.org/">http://threejs.org/</a></li>
+<li>phonon dispersion using <code>highcharts</code>: <a href="http://www.highcharts.com/">http://www.highcharts.com/</a><br /></li>
+<li>export animation using <code>CCapture.js</code>: <a href="https://github.com/spite/ccapture.js">https://github.com/spite/ccapture.js</a></li>
+<li><p>gif animation is uses <code>gif.js</code>: <a href="http://jnordberg.github.io/gif.js/">http://jnordberg.github.io/gif.js/</a></p></li>
 <li><code>Abinit</code>: <a href="http://www.abinit.org/">http://www.abinit.org/</a></li>
 <li><code>Quantum Espresso</code>: <a href="http://www.quantum-espresso.org/">http://www.quantum-espresso.org/</a></li>
 <li><p><code>phonopy</code>: <a href="http://atztogo.github.io/phonopy/">http://atztogo.github.io/phonopy/</a></p></li>

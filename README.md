@@ -76,22 +76,22 @@ File Format
 Here you can find a short description of the internal .json format used to show the
 phonon dispersions and animations on the website.
 
-name:               name of the material that will be displayed on the website (string)
-natoms:             number of atoms (integer)
-lattice:            lattice vectors (3x3 float array)
-atom\_types:        atom type   for each atom in the system (array strings)
-atom\_numbers:      atom number for each atom in the system (array integers)
-chemical\_symbols:  unique atom types   (array strings)
-atomic\_numbers:    unique atom numbers (integer)
-formula:            chemical formula (string)
-repetitions:        default value for the repetititions (array 3 integers)
-atom\_pos\_car:     atomic positions in cartesian coordinates (Nx3 float array)
-atom\_pos\_red:     atomic positions in reduced coordinates (Nx3 float array)
-highsym\_qpts:      list of high symmetry qpoints (Nx3 float arraay)
-qpoints:            list of q-point in the reciprocal space (Nx3 float array)
-distances:          list distances between the qpoints (Nq float array)
-eigenvalues:        eigenvalues in units of cm-1 (Nqx(N\*3))
-vectors:            eigenvectors (NqxN)
+    name:             name of the material that will be displayed on the website (string)
+    natoms:           number of atoms (integer)
+    lattice:          lattice vectors (3x3 float array)
+    atom_types:       atom type   for each atom in the system (array strings)
+    atom_numbers:     atom number for each atom in the system (array integers)
+    chemical_symbols: unique atom types   (array strings)
+    atomic_numbers:   unique atom numbers (integer)
+    formula:          chemical formula (string)
+    repetitions:      default value for the repetititions (array 3 integers)
+    atom_pos_car:     atomic positions in cartesian coordinates (Nx3 float array)
+    atom_pos_red:     atomic positions in reduced coordinates (Nx3 float array)
+    highsym_qpts:     list of high symmetry qpoints (Nx3 float arraay)
+    qpoints:          list of q-point in the reciprocal space (Nx3 float array)
+    distances:        list distances between the qpoints (Nq float array)
+    eigenvalues:      eigenvalues in units of cm-1 (Nqx(N\*3))
+    vectors:          eigenvectors (NqxN)
 
 
 Authors
@@ -140,10 +140,10 @@ If you would like to see some of your calculations published on this website ple
 Software used for this project
 ==============================
 
-- The WebGL visualization is made using `Three.js`: <http://threejs.org/>
-- The phonon dispersion is plotted using `highcharts`: <http://www.highcharts.com/>  
-- The export animation is provided using `CCapture.js`: <https://github.com/spite/ccapture.js>
-- The gif animation is uses `gif.js`: <http://jnordberg.github.io/gif.js/>
+- WebGL visualization using `Three.js`: <http://threejs.org/>
+- phonon dispersion using `highcharts`: <http://www.highcharts.com/>  
+- export animation using `CCapture.js`: <https://github.com/spite/ccapture.js>
+- gif animation is uses `gif.js`: <http://jnordberg.github.io/gif.js/>
 
 - `Abinit`: <http://www.abinit.org/>
 - `Quantum Espresso`: <http://www.quantum-espresso.org/>
