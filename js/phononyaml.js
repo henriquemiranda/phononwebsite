@@ -100,13 +100,13 @@ class PhononYaml {
         this.highsym_qpts = {};
         this.qindex = {};
 
-        let check_high_sym_qpoint = function(phononi,highsym_qpts) {
+        let check_high_sym_qpoint = function(phonon_qpoint,highsym_qpts) {
             //check if a label is present
-            if (phononi['label']) {
-                highsym_qpts[phononi['distance']] = phononi['label'];
+            if (phonon_qpoint['label']) {
+                highsym_qpts[phonon_qpoint['distance']] = phonon_qpoint['label'];
             }
             else {
-                highsym_qpts[phononi['distance']] = '';
+                highsym_qpts[phonon_qpoint['distance']] = '';
             }
         }
 
@@ -123,18 +123,19 @@ class PhononYaml {
 
             check_high_sym_qpoint(phonon[qpoint],this.highsym_qpts);
 
+            //iterate over_qpoints
             for (let i=0; i<segment_nqpoint[p]; i++) {
-                phononi = phonon[qpoint+i];
+                let phonon_qpoint = phonon[qpoint+i];
 
-                let dist = phononi['distance'];
+                let dist = phonon_qpoint['distance'];
                 if (!(dist in this.qindex)) {
                     this.qindex[dist] = kpoints.length;
                 }
-                kpoints.push(phononi['q-position']);
-                phononiband = phononi['band'];
+                kpoints.push(phonon_qpoint['q-position']);
+                phononiband = phonon_qpoint['band'];
 
                 //get distances
-                this.distances.push( phononi['distance'] );
+                this.distances.push( phonon_qpoint['distance'] );
 
                 //create bands
                 let eig   = [];
@@ -142,7 +143,7 @@ class PhononYaml {
                 for (let n=0; n<nmodes; n++) {
                     //get eigenvalues
                     eig.push( phononiband[n]['frequency']*thz2ev );
-                    eivals[n].push([phononi['distance'],phononiband[n]['frequency']*thz2ev]);
+                    eivals[n].push([phonon_qpoint['distance'],phononiband[n]['frequency']*thz2ev]);
 
                     //get eigenvectors
                     let vec = PhononYaml.getYaml(['eigenvector'],phononiband[n])
@@ -151,7 +152,8 @@ class PhononYaml {
                 eivecs.push(eivec);
                 this.eigenvalues.push(eig);
             }
-            check_high_sym_qpoint(phononi,this.highsym_qpts);
+
+            check_high_sym_qpoint(phonon_qpoint,this.highsym_qpts);
 
             qpoint += segment_nqpoint[p];
         }
