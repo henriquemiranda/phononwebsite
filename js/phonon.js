@@ -90,7 +90,7 @@ class PhononWebpage {
 
         function onReadJson(text) {
             this.phonon = new PhononJson();
-            this.phonon.getFromJson(text, this.loadCallback.bind(this) );
+            this.phonon.getFromString(text, this.loadCallback.bind(this) );
         }
 
         function onReadYaml(text) {
