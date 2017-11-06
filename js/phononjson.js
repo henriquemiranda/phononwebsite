@@ -74,7 +74,10 @@ class PhononJson {
         */
 
         let json = JSON.parse(string);
+        this.getFromJson(json,callback);
+    }
 
+    getFromJson(json,callback) {
         if ('@class' in json) {
             this.getFromPMGJson(json,callback);
         }
@@ -82,6 +85,7 @@ class PhononJson {
             this.getFromInternalJson(json,callback);
         }
     }
+
 
     getFromInternalJson(data,callback) {
         /*

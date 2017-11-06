@@ -65,7 +65,6 @@ class PhononWebpage {
             if (file.name.indexOf(".json") > -1) { json = file; }
         }
 
-        this.phonon.name = "Custom file"
         if      (json) { 
             this.phonon = new PhononJson();
             this.phonon.getFromFile(json, this.loadCallback.bind(this) );
@@ -90,7 +89,7 @@ class PhononWebpage {
 
         function onReadJson(text) {
             this.phonon = new PhononJson();
-            this.phonon.getFromString(text, this.loadCallback.bind(this) );
+            this.phonon.getFromJson(text, this.loadCallback.bind(this) );
         }
 
         function onReadYaml(text) {
@@ -107,7 +106,6 @@ class PhononWebpage {
             if ( key == "json" ) { $.get(url_vars[key], onReadJson.bind(this)); }
             if ( key == "name" ) { $('#t1').html(url_vars[key]);     }
         }
-        this.phonon.name = "Custom file";
 
     }
 
