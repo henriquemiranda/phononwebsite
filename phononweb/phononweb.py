@@ -56,8 +56,8 @@ for Z, symbol in enumerate(chemical_symbols):
 #end from ase
 
 #functions
-def red_car(red,lat): return np.array(map( lambda coord: coord[0]*lat[0]+coord[1]*lat[1]+coord[2]*lat[2], red))
-def car_red(car,lat): return np.array(map( lambda coord: np.linalg.solve(lat.T,coord), car))
+def red_car(red,lat): return np.array([coord[0]*lat[0]+coord[1]*lat[1]+coord[2]*lat[2] for coord in red])
+def car_red(car,lat): return np.array([np.linalg.solve(lat.T,coord) for coord in car])
 def map2(f,a):        return [[f(y) for y in x] for x in a] #apply a function to a list of lists
 
 def rec_lat(lat):
@@ -77,7 +77,7 @@ def estimate_band_connection(prev_eigvecs, eigvecs, prev_band_order):
     """
     metric = np.abs(np.dot(prev_eigvecs.conjugate().T, eigvecs))
     connection_order = []
-    indices = range(len(metric))
+    indices = list(range(len(metric)))
     indices.reverse()
     for overlaps in metric:
         maxval = 0
@@ -93,6 +93,14 @@ def estimate_band_connection(prev_eigvecs, eigvecs, prev_band_order):
     band_order = [connection_order[x] for x in prev_band_order]
     return band_order
 
+class JsonEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, (np.ndarray,np.number)):
+            if np.iscomplexobj(obj):
+                return [obj.real, obj.imag]
+            else:
+                return obj.tolist()
+        return(json.JSONEncoder.default(self, obj))
 
 class Phonon():
     """ 
@@ -110,10 +118,10 @@ class Phonon():
         eig = np.zeros([self.nqpoints,self.nphons])
         eiv = np.zeros([self.nqpoints,self.nphons,self.nphons],dtype=complex)
         #set order at gamma
-        order = range(self.nphons)
+        order = list(range(self.nphons))
         eig[0] = self.eigenvalues[0]
         eiv[0] = vectors[0]
-        for k in xrange(1,self.nqpoints):
+        for k in range(1,self.nqpoints):
             order = estimate_band_connection(vectors[k-1].T,vectors[k].T,order)
             for n,i in enumerate(order):
                 eig[k,n] = self.eigenvalues[k,i]
@@ -246,10 +254,10 @@ class Phonon():
                 #fill in the symbols
                 self.highsym_qpts = [(q,s) for (q,l),s in zip(self.highsym_qpts,self.labels_qpts)] 
             else:
-                print "Wrong number of q-points specified. Found %d high symmetry qpoints but got %d labels"%(nhiqpts,nlabels)
+                print("Wrong number of q-points specified. Found %d high symmetry qpoints but got %d labels"%(nhiqpts,nlabels))
                 exit()
         else:
-            print "The labels of the high symmetry k-points are not known. They can be changed in the .json file manualy." 
+            print("The labels of the high symmetry k-points are not known. They can be changed in the .json file manualy.") 
         return self.highsym_qpts
 
     def set_repetitions(self,reps):
@@ -259,7 +267,7 @@ class Phonon():
         if   ',' in reps: reps = reps.split(',')
         elif ' ' in reps: reps = reps.split(' ')
         self.reps = [int(r) for r in reps]       
-        print self.reps
+        print(self.reps)
 
     def set_labels(self,labels):
         """
@@ -285,24 +293,24 @@ class Phonon():
             self.get_highsym_qpts()
 
         #create the datastructure to be put on the json file
-        data = {"name":             self.name,                            # name of the material that will be displayed on the website
-                "natoms":           self.natoms,                          # number of atoms
-                "lattice":          self.cell.tolist(),                   # lattice vectors (bohr)
-                "atom_types":       self.atom_types,                      # atom type   for each atom in the system (string)
-                "atom_numbers":     self.atom_numbers,                    # atom number for each atom in the system (integer)
-                "chemical_symbols": self.chemical_symbols,                # unique atom types   (string) 
-                "atomic_numbers":   self.atomic_numbers.tolist(),         # unique atom numbers (integer)
-                "formula":          self.chemical_formula,                # chemical formula
-                "qpoints":          self.qpoints.tolist(),                # list of point in the reciprocal space
-                "repetitions":      self.reps,                            # default value for the repetititions 
-                "atom_pos_car":     red_car(self.pos,self.cell).tolist(), # atomic positions in cartesian coordinates
-                "atom_pos_red":     self.pos.tolist(),                    # atomic positions in reduced coordinates
-                "eigenvalues":      self.eigenvalues.tolist(),            # eigenvalues (in units of cm-1)
-                "distances":        self.distances,                       # list distances between the qpoints 
-                "highsym_qpts":     self.highsym_qpts,                    # list of high symmetry qpoints
-                "vectors":          self.eigenvectors.tolist()}           # eigenvectors
+        data = {"name":             self.name,                   # name of the material that will be displayed on the website
+                "natoms":           self.natoms,                 # number of atoms
+                "lattice":          self.cell,                   # lattice vectors (bohr)
+                "atom_types":       self.atom_types,             # atom type   for each atom in the system (string)
+                "atom_numbers":     self.atom_numbers,           # atom number for each atom in the system (integer)
+                "chemical_symbols": self.chemical_symbols,       # unique atom types   (string) 
+                "atomic_numbers":   self.atomic_numbers,         # unique atom numbers (integer)
+                "formula":          self.chemical_formula,       # chemical formula
+                "qpoints":          self.qpoints,                # list of point in the reciprocal space
+                "repetitions":      self.reps,                   # default value for the repetititions 
+                "atom_pos_car":     red_car(self.pos,self.cell), # atomic positions in cartesian coordinates
+                "atom_pos_red":     self.pos,                    # atomic positions in reduced coordinates
+                "eigenvalues":      self.eigenvalues,            # eigenvalues (in units of cm-1)
+                "distances":        self.distances,              # list distances between the qpoints 
+                "highsym_qpts":     self.highsym_qpts,           # list of high symmetry qpoints
+                "vectors":          self.eigenvectors}           # eigenvectors
 
-        f.write(json.dumps(data))
+        f.write(json.dumps(data,cls=JsonEncoder,indent=1))
         f.close()
 
     def open_json(self,prefix=None,folder='.',host='localhost',port=8000):

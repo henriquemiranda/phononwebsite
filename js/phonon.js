@@ -123,7 +123,7 @@ class PhononWebpage {
         this.update();
     }
 
-    loadLocal(folder='graphene') {
+    loadLocal(folder='localdb/graphene') {
         /*
         read structure from a local file distributed with the repository
         */
@@ -302,9 +302,11 @@ class PhononWebpage {
         $('#phonodb').empty();
         for (let i=0;i<materials.length;i++) {
             let material = materials[i];
+            let id = material['id'];
+            let name = material['name'];
             materials_ref[material['id']] = material;
             $('#phonodb').append('<li></li>');
-            $('#phonodb li:last').append("<a href='#' onclick='p.loadId("+material['id']+")'>"+material['name']+"</a>");
+            $('#phonodb li:last').append("<a href='#' onclick='p.loadId("+id+")'>"+name+"</a>");
         }
 
         this.materials = materials_ref;
@@ -318,19 +320,21 @@ class PhononWebpage {
         */
 
         //get a list of local materials
-        $.getJSON('models.json', function(data) {
+        $.getJSON('localdb/models.json', function(data) {
             let nmodels = data["nmodels"];
             let models  = data["models"];
             $('#mat').empty() //clean the atomic positions table
 
             for (let i=0; i<nmodels; i++) {
+                let folder = models[i]["folder"];
+                let name = models[i]["name"];
                 $('#mat').append('<li></li>');
-                $('#mat li:last').append("<a href='#' onclick=\"p.loadLocal(folder=\'"+models[i]["folder"]+"\');\">"+models[i]["name"]+"</a>");
+                $('#mat li:last').append("<a href='#' onclick=\"p.loadLocal(folder=\'"+folder+"\');\">"+name+"</a>");
             }
         });
 
         //get a list of materials from phonodb
-        $.get('phonondb.yaml', this.createPhonodbMenu.bind(this));
+        $.get('phonondb/phonondb.yaml', this.createPhonodbMenu.bind(this));
     }
 
     static getUrlVars() {

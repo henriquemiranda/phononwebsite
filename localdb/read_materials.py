@@ -23,7 +23,9 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 from phononweb import *
+import json
 
+root = "localdb"
 ana = 'anaddb.out_PHBST.nc'
 hexagonal = [(0,'\Gamma'),(20,'M'),(30,'K'),(50,'\Gamma')]
 material_list = {
@@ -41,15 +43,14 @@ models = {"nmodels": len(material_list),
 separator = "#"*50+"\n"
 
 #create the data.json files
-for folder in material_list.keys():
+for folder in list(material_list.keys()):
     reader, filename, highsym_qpts, reps, name = material_list[folder]
-    print separator,"%s\n"%name,separator
+    print(separator,"%s\n"%name,separator)
     m = reader(filename,name,reps=reps,folder=folder,highsym_qpts=highsym_qpts)
     m.write_json(prefix='data', folder=folder)
-    print m, "\n"
+    print(m, "\n")
         
-    models["models"].append({"folder":folder,"name":name})
+    models["models"].append({"folder":os.path.join(root,folder),"name":name})
 
-f = open("models.json","w")
-f.write(json.dumps(models))
-f.close()
+with open("models.json","w") as f:
+    f.write(json.dumps(models))

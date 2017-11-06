@@ -6,6 +6,5 @@
 #
 # Read phonon dispersion from quantum espresso
 #
-from phononweb import *
-from qephonon import *
-from anaddbphonon import *
+from .qephonon import *
+from .anaddbphonon import *

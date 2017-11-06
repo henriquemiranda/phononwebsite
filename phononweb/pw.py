@@ -15,13 +15,13 @@ def red_car(red,lat):
     """
     Convert reduced coordinates to cartesian
     """
-    return np.array(map( lambda coord: coord[0]*lat[0]+coord[1]*lat[1]+coord[2]*lat[2], red))
+    return np.array([coord[0]*lat[0]+coord[1]*lat[1]+coord[2]*lat[2] for coord in red])
 
 def car_red(car,lat):
     """
     Convert cartesian coordinates to reduced
     """
-    return np.array(map( lambda coord: np.linalg.solve(np.array(lat).T,coord), car))
+    return np.array([np.linalg.solve(np.array(lat).T,coord) for coord in car])
 
 def rec_lat(lat):
     """
@@ -79,13 +79,16 @@ class PwIn():
             self.read_cell_parameters()
 
     def read_atomicspecies(self):
-        lines = iter(self.file_lines)
+        lines = self.file_lines
         #find ATOMIC_SPECIES keyword in file and read next line
-        for line in lines:
+        for n,line in enumerate(lines):
             if "ATOMIC_SPECIES" in line:
-                for i in xrange(int(self.system["ntyp"])):
-                    atype, znuc, psp = lines.next().split()
-                    self.atypes[atype] = [znuc,psp]
+                n+=1
+                break
+        
+        for i in range(n,n+int(self.system["ntyp"])):
+            atype, znuc, psp = lines[i].split()
+            self.atypes[atype] = [znuc,psp]
 
     def get_atoms(self):
         """ Get the lattice parameters, postions of the atoms and chemical symbols
@@ -110,29 +113,32 @@ class PwIn():
         self.system['ibrav'] = 0
         del self.system['celldm(1)']
         self.cell_parameters = atoms.get_cell()
-        self.atoms = zip(atoms.get_chemical_symbols(),atoms.get_scaled_positions())
+        self.atoms = list(zip(atoms.get_chemical_symbols(),atoms.get_scaled_positions()))
         self.system['nat'] = len(self.atoms)
 
     def displace(self,mode,displacement):
         """ A routine to displace the atoms acoording to a phonon mode
         """
-        for i in xrange(len(self.atoms)):
+        for i in range(len(self.atoms)):
             self.atoms[i][1] = self.atoms[i][1] + mode[i].real*displacement
 
     def read_atoms(self):
-        lines = iter(self.file_lines)
+        lines = self.file_lines
         #find READ_ATOMS keyword in file and read next lines
-        for line in lines:
+        for n,line in enumerate(lines):
             if "ATOMIC_POSITIONS" in line:
                 self.atomic_pos_type = re.findall('([A-Za-z]+)',line)[-1]
-                for i in xrange(int(self.system["nat"])):
-                    atype, x,y,z = lines.next().split()
-                    self.atoms.append([atype,[float(i) for i in x,y,z]])
+                n+=1
+                break
+
+        for i in range(n,n+int(self.system["nat"])):
+            atype, x,y,z = lines[i].split()
+            self.atoms.append([atype,[float(i) for i in (x,y,z)]])
 
     def read_cell_parameters(self):
         ibrav = int(self.system['ibrav'])
         if ibrav == 0:
-            if 'celldm(1)' in self.system.keys():
+            if 'celldm(1)' in list(self.system.keys()):
                 a = float(self.system['celldm(1)'])
             else:
                 a = 1
@@ -141,7 +147,7 @@ class PwIn():
                 if "CELL_PARAMETERS" in line:
                     self.cell_units = line.translate(None, '{}()').split()[1]
                     self.cell_parameters = [[1,0,0],[0,1,0],[0,0,1]]
-                    for i in xrange(3):
+                    for i in range(3):
                         self.cell_parameters[i] = [ float(x)*a for x in lines.next().split() ]
                     self.cell_parameters = np.array(self.cell_parameters)
             if self.cell_units == 'angstrom':
@@ -169,18 +175,18 @@ class PwIn():
                                     [  0,   a,   0],
                                     [  0,   0, c*a]]
         else:
-            print 'ibrav = %d not implemented'%ibrav
+            print('ibrav = %d not implemented'%ibrav)
             exit(1)
         
     def read_kpoints(self):
-        lines = iter(self.file_lines)
+        lines = self.file_lines
         #find K_POINTS keyword in file and read next line
-        for line in lines:
+        for n,line in enumerate(lines):
             if "K_POINTS" in line:
                 #chack if the type is automatic
                 if "automatic" in line:
                     self.ktype = "automatic"
-                    vals = map(float, lines.next().split())
+                    vals = list(map(float, lines[n+1].split()))
                     self.kpoints, self.shiftk = vals[0:3], vals[3:6]
                 #otherwise read a list
                 else:
@@ -190,11 +196,11 @@ class PwIn():
                     self.ktype = ""
                     try:
                         lines_list = list(lines)
-                        for n in xrange(nkpoints):
+                        for n in range(nkpoints):
                             vals = lines_list[n].split()[:4]
-                            self.klist.append( map(float,vals) )
+                            self.klist.append( list(map(float,vals)) )
                     except IndexError:
-                        print "wrong k-points list format"
+                        print("wrong k-points list format")
                         exit()
 
     def slicefile(self, keyword):
@@ -222,7 +228,7 @@ class PwIn():
     def remove_key(self,group,key):
         """ if a certain key exists in the group, remove it
         """
-        if key in group.items():
+        if key in list(group.items()):
             del group[key]
 
     def run(self,filename,procs=1,folder='.'):
@@ -275,6 +281,6 @@ class PwIn():
                 string += (("%12.8lf "*4)+"\n")%tuple(i)
         if self.system['ibrav'] == 0 or self.system['ibrav'] == '0':
             string += "CELL_PARAMETERS %s\n"%self.cell_units
-            for i in xrange(3):
+            for i in range(3):
                 string += ("%14.10lf "*3+"\n")%tuple(self.cell_parameters[i])
         return string
