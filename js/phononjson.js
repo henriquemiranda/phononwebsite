@@ -1,15 +1,6 @@
 var thz2cm1 = 33.35641;
 var ev2cm1 = 8065.73;
 
-function distance(a,b) {
-    /* Distance between two points
-    */
-    let x = a[0]-b[0];
-    let y = a[1]-b[1];
-    let z = a[2]-b[2];
-    return x*x + y*y + z*z
-}
-
 function distances(points) {
     /* Accumulate distances between points in a list
     */
@@ -22,15 +13,40 @@ function distances(points) {
     return distances;
 }
 
+function rec_lat(lat) {
+    /* Calculate the reciprocal lattice
+    */
+    let a1 = lat[0];
+    let a2 = lat[1];
+    let a3 = lat[2];
+    let b1 = vec_cross(a2,a3);
+    let b2 = vec_cross(a3,a1);
+    let b3 = vec_cross(a1,a2);
+    let v = vec_dot(a1,b1);
+    b1 = vec_scale(b1,1/v);
+    b2 = vec_scale(b2,1/v);
+    b3 = vec_scale(b3,1/v);
+    return [b1,b2,b3] 
+}
+
 function point_in_list(point,points) {
     /* 
     Return the index of the point if it is present in a list of points
     */
     for (let i=0; i<points.length; i++) {
-        if (distance(point,points[i]) < 1e-8) {
-            return i;
+        if (distance(point,points[i]) < 1e-4) {
+            return {found:true,index:i};
         }
     }
+    return {found:false};
+}
+
+function red_car_list(red,lat) {
+    let car = [];
+    for (let i=0; i<red.length; i++) {
+        car.push(red_car(red[i],lat));
+    }
+    return car;
 }
 
 class PhononJson { 
@@ -119,6 +135,7 @@ class PhononJson {
 
         //lattice 
         this.lat = structure["lattice"]["matrix"];
+        let rlat = rec_lat(this.lat);
         this.repetitions = [3,3,3];
 
         this.atom_pos_car = [];
@@ -145,8 +162,9 @@ class PhononJson {
         */
 
         //dispersion
-        let qpoints = data['qpoints'];
-        this.kpoints = qpoints; 
+        let qpoints_red = data['qpoints'];
+        let qpoints_car = red_car_list(qpoints_red,rlat)
+        this.kpoints = qpoints_car; 
 
         //calculate the distances between the qpoints
         this.distances = distances(this.kpoints);
@@ -164,20 +182,21 @@ class PhononJson {
         */ 
 
         let labels_dict = data["labels_dict"];
-        let high_symmetry_points = [];
+        let high_symmetry_points_red = [];
         let high_symmetry_labels = [];
         for (let label in labels_dict) {
             let qpoint = labels_dict[label];
-            high_symmetry_points.push(qpoint);
+            high_symmetry_points_red.push(qpoint);
             high_symmetry_labels.push(label);
         }
-        
+
+        let high_symmetry_points_car = red_car_list(high_symmetry_points_red,rlat); 
         this.highsym_qpts = {}
-        for (let nq=0; nq<qpoints.length; nq++) {
-            let label_index = point_in_list(qpoints[nq],high_symmetry_points);
-            if (label_index) {
+        for (let nq=0; nq<qpoints_car.length; nq++) {
+            let result = point_in_list(qpoints_car[nq],high_symmetry_points_car);
+            if (result["found"]) {
                 let dist = this.distances[nq];
-                this.highsym_qpts[dist] = high_symmetry_labels[label_index]
+                this.highsym_qpts[dist] = high_symmetry_labels[result["index"]];
             }
         }
 
@@ -205,7 +224,7 @@ class PhononJson {
             let eiv_qpoint = [];
 
             for (let n=0; n<nbands; n++) {
-                eig_qpoint.push(eig[n][nq]*ev2cm1);
+                eig_qpoint.push(eig[n][nq]*thz2cm1);
               
                 let eiv_qpoint_atoms = [];
 

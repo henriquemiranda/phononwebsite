@@ -180,9 +180,9 @@ class PhononWebpage {
             let a = combinations[i][0];
             let b = combinations[i][1];
 
-            let distance = dist(a.slice(1),b.slice(1));
-            if (min > distance) {
-                min = distance;
+            let dist = distance(a.slice(1),b.slice(1));
+            if (min > dist) {
+                min = dist;
             }
         }
         return min;
