@@ -121,11 +121,12 @@ class PhononYaml {
                 eivals.push([]);
             }
 
+            let phonon_qpoint;
             check_high_sym_qpoint(phonon[qpoint],this.highsym_qpts);
 
             //iterate over_qpoints
             for (let i=0; i<segment_nqpoint[p]; i++) {
-                let phonon_qpoint = phonon[qpoint+i];
+                phonon_qpoint = phonon[qpoint+i];
 
                 let dist = phonon_qpoint['distance'];
                 if (!(dist in this.qindex)) {
