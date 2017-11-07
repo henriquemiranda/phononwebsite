@@ -290,8 +290,6 @@ class Phonon():
                 "lattice":          self.cell.tolist(),                   # lattice vectors (bohr)
                 "atom_types":       self.atom_types,                      # atom type   for each atom in the system (string)
                 "atom_numbers":     self.atom_numbers,                    # atom number for each atom in the system (integer)
-                "chemical_symbols": self.chemical_symbols,                # unique atom types   (string) 
-                "atomic_numbers":   self.atomic_numbers.tolist(),         # unique atom numbers (integer)
                 "formula":          self.chemical_formula,                # chemical formula
                 "qpoints":          self.qpoints.tolist(),                # list of point in the reciprocal space
                 "repetitions":      self.reps,                            # default value for the repetititions 
