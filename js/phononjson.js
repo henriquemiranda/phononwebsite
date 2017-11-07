@@ -93,7 +93,6 @@ class PhononJson {
         this.natoms = data["natoms"];
         this.atom_types = data["atom_types"];
         this.atom_numbers = data["atom_numbers"];
-        this.atomic_numbers = data["atomic_numbers"];
         this.atom_pos_car = data["atom_pos_car"];
         this.atom_pos_red = data["atom_pos_red"];
         this.lat = data["lattice"];
@@ -156,10 +155,6 @@ class PhononJson {
 
         //atomic sites
         this.natoms = sites.length; 
-
-        /* I think the atomic numbers are not used at all and can be removed
-        this.atomic_numbers = ;
-        */
 
         //dispersion
         let qpoints_red = data['qpoints'];

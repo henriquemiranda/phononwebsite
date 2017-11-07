@@ -81,8 +81,6 @@ phonon dispersions and animations on the website.
     lattice:          lattice vectors (3x3 float array)
     atom_types:       atom type   for each atom in the system (array strings)
     atom_numbers:     atom number for each atom in the system (array integers)
-    chemical_symbols: unique atom types   (array strings)
-    atomic_numbers:   unique atom numbers (integer)
     formula:          chemical formula (string)
     repetitions:      default value for the repetititions (array 3 integers)
     atom_pos_car:     atomic positions in cartesian coordinates (Nx3 float array)
