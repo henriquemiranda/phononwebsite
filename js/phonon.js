@@ -103,12 +103,12 @@ class PhononWebpage {
         }
 
 
-        this.phonon.name = "Custom file";
         for (let key in url_vars) {
             if ( key == "yaml" ) { $.get(url_vars[key], onReadYaml.bind(this)); }
             if ( key == "json" ) { $.get(url_vars[key], onReadJson.bind(this)); }
             if ( key == "name" ) { $('#t1').html(url_vars[key]);     }
         }
+        this.phonon.name = "Custom file";
 
     }
 
@@ -243,7 +243,6 @@ class PhononWebpage {
         /*
         lattice vectors table
         */
-
         for (let i=0; i<3; i++) {
             for (let j=0; j<3; j++) {
                 //round lattice values

@@ -38,7 +38,7 @@ if __name__ == "__main__":
     if args.reps:   q.set_repetitions(args.reps)
 
     #display information
-    print q
+    print(q)
 
     if args.writeonly:
         q.write_json()
