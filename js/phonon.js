@@ -1,6 +1,19 @@
 const pi = 3.14159265359;
 const bohr2ang = 0.529177249;
 
+function subscript_numbers(old_string) {
+    string = "";
+    for (a of old_string) {
+        if (!isNaN(a)) {
+            string += "<sub>"+a+"</sub>";
+        }
+        else {
+            string += a;
+        }
+    }
+    return string;
+}
+
 class PhononWebpage {
 
     constructor(visualizer, dispersion) {
@@ -294,18 +307,19 @@ class PhononWebpage {
 
         //update title
         let title = $('#name')[0];
-        title.removeChild(title.lastChild);
-        let node = document.createTextNode(this.phonon.name);
+        while (title.hasChildNodes()) {
+            title.removeChild(title.lastChild);
+        }
         
         //make link
         if ("link" in this.phonon) {
             let a = document.createElement("A");
             a.href = this.phonon.link;
-            a.appendChild(node);
+            a.innerHTML = this.phonon.name;
             title.appendChild(a);
         }
         else {
-            title.appendChild(node);
+            title.innerHTML = this.phonon.name;
         }
     }
 
@@ -319,33 +333,46 @@ class PhononWebpage {
 
         let self = this;
 
-        //get DOM element
         let materials_list = $('#mat');
         materials_list.empty();
 
+        let references_list = $('#ref');
+        let unique_references = new Set();
+
         function add_materials(materials) {
 
-            //add the data to the menus
             for (let i=0; i<materials.length; i++) {
+                //add the data to the menus
                 let m = materials[i];
-                let name = materials[i]["name"];
+                let name = subscript_numbers(m.name);
+                let ref = m["reference"];
 
                 let li = document.createElement("LI");
                 let a = document.createElement("A");
+                
                 a.onclick = function() {
                     let url_vars = {};
                     url_vars[m.type] = m.url;
-                    url_vars.name = m.name;
+                    url_vars.name = name;
                     if ("link" in m) { url_vars.link = m.link }
                     self.loadURL(url_vars);
                 };
 
-                let node = document.createTextNode(name);
-                a.appendChild(node);
+                a.innerHTML = name;
                 li.appendChild(a);
 
-
                 materials_list.append(li);
+                unique_references.add(ref);
+            }
+
+            //add references
+            references_list.empty();
+            let i = 1;
+            for (let ref of unique_references) {
+                let li = document.createElement("LI");
+                li.innerHTML = "["+i+"] "+ref;
+                references_list.append(li);
+                i += 1;
             }
         }
 
