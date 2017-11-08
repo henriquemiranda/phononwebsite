@@ -23,7 +23,7 @@ class LocalPhononDB {
 
             for (let i=0; i<materials.length; i++) {
                 let m = materials[i];
-                m.url = "localphonondb/band-"+m.id+".yaml";
+                m.url = "localphonondb2015/band-"+m.id+".yaml";
                 m.source = name;
                 m.type = "yaml";
                 m.link = "https://materialsproject.org/materials/mp-"+m.id;
