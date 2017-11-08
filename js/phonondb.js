@@ -31,7 +31,7 @@ class PhononDB {
             callback(materials)
         }
 
-        $.get('phonondb/phonondb.json', dothings);
+        $.get('phonondb2015/phonondb.json', dothings);
     }
 
 
