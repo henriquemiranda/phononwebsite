@@ -337,15 +337,24 @@ class PhononWebpage {
         materials_list.empty();
 
         let references_list = $('#ref');
-        let unique_references = new Set();
+        let unique_references = {};
+        let nreferences = 1;
 
         function add_materials(materials) {
 
             for (let i=0; i<materials.length; i++) {
-                //add the data to the menus
+
                 let m = materials[i];
-                let name = subscript_numbers(m.name);
+                
+                //reference
                 let ref = m["reference"];
+                if (!unique_references.hasOwnProperty(ref)) {
+                    unique_references[ref] = nreferences;
+                    nreferences+=1;
+                }
+
+                //name + refenrece
+                let name = subscript_numbers(m.name) + " ["+unique_references[ref]+"]";
 
                 let li = document.createElement("LI");
                 let a = document.createElement("A");
@@ -362,13 +371,12 @@ class PhononWebpage {
                 li.appendChild(a);
 
                 materials_list.append(li);
-                unique_references.add(ref);
             }
 
             //add references
             references_list.empty();
-            let i = 1;
-            for (let ref of unique_references) {
+            for (let ref in unique_references) {
+                let i = unique_references[ref];
                 let li = document.createElement("LI");
                 li.innerHTML = "["+i+"] "+ref;
                 references_list.append(li);
