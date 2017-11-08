@@ -293,12 +293,12 @@ class PhononWebpage {
         }
 
         //update title
-        let title = document.getElementById('name');
+        let title = $('#name')[0];
         title.removeChild(title.lastChild);
         let node = document.createTextNode(this.phonon.name);
-
+        
+        //make link
         if ("link" in this.phonon) {
-            //make link
             let a = document.createElement("A");
             a.href = this.phonon.link;
             a.appendChild(node);
