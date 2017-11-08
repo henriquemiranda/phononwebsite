@@ -22,6 +22,95 @@ class PhononWebpage {
         this.exportPOSCAR = exportPOSCAR.bind(this);
     }
 
+    loadCustomFile(event) {
+        /*
+        find the type of file and call the corresponding function to read it
+
+        two formats available:
+            1. band.yaml generated with phonopy with eigenvectors
+            2. internal .json format description available in 
+            http://henriquemiranda.github.io/phononwebsite/
+            3. pymatgen phononBS format
+        */
+        this.k = 0;
+        this.n = 0;
+
+        let file = event.target.files[0];
+        if (file.name.indexOf(".yaml") > -1) {
+            this.phonon = new PhononYaml();
+            this.phonon.getFromFile(file, this.loadCallback.bind(this) );
+         }
+        else if (file.name.indexOf(".json") > -1) { 
+            this.phonon = new PhononJson();
+            this.phonon.getFromFile(file, this.loadCallback.bind(this) );
+        }
+        else { 
+            alert("Ivalid file"); 
+        }
+    }
+
+    loadURL(url_vars) {  
+        /*
+        load file from post request in the url
+        */
+
+        this.k = 0;
+        this.n = 0;
+
+        if ("yaml" in url_vars) {
+            this.phonon = new PhononYaml();
+            this.phonon.getFromURL(url_vars.yaml,this.loadCallback.bind(this));
+        }
+        else if ("json" in url_vars) {
+            this.phonon = new PhononJson();
+            this.phonon.getFromURL(url_vars.json,this.loadCallback.bind(this));
+        }
+        else {
+            alert("Ivalid url"); 
+        }
+
+        if ( "name" in url_vars ) { 
+                this.phonon.name = url_vars.name;
+        }
+        if ( "link" in url_vars ) {
+            this.phonon.link = url_vars.link;
+        }
+    }
+
+    static getUrlVars() {
+        /* 
+        get variables from the url
+        from http://stackoverflow.com/questions/4656843/jquery-get-querystring-from-url
+
+        currently the possible options are: 
+            json : load a json file from location
+            yaml : load a yaml file from location
+            name : change the display name of the material
+        */
+        let vars = {};
+        let hash;
+
+        if (location.search) {
+            let hashes = location.search.slice(1).split('&');
+            for(let i = 0; i < hashes.length; i++) {
+                hash = hashes[i].split('=');
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        }
+        else {
+            return null;
+        }
+    }
+
+    loadCallback() {
+        /*
+        Fuunction to be called once the file is loaded
+        */
+        this.setRepetitions(this.phonon.repetitions);
+        this.update() 
+    }
+
     getRepetitions() {
         /*
         read the number of repetitions in each direction and update it
@@ -45,103 +134,6 @@ class PhononWebpage {
         $('#nx').val(this.nx);
         $('#ny').val(this.ny);
         $('#nz').val(this.nz);
-    }
-
-    loadCustomFile(event) {
-        /*
-        find the type of file and call the corresponding function to read it
-
-        two formats available:
-            phonopy files (band.yaml)
-            internal .json format (*.json) description available in ./phononweb/phononweb.py
-        */
-
-        let yaml = null;
-        let json = null;
-
-        for (let i=0; i<event.target.files.length; i++) {
-            let file = event.target.files[i];
-            if (file.name.indexOf(".yaml") > -1) { yaml = file; }
-            if (file.name.indexOf(".json") > -1) { json = file; }
-        }
-
-        this.phonon.name = "Custom file"
-        if      (json) { 
-            this.phonon = new PhononJson();
-            this.phonon.getFromFile(json, this.loadCallback.bind(this) );
-        }
-        else if (yaml) { 
-            this.phonon = new PhononYaml();
-            this.phonon.getFromFile(yaml, this.loadCallback.bind(this) );
-        }
-        else { 
-            alert("Ivalid file"); 
-        }
-    }
-
-    loadURL(url_vars) {  
-        /*
-        load file from post request in the url
-        
-        two formats available:
-            phonopy files (band.yaml)
-            internal .json format (*.json) description available in ./phononweb/phononweb.py
-        */
-
-        function onReadJson(text) {
-            this.phonon = new PhononJson();
-            this.phonon.getFromJson(text, this.loadCallback.bind(this) );
-        }
-
-        function onReadYaml(text) {
-            this.phonon = new PhononYaml();
-            this.phonon.getFromString(text, this.loadCallback.bind(this) );
-        }
-
-        if (!("yaml" in url_vars) && !("json" in url_vars)) {
-            alert("Ivalid url"); 
-        }
-
-
-        for (let key in url_vars) {
-            if ( key == "yaml" ) { $.get(url_vars[key], onReadYaml.bind(this)); }
-            if ( key == "json" ) { $.get(url_vars[key], onReadJson.bind(this)); }
-            if ( key == "name" ) { $('#t1').html(url_vars[key]);     }
-        }
-        this.phonon.name = "Custom file";
-
-    }
-
-    loadId(id) {
-        /*
-        load a material from phonodb
-        http://phonondb.mtl.kyoto-u.ac.jp
-        */
-
-        this.loadURL( { yaml: this.materials[id]['url'] } );
-        this.phonon.name = this.materials[id]['name'] +  " <a href='https://www.materialsproject.org/materials/mp-"+id+"'>mp-"+id+"</a>";
-        this.update();
-    }
-
-    loadLocal(folder='localdb/graphene') {
-        /*
-        read structure from a local file distributed with the repository
-        */
- 
-        let readJson = function(string) {
-            this.phonon = new PhononJson();
-            this.phonon.getFromString(string, this.loadCallback.bind(this) );
-        }
-
-        $.get(folder+'/data.json', readJson.bind(this), "html" );
-    }
-
-    loadCallback() {
-        /*
-        Fuunction to be called once the file is loaded
-        */
-        this.setRepetitions(this.phonon.repetitions);
-        this.update() 
     }
 
     getStructure(nx,ny,nz) {
@@ -170,7 +162,8 @@ class PhononWebpage {
 
     getBondingDistance() {
         /*
-        replicate the atoms two times in each direction
+        replicate the unit cell two times in each direction
+        and clauclate the minimum bonding distance
         */
         let atoms = this.getStructure(2,2,2);
 
@@ -201,9 +194,7 @@ class PhononWebpage {
         let atom_phase = []
         if (phonon.addatomphase) {
             for (let i=0; i<phonon.natoms; i++) {
-                let phase = kpt[0]*phonon.atom_pos_red[i][0] + 
-                        kpt[1]*phonon.atom_pos_red[i][1] + 
-                        kpt[2]*phonon.atom_pos_red[i][2];
+                let phase = vec_dot(kpt,phonon.atom_pos_red[i]);
                 atom_phase.push(phase);
             }
         }
@@ -213,9 +204,9 @@ class PhononWebpage {
             }
         }
 
-        for (var ix=0; ix<nx; ix++) {
-            for (var iy=0; iy<ny; iy++) {
-                for (var iz=0; iz<nz; iz++) {
+        for (let ix=0; ix<nx; ix++) {
+            for (let iy=0; iy<ny; iy++) {
+                for (let iz=0; iz<nz; iz++) {
 
                     for (let i=0; i<phonon.natoms; i++) {
                         let sprod = kpt[0]*ix + kpt[1]*iy + kpt[2]*iz + atom_phase[i];
@@ -239,36 +230,6 @@ class PhononWebpage {
         this.vibrations = this.getVibrations(this.nx,this.ny,this.nz);
     }
 
-    updatePage() {
-        /*
-        lattice vectors table
-        */
-        for (let i=0; i<3; i++) {
-            for (let j=0; j<3; j++) {
-                //round lattice values
-                $('#uc_'+i+j).html( this.phonon.lat[i][j].toPrecision(5) );
-            }
-        }
-
-        //unit cell table
-        $('#uc_natoms').html( this.phonon.natoms );
-        $('#uc_atypes').html( this.phonon.formula );
-
-        //atomic positions table
-        let pos = this.phonon.atom_pos_red;
-        $('#atompos').empty() //clean the atomic positions table
-        for (let i=0; i<this.phonon.natoms; i++) {
-            $('#atompos').append('<tr></tr>');
-            $('#atompos tr:last').append('<td class="ap">'+this.phonon.atom_types[i]+'</td>');
-            for (let j=0; j<3; j++) {
-                $('#atompos tr:last').append('<td>'+pos[i][j].toFixed(4)+'</td>');
-            }
-        }
-
-        //update title
-        $('#t1').html(this.phonon.name);
-    }
-
     update(dispersion=true) {
         /*
         Update all the aspects fo the webpage
@@ -290,78 +251,117 @@ class PhononWebpage {
         this.visualizer.update(this);
     }
 
-    createPhonodbMenu(phonodb) {
+    updatePage() {
         /*
-        Create the phonondb menu
+        lattice vectors table
         */
+        let lattice = $('#lattice');
+        lattice.empty();
 
-        $("#div-phonodb").css('display', 'inline');
-        let materials = jsyaml.load(phonodb);
-        let materials_ref = {};
-        $('#phonodb').empty();
-        for (let i=0;i<materials.length;i++) {
-            let material = materials[i];
-            let id = material['id'];
-            let name = material['name'];
-            materials_ref[material['id']] = material;
-            $('#phonodb').append('<li></li>');
-            $('#phonodb li:last').append("<a href='#' onclick='p.loadId("+id+")'>"+name+"</a>");
+        for (let i=0; i<3; i++) {
+            let tr = document.createElement("TR");
+            for (let j=0; j<3; j++) {
+                let td = document.createElement("TD");
+                x = document.createTextNode(this.phonon.lat[i][j].toPrecision(4));
+                td.appendChild(x);
+                tr.append(td);
+            }
+            lattice.append(tr);
         }
 
-        this.materials = materials_ref;
+        //atomic positions table
+        let pos = this.phonon.atom_pos_red;
+        let atompos = $('#atompos');
+        atompos.empty();
+
+        for (let i=0; i<pos.length; i++) {
+            let tr = document.createElement("TR");
+
+            let td = document.createElement("TD");
+            let atom_type = document.createTextNode(this.phonon.atom_types[i]);
+            td.class = "ap";
+            td.appendChild(atom_type);
+            tr.append(td);
+
+            for (let j=0; j<3; j++) {
+                td = document.createElement("TD");
+                x = document.createTextNode(pos[i][j].toFixed(4));
+                td.appendChild(x);
+                tr.append(td);
+            }
+            atompos.append(tr);
+        }
+
+        //update title
+        let title = document.getElementById('name');
+        title.removeChild(title.lastChild);
+        let node = document.createTextNode(this.phonon.name);
+
+        if ("link" in this.phonon) {
+            //make link
+            let a = document.createElement("A");
+            a.href = this.phonon.link;
+            a.appendChild(node);
+            title.appendChild(a);
+        }
+        else {
+            title.appendChild(node);
+        }
     }
 
     updateMenu() {
         /*
         create menu with:
-            local files (files distributed with the website)
-            files from the phonodb database
+            1. local files (files distributed with the website)
+            2. files from the phonodb database 2015 and 2017
+            3. potentially more sources of data can be added
         */
 
-        //get a list of local materials
-        $.getJSON('localdb/models.json', function(data) {
-            let nmodels = data["nmodels"];
-            let models  = data["models"];
-            $('#mat').empty() //clean the atomic positions table
+        let self = this;
 
-            for (let i=0; i<nmodels; i++) {
-                let folder = models[i]["folder"];
-                let name = models[i]["name"];
-                $('#mat').append('<li></li>');
-                $('#mat li:last').append("<a href='#' onclick=\"p.loadLocal(folder=\'"+folder+"\');\">"+name+"</a>");
+        //get DOM element
+        let materials_list = $('#mat');
+        materials_list.empty();
+
+        function add_materials(materials) {
+
+            //add the data to the menus
+            for (let i=0; i<materials.length; i++) {
+                let m = materials[i];
+                let name = materials[i]["name"];
+
+                let li = document.createElement("LI");
+                let a = document.createElement("A");
+                a.onclick = function() {
+                    let url_vars = {};
+                    url_vars[m.type] = m.url;
+                    url_vars.name = m.name;
+                    if ("link" in m) { url_vars.link = m.link }
+                    self.loadURL(url_vars);
+                };
+
+                let node = document.createTextNode(name);
+                a.appendChild(node);
+                li.appendChild(a);
+
+
+                materials_list.append(li);
             }
-        });
-
-        //get a list of materials from phonodb
-        $.get('phonondb/phonondb.yaml', this.createPhonodbMenu.bind(this));
-    }
-
-    static getUrlVars() {
-        /* 
-        get variables from the url
-        from http://stackoverflow.com/questions/4656843/jquery-get-querystring-from-url
-
-        currently the possible options are: 
-            json : load a json file from location
-            yaml : load a yaml file from location
-            name : change the display name of the material
-        */
-        let vars = {};
-        let hash;
-
-        if (location.search) {
-            let hashes = location.search.slice(1).split('&');
-            for(let i = 0; i < hashes.length; i++) {
-                hash = hashes[i].split('=');
-                vars[hash[0]] = hash[1];
-            }
-            return vars;
         }
-        else {
-            return null;
-        }
-    }
 
+        //local database
+        let source = new LocalDB();
+        source.get_materials(add_materials);
+
+        //phonondb database
+        /*source = new PhononDB();
+        source.get_materials(add_materials);*/
+
+        //local phonondb database
+        source = new LocalPhononDB();
+        source.get_materials(add_materials);
+
+    }
 }
 
 $(document).ready(function() {
@@ -391,14 +391,14 @@ $(document).ready(function() {
 
     let url_vars = PhononWebpage.getUrlVars();
     if (url_vars) { p.loadURL(url_vars); }
-    else          { p.loadLocal();       }
+    else          { p.loadURL({json: "localdb/graphene/data.json"}); }
 
     // check if webgl is available
     if ( ! Detector.webgl ) {
         Detector.addGetWebGLMessage();
     }
 
-    //jquery to make an action once you change the number of repetitions
+    //jquery to make an action once you press enter after changing the number of repetitions
     $(".input-rep").keyup(function(event){
         if(event.keyCode == 13) p.update(dispersion=false);
     });

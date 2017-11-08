@@ -10,6 +10,19 @@ function unique(a) {
 
 class PhononYaml {
 
+    getFromURL(url,callback) {
+        /*
+        load a file from url
+        */
+
+        function onLoadEndHandler(text) {
+            this.getFromString(text,callback);
+        };
+
+        $.get(url,onLoadEndHandler.bind(this));
+
+    }
+
     static getYaml(tags,object) {
         /*
         check if the tags are present and if so return their value 
@@ -121,11 +134,12 @@ class PhononYaml {
                 eivals.push([]);
             }
 
+            let phonon_qpoint;
             check_high_sym_qpoint(phonon[qpoint],this.highsym_qpts);
 
             //iterate over_qpoints
             for (let i=0; i<segment_nqpoint[p]; i++) {
-                let phonon_qpoint = phonon[qpoint+i];
+                phonon_qpoint = phonon[qpoint+i];
 
                 let dist = phonon_qpoint['distance'];
                 if (!(dist in this.qindex)) {

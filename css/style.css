@@ -118,17 +118,9 @@ h3 {
 	  position: absolute;
 }
 
-#div-phonodb {
-  display: none;
-}
-
-#phonodb {
+#mat {
   overflow: scroll;
   height: 200px;
-  width: 80%;
-}
-
-#mat {
   width: 80%;
 }
 
@@ -193,7 +185,7 @@ h3 {
 	width: 20%;
 }
 
-.lattice td {
+#lattice td {
   width: 20%;
 }
 

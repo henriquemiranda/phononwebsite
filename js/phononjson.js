@@ -1,5 +1,5 @@
-var thz2cm1 = 33.35641;
-var ev2cm1 = 8065.73;
+const thz2cm1 = 33.35641;
+const ev2cm1 = 8065.73;
 
 function distances(points) {
     /* Accumulate distances between points in a list
@@ -51,10 +51,23 @@ function red_car_list(red,lat) {
 
 class PhononJson { 
 
+    getFromURL(url,callback) {
+        /*
+        load a file from url
+        */
+
+        function onLoadEndHandler(text) {
+            this.getFromJson(text,callback);
+        };
+
+        $.get(url,onLoadEndHandler.bind(this));
+
+    }
+
     getFromFile(file,callback) {
         /*
-        file is a javasccript file object with the ".json" file
-         in data */
+        file is a javasccript file object with the ".json" file in data 
+        */
 
         let json_reader = new FileReader();
 
@@ -74,7 +87,10 @@ class PhononJson {
         */
 
         let json = JSON.parse(string);
+        this.getFromJson(json,callback);
+    }
 
+    getFromJson(json,callback) {
         if ('@class' in json) {
             this.getFromPMGJson(json,callback);
         }
@@ -128,9 +144,6 @@ class PhononJson {
         this.addatomphase = false;
 
         //system information (not needed for now)
-        this.name = "test" 
-        this.formula = "test"
-
         let structure = data["structure"];
 
         //lattice 

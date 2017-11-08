@@ -47,6 +47,9 @@
     <script type="text/javascript" src="js/atomic_data.js"></script>
     <script type="text/javascript" src="js/vibcrystal.js"></script>
     <script type="text/javascript" src="js/export.js"></script>
+    <script type="text/javascript" src="js/localphonondb.js"></script>
+    <script type="text/javascript" src="js/localdb.js"></script>
+    <script type="text/javascript" src="js/phonondb.js"></script>
     <script type="text/javascript" src="js/phononjson.js"></script>
     <script type="text/javascript" src="js/phononyaml.js"></script>
     <script type="text/javascript" src="js/phononhighcharts.js"></script>
@@ -71,7 +74,7 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="phonon.html">Phonons</a></li>
         </ul>
-        <div class="material-name"><h1 id="t1">Material</h1></div>
+        <div class="material-name"><h1 id="name">Material</h1></div>
         <div class="flex-container">
         <div class="flex-menu">
             <div id="menu">
@@ -82,39 +85,14 @@
                 </ul>
             </div>
 
-            <div id="div-phonodb">
-                <h3><a href="http://phonondb.mtl.kyoto-u.ac.jp/">Phonondb:</a></h3>
-                <ul id="phonodb" class="materials">
-                        <li><a href="#" onclick="folder='graphene';">Graphene</a></li>
-                </ul>
-            </div>
-
             <div>
                 <h3>Custom file:</h3>
-                <input type="file" multiple id="file-input" name="customfile"/>
-            </div>
-
-            <div>
-            <h3>Unit cell:</h3>
-                <table>
-                    <tr>
-                        <td class="atypes-text">Number of Atoms:</td>
-                        <td id="uc_natoms" class="atypes-data"></td>
-                    </tr>
-                    <tr>
-                        <td class="atypes-text">Atom Types:</td>
-                        <td id="uc_atypes" class="atypes-data"></td>
-                    </tr>
-                </table>
+                <input type="file" id="file-input" name="customfile"/>
             </div>
 
             <div>
             <h3>Lattice parameters (Ångström):</h3>
-                <table class="lattice">
-                    <tr><td>x</td>          <td>y</td>          <td>z</td></tr>
-                    <tr><td id="uc_00"></td><td id="uc_01"></td><td id="uc_02"></td></tr>
-                    <tr><td id="uc_10"></td><td id="uc_11"></td><td id="uc_12"></td></tr>
-                    <tr><td id="uc_20"></td><td id="uc_21"></td><td id="uc_22"></td></tr>
+                <table id="lattice">
                 </table>
             </div>
 
@@ -138,6 +116,13 @@
             </div>
 
             <div>
+            <h3>Camera:</h3>
+                <button type="button" onclick="v.setCameraDirection('x')">x</button>
+                <button type="button" onclick="v.setCameraDirection('y')">y</button>
+                <button type="button" onclick="v.setCameraDirection('z')">z</button>
+            </div>
+
+            <div>
             <h3>Amplitude:</h3>
             <form>
                 <input id="amplitude_range" type="range"  step ="0.01" value="0.2" min="0.0" max="1.0" 
@@ -145,13 +130,6 @@
                 <input id="amplitude_box"   type="number" step ="0.01" value="0.2" min="0.0" max="1.0"
                        onchange="v.amplitude=this.value; p.amplitude=this.value; $('#amplitude_range').val(this.value)">
             </form>
-            </div>
-
-            <div>
-            <h3>Camera:</h3>
-                <button type="button" onclick="v.setCameraDirection('x')">x</button>
-                <button type="button" onclick="v.setCameraDirection('y')">y</button>
-                <button type="button" onclick="v.setCameraDirection('z')">z</button>
             </div>
 
             <div>
