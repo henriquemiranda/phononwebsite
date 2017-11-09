@@ -91,9 +91,10 @@ class PhononYaml {
         let pmat = matrix_multiply(lat,tmat);
 
         //get the atoms inside the unit cell
-        let pos,x,y,z,atom_types = [], atom_numbers = [];
-        let atomic_numbers = {}, pc_atoms_car = [], pc_atoms_red = [];
-
+        let atom_types = [];
+        let atom_numbers = [];
+        let pc_atoms_car = [];
+        let pc_atoms_red = [];
         for (let i=0; i<pc_atoms.length; i++) {
             let symbol   = PhononYaml.getYaml(['symbol'],pc_atoms[i]);
             let position = PhononYaml.getYaml(['position','coordinates'],pc_atoms[i]);
@@ -206,13 +207,13 @@ class PhononYaml {
         this.addatomphase = true;
         this.atom_types = atom_types;
         this.atom_numbers = atom_numbers;
-        this.atomic_numbers = unique(atom_numbers).map(parseInt);
         this.atom_pos_car = pc_atoms_car;
         this.atom_pos_red = pc_atoms_red;
         this.lat = lat;
         this.vec = eivecs;
         this.kpoints = kpoints;
-        this.formula = atom_types.join('');
+        this.formula = get_formula(atom_types);
+        this.name = this.formula;
         this.repetitions = [3,3,3];
 
     }

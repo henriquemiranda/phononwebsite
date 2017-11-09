@@ -47,15 +47,22 @@ class PhononWebpage {
         */
         this.k = 0;
         this.n = 0;
+        self = this;
+
+        function set_name() {
+            delete self.link;
+            self.name = self.phonon.name; 
+            self.loadCallback();
+        }
 
         let file = event.target.files[0];
         if (file.name.indexOf(".yaml") > -1) {
             this.phonon = new PhononYaml();
-            this.phonon.getFromFile(file, this.loadCallback.bind(this) );
+            this.phonon.getFromFile(file, set_name );
          }
         else if (file.name.indexOf(".json") > -1) { 
             this.phonon = new PhononJson();
-            this.phonon.getFromFile(file, this.loadCallback.bind(this) );
+            this.phonon.getFromFile(file, set_name );
         }
         else { 
             alert("Ivalid file"); 
@@ -69,6 +76,14 @@ class PhononWebpage {
 
         this.k = 0;
         this.n = 0;
+        delete this.link;
+
+        if ( "name" in url_vars ) {
+            this.name = url_vars.name;
+        }
+        if ( "link" in url_vars ) {
+            this.link = url_vars.link;
+        }
 
         if ("yaml" in url_vars) {
             this.phonon = new PhononYaml();
@@ -80,13 +95,6 @@ class PhononWebpage {
         }
         else {
             alert("Ivalid url"); 
-        }
-
-        if ( "name" in url_vars ) { 
-                this.phonon.name = url_vars.name;
-        }
-        if ( "link" in url_vars ) {
-            this.phonon.link = url_vars.link;
         }
     }
 
@@ -222,7 +230,7 @@ class PhononWebpage {
                 for (let iz=0; iz<nz; iz++) {
 
                     for (let i=0; i<phonon.natoms; i++) {
-                        let sprod = kpt[0]*ix + kpt[1]*iy + kpt[2]*iz + atom_phase[i];
+                        let sprod = vec_dot(kpt,[ix,iy,iz]) + atom_phase[i];
                         let phase = Complex.Polar(1.0,sprod*2.0*pi);
 
                         //Displacements of the atoms
@@ -312,14 +320,14 @@ class PhononWebpage {
         }
         
         //make link
-        if ("link" in this.phonon) {
+        if ("link" in this) {
             let a = document.createElement("A");
-            a.href = this.phonon.link;
-            a.innerHTML = this.phonon.name;
+            a.href = this.link;
+            a.innerHTML = this.name;
             title.appendChild(a);
         }
         else {
-            title.innerHTML = this.phonon.name;
+            title.innerHTML = this.name;
         }
     }
 
@@ -354,7 +362,8 @@ class PhononWebpage {
                 }
 
                 //name + refenrece
-                let name = subscript_numbers(m.name) + " ["+unique_references[ref]+"]";
+                let name = subscript_numbers(m.name);
+                let name_ref = name + " ["+unique_references[ref]+"]";
 
                 let li = document.createElement("LI");
                 let a = document.createElement("A");
@@ -362,7 +371,7 @@ class PhononWebpage {
                 a.onclick = function() {
                     let url_vars = {};
                     url_vars[m.type] = m.url;
-                    url_vars.name = name;
+                    url_vars.name = name_ref;
                     if ("link" in m) { url_vars.link = m.link }
                     self.loadURL(url_vars);
                 };
@@ -426,7 +435,7 @@ $(document).ready(function() {
 
     let url_vars = PhononWebpage.getUrlVars();
     if (url_vars) { p.loadURL(url_vars); }
-    else          { p.loadURL({json: "localdb/graphene/data.json"}); }
+    else          { p.loadURL({json: "localdb/graphene/data.json", name:"Graphene [1]"}); }
 
     // check if webgl is available
     if ( ! Detector.webgl ) {

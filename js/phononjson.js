@@ -49,6 +49,22 @@ function red_car_list(red,lat) {
     return car;
 }
 
+function get_formula(atom_types) {
+    //create the name from the elements
+    //from https://stackoverflow.com/questions/15052702/count-unique-elements-in-array-without-sorting
+    let counts = {};
+    for (var i = 0; i < atom_types.length; i++) {
+        counts[atom_types[i]] = 1 + (counts[atom_types[i]] || 0);
+    }
+
+    //make the name from the counter
+    name = "";
+    for (let element in counts) {
+        name += element+counts[element];
+    }
+    return name;
+}
+
 class PhononJson { 
 
     getFromURL(url,callback) {
@@ -167,12 +183,8 @@ class PhononJson {
             this.atom_pos_red.push(site['abc']);
         }
 
-        //atomic sites
-        this.natoms = sites.length; 
-
-        /* I think the atomic numbers are not used at all and can be removed
-        this.atomic_numbers = ;
-        */
+        this.natoms = sites.length;
+        this.name = get_formula(this.atom_types);
 
         //dispersion
         let qpoints_red = data['qpoints'];
