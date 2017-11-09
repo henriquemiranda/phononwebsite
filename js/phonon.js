@@ -402,7 +402,11 @@ class PhononWebpage {
         source.get_materials(add_materials);*/
 
         //local phonondb database
-        source = new LocalPhononDB();
+        source = new LocalPhononDB2015();
+        source.get_materials(add_materials);
+
+        //local phonondb database
+        source = new LocalPhononDB2017();
         source.get_materials(add_materials);
 
     }

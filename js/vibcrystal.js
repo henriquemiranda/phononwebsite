@@ -318,7 +318,7 @@ class VibCrystal {
             length = ad.distanceTo(bd)
             let cra = covalent_radii[a.atom_number]
             let crb = covalent_radii[b.atom_number]
-            if (length < cra + crb || length < this.nndist + 0.2 ) {
+            if (length < cra + crb || length < this.nndist ) {
                 this.bonds.push( [ad,bd,length] );
 
                 //get transformations

@@ -13,6 +13,8 @@ class PhononHighcharts {
                     let label = phonon.highsym_qpts[this.value];
                     label = label.replace("$","").replace("$","");
                     label = label.replace("\\Gamma","Γ");
+                    label = label.replace("GAMMA","Γ");
+                    label = label.replace("DELTA","Δ");
                     label = label.replace("\\Sigma","Σ");
                     label = label.replace("_","");
                     return label;
