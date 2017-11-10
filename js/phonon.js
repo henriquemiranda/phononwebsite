@@ -451,4 +451,16 @@ $(document).ready(function() {
         if(event.keyCode == 13) p.update(dispersion=false);
     });
 
+    /*window.onresize = function(event) {
+        //get the height of the flex-menu
+        let hfm = $(".flex-menu").height()
+
+        //get the height of the material-list
+        let hml = $("#material-list").height()
+
+        //set the height of menu = flex-menu
+        console.log(hfm-hml);
+        $("#menu").height(hfm-hml);
+    };*/
+
 });
