@@ -97,7 +97,9 @@ class PhononHighcharts {
                              width: 2 })
         }
 
+        //actually set the eigenvalues
         this.getGraph(phonon);
+
         this.HighchartsOptions.series = this.highcharts;
         this.HighchartsOptions.xAxis.tickPositions = ticks;
         this.HighchartsOptions.xAxis.plotLines = plotLines;
@@ -116,24 +118,33 @@ class PhononHighcharts {
 
         let eival = phonon.eigenvalues;
         let dists = phonon.distances; 
+        let line_breaks = phonon.line_breaks;
 
         let nbands = eival[0].length;
-        let nqpoints = eival.length;
         this.highcharts = [];
 
         //go through the eigenvalues and create eival list
         for (let n=0; n<nbands; n++) {
-            let eig = [];
-            for (let k=0; k<nqpoints; k++) {
-                eig.push([dists[k],eival[k][n]]);
-            }
+            //iterate over the line breaks
+            for (let i=0; i<line_breaks.length; i++) {
+                let startk = line_breaks[i][0];
+                let endk = line_breaks[i][1];
 
-            this.highcharts.push({
-                                  name:  n.toString(),
-                                  color: "#0066FF",
-                                  marker: { radius: 2, symbol: "circle"},
-                                  data: eig
-                                 });
+                let eig = [];
+
+                //iterate over the q-points
+                for (let k=startk; k<endk; k++) {
+                    eig.push([dists[k],eival[k][n]]);
+                }
+
+                //add data
+                this.highcharts.push({
+                    name:  n.toString(),
+                    color: "#0066FF",
+                    marker: { radius: 2, symbol: "circle"},
+                    data: eig
+                   });
+            }
         }
     }
 }

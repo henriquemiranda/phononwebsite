@@ -81,7 +81,7 @@ class PhononYaml {
             segment_nqpoint = phononyaml['segment_nqpoint'];
         }
         else {
-            segment_nqpoint = []
+            segment_nqpoint = [];
             for (i=0; i<npath; i++) {
                 segment_nqpoint.push(nqpoint/npath);
             }
@@ -105,12 +105,6 @@ class PhononYaml {
         }
         this.natoms = pc_atoms.length;
 
-        //get the phonon dispersion
-        let kpoints = [], eivecs = [];
-        let nmodes = this.natoms*3;
-        let phononi, phononiband;
-        let qpoint = 0;
-
         this.highsym_qpts = {};
         this.qindex = {};
 
@@ -124,30 +118,27 @@ class PhononYaml {
             }
         }
 
-        //iterate over the different segments of the path
+        //iterate over the different segments of the path        
+        this.kpoints     = [];
         this.eigenvalues = [];
+        this.vec         = [];
         this.distances   = [];
+        this.line_breaks = [0];
+        let nmodes = this.natoms*3;
+        let qpoint = 0;
+
+        //iterate over number of paths
         for (let p=0; p<npath; p++) {
-
-            //clean eivals array
-            let eivals = [];
-            for (let i=0; i<nmodes; i++) {
-                eivals.push([]);
-            }
-
-            let phonon_qpoint;
-            check_high_sym_qpoint(phonon[qpoint],this.highsym_qpts);
+            //get size of segment
+            let size_segment = segment_nqpoint[p];
 
             //iterate over_qpoints
-            for (let i=0; i<segment_nqpoint[p]; i++) {
-                phonon_qpoint = phonon[qpoint+i];
+            for (let i=0; i<size_segment; i++) {
+                let phonon_qpoint = phonon[qpoint+i];
 
                 let dist = phonon_qpoint['distance'];
-                if (!(dist in this.qindex)) {
-                    this.qindex[dist] = kpoints.length;
-                }
-                kpoints.push(phonon_qpoint['q-position']);
-                phononiband = phonon_qpoint['band'];
+                this.qindex[dist] = this.kpoints.length;
+                this.kpoints.push(phonon_qpoint['q-position']);
 
                 //get distances
                 this.distances.push( phonon_qpoint['distance'] );
@@ -155,24 +146,27 @@ class PhononYaml {
                 //create bands
                 let eig   = [];
                 let eivec = [];
+                let phonon_qpoint_band = phonon_qpoint['band'];
                 for (let n=0; n<nmodes; n++) {
+                    let phonon_qpoint_band_mode = phonon_qpoint_band[n];
                     //get eigenvalues
-                    eig.push( phononiband[n]['frequency']*thz2ev );
-                    eivals[n].push([phonon_qpoint['distance'],phononiband[n]['frequency']*thz2ev]);
-
+                    eig.push( phonon_qpoint_band_mode['frequency']*thz2ev );
                     //get eigenvectors
-                    let vec = PhononYaml.getYaml(['eigenvector'],phononiband[n])
-                    eivec.push(vec);
+                    eivec.push( phonon_qpoint_band_mode['eigenvector'] );
                 }
-                eivecs.push(eivec);
+                this.vec.push(eivec);
                 this.eigenvalues.push(eig);
             }
 
-            check_high_sym_qpoint(phonon_qpoint,this.highsym_qpts);
+            //add line breaks
+            this.line_breaks.push([qpoint,qpoint+size_segment]);
 
-            qpoint += segment_nqpoint[p];
+            //check if start point and end point are high-symmetry points
+            check_high_sym_qpoint(phonon[qpoint],this.highsym_qpts);
+            qpoint += size_segment;
+            check_high_sym_qpoint(phonon[qpoint-1],this.highsym_qpts);
         }
-
+        
         //get average mass (for normalization purposes)
         let average_mass = 0;
         let sqrt_atom_masses = [];
@@ -185,9 +179,9 @@ class PhononYaml {
         let sqrt_average_mass = Math.sqrt(average_mass);
 
         //normalize the phonon modes with the masses
-        let nqpoints = eivecs.length;
+        let nqpoints = this.vec.length;
         for (let q=0; q<nqpoints; q++) {
-            let eivecq = eivecs[q];
+            let eivecq = this.vec[q];
             for (let n=0; n<nmodes; n++) {
                 let eivecqn = eivecq[n];
                 for (let i=0;i<this.natoms;i++) {
@@ -204,14 +198,13 @@ class PhononYaml {
             }
         }
 
+        //no line breaks
         this.addatomphase = true;
         this.atom_types = atom_types;
         this.atom_numbers = atom_numbers;
         this.atom_pos_car = pc_atoms_car;
         this.atom_pos_red = pc_atoms_red;
         this.lat = lat;
-        this.vec = eivecs;
-        this.kpoints = kpoints;
         this.formula = get_formula(atom_types);
         this.name = this.formula;
         this.repetitions = [3,3,3];

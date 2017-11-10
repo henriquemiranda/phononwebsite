@@ -149,6 +149,9 @@ class PhononJson {
             this.highsym_qpts[dist] = data["highsym_qpts"][i][1];
         }
 
+        //get line breaks
+        this.getLineBeaks(data);
+                
         callback();
     }
     
@@ -269,6 +272,20 @@ class PhononJson {
             this.vec.push(eiv_qpoint);
         }
 
+        //get line breaks
+        this.getLineBeaks(data);
+
         callback();
+    }
+
+    getLineBeaks(data) {
+        //get line breaks
+        if ("line_breaks" in data) {
+            this.line_breaks = data["line_breaks"]
+        }
+        else {
+            //no line breaks
+            this.line_breaks = [[0,this.kpoints.length]];
+        }
     }
 }
