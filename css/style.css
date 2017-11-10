@@ -1,7 +1,7 @@
 html, body {
     font-family: Arial,helvetica,sans-serif;
     margin: 0;
-    height: 100%;
+    height: 99.5%;//ugly hack
     width: 100%;
 }
 
@@ -90,7 +90,14 @@ h3 {
   color: white;
 }
 
-#progress{ position: absolute; left: 0; top: 0; z-index: 100; height: 10px; background-color: #b70000;}
+#progress{ 
+    position: absolute; 
+    left: 0; 
+    top: 0; 
+    z-index: 100; 
+    height: 10px; 
+    background-color: #b70000;
+}
 
 #stats {
     z-index: 100;
@@ -99,11 +106,15 @@ h3 {
 }
 
 #menu {
-    height:  100%;
-    width:  98%;
-    margin-left: 1%;
-    margin-right: 1%;
-    position: absolute;
+    flex: 2; 
+    padding: 0px 5px 0px 5px;
+    overflow: scroll;
+}
+
+#material-list {
+    flex: 1;
+    padding: 0px 5px 0px 5px;
+    height: auto;
 }
 
 #vibcrystal {
@@ -115,13 +126,13 @@ h3 {
 #highcharts {
     height: 100%;
     width: 100%;
-	  position: absolute;
+    position: absolute;
 }
 
 #mat {
-  overflow: scroll;
-  height: 200px;
-  width: 80%;
+    overflow: scroll;
+    height: 200px;
+    width: 100%;
 }
 
 .positions {
@@ -155,7 +166,8 @@ h3 {
     width: 100%;
     flex: 1;
     order: 1;
-    overflow: auto;
+    display: flex;
+    flex-direction: column;
     position: relative;
 }
 
