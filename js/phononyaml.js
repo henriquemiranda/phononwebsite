@@ -1,11 +1,17 @@
 const thz2ev = 33.35641;
 
-function unique(a) {
-    var i, b = {};
-    for (i=0; i<a.length; i++) {
-        b[a[i]] = 0;
-    }
-    return Object.keys(b);
+function getReasonableRepetitions(natoms,lat) {
+    /*
+    choose a reasonable number of repetitions
+    Some logic can be implemented here to improve 
+    in which directions the repetitions are made
+    */
+
+    if (natoms < 4)        { return [3,3,3] };
+    if (4 < natoms < 15)   { return [2,2,2] };
+    if (15 < natoms < 50)  { return [2,2,1] };
+    if (50 < natoms)       { return [1,1,1] };
+
 }
 
 class PhononYaml {
@@ -91,31 +97,31 @@ class PhononYaml {
         let pmat = matrix_multiply(lat,tmat);
 
         //get the atoms inside the unit cell
-        let atom_types = [];
-        let atom_numbers = [];
-        let pc_atoms_car = [];
-        let pc_atoms_red = [];
-        for (let i=0; i<pc_atoms.length; i++) {
-            let symbol   = PhononYaml.getYaml(['symbol'],pc_atoms[i]);
-            let position = PhononYaml.getYaml(['position','coordinates'],pc_atoms[i]);
-            atom_numbers.push(atomic_number[symbol]);
-            atom_types.push(symbol);
-            pc_atoms_red.push(position);
-            pc_atoms_car.push(red_car(position,lat));
-        }
+        this.atom_types = [];
+        this.atom_numbers = [];
+        this.atom_pos_car = [];
+        this.atom_pos_red = [];
         this.natoms = pc_atoms.length;
+        
+        for (let i=0; i<this.natoms; i++) {
+            let atom = pc_atoms[i];
+            let symbol   = PhononYaml.getYaml(['symbol'],atom);
+            let position = PhononYaml.getYaml(['position','coordinates'],atom);
+            this.atom_numbers.push(atomic_number[symbol]);
+            this.atom_types.push(symbol);
+            this.atom_pos_red.push(position);
+            this.atom_pos_car.push(red_car(position,lat));
+        }
 
-        this.highsym_qpts = {};
-        this.qindex = {};
+        this.formula = get_formula(this.atom_types);
+        this.name = this.formula;
 
         let check_high_sym_qpoint = function(phonon_qpoint,highsym_qpts) {
+            let label = phonon_qpoint['label'];
+            let dist  = phonon_qpoint['distance'];
             //check if a label is present
-            if (phonon_qpoint['label']) {
-                highsym_qpts[phonon_qpoint['distance']] = phonon_qpoint['label'];
-            }
-            else {
-                highsym_qpts[phonon_qpoint['distance']] = '';
-            }
+            if (label) {  highsym_qpts[dist] = label; }
+            else       {  highsym_qpts[dist] = '';    }
         }
 
         //iterate over the different segments of the path        
@@ -124,6 +130,8 @@ class PhononYaml {
         this.vec         = [];
         this.distances   = [];
         this.line_breaks = [0];
+        this.highsym_qpts = {};
+        this.qindex = {};
         let nmodes = this.natoms*3;
         let qpoint = 0;
 
@@ -144,17 +152,17 @@ class PhononYaml {
                 this.distances.push( phonon_qpoint['distance'] );
 
                 //create bands
-                let eig   = [];
-                let eivec = [];
+                let eig = [];
+                let eiv = [];
                 let phonon_qpoint_band = phonon_qpoint['band'];
                 for (let n=0; n<nmodes; n++) {
                     let phonon_qpoint_band_mode = phonon_qpoint_band[n];
                     //get eigenvalues
                     eig.push( phonon_qpoint_band_mode['frequency']*thz2ev );
                     //get eigenvectors
-                    eivec.push( phonon_qpoint_band_mode['eigenvector'] );
+                    eiv.push( phonon_qpoint_band_mode['eigenvector'] );
                 }
-                this.vec.push(eivec);
+                this.vec.push(eiv);
                 this.eigenvalues.push(eig);
             }
 
@@ -171,7 +179,7 @@ class PhononYaml {
         let average_mass = 0;
         let sqrt_atom_masses = [];
         for (let i=0;i<this.natoms;i++) {
-            let mass = atomic_mass[atom_numbers[i]]
+            let mass = atomic_mass[this.atom_numbers[i]]
             average_mass += mass;
             sqrt_atom_masses.push(Math.sqrt(mass));
         }
@@ -198,16 +206,8 @@ class PhononYaml {
             }
         }
 
-        //no line breaks
         this.addatomphase = true;
-        this.atom_types = atom_types;
-        this.atom_numbers = atom_numbers;
-        this.atom_pos_car = pc_atoms_car;
-        this.atom_pos_red = pc_atoms_red;
         this.lat = lat;
-        this.formula = get_formula(atom_types);
-        this.name = this.formula;
-        this.repetitions = [3,3,3];
-
+        this.repetitions = getReasonableRepetitions(this.natoms,lat);
     }
 }
