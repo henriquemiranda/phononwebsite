@@ -110,6 +110,7 @@ class PhononJson {
         self = this;
         let apikey = "fAGQ0aT2TsXeidxU"
         let url = "https://materialsproject.org/rest/v2/materials/"+mpid+"/phononbs?web=true";
+        //let url = "https://materialsproject.org/rest/v2/materials/"+mpid+"/phononbs";
 
         let xhr = new XMLHttpRequest();
         xhr.open('GET', url, true);

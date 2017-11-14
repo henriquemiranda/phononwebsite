@@ -5,9 +5,9 @@ class MaterialsProjectDB {
     */
 
     constructor() {
-        this.name = "Materials project phonon database";
+        this.name = "mpdb";
         this.year = 2017;
-        this.author = "G. Petretto et al. (in preparation)";
+        this.author = "G. Petretto et al.";
         this.url = "";
     }
 
@@ -27,6 +27,8 @@ class MaterialsProjectDB {
                 m.type = "rest";
                 m.reference = reference;
                 m.url = "mp-"+m.id;
+                m.name = m.name;
+                m.link = "https://materialsproject.org/materials/mp-"+m.id;
             }
             callback(materials);
         }
