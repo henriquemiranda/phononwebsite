@@ -93,6 +93,10 @@ class PhononWebpage {
             this.phonon = new PhononJson();
             this.phonon.getFromURL(url_vars.json,this.loadCallback.bind(this));
         }
+        else if ("rest" in url_vars) {
+            this.phonon = new PhononJson();
+            this.phonon.getFromREST(url_vars.rest,this.loadCallback.bind(this));
+        }
         else {
             alert("Ivalid url"); 
         }
@@ -367,7 +371,7 @@ class PhononWebpage {
 
                 let li = document.createElement("LI");
                 let a = document.createElement("A");
-                
+               
                 a.onclick = function() {
                     let url_vars = {};
                     url_vars[m.type] = m.url;
@@ -402,12 +406,17 @@ class PhononWebpage {
         source.get_materials(add_materials);*/
 
         //local phonondb database
-        source = new LocalPhononDB2015();
-        source.get_materials(add_materials);
+        /*source = new LocalPhononDB2015();
+        source.get_materials(add_materials);*/
 
         //local phonondb database
-        source = new LocalPhononDB2017();
+        /*source = new LocalPhononDB2017();
+        source.get_materials(add_materials);*/
+
+        //mp databse
+        source = new MaterialsProjectDB();
         source.get_materials(add_materials);
+
 
     }
 }

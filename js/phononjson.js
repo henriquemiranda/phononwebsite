@@ -106,6 +106,21 @@ class PhononJson {
         this.getFromJson(json,callback);
     }
 
+    getFromREST(mpid,callback) {
+        self = this;
+        let apikey = "fAGQ0aT2TsXeidxU"
+        let url = "https://materialsproject.org/rest/v2/materials/"+mpid+"/phononbs?web=true";
+
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.setRequestHeader('x-api-key', apikey);
+        xhr.onload = function () {
+            let json = JSON.parse(xhr.responseText);
+            self.getFromJson(json.response,callback);
+        }
+        xhr.send(null);
+    }
+    
     getFromJson(json,callback) {
         if ('@class' in json) {
             this.getFromPMGJson(json,callback);
