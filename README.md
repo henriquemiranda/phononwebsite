@@ -120,11 +120,11 @@ Aknowledgments & Funding
 
 Fonds National de la Recherche Luxembourg (2013-present): <http://www.fnr.lu/>
 
-![]("figures/fnr.jpg" | width=100)
+![](figures/fnr.jpg | width=100)
 
 University of Luxembourg (2013-present): <http://wwwen.uni.lu/>
 
-![]("figures/unilu.png" | width=100)
+![](figures/unilu.png | width=100)
 
 Contribute
 ==========
