@@ -414,7 +414,7 @@ class PhononWebpage {
         source.get_materials(add_materials);*/
 
         //mp databse
-        source = new MaterialsProjectDB();
+        source = new LocalMaterialsProjectDB();
         source.get_materials(add_materials);
 
 
