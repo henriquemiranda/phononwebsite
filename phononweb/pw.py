@@ -1,42 +1,56 @@
-# Copyright (C) 2015 Henrique Pereira Coutada Miranda, Alejandro Molina Sanchez
+# Copyright (C) 2017 Henrique Pereira Coutada Miranda, Alejandro Molina Sanchez
 # All rights reserved.
 #
 # This file is part of yambopy
 #
 #
+from qepy import *
 import os
 import re
 from math import sqrt
-import numpy as np
-
-ang2bohr = 1.889725989
-
-def red_car(red,lat):
-    """
-    Convert reduced coordinates to cartesian
-    """
-    return np.array([coord[0]*lat[0]+coord[1]*lat[1]+coord[2]*lat[2] for coord in red])
-
-def car_red(car,lat):
-    """
-    Convert cartesian coordinates to reduced
-    """
-    return np.array([np.linalg.solve(np.array(lat).T,coord) for coord in car])
-
-def rec_lat(lat):
-    """
-    Calculate the reciprocal lattice vectors
-    """
-    a1,a2,a3 = np.array(lat)
-    v = np.dot(a1,np.cross(a2,a3))
-    b1 = np.cross(a2,a3)/v
-    b2 = np.cross(a3,a1)/v
-    b3 = np.cross(a1,a2)/v
-    return np.array([b1,b2,b3])
-
 
 class PwIn():
-    """ A class to generate an manipulate quantum espresso input files
+    """
+    Class to generate an manipulate Quantum Espresso input files
+    Can be initialized either reading from a file or starting from a new file.
+
+    Examples of use:
+
+    To read a local file with name "mos2.in"
+
+        .. code-block :: python
+        
+            qe = PwIn('mos2.scf')
+            print qe
+
+    To start a file from scratch
+
+        .. code-block :: python
+        
+            qe = PwIn('mos2.scf')
+            qe.atoms = [['N',[ 0.0, 0.0,0.0]],
+                        ['B',[1./3,2./3,0.0]]]
+            qe.atypes = {'B': [10.811, "B.pbe-mt_fhi.UPF"],
+                         'N': [14.0067,"N.pbe-mt_fhi.UPF"]}
+
+            qe.control['prefix'] = "'%s'"%prefix
+            qe.control['verbosity'] = "'high'"
+            qe.control['wf_collect'] = '.true.'
+            qe.control['pseudo_dir'] = "'../pseudos/'"
+            qe.system['celldm(1)'] = 4.7
+            qe.system['celldm(3)'] = layer_separation/qe.system['celldm(1)']
+            qe.system['ecutwfc'] = 60
+            qe.system['occupations'] = "'fixed'"
+            qe.system['nat'] = 2
+            qe.system['ntyp'] = 2
+            qe.system['ibrav'] = 4
+            qe.kpoints = [6, 6, 1]
+            qe.electrons['conv_thr'] = 1e-8
+
+            print qe
+     
+    Special care should be taken with string variables e.g. "'high'"
+ 
     """    
     _pw = 'pw.x'
 
@@ -62,7 +76,6 @@ class PwIn():
         if filename:
             f = open(filename,"r")
             self.file_name = filename #set filename
-            #self.file_lines = [ line.lower() for line in f.readlines()] #set file lines
             self.file_lines = f.readlines() #set file lines
             self.store(self.control,"control")     #read &control
             self.store(self.system,"system")      #read &system
@@ -79,61 +92,99 @@ class PwIn():
             self.read_cell_parameters()
 
     def read_atomicspecies(self):
-        lines = self.file_lines
+        lines = iter(self.file_lines)
         #find ATOMIC_SPECIES keyword in file and read next line
-        for n,line in enumerate(lines):
+        for line in lines:
             if "ATOMIC_SPECIES" in line:
-                n+=1
-                break
-        
-        for i in range(n,n+int(self.system["ntyp"])):
-            atype, znuc, psp = lines[i].split()
-            self.atypes[atype] = [znuc,psp]
+                for i in range(int(self.system["ntyp"])):
+                    atype, mass, psp = lines.next().split()
+                    self.atypes[atype] = [mass,psp]
+
+    def get_symmetry_spglib(self):
+        """
+        get the symmetry group of this system using spglib
+        """
+        import spglib
+
+        lat, positions, atypes = self.get_atoms()
+        lat = np.array(lat)
+
+        at = np.unique(atypes)
+        an = dict(list(zip(at,list(range(len(at))))))
+        atypes = [an[a] for a in atypes]
+
+        cell = (lat,positions,atypes)
+
+        spacegroup = spglib.get_spacegroup(cell,symprec=1e-5)
+        return spacegroup
+
+    def get_masses(self):
+        """ Get an array with the masses of all the atoms
+        """
+        masses = []
+        for atom in self.atoms:
+            atype = self.atypes[atom[0]]
+            mass = float(atype[0])
+            masses.append(mass) 
+        return masses
+
+    def set_path(self,path):
+        self.klist = path.get_klist()
 
     def get_atoms(self):
         """ Get the lattice parameters, postions of the atoms and chemical symbols
         """
+        self.read_cell_parameters()
         cell = self.cell_parameters
-        if self.atomic_pos_type == 'bohr':
-            pos = [atom[1] for atom in self.atoms]
-            pos = car_red(pos,cell)
-        if self.atomic_pos_type == 'angstrom':
-            pos = [atom[1] for atom in self.atoms]
-            pos = [[x*ang2bohr for x in a] for a in pos]
-            pos = car_red(pos,cell)
-        else:
-            pos = [atom[1] for atom in self.atoms]
         sym = [atom[0] for atom in self.atoms]
+        pos = [atom[1] for atom in self.atoms]
+        if self.atomic_pos_type == 'bohr':
+            pos = car_red(pos,cell)
         return cell, pos, sym
+
+    def set_atoms_string(self,string):
+        """
+        set the atomic postions using string of the form
+        Si 0.0 0.0 0.0
+        Si 0.5 0.5 0.5
+        """
+        atoms_str = [line.strip().split() for line in string.strip().split('\n')]
+        self.atoms = []
+        for atype,x,y,z in atoms_str:
+            self.atoms.append([atype,list(map(float,[x,y,z]))])
 
     def set_atoms(self,atoms):
         """ set the atomic postions using a Atoms datastructure from ase
         """
         # we will write down the cell parameters explicitly
         self.system['ibrav'] = 0
-        del self.system['celldm(1)']
+        if 'celldm(1)' in self.system: del self.system['celldm(1)']
         self.cell_parameters = atoms.get_cell()
         self.atoms = list(zip(atoms.get_chemical_symbols(),atoms.get_scaled_positions()))
         self.system['nat'] = len(self.atoms)
 
-    def displace(self,mode,displacement):
+    def displace(self,mode,displacement,masses=None):
         """ A routine to displace the atoms acoording to a phonon mode
         """
+        if masses is None:
+            masses = [1] * len(self.atoms)
+            small_mass = 1
+        else:
+            small_mass = min(masses) #we scale all the displacements to the bigger mass
         for i in range(len(self.atoms)):
-            self.atoms[i][1] = self.atoms[i][1] + mode[i].real*displacement
+            self.atoms[i][1] = self.atoms[i][1] + mode[i].real*displacement*sqrt(small_mass)/sqrt(masses[i])
 
     def read_atoms(self):
-        lines = self.file_lines
+        lines = iter(self.file_lines)
         #find READ_ATOMS keyword in file and read next lines
-        for n,line in enumerate(lines):
+        for line in lines:
             if "ATOMIC_POSITIONS" in line:
+                atomic_pos_type = line
                 self.atomic_pos_type = re.findall('([A-Za-z]+)',line)[-1]
-                n+=1
-                break
-
-        for i in range(n,n+int(self.system["nat"])):
-            atype, x,y,z = lines[i].split()
-            self.atoms.append([atype,[float(i) for i in (x,y,z)]])
+                for i in range(int(self.system["nat"])):
+                    atype, x,y,z = lines.next().split()
+                    self.atoms.append([atype,[float(i) for i in (x,y,z)]])
+        self.atomic_pos_type = atomic_pos_type.replace('{','').replace('}','').strip().split()[1]
 
     def read_cell_parameters(self):
         ibrav = int(self.system['ibrav'])
@@ -149,14 +200,8 @@ class PwIn():
                     self.cell_parameters = [[1,0,0],[0,1,0],[0,0,1]]
                     for i in range(3):
                         self.cell_parameters[i] = [ float(x)*a for x in lines.next().split() ]
-                    self.cell_parameters = np.array(self.cell_parameters)
-            if self.cell_units == 'angstrom':
-                self.cell_parameters *= ang2bohr
-                if 'celldm(1)' in self.system:
-                    del self.system['celldm(1)']
-            if self.cell_units == 'bohr':
-                if 'celldm(1)' in self.system:
-                    del self.system['celldm(1)']
+            if self.cell_units == 'angstrom' or self.cell_units == 'bohr':
+                if 'celldm(1)' in self.system: del self.system['celldm(1)']
         elif ibrav == 4:
             a = float(self.system['celldm(1)'])
             c = float(self.system['celldm(3)'])
@@ -179,14 +224,14 @@ class PwIn():
             exit(1)
         
     def read_kpoints(self):
-        lines = self.file_lines
+        lines = iter(self.file_lines)
         #find K_POINTS keyword in file and read next line
-        for n,line in enumerate(lines):
+        for line in lines:
             if "K_POINTS" in line:
                 #chack if the type is automatic
                 if "automatic" in line:
                     self.ktype = "automatic"
-                    vals = list(map(float, lines[n+1].split()))
+                    vals = list(map(float, lines.next().split()))
                     self.kpoints, self.shiftk = vals[0:3], vals[3:6]
                 #otherwise read a list
                 else:
@@ -204,7 +249,7 @@ class PwIn():
                         exit()
 
     def slicefile(self, keyword):
-        lines = re.findall('&%s(?:.?)+\n((?:.+\n)+?)(?:\s+)?[\/&]'%keyword,"".join(self.file_lines),re.MULTILINE and re.IGNORECASE)
+        lines = re.findall('&%s(?:.?)+\n((?:.+\n)+?)(?:\s+)?\/'%keyword,"".join(self.file_lines),re.MULTILINE)
         return lines
     
     def store(self,group,name):

@@ -1,75 +1,65 @@
-# Copyright (c) 2016, Henrique Miranda
+# Copyright (c) 2017, Henrique Miranda
 # All rights reserved.
 #
 # This file is part of the phononwebsite project
 #
-# Generic class to hold phonon dispersion data
-#
+""" Generic class to hold and manipulate phonon dispersion data """
 import os
 import json
 import numpy as np
 from collections import Counter
+from .units import *
 
-#conversion variables
-bohr_angstroem = 0.529177249
-hartree_cm1 = 219474.63
-eV = 27.211396132
-Bohr = 1.88973
-
-#from ase https://wiki.fysik.dtu.dk/ase/
-chemical_symbols = ['X',  'H',  'He', 'Li', 'Be',
-                    'B',  'C',  'N',  'O',  'F',
-                    'Ne', 'Na', 'Mg', 'Al', 'Si',
-                    'P',  'S',  'Cl', 'Ar', 'K',
-                    'Ca', 'Sc', 'Ti', 'V',  'Cr',
-                    'Mn', 'Fe', 'Co', 'Ni', 'Cu',
-                    'Zn', 'Ga', 'Ge', 'As', 'Se',
-                    'Br', 'Kr', 'Rb', 'Sr', 'Y',
-                    'Zr', 'Nb', 'Mo', 'Tc', 'Ru',
-                    'Rh', 'Pd', 'Ag', 'Cd', 'In',
-                    'Sn', 'Sb', 'Te', 'I',  'Xe',
-                    'Cs', 'Ba', 'La', 'Ce', 'Pr',
-                    'Nd', 'Pm', 'Sm', 'Eu', 'Gd',
-                    'Tb', 'Dy', 'Ho', 'Er', 'Tm',
-                    'Yb', 'Lu', 'Hf', 'Ta', 'W',
-                    'Re', 'Os', 'Ir', 'Pt', 'Au',
-                    'Hg', 'Tl', 'Pb', 'Bi', 'Po',
-                    'At', 'Rn', 'Fr', 'Ra', 'Ac',
-                    'Th', 'Pa', 'U',  'Np', 'Pu',
-                    'Am', 'Cm', 'Bk', 'Cf', 'Es',
-                    'Fm', 'Md', 'No', 'Lr']
-
-atomic_mass = [None,1.00794,4.002602,6.941,9.012182,10.811,12.0107,14.0067,15.9994,
-18.9984032,20.1797, 22.98976928,24.305,26.9815386,28.0855,30.973762,32.065,35.453,39.948,
-39.0983,40.078,44.955912,47.867,50.9415,51.9961,54.938045,55.845,58.933195,58.6934,63.546,
-65.38,69.723,72.64,74.9216,78.96,79.904,83.798,85.4678,87.62,88.90585,91.224,92.90638,95.96,
-None,101.07,102.9055,106.42,107.8682,112.411,114.818,118.71,121.76,127.6,126.90447,131.293,
-132.9054519,137.327,138.90547,140.116,140.90765,144.242,None,150.36,151.964,157.25,
-158.92535,162.5,164.93032,167.259,168.93421,173.054,174.9668,178.49,180.94788,183.84,
-186.207,190.23,192.217,195.084,196.966569,200.59,204.3833,207.2,208.9804,None,None,None,
-None,None,None,232.03806,231.03588,238.02891,None,None,None,None,None,None,None,None,
-None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None]
-
-atomic_numbers = {}
-for Z, symbol in enumerate(chemical_symbols):
-    atomic_numbers[symbol] = Z
-#end from ase
-
-#functions
-def red_car(red,lat): return np.array([coord[0]*lat[0]+coord[1]*lat[1]+coord[2]*lat[2] for coord in red])
-def car_red(car,lat): return np.array([np.linalg.solve(lat.T,coord) for coord in car])
-def map2(f,a):        return [[f(y) for y in x] for x in a] #apply a function to a list of lists
-
-def rec_lat(lat):
+def open_file_phononwebsite(filename,port=8000,host="localhost"):
     """
-    Calculate the reciprocal lattice vectors
+    take a file, detect the type and open it on the phonon website
     """
-    a1,a2,a3 = lat
-    v = np.dot(a1,np.cross(a2,a3))
-    b1 = np.cross(a2,a3)/v
-    b2 = np.cross(a3,a1)/v
-    b3 = np.cross(a1,a2)/v
-    return np.array([b1,b2,b3])
+    import webbrowser
+    import signal
+    import sys
+
+    #python 2 and 3 http server
+    from http.server import SimpleHTTPRequestHandler
+    from http.server import HTTPServer
+
+    #create threads python
+    from threading import Thread
+
+    if ".json" in filename:
+        filetype = "json"
+    elif ".yaml" in filename:
+        filetype = "yaml"
+    else: 
+        filetype = "rest"
+
+    # Add CORS header to the website
+    class CORSRequestHandler (SimpleHTTPRequestHandler):
+        def end_headers (self):
+            self.send_header('Access-Control-Allow-Origin', 'http://henriquemiranda.github.io')
+            SimpleHTTPRequestHandler.end_headers(self)
+        def log_message(self, format, *args):
+            return
+
+    # Quit application when SIGINT is received
+    def signal_handler(signal, frame):
+        sys.exit(0)
+
+    #initialize http server thread
+    print('Starting HTTP server...')
+    server = HTTPServer(('', port), CORSRequestHandler)
+    server.url = 'http://{}:{}'.format(host,server.server_port)
+    t = Thread(target=server.serve_forever)
+    t.daemon = True
+    t.start()
+
+    #open website with the file
+    url_filename = 'http://{}:{}/{}'.format(host,server.server_port,filename)
+    url = 'http://henriquemiranda.github.io/phononwebsite/phonon.html?%s=%s'%(filetype,url_filename)
+    webbrowser.open_new(url)
+
+    print('Press Ctrl+C to terminate HTTP server')
+    signal.signal(signal.SIGINT, signal_handler)
+    signal.pause()
 
 def estimate_band_connection(prev_eigvecs, eigvecs, prev_band_order):
     """ 
@@ -93,15 +83,6 @@ def estimate_band_connection(prev_eigvecs, eigvecs, prev_band_order):
     band_order = [connection_order[x] for x in prev_band_order]
     return band_order
 
-class JsonEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, (np.ndarray,np.number)):
-            if np.iscomplexobj(obj):
-                return [obj.real, obj.imag]
-            else:
-                return obj.tolist()
-        return(json.JSONEncoder.default(self, obj))
-
 class Phonon():
     """ 
     Class to hold and manipulate generic phonon dispersions data 
@@ -113,7 +94,8 @@ class Phonon():
         to re-order the eigenvalues and solve the band-crossings
         """
         #vector transformations
-        vectors = self.eigenvectors.view(complex).reshape((self.nqpoints, self.nphons, self.nphons))
+        dim = (self.nqpoints, self.nphons, self.nphons)
+        vectors = self.eigenvectors.view(complex).reshape(dim)
         
         eig = np.zeros([self.nqpoints,self.nphons])
         eiv = np.zeros([self.nqpoints,self.nphons,self.nphons],dtype=complex)
@@ -129,7 +111,8 @@ class Phonon():
         
         #update teh eigenvales with the ordered version
         self.eigenvalues  = eig
-        self.eigenvectors = eiv.view(float).reshape((self.nqpoints,self.nphons,self.natoms,3,2))
+        dim = (self.nqpoints,self.nphons,self.natoms,3,2)
+        self.eigenvectors = eiv.view(float).reshape(dim)
 
     def get_chemical_formula(self):
         """
@@ -182,17 +165,21 @@ class Phonon():
         ncfile.createDimension('symbol_length',2)
 
         nccv = ncfile.createVariable
-        nc_primvecs       = nccv('primitive_vectors','f8',('number_of_cartesian_dimensions','number_of_cartesian_dimensions'))
-        nc_atoms_pos      = nccv('reduced_atom_positions','f8',('number_of_atoms','number_of_cartesian_dimensions'))
-        nc_chem_sym       = nccv('chemical_symbols','S1',('number_of_atom_species','symbol_length'))
-        nc_qpoints        = nccv('qpoints','f8',('number_of_qpoints','number_of_reduced_dimensions'))
-        nc_eig            = nccv('phfreqs','f8',('number_of_qpoints','number_of_phonon_modes'))
-        nc_atypes         = nccv('atom_species','i4',('number_of_atoms'))
-        nc_atomic_numbers = nccv('atomic_numbers','f8',('number_of_atom_species'))
-        nc_eiv            = nccv('phdispl_cart','f8',('number_of_qpoints','number_of_phonon_modes',
-                                                      'number_of_phonon_modes','complex'))
-        nc_chem_sym[:]       = np.array([ "%2s"%a for a in self.chemical_symbols ],dtype=np.dtype(('S10', 2)))
-        nc_atypes[:]         = np.array([np.where(self.chemical_symbols == a) for a in self.atom_types])
+        nc_primvecs    = nccv('primitive_vectors','f8',('number_of_cartesian_dimensions',
+                                                        'number_of_cartesian_dimensions'))
+        nc_atoms_pos   = nccv('reduced_atom_positions','f8',('number_of_atoms',
+                                                             'number_of_cartesian_dimensions'))
+        nc_chem_sym    = nccv('chemical_symbols','S1',('number_of_atom_species','symbol_length'))
+        nc_qpoints     = nccv('qpoints','f8',('number_of_qpoints','number_of_reduced_dimensions'))
+        nc_eig         = nccv('phfreqs','f8',('number_of_qpoints','number_of_phonon_modes'))
+        nc_atypes      = nccv('atom_species','i4',('number_of_atoms'))
+        nc_atomic_nums = nccv('atomic_numbers','f8',('number_of_atom_species'))
+        nc_eiv         = nccv('phdispl_cart','f8',('number_of_qpoints','number_of_phonon_modes',
+                                                   'number_of_phonon_modes','complex'))
+
+        str10 = np.dtype(('S10', 2))
+        nc_chem_sym[:]    = np.array(["%2s"%a for a in self.chemical_symbols],dtype=str10)
+        nc_atypes[:]      = np.array([np.where(self.chemical_symbols == a) for a in self.atom_types])
         nc_atomic_numbers[:] = self.atomic_numbers
         nc_qpoints[:]        = np.array(self.qpoints)
         nc_primvecs[:]       = self.cell/bohr_angstroem
@@ -224,7 +211,8 @@ class Phonon():
 
     def get_highsym_qpts(self):
         """ 
-        Iterate over all the qpoints and obtain the high symmetry points as well as the distances between them
+        Iterate over all the qpoints and obtain the high symmetry points 
+        as well as the distances between them
         """
        
         def collinear(a,b,c):
@@ -254,10 +242,11 @@ class Phonon():
                 #fill in the symbols
                 self.highsym_qpts = [(q,s) for (q,l),s in zip(self.highsym_qpts,self.labels_qpts)] 
             else:
-                print("Wrong number of q-points specified. Found %d high symmetry qpoints but got %d labels"%(nhiqpts,nlabels))
-                exit()
+                raise ValueError("Wrong number of q-points specified. "
+                                 "Found %d high symmetry qpoints but %d labels"%(nhiqpts,nlabels))
         else:
-            print("The labels of the high symmetry k-points are not known. They can be changed in the .json file manualy.") 
+            print("The labels of the high symmetry k-points are not known. "
+                  "They can be changed in the .json file manualy.") 
         return self.highsym_qpts
 
     def set_repetitions(self,reps):
@@ -292,23 +281,22 @@ class Phonon():
         if self.highsym_qpts == None:
             self.get_highsym_qpts()
 
+        red_pos = red_car(self.pos,self.cell)
         #create the datastructure to be put on the json file
-        data = {"name":             self.name,                   # name of the material that will be displayed on the website
-                "natoms":           self.natoms,                 # number of atoms
-                "lattice":          self.cell,                   # lattice vectors (bohr)
-                "atom_types":       self.atom_types,             # atom type   for each atom in the system (string)
-                "atom_numbers":     self.atom_numbers,           # atom number for each atom in the system (integer)
-                "chemical_symbols": self.chemical_symbols,       # unique atom types   (string) 
-                "atomic_numbers":   self.atomic_numbers,         # unique atom numbers (integer)
-                "formula":          self.chemical_formula,       # chemical formula
-                "qpoints":          self.qpoints,                # list of point in the reciprocal space
-                "repetitions":      self.reps,                   # default value for the repetititions 
-                "atom_pos_car":     red_car(self.pos,self.cell), # atomic positions in cartesian coordinates
-                "atom_pos_red":     self.pos,                    # atomic positions in reduced coordinates
-                "eigenvalues":      self.eigenvalues,            # eigenvalues (in units of cm-1)
-                "distances":        self.distances,              # list distances between the qpoints 
-                "highsym_qpts":     self.highsym_qpts,           # list of high symmetry qpoints
-                "vectors":          self.eigenvectors}           # eigenvectors
+        data = {"name":         self.name,             # name of the material on the website
+                "natoms":       self.natoms,           # number of atoms
+                "lattice":      self.cell,             # lattice vectors (bohr)
+                "atom_types":   self.atom_types,       # atom type for each atom (string)
+                "atom_numbers": self.atom_numbers,     # atom number for each atom (integer)
+                "formula":      self.chemical_formula, # chemical formula
+                "qpoints":      self.qpoints,          # list of point in the reciprocal space
+                "repetitions":  self.reps,             # default value for the repetititions 
+                "atom_pos_car": red_pos,               # atomic positions in cartesian coordinates
+                "atom_pos_red": self.pos,              # atomic positions in reduced coordinates
+                "eigenvalues":  self.eigenvalues,      # eigenvalues (in units of cm-1)
+                "distances":    self.distances,        # list distances between the qpoints 
+                "highsym_qpts": self.highsym_qpts,     # list of high symmetry qpoints
+                "vectors":      self.eigenvectors}     # eigenvectors
 
         f.write(json.dumps(data,cls=JsonEncoder,indent=1))
         f.close()
@@ -317,55 +305,17 @@ class Phonon():
         """
         Create a json file and open it on the webbrowser
         
-        1. Create json file
-        2. Create a thread with HTTP server on localhost to provide the file to the page
-        3. Open the webpage indicating it to open the file from the localhost
-        4. Wait for user to kill HTTP server (TODO: once the file is served the server can shutdown automatically)
+        1. Create a thread with HTTP server on localhost to provide the file to the page
+        2. Open the webpage indicating it to open the file from the localhost
+        3. Wait for user to kill HTTP server 
+        (TODO: once the file is served the server can shutdown automatically)
         """
-
-        #python 2 and 3 http server
-        from http.server import SimpleHTTPRequestHandler
-        from http.server import HTTPServer
-
-        #create threads python
-        from threading import Thread
-
-        import webbrowser
-        import signal
-        import sys
 
         if prefix: name = prefix
         else:      name = self.name
         filename = "%s/%s.json"%(folder,name)
-    
-        # Add CORS header to the website
-        class CORSRequestHandler (SimpleHTTPRequestHandler):
-            def end_headers (self):
-                self.send_header('Access-Control-Allow-Origin', 'http://henriquemiranda.github.io')
-                SimpleHTTPRequestHandler.end_headers(self)
-            def log_message(self, format, *args):
-                return
 
-        # Quit application when SIGINT is received
-        def signal_handler(signal, frame):
-            sys.exit(0)
-
-        #initialize http server thread
-        print('Starting HTTP server...')
-        server = HTTPServer(('', port), CORSRequestHandler)
-        server.url = 'http://{}:{}'.format(host,server.server_port)
-        t = Thread(target=server.serve_forever)
-        t.daemon = True
-        t.start()
-
-        #open website with the file
-        filename = 'http://{}:{}/{}'.format(host,server.server_port,filename)
-        url = 'http://henriquemiranda.github.io/phononwebsite/phonon.html?json=%s'%filename
-        webbrowser.open_new(url)
-
-        print('Press Ctrl+C to terminate HTTP server')
-        signal.signal(signal.SIGINT, signal_handler)
-        signal.pause()
+        open_file_phononwebsite(filename,localhost=localhost,port=port)
 
     def __str__(self):
         text = ""
@@ -375,7 +325,9 @@ class Phonon():
             text += ("%12.8lf "*3)%tuple(self.cell[i])+"\n"
         text += "atoms:\n"
         for a in range(self.natoms):
-            text += "%3s %3d"%(self.atom_types[a],self.atom_numbers[a])+("%12.8lf "*3)%tuple(self.pos[a])+"\n"
+            atom_pos_string = "%3s %3d"%(self.atom_types[a],self.atom_numbers[a])
+            atom_typ_string = ("%12.8lf "*3)%tuple(self.pos[a]) 
+            text += atom_pos_string+atom_typ_string+"\n"
         text += "atypes:\n"
         for cs,an in zip(self.chemical_symbols,self.atomic_numbers):
             text += "%3s %d\n"%(cs,an)

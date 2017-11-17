@@ -1,14 +1,13 @@
-#!/usr/bin/env python
+#!/usr/bin/env python 
 # Copyright (c) 2017, Henrique Miranda
 # All rights reserved.
 #
 # This file is part of the phononwebsite project
 #
-# Read phonon dispersion from anaddb
-#
-from phononweb.anaddbphonon import *
+""" Read phonon dispersion from anaddb """
 import argparse
 import sys
+from phononweb.anaddbphonon import *
 
 if __name__ == "__main__":
    
