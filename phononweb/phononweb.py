@@ -10,7 +10,9 @@ import numpy as np
 from collections import Counter
 from .units import *
 
-def open_file_phononwebsite(filename,port=8000,host="localhost"):
+def open_file_phononwebsite(filename,port=8000,
+                            website="http://henriquemiranda.github.io/phononwebsite",
+                            host="localhost"):
     """
     take a file, detect the type and open it on the phonon website
     """
@@ -35,7 +37,7 @@ def open_file_phononwebsite(filename,port=8000,host="localhost"):
     # Add CORS header to the website
     class CORSRequestHandler (SimpleHTTPRequestHandler):
         def end_headers (self):
-            self.send_header('Access-Control-Allow-Origin', 'http://henriquemiranda.github.io')
+            self.send_header('Access-Control-Allow-Origin', website)
             SimpleHTTPRequestHandler.end_headers(self)
         def log_message(self, format, *args):
             return
@@ -46,7 +48,11 @@ def open_file_phononwebsite(filename,port=8000,host="localhost"):
 
     #initialize http server thread
     print('Starting HTTP server...')
-    server = HTTPServer(('', port), CORSRequestHandler)
+    try:
+        server = HTTPServer(('', port), CORSRequestHandler)
+    except OSError:
+        server = HTTPServer(('', port+1), CORSRequestHandler)
+        
     server.url = 'http://{}:{}'.format(host,server.server_port)
     t = Thread(target=server.serve_forever)
     t.daemon = True
@@ -54,7 +60,7 @@ def open_file_phononwebsite(filename,port=8000,host="localhost"):
 
     #open website with the file
     url_filename = 'http://{}:{}/{}'.format(host,server.server_port,filename)
-    url = 'http://henriquemiranda.github.io/phononwebsite/phonon.html?%s=%s'%(filetype,url_filename)
+    url = '%s/phonon.html?%s=%s'%(website,filetype,url_filename)
     webbrowser.open_new(url)
 
     print('Press Ctrl+C to terminate HTTP server')
