@@ -393,7 +393,7 @@ class PhononWebpage {
         let unique_references = {};
         let nreferences = 1;
 
-        function add_materials(materials) {
+        function addMaterials(materials) {
 
             for (let i=0; i<materials.length; i++) {
 
@@ -440,26 +440,37 @@ class PhononWebpage {
 
         //local database
         let source = new LocalDB();
-        source.get_materials(add_materials);
+        source.get_materials(addMaterials);
 
-        //phonondb database
-        /*source = new PhononDB();
-        source.get_materials(add_materials);*/
-
-        //local phonondb database
-        /*source = new LocalPhononDB2015();
-        source.get_materials(add_materials);*/
-
-        //local phonondb database
-        /*source = new LocalPhononDB2017();
-        source.get_materials(add_materials);*/
+        //phonondb2015 database
+        for (let sourceclass of [PhononDB2015, LocalPhononDB2015 ]) {
+            source = new sourceclass;
+            if (source.isAvailable()) {
+                source.get_materials(addMaterials);
+                break;
+            }
+        }
+       
+        //phonondb2017 database 
+        for (let sourceclass of [LocalPhononDB2017 ]) {
+            source = new sourceclass;
+            if (source.isAvailable()) {
+                source.get_materials(addMaterials);
+                break;
+            }
+        }
 
         //mp databse
-        source = new LocalMaterialsProjectDB();
-        source.get_materials(add_materials);
-
+        for (let sourceclass of [LocalMaterialsProjectDB ]) {
+            source = new sourceclass;
+            if (source.isAvailable()) {
+                source.get_materials(addMaterials);
+                break;
+            }
+        }
 
     }
+
 }
 
 $(document).ready(function() {
