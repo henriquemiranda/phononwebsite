@@ -23,13 +23,6 @@ class PhononHighcharts {
             }
         }
 
-        let click_event = function() {
-            p.k = p.phonon.qindex[this.x];
-            p.n = this.series.name;
-            p.setVibrations();
-            p.visualizer.update(p);
-        }
-
         this.HighchartsOptions = {
             chart: { type: 'line',
                      zoomType: 'xy' },
@@ -59,10 +52,20 @@ class PhononHighcharts {
                                                        }
                                              },
                                      cursor: 'pointer',
-                                     point: { events: { click: click_event } }
+                                     point: { events: { } }
                                    }
                          }
         };
+    }
+    
+    setClickEvent( phononweb ) {
+        let click_event = function () {
+            phononweb.k = phononweb.phonon.qindex[this.x];
+            phononweb.n = this.series.name;
+            phononweb.setVibrations();
+            phononweb.visualizer.update(phononweb);
+        }
+        this.HighchartsOptions.plotOptions.series.point.events.click = click_event 
     }
 
     update(phonon) {
