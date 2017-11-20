@@ -35,6 +35,50 @@ class PhononWebpage {
         this.exportPOSCAR = exportPOSCAR.bind(this);
     }
 
+    //functions to link the DOM buttons with this class
+    setMaterialsList(dom_mat)      { this.dom_mat = dom_mat; }    
+    setReferencesList(dom_ref)     { this.dom_ref = dom_ref; }    
+    setAtomPositions(dom_atompos)  { this.dom_atompos = dom_atompos; }    
+    setLattice(dom_lattice)        { this.dom_lattice = dom_lattice; }    
+
+    setUpdateButton(dom_button) {
+        self = this;
+        dom_button.click( function() { self.update() } )
+    }
+
+    setExportXSFButton(dom_button) {
+        dom_button.click(this.exportXSF.bind(this));
+    }
+
+    setExportPOSCARButton(dom_button) {
+        dom_button.click(this.exportPOSCAR.bind(this));
+    }
+ 
+    setRepetitionsInput(dom_nx,dom_ny,dom_nz) { 
+
+        self = this;
+        this.dom_nx = dom_nx;
+        this.dom_ny = dom_ny;
+        this.dom_nz = dom_nz;
+
+        function keyup(event) {
+            if(event.keyCode == 13) {
+                this.update(false);
+            }
+        }
+
+        dom_nx.keyup( keyup.bind(this) );
+        dom_ny.keyup( keyup.bind(this) );
+        dom_nz.keyup( keyup.bind(this) );
+    }
+
+    setFileInput(dom_input) {
+        /* Load a custom file button
+        */ 
+        dom_input.change( this.loadCustomFile.bind(this) );
+        dom_input.click( function() { this.value = '';} );
+    }
+
     loadCustomFile(event) {
         /*
         find the type of file and call the corresponding function to read it
@@ -102,7 +146,7 @@ class PhononWebpage {
         }
     }
 
-    static getUrlVars() {
+    getUrlVars() {
         /* 
         get variables from the url
         from http://stackoverflow.com/questions/4656843/jquery-get-querystring-from-url
@@ -112,7 +156,7 @@ class PhononWebpage {
             yaml : load a yaml file from location
             name : change the display name of the material
         */
-        let vars = {};
+        let vars = {json: "localdb/graphene/data.json", name:"Graphene [1]"};
         let hash;
 
         if (location.search) {
@@ -121,11 +165,8 @@ class PhononWebpage {
                 hash = hashes[i].split('=');
                 vars[hash[0]] = hash[1];
             }
-            return vars;
         }
-        else {
-            return null;
-        }
+        this.loadURL(vars);
     }
 
     loadCallback() {
@@ -140,9 +181,9 @@ class PhononWebpage {
         /*
         read the number of repetitions in each direction and update it
         */
-        this.nx = $('#nx').val();
-        this.ny = $('#ny').val();
-        this.nz = $('#nz').val();
+        this.nx = this.dom_nx.val();
+        this.ny = this.dom_ny.val();
+        this.nz = this.dom_nz.val();
     }
 
     setRepetitions(repetitions) {
@@ -156,9 +197,9 @@ class PhononWebpage {
             this.nz = repetitions[2];
         }
 
-        $('#nx').val(this.nx);
-        $('#ny').val(this.ny);
-        $('#nz').val(this.nz);
+        this.dom_nx.val(this.nx);
+        this.dom_ny.val(this.ny);
+        this.dom_nz.val(this.nz);
     }
 
     getStructure(nx,ny,nz) {
@@ -255,7 +296,7 @@ class PhononWebpage {
         this.vibrations = this.getVibrations(this.nx,this.ny,this.nz);
     }
 
-    update(dispersion=true) {
+    update(dispersion = true) {
         /*
         Update all the aspects fo the webpage
         */
@@ -280,7 +321,7 @@ class PhononWebpage {
         /*
         lattice vectors table
         */
-        let lattice = $('#lattice');
+        let lattice = this.dom_lattice;
         lattice.empty();
 
         for (let i=0; i<3; i++) {
@@ -296,7 +337,7 @@ class PhononWebpage {
 
         //atomic positions table
         let pos = this.phonon.atom_pos_red;
-        let atompos = $('#atompos');
+        let atompos = this.dom_atompos;
         atompos.empty();
 
         for (let i=0; i<pos.length; i++) {
@@ -345,10 +386,10 @@ class PhononWebpage {
 
         let self = this;
 
-        let materials_list = $('#mat');
+        let materials_list = this.dom_mat;
         materials_list.empty();
 
-        let references_list = $('#ref');
+        let references_list = this.dom_ref;
         let unique_references = {};
         let nreferences = 1;
 
@@ -430,46 +471,36 @@ $(document).ready(function() {
     //phonon class
     p = new PhononWebpage(v,d);
 
-    /*
-    check if its Chrome 1+ taken from
-    http://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
-    only show webm button for chrome
-    */
-    let isChrome = !!window.chrome && !!window.chrome.webstore;
-    if (!isChrome) {
-        $('#webmbutton')[0].style.visibility = 'hidden';
-    }
+    //set dom objects phononwebsite
+    p.setMaterialsList( $('#mat') );
+    p.setReferencesList( $('#ref') );
+    p.setAtomPositions( $('#atompos') );
+    p.setLattice( $('#lattice') );
+    p.setRepetitionsInput( $('#nx'), $('#ny'), $('#nz') );
+    p.setUpdateButton( $('#update') );
+    p.setFileInput( $('#file-input') );
+    p.setExportPOSCARButton($('#poscar'));
+    p.setExportXSFButton($('#xsf'));
 
-    //get if the draw vectors option is activated
-    v.arrows = $('#drawvectors')[0].checked;
-    $('#file-input')[0].addEventListener('change', p.loadCustomFile.bind(p), false);
-    $('#file-input')[0].addEventListener('click', function() { this.value = '';}, false);
     p.updateMenu();
+    p.getUrlVars();
 
-    let url_vars = PhononWebpage.getUrlVars();
-    if (url_vars) { p.loadURL(url_vars); }
-    else          { p.loadURL({json: "localdb/graphene/data.json", name:"Graphene [1]"}); }
+    //set dom objects vibcrystal
+    v.setCameraDirectionButton($('#camerax'),'x');
+    v.setCameraDirectionButton($('#cameray'),'y');
+    v.setCameraDirectionButton($('#cameraz'),'z');
+    
+    v.setCellCheckbox($('#drawcell'));
+    v.setWebmButton($('#webmbutton'));
+    v.setGifButton($('#gifbutton'));
+    v.setArrowsCheckbox($('#drawvectors'));
+    v.setArrowsInput($('#vectors_amplitude_range'));
+    v.setSpeedInput($('#speed_range'));
+    v.setAmplitudeInput($('#amplitude_box'),$('#amplitude_range'))
+    v.setPlayPause($('#playpause'))
 
     // check if webgl is available
     if ( ! Detector.webgl ) {
         Detector.addGetWebGLMessage();
     }
-
-    //jquery to make an action once you press enter after changing the number of repetitions
-    $(".input-rep").keyup(function(event){
-        if(event.keyCode == 13) p.update(dispersion=false);
-    });
-
-    /*window.onresize = function(event) {
-        //get the height of the flex-menu
-        let hfm = $(".flex-menu").height()
-
-        //get the height of the material-list
-        let hml = $("#material-list").height()
-
-        //set the height of menu = flex-menu
-        console.log(hfm-hml);
-        $("#menu").height(hfm-hml);
-    };*/
-
 });

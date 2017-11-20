@@ -86,6 +86,10 @@ h3 {
     color: white;
 }
 
+#nx, #ny, #nz {
+  width: 20%;
+}
+
 #progress { 
     position: absolute; 
     left: 0; 
@@ -173,10 +177,6 @@ h3 {
     flex: 2;
     order: 3;
     position: relative;
-}
-
-.input-rep {
-  width: 20%;
 }
 
 #lattice td {

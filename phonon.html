@@ -109,28 +109,28 @@
                     <div>
                         <h3>Repetitions:</h3>
                         <form>
-                            <input class="input-rep" id="nx" value="3" type="number" name="quantity">
-                            <input class="input-rep" id="ny" value="3" type="number" name="quantity">
-                            <input class="input-rep" id="nz" value="3" type="number" name="quantity">
-                            <button type="button" onclick="p.update()">update</button>
+                            <input id="nx" value="3" type="number" name="quantity">
+                            <input id="ny" value="3" type="number" name="quantity">
+                            <input id="nz" value="3" type="number" name="quantity">
+                            <button id="update" type="button">update</button>
                         </form>
                     </div>
 
                     <div style="display: table;">
                         <div style="display: table-cell; padding-right: 5px;">
                             <h3>Camera:</h3>
-                            <button type="button" onclick="v.setCameraDirection('x')">x</button>
-                            <button type="button" onclick="v.setCameraDirection('y')">y</button>
-                            <button type="button" onclick="v.setCameraDirection('z')">z</button>
+                            <button id="camerax" type="button">x</button>
+                            <button id="cameray" type="button">y</button>
+                            <button id="cameraz" type="button">z</button>
                         </div>
                         <div style="display: table-cell; padding-right: 5px;">
                             <h3>Cell:</h3>
-                            <input id="drawcell"    type="checkbox" onclick="v.cell   = this.checked; p.update()">on</input>
+                            <input id="drawcell" type="checkbox">on</input>
                         </div>
                         <div style="display: table-cell;">
                             <h3>Export movie:</h3>
-                            <button type="button" onclick="v.capturestart('gif')">gif</button>
-                            <button id="webmbutton" type="button" onclick="v.capturestart('webm')">webm</button>
+                            <button id="gifbutton"  type="button">gif</button>
+                            <button id="webmbutton" type="button">webm</button>
                             <div id="progress"></div>
                         </div>
                     </div>
@@ -138,31 +138,29 @@
                     <div>
                         <h3>Amplitude:</h3>
                         <form>
-                        <input id="amplitude_range" type="range"  step ="0.01" value="0.2" min="0.0" max="1.0" 
-                               onchange="v.amplitude=this.value; p.amplitude=this.value; $('#amplitude_box').val(this.value)">
-                        <input id="amplitude_box"   type="number" step ="0.01" value="0.2" min="0.0" max="1.0"
-                               onchange="v.amplitude=this.value; p.amplitude=this.value; $('#amplitude_range').val(this.value)">
+                        <input id="amplitude_range" type="range">
+                        <input id="amplitude_box"   type="number">
                         </form>
                     </div>
 
                     <div>
                         <h3>Vectors:</h3>
-                        <input id="vamplitude_range" type="range" step ="0.02" value="2.5" min="0.1" max="5.0" onchange="v.arrowScale=this.value">
-                        <input id="drawvectors" type="checkbox" onclick="v.arrows = this.checked; p.update()">on</input>
+                        <input id="vectors_amplitude_range" type="range">
+                        <input id="drawvectors" type="checkbox">on</input>
                     </div>
 
                     <div>
                         <h3>Speed:</h3>
-                        <input id="speed_range" type="range"  step="0.01" value="1.0" min="0.01" max="3.0" onchange="v.speed=this.value">
-                        <button type="button" onclick="v.playpause()">pause</button>
+                        <input id="speed_range" type="range">
+                        <button id="playpause" type="button">pause</button>
                     </div>
 
                     <div>
                         <h3>Export displacement:</h3>
                         Phase (°): 
-                        <input id="phase" type="number" value="0.0" min="0.0" max="360.0" step ="45">
-                        <button type="button" onclick="p.exportXSF()">xsf</button>
-                        <button type="button" onclick="p.exportPOSCAR()">POSCAR</button>
+                        <input  id="phase" type="number" value="0.0" min="0.0" max="360.0" step ="45">
+                        <button id="xsf"    type="button">xsf</button>
+                        <button id="poscar" type="button">POSCAR</button>
                     </div>
                 </div>
                 </div>
