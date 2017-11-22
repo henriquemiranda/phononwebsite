@@ -3,8 +3,7 @@
 #
 # This file is part of the phononwebsite project
 #
-# Read phonon dispersion from anaddb
-#
+""" Read phonon dispersion from anaddb """
 import os
 from math import sqrt
 import numpy as np

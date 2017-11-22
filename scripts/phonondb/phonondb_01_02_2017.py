@@ -1,51 +1,58 @@
-#
-# 1 February 2016
-#
-# Obtain phonondb structures  from
-# http://phonondb.mtl.kyoto-u.ac.jp
-# and plot the pohnon dispersion on the path obtained from the materials project API
-#
+"""
+Obtain phonondb structures  from
+http://phonondb.mtl.kyoto-u.ac.jp
+and plot the pohnon dispersion on the path obtained from the materials project API
+"""
 
-from phonopy import Phonopy
-from phonopy.interface.vasp import read_vasp
-from phonopy.interface.phonopy_yaml import *
-from pymatgen.matproj.rest import MPRester
-from phonopy.structure.atoms import Atoms
-import phonopy.file_IO as file_IO
 import urllib2
 import os
 import json
 import re
 from HTMLParser import HTMLParser
 
+from phonopy import Phonopy
+from phonopy.interface.phonopy_yaml import *
+from pymatgen.matproj.rest import MPRester
+import phonopy.file_IO as file_IO
+
 band_points = 5
 
 class ParseHTML(HTMLParser):
+    """ read a list of materials from the PhononDB database
+    """
     materials = []
 
     def handle_data(self, data):
         if "Materials id" in data and '-' not in data:
-            print data
             self.materials.append(re.findall('([0-9]+)\s+\/\s+(.+?)\s+\/\s+(.+)',data)[0])
 
-class Phonondb():
+class PhononDB2015():
+    """
+    Load a list of materials from the phonondb 2015 database
+    http://phonondb.mtl.kyoto-u.ac.jp/database-mp.html
+    """
     _url = "http://phonondb.mtl.kyoto-u.ac.jp/database-mp.html"
     _savefile = "phonondb.json"
     def __init__(self):
         if os.path.isfile(self._savefile):
             print("reading from %s"%self._savefile)
-            f = open(self._savefile,'r')
-            self.materials = json.load(f)
-            f.close()
+            self.load_files():
         else:
             print("making http request...")
             self.page = urllib2.urlopen(self._url).read()
             self.get_materials()
-            #save materials in a json file
-            f = open(self._savefile,'w')
-            json.dump(self.materials,f)
-            f.close()
+            self.save_materials()
 
+    def load_materials(self):
+        """load materials"""
+        with open(self._savefile,'r') as f:
+            self.materials = json.load(f)
+
+    def save_materials(self):
+        """save materials in a json file"""
+        with open(self._savefile,'w') as f:
+            json.dump(self.materials,f)
+        
     def get_materials(self):
         parser = ParseHTML()
         parser.feed(self.page)
@@ -85,7 +92,7 @@ class MaterialsProjectPhonon():
 
         #get high symmetry k-points
         kpoints = bs.kpoints
-        print "nkpoints:", len(kpoints)
+        print("nkpoints:", len(kpoints))
         branches = bs.as_dict()['branches']
 
         self.bands = []
@@ -95,16 +102,19 @@ class MaterialsProjectPhonon():
             end   = path['end_index']
             start_kpoint = kpoints[start].frac_coords
             end_kpoint   = kpoints[end].frac_coords
-            step_kpoint   = end_kpoint-start_kpoint
+            step_kpoint  = end_kpoint-start_kpoint
             labels = path['name'].split('-')
-            print "%4d %4d %4d"%(start,end,end-start), labels
             high_sym_kpoints.append(kpoints[end].frac_coords)
-             
-            self.bands.append([start_kpoint+float(i)/band_points*step_kpoint for i in range(band_points+1)])
 
-    def get_phonons(self):
-        # calculate the phonon dispersion
-        folder = material_id
+            print("%4d %4d %4d"%(start,end,end-start), labels)
+          
+            branch = []
+            for i in range(band_points+1):
+                branch.append[ start_kpoint + float(i)/band_points*step_kpoint ]
+            self.bands.append(branch)
+
+    def get_phonons(self,folder):
+        """calculate the phonon dispersion along the path"""
         ph_yaml = PhonopyYaml('%s/phonon.yaml'%folder)
         atoms = ph_yaml.get_atoms()
         supercell_matrix = ph_yaml._data['supercell_matrix']
@@ -119,6 +129,7 @@ class MaterialsProjectPhonon():
         phonon.get_band_structure()
 
     def write_disp_yaml(self,filename='disp.yaml'):
+        """write disp yaml file"""
         phonon = self.phonon
         
         displacements = phonon.get_displacements()
@@ -127,8 +138,8 @@ class MaterialsProjectPhonon():
         file_IO.write_disp_yaml(displacements, supercell, directions=directions, filename=filename)
 
     def write_band_yaml(self):
-        # export a json file with the data
-        self.phonon.write_yaml_band_structure()# get structures from the phonondb page
+        """export a yaml file with the band-structure data"""
+        self.phonon.write_yaml_band_structure()
 
 if __name__ == "__main__":
     # from here we can get all the ids of the materials in the phonondb page
