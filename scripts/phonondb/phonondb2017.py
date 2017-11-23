@@ -23,7 +23,7 @@ def calculate_bs(material_id):
     nac_filename = os.path.join(folder,'BORN')
 
     #create phonopy object
-    mpp = PhonopyPhonon.from_files(phonon_yaml_filename,force_sets_filename)
+    mpp = PhonopyPhonon.from_files(phonon_yaml_filename,force_sets_filename,nac_filename=nac_filename)
     mpp.set_bandstructure_seekpath()
     mpp.get_bandstructure()
 

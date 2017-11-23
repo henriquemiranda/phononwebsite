@@ -10,6 +10,7 @@ import json
 import re
 
 from phonopy import Phonopy
+from phonopy.units import Hartree, Bohr
 from phonopy.interface.phonopy_yaml import *
 import phonopy.file_IO as file_IO
 
