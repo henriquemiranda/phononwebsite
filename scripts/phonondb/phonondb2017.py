@@ -1,125 +1,55 @@
+# Copyright (c) 2017, Henrique Miranda
+# All rights reserved.
 #
-# 9 October 2017
-# Calculate the phonon disperions from phonondb using seekpath
+# This file is part of the phononwebsite project
 #
+"""
+Extract the files from phonondb2017
+http://phonondb.mtl.kyoto-u.ac.jp/ph20170621/index.html
+and calculate the path using seekpath 
+"""
 
-from phonopy import Phonopy
-from phonopy.interface.vasp import read_vasp
-from phonopy.interface.phonopy_yaml import *
-from phonopy.structure.atoms import Atoms
-from phonopy.units import Hartree, Bohr
-import phonopy.file_IO as file_IO
 import os
-import re
 import multiprocessing
+from phononweb.phonopyphonon import PhonopyPhonon
 
-class MaterialsProjectPhonon():
-    """ Obtain the bandstrcture from seekpath and calculate it using phonopy
+def calculate_bs(material_id):
     """
-    def __init__(self,material_id):
-        self.material_id = material_id
-        
-        ph_yaml = PhonopyYaml(calculator='vasp')
-        ph_yaml.read('%s/phonon.yaml'%material_id)
-        atoms            = ph_yaml._unitcell
-        supercell_matrix = ph_yaml._data['supercell_matrix']
-        phonon = Phonopy(atoms,supercell_matrix)
+    go inside the folder and calculate the band-structure
+    """
+    folder = material_id
+    phonon_yaml_filename = os.path.join(folder,'phonon.yaml') 
+    force_sets_filename = os.path.join(folder,'FORCE_SETS')
+    nac_filename = os.path.join(folder,'BORN')
 
-        self.atoms = atoms
-        self.supercell_matrix = supercell_matrix
-        self.phonon = phonon
+    #create phonopy object
+    mpp = PhonopyPhonon.from_files(phonon_yaml_filename,force_sets_filename)
+    mpp.set_bandstructure_seekpath()
+    mpp.get_bandstructure()
 
-    def get_cell(self):
-        return ( self.atoms.get_cell(),
-                 self.atoms.get_scaled_positions(),
-                 self.atoms.get_atomic_numbers() )
-    
-    def get_bandstructure(self,reference_distance=0.2):
-        import seekpath
-        path = seekpath.get_explicit_k_path(self.get_cell(),reference_distance=reference_distance)
-        kpath  = path['explicit_kpoints_rel']
-        explicit_labels = path['explicit_kpoints_labels']
-        bands = []
-        labels = []
-        for segment in path['segments']:
-            start_k, end_k = segment
-            labels.append(explicit_labels[start_k])
-            bands.append(kpath[start_k:end_k])
-        labels.append(explicit_labels[-1])
-        self.bands = bands
-        self.labels = labels
+    #write yaml file
+    yaml_filename = os.path.join(folder,'%s.yaml'%material_id)
+    mpp.write_band_yaml(filename=yaml_filename) 
 
-    def get_phonons(self):
-        """
-        Calculate the phonon bandstructures along a path
-        """
-        phonon = self.phonon
+def run_job(filename):
+    print(filename)
 
-        #get forces
-        force_sets = file_IO.parse_FORCE_SETS(filename='%s/FORCE_SETS'%self.material_id)
-        phonon.set_displacement_dataset(force_sets)
+    #extract file
+    os.system('tar fx %s'%filename)
 
-        #get force constants
-        phonon.produce_force_constants()
-        phonon.symmetrize_force_constants_by_space_group()
-
-        #get NAC       
-        nac_params = file_IO.parse_BORN(phonon.get_primitive(), filename="%s/BORN"%self.material_id)
-        nac_factor = Hartree * Bohr
-        if nac_params['factor'] == None:
-            nac_params['factor'] = nac_factor
-        phonon.set_nac_params(nac_params)
- 
-        #get band-structure
-        phonon.set_band_structure(self.bands, is_eigenvectors=True, is_band_connection=True)
-        phonon.get_band_structure()
-
-    def write_disp_yaml(self,filename='disp.yaml'):
-        phonon = self.phonon
-        
-        displacements = phonon.get_displacements()
-        directions = phonon.get_displacement_directions()
-        supercell = phonon.get_supercell()
-        file_IO.write_disp_yaml(displacements, supercell, directions=directions, filename="%s/%s"%(self.material_id,filename))
-
-    def write_band_yaml(self,filename='band.yaml'):
-        """ export a json file with the data 
-        """
-        path_filename = "%s/%s"%(self.material_id,filename)
-        self.phonon.write_yaml_band_structure(labels=self.labels,filename=path_filename)
+    #calculate band-structure
+    material_id = filename.split('.')[0]
+    calculate_bs(material_id)
 
 if __name__ == "__main__":
     nthreads = 2
 
-    def calculate_bs(material_id):
-        """
-        go inside the folder and calculate the band-structure
-        """
-        mpp = MaterialsProjectPhonon(material_id)
-        mpp.get_bandstructure()
-        mpp.get_phonons()
-        mpp.write_disp_yaml()
-        mpp.write_band_yaml() 
-
-    def run_job(filename):
-        print filename
-
-        #extract file
-        os.system('tar fx %s'%filename)
-
-        #calculate band-structure
-        material_id = filename.split('.')[0]
-        calculate_bs(material_id)
-
-
     #list all the materials
     jobs = [ filename for filename in os.listdir('.') if 'lzma' in filename ]
     
-    #paralllel
+    #paralel
     #p = multiprocessing.Pool(nthreads)
     #p.map(run_job, jobs)
 
     #serial
-    map(run_job,jobs)
-
-
+    list(map(run_job,jobs))
