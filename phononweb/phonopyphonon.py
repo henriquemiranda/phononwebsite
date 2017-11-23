@@ -21,7 +21,7 @@ class PhonopyPhonon():
         self.phonon = phonon
 
     @classmethod
-    def from_files(self,phonon_yaml_filename,force_sets_filename):
+    def from_files(self,phonon_yaml_filename,force_sets_filename,nac_filename=None):
         """initialize the PhonopyPhonon"""
         #get phonon_yaml
         ph_yaml = PhonopyYaml()
@@ -36,6 +36,14 @@ class PhonopyPhonon():
         phonon.set_displacement_dataset(force_sets)
         phonon.produce_force_constants()
         phonon.symmetrize_force_constants_by_space_group()
+
+        #get NAC
+        if nac_filename:
+            nac_params = file_IO.parse_BORN(phonon.get_primitive(), filename=nac_filename)
+            nac_factor = Hartree * Bohr
+            if nac_params['factor'] == None:
+                nac_params['factor'] = nac_factor
+            phonon.set_nac_params(nac_params)
 
         return PhonopyPhonon(phonon)
 
