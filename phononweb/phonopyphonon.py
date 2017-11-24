@@ -101,9 +101,9 @@ class PhonopyPhonon():
             self.bands.append(kpath[start_k:end_k])
         self.labels.append(explicit_labels[-1])
 
-    def get_bandstructure(self,mode="seekpath"):
+    def get_bandstructure(self, is_eigenvectors=True, is_band_connection=True):
         """calculate the bandstructure"""
-        self.phonon.set_band_structure(self.bands, is_eigenvectors=True, is_band_connection=True)
+        self.phonon.set_band_structure(self.bands, is_eigenvectors=is_eigenvectors, is_band_connection=is_band_connection)
         return self.phonon.get_band_structure()
  
     def write_disp_yaml(self,filename='disp.yaml'):
