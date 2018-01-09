@@ -9,6 +9,7 @@ class MaterialsProjectDB {
         this.year = 2017;
         this.author = "G. Petretto et al.";
         this.url = "";
+        this.apikey = "fAGQ0aT2TsXeidxU";
     }
 
     isAvailable() {
@@ -22,6 +23,7 @@ class MaterialsProjectDB {
         */
         let reference = this.author+", "+"<a href="+this.url+">"+this.name+"</a> ("+this.year+")";
         let name = this.name;
+        let apikey = this.apikey;
 
         function dothings(materials) {
 
@@ -30,9 +32,10 @@ class MaterialsProjectDB {
                 m.source = name;
                 m.type = "rest";
                 m.reference = reference;
-                m.url = "mp-"+m.id;
+                m.url = "https://materialsproject.org/rest/v2/materials/mp-"+m.id+"/phononbs?web=true";
                 m.name = m.name;
                 m.link = "https://materialsproject.org/materials/mp-"+m.id;
+                m.apikey = apikey;
             }
             callback(materials);
         }

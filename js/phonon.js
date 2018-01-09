@@ -139,7 +139,7 @@ class PhononWebpage {
         }
         else if ("rest" in url_vars) {
             this.phonon = new PhononJson();
-            this.phonon.getFromREST(url_vars.rest,this.loadCallback.bind(this));
+            this.phonon.getFromREST(url_vars.rest,url_vars.apikey,this.loadCallback.bind(this));
         }
         else {
             alert("Ivalid url"); 
@@ -156,16 +156,23 @@ class PhononWebpage {
             yaml : load a yaml file from location
             name : change the display name of the material
         */
-        let vars = {json: "localdb/graphene/data.json", name:"Graphene [1]"};
         let hash;
+        let vars = {};
 
         if (location.search) {
             let hashes = location.search.slice(1).split('&');
             for(let i = 0; i < hashes.length; i++) {
                 hash = hashes[i].split('=');
                 vars[hash[0]] = hash[1];
+                console.log(hash);
             }
         }
+
+        //default
+        if (vars.lenght < 1) {
+            vars = {json: "localdb/graphene/data.json", name:"Graphene [1]"};
+        }
+
         this.loadURL(vars);
     }
 
