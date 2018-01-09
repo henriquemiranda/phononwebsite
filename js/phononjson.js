@@ -1,17 +1,5 @@
-var thz2cm1 = 33.35641;
-var ev2cm1 = 8065.73;
-
-function distances(points) {
-    /* Accumulate distances between points in a list
-    */
-    let distances = [0];
-    let dist = 0;
-    for (let i=1; i<points.length; i++) {
-        dist = dist + distance(points[i-1],points[i]);
-        distances.push(dist);
-    }
-    return distances;
-}
+const thz2cm1 = 33.35641;
+const ev2cm1 = 8065.73;
 
 function rec_lat(lat) {
     /* Calculate the reciprocal lattice
@@ -49,12 +37,41 @@ function red_car_list(red,lat) {
     return car;
 }
 
+function get_formula(atom_types) {
+    //create the name from the elements
+    //from https://stackoverflow.com/questions/15052702/count-unique-elements-in-array-without-sorting
+    let counts = {};
+    for (var i = 0; i < atom_types.length; i++) {
+        counts[atom_types[i]] = 1 + (counts[atom_types[i]] || 0);
+    }
+
+    //make the name from the counter
+    name = "";
+    for (let element in counts) {
+        name += element+counts[element];
+    }
+    return name;
+}
+
 class PhononJson { 
+
+    getFromURL(url,callback) {
+        /*
+        load a file from url
+        */
+
+        function onLoadEndHandler(text) {
+            this.getFromJson(text,callback);
+        };
+
+        $.get(url,onLoadEndHandler.bind(this));
+
+    }
 
     getFromFile(file,callback) {
         /*
-        file is a javasccript file object with the ".json" file
-         in data */
+        file is a javasccript file object with the ".json" file in data 
+        */
 
         let json_reader = new FileReader();
 
@@ -77,6 +94,22 @@ class PhononJson {
         this.getFromJson(json,callback);
     }
 
+    getFromREST(mpid,callback) {
+        self = this;
+        let apikey = "fAGQ0aT2TsXeidxU"
+        let url = "https://materialsproject.org/rest/v2/materials/"+mpid+"/phononbs?web=true";
+        //let url = "https://materialsproject.org/rest/v2/materials/"+mpid+"/phononbs";
+
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.setRequestHeader('x-api-key', apikey);
+        xhr.onload = function () {
+            let json = JSON.parse(xhr.responseText);
+            self.getFromJson(json.response,callback);
+        }
+        xhr.send(null);
+    }
+    
     getFromJson(json,callback) {
         if ('@class' in json) {
             this.getFromPMGJson(json,callback);
@@ -85,7 +118,6 @@ class PhononJson {
             this.getFromInternalJson(json,callback);
         }
     }
-
 
     getFromInternalJson(data,callback) {
         /*
@@ -97,6 +129,7 @@ class PhononJson {
         this.natoms = data["natoms"];
         this.atom_types = data["atom_types"];
         this.atom_numbers = data["atom_numbers"];
+        this.atomic_numbers = data["atomic_numbers"];
         this.atom_pos_car = data["atom_pos_car"];
         this.atom_pos_red = data["atom_pos_red"];
         this.lat = data["lattice"];
@@ -120,6 +153,9 @@ class PhononJson {
             this.highsym_qpts[dist] = data["highsym_qpts"][i][1];
         }
 
+        //get line breaks
+        this.getLineBreaks(data);
+                
         callback();
     }
     
@@ -131,9 +167,6 @@ class PhononJson {
         this.addatomphase = false;
 
         //system information (not needed for now)
-        this.name = "test" 
-        this.formula = "test"
-
         let structure = data["structure"];
 
         //lattice 
@@ -157,29 +190,19 @@ class PhononJson {
             this.atom_pos_red.push(site['abc']);
         }
 
-        //atomic sites
-        this.natoms = sites.length; 
+        this.natoms = sites.length;
+        this.name = get_formula(this.atom_types);
 
         //dispersion
         let qpoints_red = data['qpoints'];
         let qpoints_car = red_car_list(qpoints_red,rlat)
         this.kpoints = qpoints_car; 
 
-        //calculate the distances between the qpoints
-        this.distances = distances(this.kpoints);
-
-        //get qindex
-        this.qindex = {};
-        for (let i=0; i<this.distances.length; i++) {
-            this.qindex[this.distances[i]] = i;
-        }
-
         /*
         get high symmetry qpoints
         Where we have to match the qpoint with a certain label with the
         high-symmetry point
         */ 
-
         let labels_dict = data["labels_dict"];
         let high_symmetry_points_red = [];
         let high_symmetry_labels = [];
@@ -190,13 +213,48 @@ class PhononJson {
         }
 
         let high_symmetry_points_car = red_car_list(high_symmetry_points_red,rlat); 
-        this.highsym_qpts = {}
+        let highsym_qpts_index = {}
         for (let nq=0; nq<qpoints_car.length; nq++) {
             let result = point_in_list(qpoints_car[nq],high_symmetry_points_car);
             if (result["found"]) {
-                let dist = this.distances[nq];
-                this.highsym_qpts[dist] = high_symmetry_labels[result["index"]];
+                let label = high_symmetry_labels[result["index"]]
+                highsym_qpts_index[nq] = label;
             }
+        }
+
+        //calculate the distances between the qpoints
+        this.distances = [0];
+        this.line_breaks = []
+        let nqstart = 0;
+        let dist = 0;
+        for (let nq=1; nq<this.kpoints.length; nq++) {
+            //handle jumps
+            if ((nq in highsym_qpts_index) && (nq-1 in highsym_qpts_index) &&
+                (highsym_qpts_index[nq] != highsym_qpts_index[nq-1])) {
+                highsym_qpts_index[nq] += "|"+highsym_qpts_index[nq-1];
+                delete highsym_qpts_index[nq-1];
+                this.line_breaks.push([nqstart,nq]);
+                nqstart = nq;
+            }
+            else 
+            {
+                dist = dist + distance(this.kpoints[nq-1],this.kpoints[nq]);
+            }
+            this.distances.push(dist);
+        }
+        this.line_breaks.push([nqstart,this.kpoints.length]);
+
+        this.highsym_qpts = {}
+        for (let nq in highsym_qpts_index) { 
+            let dist = this.distances[nq];
+            let label = highsym_qpts_index[nq];
+            this.highsym_qpts[dist] = label;
+        }
+
+        //get qindex
+        this.qindex = {};
+        for (let i=0; i<this.distances.length; i++) {
+            this.qindex[this.distances[i]] = i;
         }
 
         /*
@@ -245,4 +303,16 @@ class PhononJson {
 
         callback();
     }
+
+    getLineBreaks(data) {
+        //get line breaks
+        if ("line_breaks" in data) {
+            this.line_breaks = data["line_breaks"]
+        }
+        else {
+            //no line breaks
+            this.line_breaks = [[0,this.kpoints.length]];
+        }
+    }
+
 }

@@ -4,16 +4,18 @@
 #
 # This file is part of the phononwebsite project
 #
-# Read phonon dispersion from quantum espresso
-# http://www.quantum-espresso.org/
-#
+""" 
+Read phonon dispersion from quantum espresso
+http://www.quantum-espresso.org/ 
+"""
 from phononweb.qephonon import *
 import argparse
 import sys
 
 if __name__ == "__main__":
 
-    parser = argparse.ArgumentParser(description='Read <prefix>.modes and <prefix>.scf files from quantum espresso and write a .json file to use in the phononwebsite.')
+    parser = argparse.ArgumentParser(description='Read <prefix>.modes and <prefix>.scf files from quantum espresso '
+                                                 'and write a .json file to use in the phononwebsite.')
     parser.add_argument('prefix',           help='the prefix used in the pw.x and ph.x calculation')
     parser.add_argument('name',             help='name of the material', nargs='?', default=None)
     parser.add_argument('-s','--scf',       help='name of the scf input file for pw.x')
@@ -38,7 +40,7 @@ if __name__ == "__main__":
     if args.reps:   q.set_repetitions(args.reps)
 
     #display information
-    print q
+    print(q)
 
     if args.writeonly:
         q.write_json()

@@ -1,7 +1,8 @@
 from distutils.core import setup
 
 scripts_phononwebsite = ['scripts/read_qe_phonon.py',
-                         'scripts/read_anaddb_phonon.py']
+                         'scripts/read_anaddb_phonon.py',
+                         'scripts/phononwebsite.py']
 packages_phononwebsite = ['phononweb']
 
 if __name__ == '__main__':

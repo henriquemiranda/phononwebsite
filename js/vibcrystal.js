@@ -47,17 +47,126 @@ class VibCrystal {
         this.arrowHeadLengthRatio = .25;
         this.arrowRadius = 0.1;
         this.arrowLength = 1.0;
-        this.arrowScale = 2.0;
 
-        //options
+        //arrowscale
+        this.arrowScale = 2.0;
+        this.minArrowScale = 0.0;
+        this.maxArrowScale = 5.0;
+        this.stepArrowScale = 0.01;
+
+        //amplitude
         this.amplitude = 0.2;
+        this.minAmplitude = 0.0;
+        this.maxAmplitude = 1.0;
+        this.stepAmplitude = 0.01;
+
+        //speed
         this.speed = 1.0;
+        this.minSpeed = 0.01;
+        this.maxSpeed = 3.0;
+        this.stepSpeed = 0.01;
+       
         this.fps = 60;
 
         this.arrowobjects = [];
         this.atomobjects = [];
         this.bondobjects = [];
         this.bonds = [];
+    }
+
+    //functions to link the DOM buttons with this class
+    setCameraDirectionButton(dom_button,direction) {
+    /* Bind the action to set the direction of the camera using direction
+       direction can be 'x','y','z'
+    */
+        self = this;
+        dom_button.click( function() { self.setCameraDirection(direction) } )
+    }
+
+    setPlayPause(dom_input) {
+        dom_input.click( this.playpause.bind(this) );
+    }
+
+    setCellCheckbox(dom_checkbox) {
+        self = this;
+        dom_checkbox.click( function() { 
+            self.cell = this.checked;
+            self.updatelocal();
+        } ) 
+    }
+
+    setWebmButton(dom_button) {
+        self = this;
+        /*
+        check if its Chrome 1+ taken from
+        http://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
+        only show webm button for chrome
+        */
+        let isChrome = !!window.chrome && !!window.chrome.webstore;
+        if (!isChrome) {
+            dom_button.style.visibility = 'hidden';
+        }
+
+        dom_button.click(function() { self.capturestart('webm'); }); 
+    }
+
+    setGifButton(dom_button) { 
+        self = this;
+        dom_button.click(function() { self.capturestart('gif'); }); 
+    } 
+
+    setArrowsCheckbox(dom_checkbox) {
+        self = this;
+        this.arrows = dom_checkbox.checked;
+        dom_checkbox.click( function() { 
+            self.arrows = this.checked; 
+            self.updatelocal();
+        });
+    }
+
+    setArrowsInput(dom_range) {
+        self = this;
+
+        dom_range.val(self.arrowScale);
+        dom_range.attr('min',self.minArrowScale);
+        dom_range.attr('max',self.maxArrowScale);
+        dom_range.attr('step',self.stepArrowScale);
+        dom_range.change( function () {
+            self.arrowScale = this.value;
+        });
+    }
+
+   setAmplitudeInput(dom_number,dom_range) {
+        self = this;
+
+        dom_number.val(self.amplitude);
+        dom_number.keyup( function () {
+            if (this.value < dom_range.min) { dom_range.attr('min', this.value); }
+            if (this.value > dom_range.max) { dom_range.attr('max', this.value); }
+            self.amplitude = this.value;
+            dom_range.val(this.value)
+        });
+
+        dom_range.val(self.amplitude);
+        dom_range.attr('min',self.minAmplitude);
+        dom_range.attr('max',self.maxAmplitude);
+        dom_range.attr('step',self.stepAmplitude);
+        dom_range.change( function () {
+            self.amplitude = this.value;
+            dom_number.val(this.value);
+        });
+    }
+
+    setSpeedInput(dom_range) {
+        self = this;
+
+        dom_range.val(self.speed);
+        dom_range.attr('min',self.minSpeed);
+        dom_range.attr('max',self.maxSpeed);
+        dom_range.attr('step',self.stepSpeed);
+        dom_range.change( function () {
+            self.speed = this.value;
+        });
     }
 
     init(phonon) {
@@ -318,7 +427,7 @@ class VibCrystal {
             length = ad.distanceTo(bd)
             let cra = covalent_radii[a.atom_number]
             let crb = covalent_radii[b.atom_number]
-            if (length < cra + crb || length < this.nndist + 0.2 ) {
+            if (length < cra + crb || length < this.nndist ) {
                 this.bonds.push( [ad,bd,length] );
 
                 //get transformations
@@ -377,6 +486,10 @@ class VibCrystal {
             this.initialized = true;
         }
 
+        this.updatelocal();
+    }
+
+    updatelocal() {
         this.removeStructure();
         this.addLights();
         this.getAtypes(this.phonon.atom_numbers);

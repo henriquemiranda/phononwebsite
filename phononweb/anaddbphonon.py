@@ -1,22 +1,19 @@
-#!/usr/bin/env python
-# Copyright (c) 2015, Henrique Miranda
+# Copyright (c) 2017, Henrique Miranda
 # All rights reserved.
 #
 # This file is part of the phononwebsite project
 #
-# Read phonon dispersion from anaddb
-#
-try:
-    from netCDF4 import Dataset
-    _has_netcdf = True
-except:
-    _has_netcdf = False
-from phononweb import *
+""" Read phonon dispersion from anaddb """
 import os
-import numpy as np
 from math import sqrt
+import numpy as np
+from .phononweb import Phonon
+from .units import *
 
 class AnaddbPhonon(Phonon):
+    """
+    Read the phonons produced with anaddb
+    """
     def __init__(self,filename,name,reps=(3,3,3),reorder=True,highsym_qpts=None,folder='.'):
         self.reps = reps
         self.name = name
@@ -39,9 +36,8 @@ class AnaddbPhonon(Phonon):
     def read_anaddb(self):
         """ read the netcdf file that results form anaddb
         """
-        if not _has_netcdf:
-            print "python netCDF4 needed to read anaddb.nc files not found."
-            exit(1)
+        from netCDF4 import Dataset
+
         pcfile = Dataset(self.filename, 'r', format='NETCDF4')
 
         self.eigenvalues      = pcfile.variables['phfreqs'][:]*hartree_cm1/eV
@@ -53,7 +49,7 @@ class AnaddbPhonon(Phonon):
         self.natoms           = len(pcfile.dimensions['number_of_atoms'])
         self.nqpoints         = len(pcfile.dimensions['number_of_qpoints'])
         self.nphons           = len(pcfile.dimensions['number_of_phonon_modes'])
-        self.chemical_symbols = pcfile.variables['chemical_symbols'][:]
+        self.chemical_symbols = pcfile.variables['chemical_symbols'][:].astype(str)
         self.atomic_numbers   = pcfile.variables['atomic_numbers'][:].astype(int)
         pcfile.close()
 

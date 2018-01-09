@@ -1,0 +1,6062 @@
+[
+    {
+        "name": "Ba1Te1",
+        "id": 1000
+    },
+    {
+        "name": "Hf1C1",
+        "id": 1002124
+    },
+    {
+        "name": "Ge1C1",
+        "id": 1002164
+    },
+    {
+        "name": "B1As1",
+        "id": 10044
+    },
+    {
+        "name": "Ca1Se1",
+        "id": 1008223
+    },
+    {
+        "name": "Ba1Ga1Si1H1",
+        "id": 1008506
+    },
+    {
+        "name": "Al1Ga1N2",
+        "id": 1008556
+    },
+    {
+        "name": "B2P2",
+        "id": 1008559
+    },
+    {
+        "name": "Ti1Ge1Pt1",
+        "id": 1008680
+    },
+    {
+        "name": "Y2S2F2",
+        "id": 10086
+    },
+    {
+        "name": "Mg1Te1",
+        "id": 1008786
+    },
+    {
+        "name": "Li1F1",
+        "id": 1009009
+    },
+    {
+        "name": "Mg2Sn2As4",
+        "id": 1009082
+    },
+    {
+        "name": "Be2Sn2As4",
+        "id": 1009084
+    },
+    {
+        "name": "Be2Si2P4",
+        "id": 1009085
+    },
+    {
+        "name": "Be2Si2As4",
+        "id": 1009087
+    },
+    {
+        "name": "Be2Ge2As4",
+        "id": 1009088
+    },
+    {
+        "name": "Mg1O1",
+        "id": 1009127
+    },
+    {
+        "name": "Mg1O1",
+        "id": 1009129
+    },
+    {
+        "name": "Na1H1",
+        "id": 1009220
+    },
+    {
+        "name": "Os1C1",
+        "id": 1009540
+    },
+    {
+        "name": "Ca2Si1",
+        "id": 1009733
+    },
+    {
+        "name": "Sc1N1",
+        "id": 1009750
+    },
+    {
+        "name": "Ru1C1",
+        "id": 1009792
+    },
+    {
+        "name": "Si1Sn1",
+        "id": 1009813
+    },
+    {
+        "name": "Sr1O1",
+        "id": 1009819
+    },
+    {
+        "name": "Sn1C1",
+        "id": 1009820
+    },
+    {
+        "name": "Zr1C1",
+        "id": 1009894
+    },
+    {
+        "name": "Cs2Se1",
+        "id": 1011695
+    },
+    {
+        "name": "Zr1Zn1N2",
+        "id": 1014244
+    },
+    {
+        "name": "P8Ir4",
+        "id": 10155
+    },
+    {
+        "name": "K3Sb1",
+        "id": 10159
+    },
+    {
+        "name": "Na2Al2Te4",
+        "id": 10163
+    },
+    {
+        "name": "Na3Sb1S4",
+        "id": 10167
+    },
+    {
+        "name": "Mg2Se2",
+        "id": 1018040
+    },
+    {
+        "name": "Ba2N1F1",
+        "id": 1018096
+    },
+    {
+        "name": "Al2Sb2",
+        "id": 1018100
+    },
+    {
+        "name": "Li1Zn1P1",
+        "id": 10182
+    },
+    {
+        "name": "Li4P2N2O4",
+        "id": 1020019
+    },
+    {
+        "name": "Li2Ge4N6",
+        "id": 1020059
+    },
+    {
+        "name": "Y2O2F2",
+        "id": 10219
+    },
+    {
+        "name": "Na4Pd2S4",
+        "id": 10223
+    },
+    {
+        "name": "Na1Y1S2",
+        "id": 10226
+    },
+    {
+        "name": "K2S1",
+        "id": 1022
+    },
+    {
+        "name": "Na4Pt2S4",
+        "id": 10246
+    },
+    {
+        "name": "Ba1Li1F3",
+        "id": 10250
+    },
+    {
+        "name": "Zn4S4",
+        "id": 10281
+    },
+    {
+        "name": "Ca2B4C4",
+        "id": 10289
+    },
+    {
+        "name": "Ba1F2",
+        "id": 1029
+    },
+    {
+        "name": "Ba2Hf2N4",
+        "id": 10322
+    },
+    {
+        "name": "Ba2Y2Cu2Te6",
+        "id": 10336
+    },
+    {
+        "name": "Sr1Ge1Te1O6",
+        "id": 10341
+    },
+    {
+        "name": "Cs3Sb1",
+        "id": 10378
+    },
+    {
+        "name": "K4Cu2Sb2",
+        "id": 10381
+    },
+    {
+        "name": "Mg2Te2",
+        "id": 1039
+    },
+    {
+        "name": "K2C1N2",
+        "id": 10408
+    },
+    {
+        "name": "K2Sb2O4",
+        "id": 10417
+    },
+    {
+        "name": "Rb2Sb2O4",
+        "id": 10418
+    },
+    {
+        "name": "Na1P1F6",
+        "id": 10474
+    },
+    {
+        "name": "Rb2Ag6Te4",
+        "id": 10481
+    },
+    {
+        "name": "Ba2Li2Sb2",
+        "id": 10485
+    },
+    {
+        "name": "Rb2Si1F6",
+        "id": 10492
+    },
+    {
+        "name": "Rb4Au4O4",
+        "id": 10547
+    },
+    {
+        "name": "Sr1Mg2N2",
+        "id": 10550
+    },
+    {
+        "name": "Na2P2N4",
+        "id": 10572
+    },
+    {
+        "name": "Sr1Li1P1",
+        "id": 10614
+    },
+    {
+        "name": "Ba1Li1P1",
+        "id": 10615
+    },
+    {
+        "name": "Ba1Li1As1",
+        "id": 10616
+    },
+    {
+        "name": "Sr1S1",
+        "id": 10627
+    },
+    {
+        "name": "Sr1Te1",
+        "id": 10653
+    },
+    {
+        "name": "Ba1Se1",
+        "id": 10680
+    },
+    {
+        "name": "Sc1F3",
+        "id": 10694
+    },
+    {
+        "name": "Zn1S1",
+        "id": 10695
+    },
+    {
+        "name": "Cd2Se2",
+        "id": 1070
+    },
+    {
+        "name": "Ta1Cu3S4",
+        "id": 10748
+    },
+    {
+        "name": "Mg1Se1",
+        "id": 10760
+    },
+    {
+        "name": "K2Sn1As2S6",
+        "id": 10776
+    },
+    {
+        "name": "Sr1S1",
+        "id": 1087
+    },
+    {
+        "name": "Rb2Pd1C2",
+        "id": 10918
+    },
+    {
+        "name": "Rb2Pt1C2",
+        "id": 10919
+    },
+    {
+        "name": "Sn1Hg2Se4",
+        "id": 10955
+    },
+    {
+        "name": "Cd1C1N2",
+        "id": 10969
+    },
+    {
+        "name": "Rb2Cu6S4",
+        "id": 10985
+    },
+    {
+        "name": "Ga2Cu2O4",
+        "id": 11019
+    },
+    {
+        "name": "Ga2Ag2O4",
+        "id": 11020
+    },
+    {
+        "name": "Sc2Ag2O4",
+        "id": 11022
+    },
+    {
+        "name": "Ba1O2",
+        "id": 1105
+    },
+    {
+        "name": "Sr8Si4",
+        "id": 1106
+    },
+    {
+        "name": "Cs2Y2Hg2Se6",
+        "id": 11123
+    },
+    {
+        "name": "Li1Zn1P1S4",
+        "id": 11175
+    },
+    {
+        "name": "Ba4Ca4Sn4",
+        "id": 11265
+    },
+    {
+        "name": "Rb2Se1",
+        "id": 11327
+    },
+    {
+        "name": "Li1F1",
+        "id": 1138
+    },
+    {
+        "name": "Al4O6",
+        "id": 1143
+    },
+    {
+        "name": "Y1Ni1Sb1",
+        "id": 11520
+    },
+    {
+        "name": "Li2S1",
+        "id": 1153
+    },
+    {
+        "name": "Zr4S2N4",
+        "id": 11583
+    },
+    {
+        "name": "Ba1Ti1B2O6",
+        "id": 11659
+    },
+    {
+        "name": "Al4Se6",
+        "id": 11674
+    },
+    {
+        "name": "Rb2Pd3S4",
+        "id": 11695
+    },
+    {
+        "name": "K2Sb2S4",
+        "id": 11703
+    },
+    {
+        "name": "Si5C5",
+        "id": 11713
+    },
+    {
+        "name": "Si4C4",
+        "id": 11714
+    },
+    {
+        "name": "Mg1Sn1B2O6",
+        "id": 11715
+    },
+    {
+        "name": "Rb1F1",
+        "id": 11718
+    },
+    {
+        "name": "K4Zn1P2",
+        "id": 11719
+    },
+    {
+        "name": "K1La1Te2",
+        "id": 11739
+    },
+    {
+        "name": "Ca3P1N1",
+        "id": 11824
+    },
+    {
+        "name": "Hf1Sn1Pd1",
+        "id": 11869
+    },
+    {
+        "name": "Zn1Se1",
+        "id": 1190
+    },
+    {
+        "name": "Mg1Be2N2",
+        "id": 11917
+    },
+    {
+        "name": "Ca2Be4N4",
+        "id": 11918
+    },
+    {
+        "name": "Sr2Be4N4",
+        "id": 11919
+    },
+    {
+        "name": "K1Ag2As1O4",
+        "id": 12015
+    },
+    {
+        "name": "Rb4Si2S6",
+        "id": 12016
+    },
+    {
+        "name": "Sr1C1N2",
+        "id": 12317
+    },
+    {
+        "name": "Ba2Y1Ta1O6",
+        "id": 12385
+    },
+    {
+        "name": "Sr4Ca4Ge4",
+        "id": 12418
+    },
+    {
+        "name": "Sr2Ta1Ga1O6",
+        "id": 12427
+    },
+    {
+        "name": "Ga4O6",
+        "id": 1243
+    },
+    {
+        "name": "K1Au1F6",
+        "id": 12442
+    },
+    {
+        "name": "Sr2Cu2S2F2",
+        "id": 12444
+    },
+    {
+        "name": "Sb8Ir4",
+        "id": 1247
+    },
+    {
+        "name": "Cs2La2Cd2Te6",
+        "id": 12491
+    },
+    {
+        "name": "Mg2F4",
+        "id": 1249
+    },
+    {
+        "name": "Y2Zn2P2O2",
+        "id": 12509
+    },
+    {
+        "name": "Sr2Li1Re1O6",
+        "id": 12525
+    },
+    {
+        "name": "K1Ag2P1S4",
+        "id": 12532
+    },
+    {
+        "name": "K4Zn2Te4",
+        "id": 12535
+    },
+    {
+        "name": "Ba1Se1",
+        "id": 1253
+    },
+    {
+        "name": "Li1Mg1As1",
+        "id": 12558
+    },
+    {
+        "name": "Sr2Pd2F8",
+        "id": 12622
+    },
+    {
+        "name": "Mg1O1",
+        "id": 1265
+    },
+    {
+        "name": "Na2Se1",
+        "id": 1266
+    },
+    {
+        "name": "Cd2Te2",
+        "id": 12779
+    },
+    {
+        "name": "Ba6Sb2N2",
+        "id": 12814
+    },
+    {
+        "name": "Pt2O4",
+        "id": 1285
+    },
+    {
+        "name": "K6S6",
+        "id": 1287
+    },
+    {
+        "name": "Ba1Al2Sb2O7",
+        "id": 12885
+    },
+    {
+        "name": "Y2S1O2",
+        "id": 12894
+    },
+    {
+        "name": "Y2Ag2Te4",
+        "id": 12903
+    },
+    {
+        "name": "Sc1Ag1Se2",
+        "id": 12908
+    },
+    {
+        "name": "Ba2Be4N4",
+        "id": 12927
+    },
+    {
+        "name": "Cu2B2S4",
+        "id": 12954
+    },
+    {
+        "name": "Ba1Ti1O3",
+        "id": 12992
+    },
+    {
+        "name": "Mg1Se1",
+        "id": 13031
+    },
+    {
+        "name": "Mg1S1",
+        "id": 13032
+    },
+    {
+        "name": "Mg1Te1",
+        "id": 13033
+    },
+    {
+        "name": "Ba2La1Ta1O6",
+        "id": 13055
+    },
+    {
+        "name": "Ba2La1Ta1O6",
+        "id": 13056
+    },
+    {
+        "name": "Na2Zn2As2",
+        "id": 13097
+    },
+    {
+        "name": "Y1N1",
+        "id": 13099
+    },
+    {
+        "name": "Sr2Hf2O6",
+        "id": 13109
+    },
+    {
+        "name": "K4Ti2O6",
+        "id": 13133
+    },
+    {
+        "name": "Mg1S1",
+        "id": 1315
+    },
+    {
+        "name": "K1Rb2Ga1F6",
+        "id": 13190
+    },
+    {
+        "name": "Na3Sr3P3",
+        "id": 13275
+    },
+    {
+        "name": "Sr2Li2P2",
+        "id": 13276
+    },
+    {
+        "name": "Ba2Li2P2",
+        "id": 13277
+    },
+    {
+        "name": "Ba2Cu2Te2F2",
+        "id": 13287
+    },
+    {
+        "name": "Al1N1",
+        "id": 1330
+    },
+    {
+        "name": "Ba2Sr1Te1O6",
+        "id": 13356
+    },
+    {
+        "name": "Ga4Se6",
+        "id": 1340
+    },
+    {
+        "name": "Ba1O1",
+        "id": 1342
+    },
+    {
+        "name": "Rb4As4Pt2",
+        "id": 13445
+    },
+    {
+        "name": "Ca6P6",
+        "id": 1345
+    },
+    {
+        "name": "Sr2Mg1B2O6",
+        "id": 13541
+    },
+    {
+        "name": "Cs4Pt2",
+        "id": 13548
+    },
+    {
+        "name": "Zn1Pb1F6",
+        "id": 13610
+    },
+    {
+        "name": "Ti2Cd2O6",
+        "id": 13641
+    },
+    {
+        "name": "Rb2N2O6",
+        "id": 13658
+    },
+    {
+        "name": "Ca4Sb2O1",
+        "id": 13660
+    },
+    {
+        "name": "Tl2P2O8",
+        "id": 13676
+    },
+    {
+        "name": "Mg2Si1",
+        "id": 1367
+    },
+    {
+        "name": "K2Na1Tl1F6",
+        "id": 13798
+    },
+    {
+        "name": "Cs2Na1Tl1F6",
+        "id": 13800
+    },
+    {
+        "name": "Pd2F8",
+        "id": 13868
+    },
+    {
+        "name": "Cs2Na1In1F6",
+        "id": 13898
+    },
+    {
+        "name": "Sr2Cu4O4",
+        "id": 13900
+    },
+    {
+        "name": "Zn1Sn1F6",
+        "id": 13903
+    },
+    {
+        "name": "Cd1Sn1F6",
+        "id": 13907
+    },
+    {
+        "name": "Cs2Na1Y1F6",
+        "id": 13925
+    },
+    {
+        "name": "Rb2Na1Y1F6",
+        "id": 13926
+    },
+    {
+        "name": "Rb2Zr1F6",
+        "id": 13946
+    },
+    {
+        "name": "Rb2Hf1F6",
+        "id": 13947
+    },
+    {
+        "name": "Cs2Hf1F6",
+        "id": 13948
+    },
+    {
+        "name": "Cd1Ga2Te4",
+        "id": 13949
+    },
+    {
+        "name": "Rb2O1",
+        "id": 1394
+    },
+    {
+        "name": "Zn1Pd1F6",
+        "id": 13983
+    },
+    {
+        "name": "Cd1Pd1F6",
+        "id": 13984
+    },
+    {
+        "name": "Cs2Pt3S4",
+        "id": 13992
+    },
+    {
+        "name": "Ba1Ge1F6",
+        "id": 14006
+    },
+    {
+        "name": "K6Sb2",
+        "id": 14017
+    },
+    {
+        "name": "K1Rb2Rh1F6",
+        "id": 14036
+    },
+    {
+        "name": "Na1Tl2Rh1F6",
+        "id": 14037
+    },
+    {
+        "name": "Rb2Na1Rh1F6",
+        "id": 14038
+    },
+    {
+        "name": "K2Na1Rh1F6",
+        "id": 14039
+    },
+    {
+        "name": "Cs2Al2O4",
+        "id": 14069
+    },
+    {
+        "name": "Rb2Al2O4",
+        "id": 14070
+    },
+    {
+        "name": "Rb2Pd1F6",
+        "id": 14088
+    },
+    {
+        "name": "Al2Ag2Se4",
+        "id": 14091
+    },
+    {
+        "name": "Al2Ag2Te4",
+        "id": 14092
+    },
+    {
+        "name": "Li1Rh1O2",
+        "id": 14115
+    },
+    {
+        "name": "Cu1Rh1O2",
+        "id": 14116
+    },
+    {
+        "name": "P4Ru2",
+        "id": 1413
+    },
+    {
+        "name": "Ca1Se1",
+        "id": 1415
+    },
+    {
+        "name": "K3Nb1O8",
+        "id": 14175
+    },
+    {
+        "name": "K3Cu3As2",
+        "id": 14205
+    },
+    {
+        "name": "K3Ag3As2",
+        "id": 14206
+    },
+    {
+        "name": "Co4P8",
+        "id": 14285
+    },
+    {
+        "name": "Ta2Al2O8",
+        "id": 14333
+    },
+    {
+        "name": "Ca1Sn1B2O6",
+        "id": 14398
+    },
+    {
+        "name": "Rb1Y1O2",
+        "id": 14437
+    },
+    {
+        "name": "Na4Pt2Se4",
+        "id": 14588
+    },
+    {
+        "name": "Cs4P6",
+        "id": 14652
+    },
+    {
+        "name": "B1P1",
+        "id": 1479
+    },
+    {
+        "name": "Si4P4Ru1",
+        "id": 14983
+    },
+    {
+        "name": "Si2",
+        "id": 149
+    },
+    {
+        "name": "Ba1S1",
+        "id": 1500
+    },
+    {
+        "name": "Cs2Ca1F4",
+        "id": 15157
+    },
+    {
+        "name": "Ca1Te1",
+        "id": 1519
+    },
+    {
+        "name": "Fe2S4",
+        "id": 1522
+    },
+    {
+        "name": "Li4Ge2O6",
+        "id": 15349
+    },
+    {
+        "name": "Be1Se1",
+        "id": 1541
+    },
+    {
+        "name": "Al1P1",
+        "id": 1550
+    },
+    {
+        "name": "Rb4As6",
+        "id": 15556
+    },
+    {
+        "name": "Cs4As6",
+        "id": 15557
+    },
+    {
+        "name": "Zr1O2",
+        "id": 1565
+    },
+    {
+        "name": "Na4Se4",
+        "id": 15668
+    },
+    {
+        "name": "K4Cu2As2",
+        "id": 15684
+    },
+    {
+        "name": "Na4Cu2As2",
+        "id": 15685
+    },
+    {
+        "name": "Be2C1",
+        "id": 1569
+    },
+    {
+        "name": "Be2C2N4",
+        "id": 15703
+    },
+    {
+        "name": "Be2Si2N4",
+        "id": 15704
+    },
+    {
+        "name": "K1Na2Sb1",
+        "id": 15724
+    },
+    {
+        "name": "Zn1Ga2Se4",
+        "id": 15776
+    },
+    {
+        "name": "Zn1Ga2Te4",
+        "id": 15777
+    },
+    {
+        "name": "K1La1S2",
+        "id": 15781
+    },
+    {
+        "name": "Li1Y1S2",
+        "id": 15788
+    },
+    {
+        "name": "Li1Y1Se2",
+        "id": 15794
+    },
+    {
+        "name": "Cu4Si2Se6",
+        "id": 15896
+    },
+    {
+        "name": "Al4C3",
+        "id": 1591
+    },
+    {
+        "name": "Be3F6",
+        "id": 15951
+    },
+    {
+        "name": "P8Rh4",
+        "id": 15953
+    },
+    {
+        "name": "As8Rh4",
+        "id": 15954
+    },
+    {
+        "name": "Li2Cu1Sb1",
+        "id": 15988
+    },
+    {
+        "name": "Na6P2",
+        "id": 1598
+    },
+    {
+        "name": "Li6Au2S4",
+        "id": 15999
+    },
+    {
+        "name": "B12",
+        "id": 160
+    },
+    {
+        "name": "K2Ag2Se2",
+        "id": 16236
+    },
+    {
+        "name": "Li4Ca4Sb4",
+        "id": 16264
+    },
+    {
+        "name": "Ga2Hg1Te4",
+        "id": 16337
+    },
+    {
+        "name": "Mo2Se4",
+        "id": 1634
+    },
+    {
+        "name": "B1N1",
+        "id": 1639
+    },
+    {
+        "name": "Li2Ca1Hf1F8",
+        "id": 16577
+    },
+    {
+        "name": "Si4",
+        "id": 165
+    },
+    {
+        "name": "Ca1S1",
+        "id": 1672
+    },
+    {
+        "name": "Ba2Ag2Te2F2",
+        "id": 16742
+    },
+    {
+        "name": "K1Y1Te2",
+        "id": 16763
+    },
+    {
+        "name": "Rb2Y2Te4",
+        "id": 16764
+    },
+    {
+        "name": "Al1N1",
+        "id": 1700
+    },
+    {
+        "name": "K2Te1",
+        "id": 1747
+    },
+    {
+        "name": "Be1O1",
+        "id": 1778
+    },
+    {
+        "name": "Cs1F1",
+        "id": 1784
+    },
+    {
+        "name": "Be1O1",
+        "id": 1794
+    },
+    {
+        "name": "K3Ga9",
+        "id": 181
+    },
+    {
+        "name": "Zn2F4",
+        "id": 1873
+    },
+    {
+        "name": "Si4Ru4",
+        "id": 189
+    },
+    {
+        "name": "Ru4Se8",
+        "id": 1922
+    },
+    {
+        "name": "Sr1Te1",
+        "id": 1958
+    },
+    {
+        "name": "Li2O1",
+        "id": 1960
+    },
+    {
+        "name": "La2O3",
+        "id": 1968
+    },
+    {
+        "name": "Te1Pb1",
+        "id": 19717
+    },
+    {
+        "name": "Mg1Pb1F6",
+        "id": 19734
+    },
+    {
+        "name": "In2Hg1Te4",
+        "id": 19765
+    },
+    {
+        "name": "In4S4",
+        "id": 19795
+    },
+    {
+        "name": "Ba1Pb1F6",
+        "id": 19799
+    },
+    {
+        "name": "In2Ag2S4",
+        "id": 19833
+    },
+    {
+        "name": "K2In2Te4",
+        "id": 19851
+    },
+    {
+        "name": "Zn1O1",
+        "id": 1986
+    },
+    {
+        "name": "As2Pb1O6",
+        "id": 20015
+    },
+    {
+        "name": "Fe2P4",
+        "id": 20027
+    },
+    {
+        "name": "La1Cu1O2",
+        "id": 20072
+    },
+    {
+        "name": "Fe2As4",
+        "id": 2008
+    },
+    {
+        "name": "Ba2Pb1O4",
+        "id": 20098
+    },
+    {
+        "name": "Li2In2Se4",
+        "id": 20187
+    },
+    {
+        "name": "Ag4Pb2O4",
+        "id": 20210
+    },
+    {
+        "name": "K6In2P4",
+        "id": 20256
+    },
+    {
+        "name": "Cs2Pb2F6",
+        "id": 20282
+    },
+    {
+        "name": "Na1In1S2",
+        "id": 20289
+    },
+    {
+        "name": "Ru4S8",
+        "id": 2030
+    },
+    {
+        "name": "In2Ag2O4",
+        "id": 20329
+    },
+    {
+        "name": "In1P1",
+        "id": 20351
+    },
+    {
+        "name": "Ba3In2O6",
+        "id": 20352
+    },
+    {
+        "name": "Y4Cr4B16",
+        "id": 20450
+    },
+    {
+        "name": "Ti1Pb1O3",
+        "id": 20459
+    },
+    {
+        "name": "Ca1Pb1F6",
+        "id": 20463
+    },
+    {
+        "name": "Ba2Nb1In1O6",
+        "id": 20620
+    },
+    {
+        "name": "Rb1F1",
+        "id": 2064
+    },
+    {
+        "name": "Rh2F6",
+        "id": 2068
+    },
+    {
+        "name": "K4Te4",
+        "id": 2072
+    },
+    {
+        "name": "In2Hg1Se4",
+        "id": 20731
+    },
+    {
+        "name": "Li3Sb1",
+        "id": 2074
+    },
+    {
+        "name": "Li2In2Te4",
+        "id": 20782
+    },
+    {
+        "name": "In1P1S4",
+        "id": 20790
+    },
+    {
+        "name": "Rb4P6",
+        "id": 2079
+    },
+    {
+        "name": "Ge4Pt4Se4",
+        "id": 20817
+    },
+    {
+        "name": "Zn1In2Te4",
+        "id": 20832
+    },
+    {
+        "name": "Sr4Ca4Pb4",
+        "id": 21166
+    },
+    {
+        "name": "Sr2Cu2Se2F2",
+        "id": 21228
+    },
+    {
+        "name": "Pb1S1",
+        "id": 21276
+    },
+    {
+        "name": "Zn2O2",
+        "id": 2133
+    },
+    {
+        "name": "Cd1In2Te4",
+        "id": 21374
+    },
+    {
+        "name": "Ba2Te4",
+        "id": 2150
+    },
+    {
+        "name": "K4Na2In2As4",
+        "id": 21510
+    },
+    {
+        "name": "K4Na2In2P4",
+        "id": 21511
+    },
+    {
+        "name": "Al1As1",
+        "id": 2172
+    },
+    {
+        "name": "Tl1F1",
+        "id": 2175
+    },
+    {
+        "name": "Zn1Te1",
+        "id": 2176
+    },
+    {
+        "name": "V1Cu3Se4",
+        "id": 21855
+    },
+    {
+        "name": "Na1N3",
+        "id": 22003
+    },
+    {
+        "name": "Pb1Se1",
+        "id": 2201
+    },
+    {
+        "name": "Rb2In2Te4",
+        "id": 22255
+    },
+    {
+        "name": "In2Cu2Te4",
+        "id": 22261
+    },
+    {
+        "name": "Zn1O1",
+        "id": 2229
+    },
+    {
+        "name": "Cd1In2Se4",
+        "id": 22304
+    },
+    {
+        "name": "Na2Pt1O2",
+        "id": 22313
+    },
+    {
+        "name": "In4O6",
+        "id": 22323
+    },
+    {
+        "name": "Ge3O6",
+        "id": 223
+    },
+    {
+        "name": "Li4Pb2O6",
+        "id": 22450
+    },
+    {
+        "name": "Na1In1Se2",
+        "id": 22473
+    },
+    {
+        "name": "Na2In2Te4",
+        "id": 22483
+    },
+    {
+        "name": "Li3N1",
+        "id": 2251
+    },
+    {
+        "name": "K1In1P2S7",
+        "id": 22583
+    },
+    {
+        "name": "Zn1In2Se4",
+        "id": 22607
+    },
+    {
+        "name": "In1Ag1O2",
+        "id": 22660
+    },
+    {
+        "name": "Na1Cl1",
+        "id": 22851
+    },
+    {
+        "name": "Na1Cl1",
+        "id": 22862
+    },
+    {
+        "name": "Cs1Cl1",
+        "id": 22865
+    },
+    {
+        "name": "Rb1Br1",
+        "id": 22867
+    },
+    {
+        "name": "Li2Se1",
+        "id": 2286
+    },
+    {
+        "name": "Tl1Br1",
+        "id": 22875
+    },
+    {
+        "name": "Ca2Br4",
+        "id": 22888
+    },
+    {
+        "name": "Ag2I2",
+        "id": 22894
+    },
+    {
+        "name": "Cu1I1",
+        "id": 22895
+    },
+    {
+        "name": "La2Cl6",
+        "id": 22896
+    },
+    {
+        "name": "K1I1",
+        "id": 22898
+    },
+    {
+        "name": "Li1I1",
+        "id": 22899
+    },
+    {
+        "name": "K1I1",
+        "id": 22901
+    },
+    {
+        "name": "Rb1I1",
+        "id": 22903
+    },
+    {
+        "name": "Ca2Cl4",
+        "id": 22904
+    },
+    {
+        "name": "Li1Cl1",
+        "id": 22905
+    },
+    {
+        "name": "Cs1Br1",
+        "id": 22906
+    },
+    {
+        "name": "Zn2Cl4",
+        "id": 22909
+    },
+    {
+        "name": "Cu1Br1",
+        "id": 22913
+    },
+    {
+        "name": "Cu1Cl1",
+        "id": 22914
+    },
+    {
+        "name": "Na1Br1",
+        "id": 22916
+    },
+    {
+        "name": "Ag1I1",
+        "id": 22919
+    },
+    {
+        "name": "Ag1Cl1",
+        "id": 22922
+    },
+    {
+        "name": "Ag1I1",
+        "id": 22925
+    },
+    {
+        "name": "K2Pt1Cl4",
+        "id": 22934
+    },
+    {
+        "name": "Cs2Br2F2",
+        "id": 22935
+    },
+    {
+        "name": "Ca2N1Cl1",
+        "id": 22936
+    },
+    {
+        "name": "Na4I2O1",
+        "id": 22937
+    },
+    {
+        "name": "Ba2I2F2",
+        "id": 22951
+    },
+    {
+        "name": "K2Pd1Cl4",
+        "id": 22956
+    },
+    {
+        "name": "Sr2Cl2F2",
+        "id": 22957
+    },
+    {
+        "name": "Rb2Te1Cl6",
+        "id": 22975
+    },
+    {
+        "name": "Na2Bi2O4",
+        "id": 22984
+    },
+    {
+        "name": "Cs1Ge1Cl3",
+        "id": 22988
+    },
+    {
+        "name": "Cs1I1Cl2",
+        "id": 22990
+    },
+    {
+        "name": "Cs2Mg2Cl6",
+        "id": 23004
+    },
+    {
+        "name": "Ca2Br1N1",
+        "id": 23009
+    },
+    {
+        "name": "Cs2Cu4Br6",
+        "id": 23017
+    },
+    {
+        "name": "Bi2Sb2O8",
+        "id": 23018
+    },
+    {
+        "name": "La2Br2O2",
+        "id": 23023
+    },
+    {
+        "name": "Sr2Br2F2",
+        "id": 23024
+    },
+    {
+        "name": "La2Cl2O2",
+        "id": 23025
+    },
+    {
+        "name": "Sr2N1Cl1",
+        "id": 23033
+    },
+    {
+        "name": "K2Se1Br6",
+        "id": 23036
+    },
+    {
+        "name": "Ca2P1I1",
+        "id": 23040
+    },
+    {
+        "name": "Na2Bi2O6",
+        "id": 23054
+    },
+    {
+        "name": "Sr2Br1N1",
+        "id": 23056
+    },
+    {
+        "name": "Rb2Sn1Cl6",
+        "id": 23059
+    },
+    {
+        "name": "Cs2Pt1I6",
+        "id": 23060
+    },
+    {
+        "name": "K2Pd1Cl6",
+        "id": 23067
+    },
+    {
+        "name": "Ba2Br2F2",
+        "id": 23070
+    },
+    {
+        "name": "Ba2Bi1Sb1O6",
+        "id": 23091
+    },
+    {
+        "name": "Ba2Ta1Bi1O6",
+        "id": 23092
+    },
+    {
+        "name": "K2Os1Cl4O2",
+        "id": 23097
+    },
+    {
+        "name": "Cu2Bi2Se2O2",
+        "id": 23116
+    },
+    {
+        "name": "Cs2Na1Y1Cl6",
+        "id": 23120
+    },
+    {
+        "name": "Ba2Bi1Sb1O6",
+        "id": 23127
+    },
+    {
+        "name": "Ba2Y1Bi1O6",
+        "id": 23137
+    },
+    {
+        "name": "Tl1Cl1",
+        "id": 23167
+    },
+    {
+        "name": "K1Cl1",
+        "id": 23193
+    },
+    {
+        "name": "Tl1I1",
+        "id": 23197
+    },
+    {
+        "name": "P4Os2",
+        "id": 2319
+    },
+    {
+        "name": "Sr1Cl2",
+        "id": 23209
+    },
+    {
+        "name": "Ca2Cl4",
+        "id": 23214
+    },
+    {
+        "name": "Li3Bi1",
+        "id": 23222
+    },
+    {
+        "name": "Ag1Br1",
+        "id": 23231
+    },
+    {
+        "name": "K1Br1",
+        "id": 23251
+    },
+    {
+        "name": "Li1Br1",
+        "id": 23259
+    },
+    {
+        "name": "Ba4I8",
+        "id": 23260
+    },
+    {
+        "name": "La2Br6",
+        "id": 23263
+    },
+    {
+        "name": "Na1I1",
+        "id": 23268
+    },
+    {
+        "name": "K1Cl1",
+        "id": 23289
+    },
+    {
+        "name": "Rb1Cl1",
+        "id": 23295
+    },
+    {
+        "name": "Rb1Cl1",
+        "id": 23299
+    },
+    {
+        "name": "Rb1I1",
+        "id": 23302
+    },
+    {
+        "name": "Rb1Br1",
+        "id": 23303
+    },
+    {
+        "name": "Bi1B3O6",
+        "id": 23349
+    },
+    {
+        "name": "Rb2Pt1Cl6",
+        "id": 23350
+    },
+    {
+        "name": "Cu2Hg1I4",
+        "id": 23353
+    },
+    {
+        "name": "Cs2Li2Cl4",
+        "id": 23364
+    },
+    {
+        "name": "Cs2Te1Br6",
+        "id": 23405
+    },
+    {
+        "name": "Cs2Pt1Cl6",
+        "id": 23406
+    },
+    {
+        "name": "Na6O6",
+        "id": 2340
+    },
+    {
+        "name": "Cs2Pb1Cl6",
+        "id": 23425
+    },
+    {
+        "name": "Ba2Cl2F2",
+        "id": 23432
+    },
+    {
+        "name": "Cs2Te1Cl6",
+        "id": 23465
+    },
+    {
+        "name": "Rb2Pb1Cl6",
+        "id": 23475
+    },
+    {
+        "name": "Cs2Au2Cl6",
+        "id": 23484
+    },
+    {
+        "name": "Ag2Hg1I4",
+        "id": 23485
+    },
+    {
+        "name": "K2Pt1Cl6",
+        "id": 23513
+    },
+    {
+        "name": "Na2O1",
+        "id": 2352
+    },
+    {
+        "name": "K2Br2F8",
+        "id": 23550
+    },
+    {
+        "name": "Li1H1",
+        "id": 23703
+    },
+    {
+        "name": "Mg2H4",
+        "id": 23710
+    },
+    {
+        "name": "Ga2Te5",
+        "id": 2371
+    },
+    {
+        "name": "K1Mg1H3",
+        "id": 23737
+    },
+    {
+        "name": "Mg2Fe1H6",
+        "id": 23804
+    },
+    {
+        "name": "Ba1Li1H3",
+        "id": 23818
+    },
+    {
+        "name": "Ca2H2Cl2",
+        "id": 23859
+    },
+    {
+        "name": "Sr2H2Cl2",
+        "id": 23860
+    },
+    {
+        "name": "Ba2H2Cl2",
+        "id": 23861
+    },
+    {
+        "name": "Ba2H2I2",
+        "id": 23862
+    },
+    {
+        "name": "Na1H1",
+        "id": 23870
+    },
+    {
+        "name": "Al2H6",
+        "id": 23933
+    },
+    {
+        "name": "Rb1Ca1H3",
+        "id": 23949
+    },
+    {
+        "name": "K2Mg1H4",
+        "id": 23956
+    },
+    {
+        "name": "Ba2S6",
+        "id": 239
+    },
+    {
+        "name": "Rb4H2Br2O2",
+        "id": 24007
+    },
+    {
+        "name": "Na4S4",
+        "id": 2400
+    },
+    {
+        "name": "Sr2H2Cl2O2",
+        "id": 24066
+    },
+    {
+        "name": "K1H1",
+        "id": 24084
+    },
+    {
+        "name": "Cd1F2",
+        "id": 241
+    },
+    {
+        "name": "Sr2H6Ru1",
+        "id": 24292
+    },
+    {
+        "name": "Cs2Be2H6",
+        "id": 24341
+    },
+    {
+        "name": "Sr2H2Br2",
+        "id": 24423
+    },
+    {
+        "name": "Ba2H2Br2",
+        "id": 24424
+    },
+    {
+        "name": "K2H4N2",
+        "id": 24428
+    },
+    {
+        "name": "As4Os2",
+        "id": 2455
+    },
+    {
+        "name": "K4H2Br2O2",
+        "id": 24589
+    },
+    {
+        "name": "Cd1S1",
+        "id": 2469
+    },
+    {
+        "name": "Rb1H1",
+        "id": 24721
+    },
+    {
+        "name": "Sr1O1",
+        "id": 2472
+    },
+    {
+        "name": "Si4Os4",
+        "id": 2488
+    },
+    {
+        "name": "Ga1P1",
+        "id": 2490
+    },
+    {
+        "name": "Ca8Si4",
+        "id": 2517
+    },
+    {
+        "name": "Be1Te1",
+        "id": 252
+    },
+    {
+        "name": "Y2Ti2S2O5",
+        "id": 25305
+    },
+    {
+        "name": "Li2Te1",
+        "id": 2530
+    },
+    {
+        "name": "Ga1As1",
+        "id": 2534
+    },
+    {
+        "name": "Be2O2",
+        "id": 2542
+    },
+    {
+        "name": "Te2O6",
+        "id": 2552
+    },
+    {
+        "name": "Zr2O4",
+        "id": 2574
+    },
+    {
+        "name": "Sr8Ge4",
+        "id": 2576
+    },
+    {
+        "name": "Ba1Te1",
+        "id": 2600
+    },
+    {
+        "name": "Ca1O1",
+        "id": 2605
+    },
+    {
+        "name": "Al1Sb1",
+        "id": 2624
+    },
+    {
+        "name": "Mg3Sb2",
+        "id": 2646
+    },
+    {
+        "name": "Ti2O4",
+        "id": 2657
+    },
+    {
+        "name": "Li1N3",
+        "id": 2659
+    },
+    {
+        "name": "Cs1Au1",
+        "id": 2667
+    },
+    {
+        "name": "K4O4",
+        "id": 2672
+    },
+    {
+        "name": "Te4Ru2",
+        "id": 267
+    },
+    {
+        "name": "Cd1Se1",
+        "id": 2691
+    },
+    {
+        "name": "Sn1Se1",
+        "id": 2693
+    },
+    {
+        "name": "Sb4Os2",
+        "id": 2695
+    },
+    {
+        "name": "Sr1O2",
+        "id": 2697
+    },
+    {
+        "name": "K2Pd1Br4",
+        "id": 27138
+    },
+    {
+        "name": "Rb1I1O3",
+        "id": 27193
+    },
+    {
+        "name": "K2Mg1Cl4",
+        "id": 27207
+    },
+    {
+        "name": "Li2Ag6O4",
+        "id": 27227
+    },
+    {
+        "name": "K2Pt1Br4",
+        "id": 27243
+    },
+    {
+        "name": "Au4O6",
+        "id": 27253
+    },
+    {
+        "name": "Ga4Te2S4",
+        "id": 27255
+    },
+    {
+        "name": "Ca3As1Br3",
+        "id": 27294
+    },
+    {
+        "name": "Rb2Au2Br6",
+        "id": 27300
+    },
+    {
+        "name": "Na2Ag6O4",
+        "id": 27303
+    },
+    {
+        "name": "Ca1Ti1F6",
+        "id": 27315
+    },
+    {
+        "name": "Rb2Ge2Cl6",
+        "id": 27369
+    },
+    {
+        "name": "K2Tl2Cl8",
+        "id": 27385
+    },
+    {
+        "name": "Li1Bi1F6",
+        "id": 27419
+    },
+    {
+        "name": "Ca1F2",
+        "id": 2741
+    },
+    {
+        "name": "Na1Bi1F6",
+        "id": 27420
+    },
+    {
+        "name": "Rb1Bi1F6",
+        "id": 27421
+    },
+    {
+        "name": "Cs1Bi1F6",
+        "id": 27422
+    },
+    {
+        "name": "Ba4Br8",
+        "id": 27456
+    },
+    {
+        "name": "Ca2Cl2F2",
+        "id": 27546
+    },
+    {
+        "name": "K4Ag2Bi2",
+        "id": 27549
+    },
+    {
+        "name": "Na2Pd3O4",
+        "id": 27562
+    },
+    {
+        "name": "Sr1Se1",
+        "id": 2758
+    },
+    {
+        "name": "Be4Te1O7",
+        "id": 27608
+    },
+    {
+        "name": "Y4Cl6",
+        "id": 27678
+    },
+    {
+        "name": "K2Pt1Br6",
+        "id": 27691
+    },
+    {
+        "name": "K2Tl2O2",
+        "id": 27716
+    },
+    {
+        "name": "Sr2Be6O8",
+        "id": 27791
+    },
+    {
+        "name": "Rb2Ti1Cl6",
+        "id": 27827
+    },
+    {
+        "name": "Cs2Ti1Cl6",
+        "id": 27828
+    },
+    {
+        "name": "Rb2Se1Cl6",
+        "id": 27829
+    },
+    {
+        "name": "Cs2Se1Cl6",
+        "id": 27830
+    },
+    {
+        "name": "Rb2Zr1Cl6",
+        "id": 27831
+    },
+    {
+        "name": "K2Ti1Cl6",
+        "id": 27839
+    },
+    {
+        "name": "Na2Te1",
+        "id": 2784
+    },
+    {
+        "name": "Ba2P1Cl1",
+        "id": 27869
+    },
+    {
+        "name": "Cs2Ge1Cl6",
+        "id": 27882
+    },
+    {
+        "name": "Fe4Sb4S4",
+        "id": 27904
+    },
+    {
+        "name": "Y2Cl2O2",
+        "id": 27985
+    },
+    {
+        "name": "K5Cu1Sb2",
+        "id": 27999
+    },
+    {
+        "name": "Al2Cu2Cl8",
+        "id": 28020
+    },
+    {
+        "name": "Ca3As1Cl3",
+        "id": 28069
+    },
+    {
+        "name": "K2Ti2O5",
+        "id": 28075
+    },
+    {
+        "name": "Rb2Pd1Br6",
+        "id": 28084
+    },
+    {
+        "name": "Rb2Pt1I6",
+        "id": 28110
+    },
+    {
+        "name": "K6N2O6",
+        "id": 28111
+    },
+    {
+        "name": "Rb2Pd1Cl6",
+        "id": 28145
+    },
+    {
+        "name": "K3I1O1",
+        "id": 28171
+    },
+    {
+        "name": "Rb2Li2Br4",
+        "id": 28237
+    },
+    {
+        "name": "Rb2Li2Cl4",
+        "id": 28243
+    },
+    {
+        "name": "Rb2H6O4",
+        "id": 28264
+    },
+    {
+        "name": "P4Pd2",
+        "id": 28266
+    },
+    {
+        "name": "K4Cu4S4",
+        "id": 28270
+    },
+    {
+        "name": "Cs2I2O6",
+        "id": 28295
+    },
+    {
+        "name": "K4Cd1P2",
+        "id": 28302
+    },
+    {
+        "name": "Cs1Ge1I3",
+        "id": 28377
+    },
+    {
+        "name": "Ga4Te2Se4",
+        "id": 28423
+    },
+    {
+        "name": "Cs2Au2I6",
+        "id": 28453
+    },
+    {
+        "name": "Ga1N1",
+        "id": 2853
+    },
+    {
+        "name": "Ca4I2N2",
+        "id": 28553
+    },
+    {
+        "name": "Ca2As1I1",
+        "id": 28554
+    },
+    {
+        "name": "Zr4O8",
+        "id": 2858
+    },
+    {
+        "name": "Na4Hg1P2",
+        "id": 28591
+    },
+    {
+        "name": "Na4Br2O1",
+        "id": 28599
+    },
+    {
+        "name": "Na3Cl1O1",
+        "id": 28602
+    },
+    {
+        "name": "Na4Li4Se4",
+        "id": 28603
+    },
+    {
+        "name": "La4S4O4",
+        "id": 28626
+    },
+    {
+        "name": "K4Br2O1",
+        "id": 28627
+    },
+    {
+        "name": "Cs1Br2F1",
+        "id": 28650
+    },
+    {
+        "name": "Y1H1Se1",
+        "id": 28797
+    },
+    {
+        "name": "Rb1Br1O3",
+        "id": 28872
+    },
+    {
+        "name": "Cs1Br1O3",
+        "id": 28873
+    },
+    {
+        "name": "Pt2S2",
+        "id": 288
+    },
+    {
+        "name": "Sc1Sn1Au1",
+        "id": 2894
+    },
+    {
+        "name": "K2Li4As2",
+        "id": 28994
+    },
+    {
+        "name": "Li5Br2N1",
+        "id": 29025
+    },
+    {
+        "name": "K2Sb4",
+        "id": 29055
+    },
+    {
+        "name": "Ti1Cu4S4",
+        "id": 29091
+    },
+    {
+        "name": "K2Au2Se4",
+        "id": 29138
+    },
+    {
+        "name": "Li4N1Cl1",
+        "id": 29149
+    },
+    {
+        "name": "Li5N1Cl2",
+        "id": 29151
+    },
+    {
+        "name": "Ag4Te2S6",
+        "id": 29163
+    },
+    {
+        "name": "Y2Cu2O4",
+        "id": 2918
+    },
+    {
+        "name": "Ca1Mg2Bi2",
+        "id": 29208
+    },
+    {
+        "name": "Ba1Mg2Bi2",
+        "id": 29209
+    },
+    {
+        "name": "La2Al2O6",
+        "id": 2920
+    },
+    {
+        "name": "Cs2S2",
+        "id": 29266
+    },
+    {
+        "name": "Ca3P1Cl3",
+        "id": 29342
+    },
+    {
+        "name": "Li5Sb1O5",
+        "id": 29364
+    },
+    {
+        "name": "Cu4Pb2O4",
+        "id": 29396
+    },
+    {
+        "name": "Cs2Hf1I6",
+        "id": 29398
+    },
+    {
+        "name": "Ga1Cu1I4",
+        "id": 29403
+    },
+    {
+        "name": "Li4Be4N4",
+        "id": 29463
+    },
+    {
+        "name": "K4Hg1As2",
+        "id": 29484
+    },
+    {
+        "name": "Cs2Bi2O4",
+        "id": 29506
+    },
+    {
+        "name": "Rb2Bi2O4",
+        "id": 29521
+    },
+    {
+        "name": "Na2Sn2P2",
+        "id": 29529
+    },
+    {
+        "name": "K4Be1As2",
+        "id": 29584
+    },
+    {
+        "name": "K4Cd1As2",
+        "id": 29585
+    },
+    {
+        "name": "Mg2Si2P4",
+        "id": 2961
+    },
+    {
+        "name": "Na1N1O2",
+        "id": 2964
+    },
+    {
+        "name": "Ag1Bi1S2",
+        "id": 29678
+    },
+    {
+        "name": "Cs2Mg2Br6",
+        "id": 29750
+    },
+    {
+        "name": "Cs2Mg2I6",
+        "id": 29751
+    },
+    {
+        "name": "Sr2Li2N2",
+        "id": 29754
+    },
+    {
+        "name": "Zn4Ge4N8",
+        "id": 2979
+    },
+    {
+        "name": "Rb4Br2O1",
+        "id": 30004
+    },
+    {
+        "name": "Rb1Bi1S2",
+        "id": 30041
+    },
+    {
+        "name": "Cs1Ca1Br3",
+        "id": 30056
+    },
+    {
+        "name": "Cs2Pt1Br6",
+        "id": 30062
+    },
+    {
+        "name": "Y2Ag2O4",
+        "id": 30250
+    },
+    {
+        "name": "Y2Au2O4",
+        "id": 30251
+    },
+    {
+        "name": "Ca3B1N3",
+        "id": 30315
+    },
+    {
+        "name": "Rb1Au1",
+        "id": 30373
+    },
+    {
+        "name": "Al2Hg1Se4",
+        "id": 3038
+    },
+    {
+        "name": "K2Si1F6",
+        "id": 3042
+    },
+    {
+        "name": "Sr4Li4Bi4",
+        "id": 30456
+    },
+    {
+        "name": "Sc1Ni1Bi1",
+        "id": 30459
+    },
+    {
+        "name": "Y1Ni1Bi1",
+        "id": 30460
+    },
+    {
+        "name": "Ca8Ge4",
+        "id": 304
+    },
+    {
+        "name": "Li4C2O6",
+        "id": 3054
+    },
+    {
+        "name": "Na1Tl1O2",
+        "id": 3056
+    },
+    {
+        "name": "Na4C2O6",
+        "id": 3070
+    },
+    {
+        "name": "K4Ag4O4",
+        "id": 3074
+    },
+    {
+        "name": "Cd2Si2As4",
+        "id": 3078
+    },
+    {
+        "name": "Ti1Sn1Pt1",
+        "id": 30847
+    },
+    {
+        "name": "K2Bi2O4",
+        "id": 30988
+    },
+    {
+        "name": "Al2Cu2O4",
+        "id": 3098
+    },
+    {
+        "name": "Rb2Te5",
+        "id": 31002
+    },
+    {
+        "name": "Ba2Zr2N4",
+        "id": 3104
+    },
+    {
+        "name": "Ca3Bi1N1",
+        "id": 31149
+    },
+    {
+        "name": "K2Mg1F4",
+        "id": 31212
+    },
+    {
+        "name": "Ba3Na3Bi3",
+        "id": 31235
+    },
+    {
+        "name": "K3Zn2F7",
+        "id": 3125
+    },
+    {
+        "name": "Zr1Co1Bi1",
+        "id": 31451
+    },
+    {
+        "name": "Ta1Sb1Ru1",
+        "id": 31454
+    },
+    {
+        "name": "Li4Ca4N4",
+        "id": 31468
+    },
+    {
+        "name": "Al2Cd1Se4",
+        "id": 3159
+    },
+    {
+        "name": "Pb1F2",
+        "id": 315
+    },
+    {
+        "name": "Ba1Sn1O3",
+        "id": 3163
+    },
+    {
+        "name": "Hg2Ge1Se4",
+        "id": 3167
+    },
+    {
+        "name": "Li2Zr1N2",
+        "id": 3216
+    },
+    {
+        "name": "Ga4S6",
+        "id": 32616
+    },
+    {
+        "name": "B1As1O4",
+        "id": 3277
+    },
+    {
+        "name": "Cu1Br1",
+        "id": 32880
+    },
+    {
+        "name": "Cs3N3O6",
+        "id": 3288
+    },
+    {
+        "name": "Sr3Ti2O7",
+        "id": 3349
+    },
+    {
+        "name": "Li2Bi2S4",
+        "id": 33526
+    },
+    {
+        "name": "Ca4N2F2",
+        "id": 33588
+    },
+    {
+        "name": "Ba2Sn1O4",
+        "id": 3359
+    },
+    {
+        "name": "Sr2Se2O6",
+        "id": 3395
+    },
+    {
+        "name": "Cu4Sn1P10",
+        "id": 34126
+    },
+    {
+        "name": "Zn1In2Se4",
+        "id": 34169
+    },
+    {
+        "name": "Rb2Au2F8",
+        "id": 3419
+    },
+    {
+        "name": "Li4Al4O8",
+        "id": 3427
+    },
+    {
+        "name": "Cs2Ta2N4",
+        "id": 34293
+    },
+    {
+        "name": "Sc1Ni1Sb1",
+        "id": 3432
+    },
+    {
+        "name": "K1Mg1F3",
+        "id": 3448
+    },
+    {
+        "name": "Na3Hf1F7",
+        "id": 34579
+    },
+    {
+        "name": "K2Sn2As2",
+        "id": 3481
+    },
+    {
+        "name": "K2Sn2Sb2",
+        "id": 3486
+    },
+    {
+        "name": "Ca1H1N1",
+        "id": 34932
+    },
+    {
+        "name": "Na2Bi2Se4",
+        "id": 35015
+    },
+    {
+        "name": "Sr2H5Rh1",
+        "id": 35152
+    },
+    {
+        "name": "Zr4S4O4",
+        "id": 3519
+    },
+    {
+        "name": "P2H2N4",
+        "id": 35220
+    },
+    {
+        "name": "Li2P2N4",
+        "id": 3524
+    },
+    {
+        "name": "Mg1In2Te4",
+        "id": 35777
+    },
+    {
+        "name": "B1P1O4",
+        "id": 3589
+    },
+    {
+        "name": "Zn2Si2As4",
+        "id": 3595
+    },
+    {
+        "name": "P2N2O2",
+        "id": 36066
+    },
+    {
+        "name": "Li1Mg1P1",
+        "id": 36111
+    },
+    {
+        "name": "K1Ta1O3",
+        "id": 3614
+    },
+    {
+        "name": "Y2O2F2",
+        "id": 3637
+    },
+    {
+        "name": "Sc2Cu2O4",
+        "id": 3642
+    },
+    {
+        "name": "Sn1Hg1F6",
+        "id": 36508
+    },
+    {
+        "name": "Rb1Ca1F3",
+        "id": 3654
+    },
+    {
+        "name": "Na1H1S1",
+        "id": 36582
+    },
+    {
+        "name": "Li2Ta2O6",
+        "id": 3666
+    },
+    {
+        "name": "Cd2Ge2P4",
+        "id": 3668
+    },
+    {
+        "name": "Sr1Al2Te4",
+        "id": 37091
+    },
+    {
+        "name": "Cd1S1",
+        "id": 370
+    },
+    {
+        "name": "Ag1As1F6",
+        "id": 37153
+    },
+    {
+        "name": "Cd1Pb1F6",
+        "id": 37216
+    },
+    {
+        "name": "Li2Nb2O6",
+        "id": 3731
+    },
+    {
+        "name": "Na2Nb2O4",
+        "id": 3744
+    },
+    {
+        "name": "Al1Cu1O2",
+        "id": 3748
+    },
+    {
+        "name": "V1Cu3S4",
+        "id": 3762
+    },
+    {
+        "name": "Mg2Ti2O6",
+        "id": 3771
+    },
+    {
+        "name": "Cd1Ga2Se4",
+        "id": 3772
+    },
+    {
+        "name": "Li1Mg1N1",
+        "id": 37906
+    },
+    {
+        "name": "K1H1S1",
+        "id": 38011
+    },
+    {
+        "name": "Zn2Se2",
+        "id": 380
+    },
+    {
+        "name": "Hg1As2O6",
+        "id": 3810
+    },
+    {
+        "name": "Ba1Ga2Te4",
+        "id": 38117
+    },
+    {
+        "name": "Ba2Zr1S4",
+        "id": 3813
+    },
+    {
+        "name": "K2Pt1F6",
+        "id": 3821
+    },
+    {
+        "name": "Ba1Zr1O3",
+        "id": 3834
+    },
+    {
+        "name": "Ga2Cu2Te4",
+        "id": 3839
+    },
+    {
+        "name": "Mg2P8",
+        "id": 384
+    },
+    {
+        "name": "Ga4Te6",
+        "id": 38970
+    },
+    {
+        "name": "Ba1Hg1O2",
+        "id": 3915
+    },
+    {
+        "name": "Li2Nb2O4",
+        "id": 3924
+    },
+    {
+        "name": "Ca2C2O6",
+        "id": 3953
+    },
+    {
+        "name": "K2Ti1F6",
+        "id": 3970
+    },
+    {
+        "name": "Li1Sb1F6",
+        "id": 3980
+    },
+    {
+        "name": "K2Cu2O4",
+        "id": 3982
+    },
+    {
+        "name": "Li2Zr1F6",
+        "id": 4002
+    },
+    {
+        "name": "Ba2Pd2S4",
+        "id": 4009
+    },
+    {
+        "name": "Nb1Cu3Se4",
+        "id": 4043
+    },
+    {
+        "name": "Cs2Si1F6",
+        "id": 4047
+    },
+    {
+        "name": "Cd1Te1",
+        "id": 406
+    },
+    {
+        "name": "Ta1Cu3Se4",
+        "id": 4081
+    },
+    {
+        "name": "Ca1C1N2",
+        "id": 4124
+    },
+    {
+        "name": "Li4Zr2O6",
+        "id": 4156
+    },
+    {
+        "name": "Ta4N4O4",
+        "id": 4165
+    },
+    {
+        "name": "Zn2Sn2P4",
+        "id": 4175
+    },
+    {
+        "name": "Ge4N4O2",
+        "id": 4187
+    },
+    {
+        "name": "Ca2Sn2O6",
+        "id": 4190
+    },
+    {
+        "name": "Sc2P2O8",
+        "id": 4200
+    },
+    {
+        "name": "Be1S1",
+        "id": 422
+    },
+    {
+        "name": "Ba3Zn3O6",
+        "id": 4236
+    },
+    {
+        "name": "Ga1Cu1O2",
+        "id": 4280
+    },
+    {
+        "name": "K1Nb1O3",
+        "id": 4342
+    },
+    {
+        "name": "Sr2Pd1O3",
+        "id": 4359
+    },
+    {
+        "name": "Na2Cd2F6",
+        "id": 4360
+    },
+    {
+        "name": "Cd2C2O6",
+        "id": 4385
+    },
+    {
+        "name": "Rb3Au1O1",
+        "id": 4405
+    },
+    {
+        "name": "Ca2S2O8",
+        "id": 4406
+    },
+    {
+        "name": "Rb2Te1",
+        "id": 441
+    },
+    {
+        "name": "Cd1Ga2S4",
+        "id": 4452
+    },
+    {
+        "name": "Na2Sb2O6",
+        "id": 4482
+    },
+    {
+        "name": "K2Li2Te2",
+        "id": 4495
+    },
+    {
+        "name": "Si4N4O2",
+        "id": 4497
+    },
+    {
+        "name": "La2S1O2",
+        "id": 4511
+    },
+    {
+        "name": "Na2Nb2O6",
+        "id": 4514
+    },
+    {
+        "name": "Zn2Ge2P4",
+        "id": 4524
+    },
+    {
+        "name": "Na2N2O6",
+        "id": 4531
+    },
+    {
+        "name": "Na4Si2O6",
+        "id": 4533
+    },
+    {
+        "name": "La2Te1O2",
+        "id": 4547
+    },
+    {
+        "name": "Ca1As2O6",
+        "id": 4555
+    },
+    {
+        "name": "Li2Al2Te4",
+        "id": 4586
+    },
+    {
+        "name": "Hf2Si2O8",
+        "id": 4609
+    },
+    {
+        "name": "Co4As4S4",
+        "id": 4627
+    },
+    {
+        "name": "Sc1Cu1O2",
+        "id": 4636
+    },
+    {
+        "name": "K1F1",
+        "id": 463
+    },
+    {
+        "name": "Sr2Ti2O6",
+        "id": 4651
+    },
+    {
+        "name": "Cd2Si2P4",
+        "id": 4666
+    },
+    {
+        "name": "Al2F6",
+        "id": 468
+    },
+    {
+        "name": "K3Ta1O8",
+        "id": 4690
+    },
+    {
+        "name": "Ge2O4",
+        "id": 470
+    },
+    {
+        "name": "Zn2Si2P4",
+        "id": 4763
+    },
+    {
+        "name": "Ca1Sn1F6",
+        "id": 4782
+    },
+    {
+        "name": "Ga2Hg1S4",
+        "id": 4809
+    },
+    {
+        "name": "Zr2Si2O8",
+        "id": 4820
+    },
+    {
+        "name": "Na2Zn2P2",
+        "id": 4824
+    },
+    {
+        "name": "Ni2P4",
+        "id": 486
+    },
+    {
+        "name": "Mn2P8",
+        "id": 487
+    },
+    {
+        "name": "Na2Hg1O2",
+        "id": 4961
+    },
+    {
+        "name": "Al2Cu2S4",
+        "id": 4979
+    },
+    {
+        "name": "Li4Si2O6",
+        "id": 5012
+    },
+    {
+        "name": "Ba1Ti1O3",
+        "id": 5020
+    },
+    {
+        "name": "Cs2Ga2S4",
+        "id": 5038
+    },
+    {
+        "name": "In2H2O4",
+        "id": 504535
+    },
+    {
+        "name": "Be1S1O4",
+        "id": 5046
+    },
+    {
+        "name": "Cs2Pd1F6",
+        "id": 504729
+    },
+    {
+        "name": "Cs2P2S6",
+        "id": 504838
+    },
+    {
+        "name": "Li2Ga2Te4",
+        "id": 5048
+    },
+    {
+        "name": "Nb1Sb1Ru1",
+        "id": 505297
+    },
+    {
+        "name": "Cs4Te6",
+        "id": 505634
+    },
+    {
+        "name": "Cs2Pt1C2",
+        "id": 505825
+    },
+    {
+        "name": "Li5Re1O6",
+        "id": 5061
+    },
+    {
+        "name": "Rb2Hg1O2",
+        "id": 5072
+    },
+    {
+        "name": "Na1Li2Sb1",
+        "id": 5077
+    },
+    {
+        "name": "Sr2Zn2F8",
+        "id": 5078
+    },
+    {
+        "name": "Cs2Pd3S4",
+        "id": 510268
+    },
+    {
+        "name": "Cs2Sb2O4",
+        "id": 510273
+    },
+    {
+        "name": "Na6Al2P4",
+        "id": 5122
+    },
+    {
+        "name": "Li4Cu4O4",
+        "id": 5127
+    },
+    {
+        "name": "Y2P2O8",
+        "id": 5132
+    },
+    {
+        "name": "Na1In1O2",
+        "id": 5175
+    },
+    {
+        "name": "Cd2Sn2P4",
+        "id": 5213
+    },
+    {
+        "name": "Ga2Cu2S4",
+        "id": 5238
+    },
+    {
+        "name": "In2Ge2O7",
+        "id": 5280
+    },
+    {
+        "name": "La2Nb2O8",
+        "id": 5295
+    },
+    {
+        "name": "Cs2Na2Te2",
+        "id": 5339
+    },
+    {
+        "name": "Ga2Ag2S4",
+        "id": 5342
+    },
+    {
+        "name": "Mg2C2O6",
+        "id": 5348
+    },
+    {
+        "name": "Zn1Ga2S4",
+        "id": 5350
+    },
+    {
+        "name": "Y2Ta2O8",
+        "id": 5377
+    },
+    {
+        "name": "Ca4P2O1",
+        "id": 5380
+    },
+    {
+        "name": "La2S2F2",
+        "id": 5394
+    },
+    {
+        "name": "Ga4S6",
+        "id": 539
+    },
+    {
+        "name": "K2Pd1O2",
+        "id": 540584
+    },
+    {
+        "name": "Cs8S4",
+        "id": 540703
+    },
+    {
+        "name": "Cs2Te1I6",
+        "id": 540957
+    },
+    {
+        "name": "Cs2Cu2O2",
+        "id": 541037
+    },
+    {
+        "name": "Cs2Y2O4",
+        "id": 541044
+    },
+    {
+        "name": "Cs1Br1F6",
+        "id": 541226
+    },
+    {
+        "name": "Na2Sb2S4",
+        "id": 5414
+    },
+    {
+        "name": "Cs2Cd2Br6",
+        "id": 541899
+    },
+    {
+        "name": "Na2C1N2",
+        "id": 541989
+    },
+    {
+        "name": "Mg2P2O7",
+        "id": 5427
+    },
+    {
+        "name": "Cs2Pd1I2Br4",
+        "id": 543024
+    },
+    {
+        "name": "Ba2Te2O6",
+        "id": 5431
+    },
+    {
+        "name": "K1Na2Cu1O2",
+        "id": 545359
+    },
+    {
+        "name": "Ba2Sb2Cl2O4",
+        "id": 545500
+    },
+    {
+        "name": "Ba2Ta1Bi1O6",
+        "id": 545544
+    },
+    {
+        "name": "Y2Zn2As2O2",
+        "id": 546011
+    },
+    {
+        "name": "Sc2As2O8",
+        "id": 546125
+    },
+    {
+        "name": "Na1C1N1O1",
+        "id": 546500
+    },
+    {
+        "name": "Si2O4",
+        "id": 546794
+    },
+    {
+        "name": "Y2C1N2O2",
+        "id": 546864
+    },
+    {
+        "name": "Sr2Bi2Cl2O4",
+        "id": 547244
+    },
+    {
+        "name": "Na1Ta1N2",
+        "id": 5475
+    },
+    {
+        "name": "K2Sb2O6",
+        "id": 547792
+    },
+    {
+        "name": "Tl2Pd6O8",
+        "id": 5478
+    },
+    {
+        "name": "Rb1Al1F4",
+        "id": 5479
+    },
+    {
+        "name": "Li2In2O4",
+        "id": 5488
+    },
+    {
+        "name": "La2Zn2As2O2",
+        "id": 549589
+    },
+    {
+        "name": "Rb1Ge1I1O6",
+        "id": 549697
+    },
+    {
+        "name": "Ba2Ca1B2O6",
+        "id": 549737
+    },
+    {
+        "name": "Ba2Ca1Te1O6",
+        "id": 550685
+    },
+    {
+        "name": "Ba1Be1Si1O4",
+        "id": 550751
+    },
+    {
+        "name": "K2Li2Zn2O4",
+        "id": 551092
+    },
+    {
+        "name": "Sr4I4O2",
+        "id": 551203
+    },
+    {
+        "name": "Ba2Bi2I2O4",
+        "id": 551243
+    },
+    {
+        "name": "Ba2La1Sb1O6",
+        "id": 551269
+    },
+    {
+        "name": "Ba2Cu1Cl1O2",
+        "id": 551456
+    },
+    {
+        "name": "Ba4I4O2",
+        "id": 551835
+    },
+    {
+        "name": "Ca4Bi2O1",
+        "id": 551873
+    },
+    {
+        "name": "Ga2Ag2Se4",
+        "id": 5518
+    },
+    {
+        "name": "Sr2Bi2Br2O4",
+        "id": 552234
+    },
+    {
+        "name": "La2Cu2Se2O2",
+        "id": 552488
+    },
+    {
+        "name": "Sr2Cu1Br1O2",
+        "id": 552537
+    },
+    {
+        "name": "Sr2Bi2I2O4",
+        "id": 552547
+    },
+    {
+        "name": "Li1Sc1As2O7",
+        "id": 552663
+    },
+    {
+        "name": "Ba2Bi2Cl2O4",
+        "id": 552806
+    },
+    {
+        "name": "Ba2Cu1Br1O2",
+        "id": 552934
+    },
+    {
+        "name": "Ca2Bi2Cl2O4",
+        "id": 553025
+    },
+    {
+        "name": "Ba2La1Nb1O6",
+        "id": 553281
+    },
+    {
+        "name": "Sr2Ti1O4",
+        "id": 5532
+    },
+    {
+        "name": "Cs1Cu3O2",
+        "id": 553303
+    },
+    {
+        "name": "Cs2Cu2O4",
+        "id": 553310
+    },
+    {
+        "name": "Cs1Be2B1O3F2",
+        "id": 553342
+    },
+    {
+        "name": "Cs4Sb2O5",
+        "id": 553374
+    },
+    {
+        "name": "Zr2S1N2",
+        "id": 553875
+    },
+    {
+        "name": "Sc2Nb2O8",
+        "id": 553961
+    },
+    {
+        "name": "K1Sb1P2O8",
+        "id": 554155
+    },
+    {
+        "name": "Rb1Ta1P2O8",
+        "id": 554412
+    },
+    {
+        "name": "K1Rb2Bi1F6",
+        "id": 554941
+    },
+    {
+        "name": "Ba1Ag2Sn1S4",
+        "id": 555166
+    },
+    {
+        "name": "Cs1Nb1P2O8",
+        "id": 555286
+    },
+    {
+        "name": "Zn4S4",
+        "id": 555410
+    },
+    {
+        "name": "Zn3S3",
+        "id": 555763
+    },
+    {
+        "name": "Li2As2S4",
+        "id": 555874
+    },
+    {
+        "name": "Rb1Tl1S2O8",
+        "id": 556120
+    },
+    {
+        "name": "La2C2N4F2",
+        "id": 556405
+    },
+    {
+        "name": "Ag4Hg2S2I4",
+        "id": 556866
+    },
+    {
+        "name": "Rb2P2S6",
+        "id": 556953
+    },
+    {
+        "name": "Cs2Tl1Bi1F6",
+        "id": 557664
+    },
+    {
+        "name": "Rb2S2",
+        "id": 558071
+    },
+    {
+        "name": "Be3F6",
+        "id": 558118
+    },
+    {
+        "name": "Ba1B2F8",
+        "id": 558430
+    },
+    {
+        "name": "Sc2Ta2O8",
+        "id": 558781
+    },
+    {
+        "name": "Ba1Si1F6",
+        "id": 5588
+    },
+    {
+        "name": "Sc1F3",
+        "id": 559092
+    },
+    {
+        "name": "Sc2Si2O7",
+        "id": 5594
+    },
+    {
+        "name": "Cs2Rb1Bi1F6",
+        "id": 559695
+    },
+    {
+        "name": "Rb2Na1Bi1F6",
+        "id": 560037
+    },
+    {
+        "name": "Cs2Cd2Au2S4",
+        "id": 560558
+    },
+    {
+        "name": "Zn2S2",
+        "id": 560588
+    },
+    {
+        "name": "Cs2Na1Bi1F6",
+        "id": 560790
+    },
+    {
+        "name": "Cs2Na2Ti2O6",
+        "id": 560791
+    },
+    {
+        "name": "Cs2K1Rh1F6",
+        "id": 561561
+    },
+    {
+        "name": "Cs1La1S2",
+        "id": 561586
+    },
+    {
+        "name": "Cs2Sn2S6",
+        "id": 561710
+    },
+    {
+        "name": "Cs3Tl1F6",
+        "id": 561827
+    },
+    {
+        "name": "Mg2As2O7",
+        "id": 5618
+    },
+    {
+        "name": "Cs2Ag6S4",
+        "id": 561902
+    },
+    {
+        "name": "Cs1Hg1F3",
+        "id": 561947
+    },
+    {
+        "name": "Nb1Cu3S4",
+        "id": 5621
+    },
+    {
+        "name": "Y2Si2O7",
+        "id": 5652
+    },
+    {
+        "name": "La2N2",
+        "id": 567290
+    },
+    {
+        "name": "La2C2N4Cl2",
+        "id": 567373
+    },
+    {
+        "name": "Cs2Ag2Cl4",
+        "id": 567558
+    },
+    {
+        "name": "V1Fe1Sb1",
+        "id": 567636
+    },
+    {
+        "name": "Cs2Li1Y1Cl6",
+        "id": 567652
+    },
+    {
+        "name": "Sr2C1N2Cl2",
+        "id": 567655
+    },
+    {
+        "name": "Ba6Bi2N2",
+        "id": 567666
+    },
+    {
+        "name": "Ba3Cl6",
+        "id": 567680
+    },
+    {
+        "name": "Sr4Br8",
+        "id": 567744
+    },
+    {
+        "name": "Cs2Ag1Au1Cl6",
+        "id": 567776
+    },
+    {
+        "name": "Be24P16",
+        "id": 567841
+    },
+    {
+        "name": "Cs2Au2Se6",
+        "id": 567913
+    },
+    {
+        "name": "Rb2Sb4",
+        "id": 568018
+    },
+    {
+        "name": "Cd1In2Se4",
+        "id": 568032
+    },
+    {
+        "name": "K4Ga6",
+        "id": 568052
+    },
+    {
+        "name": "Li2I2",
+        "id": 568273
+    },
+    {
+        "name": "Sr4I8",
+        "id": 568284
+    },
+    {
+        "name": "Ba3I6",
+        "id": 568536
+    },
+    {
+        "name": "Cs1Cd1Cl3",
+        "id": 568544
+    },
+    {
+        "name": "Tl1Br1",
+        "id": 568560
+    },
+    {
+        "name": "Si5C5",
+        "id": 568619
+    },
+    {
+        "name": "Cd1In2Se4",
+        "id": 568661
+    },
+    {
+        "name": "Ba1Cl2",
+        "id": 568662
+    },
+    {
+        "name": "Rb2Au2I6",
+        "id": 568666
+    },
+    {
+        "name": "K2Sn1Hg1Se4",
+        "id": 568968
+    },
+    {
+        "name": "Rb2Sn1Br6",
+        "id": 569028
+    },
+    {
+        "name": "K2Te1Cl6",
+        "id": 569149
+    },
+    {
+        "name": "Cu2I2",
+        "id": 569346
+    },
+    {
+        "name": "Rb2Au2Cl8",
+        "id": 569442
+    },
+    {
+        "name": "Cs2Au2Br6",
+        "id": 569548
+    },
+    {
+        "name": "Nb6Sb4Te10",
+        "id": 569571
+    },
+    {
+        "name": "Tl1Cl1",
+        "id": 569639
+    },
+    {
+        "name": "Sr2I1N1",
+        "id": 569677
+    },
+    {
+        "name": "Sc1Sb1Pd1",
+        "id": 569779
+    },
+    {
+        "name": "Ba2N6Cl2",
+        "id": 569812
+    },
+    {
+        "name": "Sr3Bi1N1",
+        "id": 570008
+    },
+    {
+        "name": "Sr1Li4P2",
+        "id": 570097
+    },
+    {
+        "name": "Li1Mg1Bi1",
+        "id": 570213
+    },
+    {
+        "name": "Ag2Hg1I4",
+        "id": 570256
+    },
+    {
+        "name": "Rb2Te1Br6",
+        "id": 570324
+    },
+    {
+        "name": "Cu1Br1",
+        "id": 570354
+    },
+    {
+        "name": "Sr1Al1Si1H1",
+        "id": 570485
+    },
+    {
+        "name": "Na1N3",
+        "id": 570538
+    },
+    {
+        "name": "Cs2As2F8",
+        "id": 5707
+    },
+    {
+        "name": "Ga12Os4",
+        "id": 570844
+    },
+    {
+        "name": "K1Br1",
+        "id": 570891
+    },
+    {
+        "name": "Li2I2",
+        "id": 570935
+    },
+    {
+        "name": "Ba1Al1Si1H1",
+        "id": 571093
+    },
+    {
+        "name": "Tl1I1",
+        "id": 571102
+    },
+    {
+        "name": "Cs2K1Sc1Cl6",
+        "id": 571124
+    },
+    {
+        "name": "Ca2Br4",
+        "id": 571166
+    },
+    {
+        "name": "Cs1Br1",
+        "id": 571222
+    },
+    {
+        "name": "Ca4Zn4Cu2P6",
+        "id": 571306
+    },
+    {
+        "name": "Cu1Cl1",
+        "id": 571386
+    },
+    {
+        "name": "K4Zn1As2",
+        "id": 571461
+    },
+    {
+        "name": "Cs2Na1Y1Br6",
+        "id": 571467
+    },
+    {
+        "name": "Cs2K1Bi1F6",
+        "id": 573204
+    },
+    {
+        "name": "Cs6B2As4",
+        "id": 573658
+    },
+    {
+        "name": "Cs1Cl1",
+        "id": 573697
+    },
+    {
+        "name": "Cs4Si2As4",
+        "id": 573721
+    },
+    {
+        "name": "Cs2Te2Au2",
+        "id": 573755
+    },
+    {
+        "name": "Cs8Te4",
+        "id": 573763
+    },
+    {
+        "name": "Cs2Au2Se2",
+        "id": 574599
+    },
+    {
+        "name": "Al2Ag2S4",
+        "id": 5782
+    },
+    {
+        "name": "Na4Ge2O6",
+        "id": 5784
+    },
+    {
+        "name": "Ca1Mg2N2",
+        "id": 5795
+    },
+    {
+        "name": "Cs1K2Sb1",
+        "id": 581024
+    },
+    {
+        "name": "Rb1N3",
+        "id": 581833
+    },
+    {
+        "name": "Li2Sc2O4",
+        "id": 5840
+    },
+    {
+        "name": "Li2Si4N6",
+        "id": 5853
+    },
+    {
+        "name": "Cd1Pt1F6",
+        "id": 5858
+    },
+    {
+        "name": "K2Hg1O2",
+        "id": 5860
+    },
+    {
+        "name": "K1Zn1F3",
+        "id": 5878
+    },
+    {
+        "name": "Ga2F6",
+        "id": 588
+    },
+    {
+        "name": "Al2Cd1S4",
+        "id": 5928
+    },
+    {
+        "name": "Na1Sb1F6",
+        "id": 5955
+    },
+    {
+        "name": "Na2Mg2As2",
+        "id": 5962
+    },
+    {
+        "name": "Ti1Co1Sb1",
+        "id": 5967
+    },
+    {
+        "name": "Ba1Ti1O3",
+        "id": 5986
+    },
+    {
+        "name": "Na2Mg1C2O6",
+        "id": 6026
+    },
+    {
+        "name": "Te4Mo2",
+        "id": 602
+    },
+    {
+        "name": "K2Na1Sc1F6",
+        "id": 6058
+    },
+    {
+        "name": "Cs2K1Y1F6",
+        "id": 6059
+    },
+    {
+        "name": "Cs2Sn1Cl6",
+        "id": 608555
+    },
+    {
+        "name": "La2Cu2S2O2",
+        "id": 6088
+    },
+    {
+        "name": "Cs1I1",
+        "id": 614603
+    },
+    {
+        "name": "Cs2Sn2I6",
+        "id": 616378
+    },
+    {
+        "name": "Cs2Na1Sc1F6",
+        "id": 6204
+    },
+    {
+        "name": "Ti1Cd1F6",
+        "id": 623024
+    },
+    {
+        "name": "Cs2H2O2",
+        "id": 625136
+    },
+    {
+        "name": "Y2H2O4",
+        "id": 626151
+    },
+    {
+        "name": "Rb2H2O2",
+        "id": 626620
+    },
+    {
+        "name": "La2H2O4",
+        "id": 626724
+    },
+    {
+        "name": "K2H2O2",
+        "id": 626785
+    },
+    {
+        "name": "Ba2Li1Re1O6",
+        "id": 6270
+    },
+    {
+        "name": "Cs1H1",
+        "id": 632319
+    },
+    {
+        "name": "Na2H2S2",
+        "id": 634657
+    },
+    {
+        "name": "K2H2S2",
+        "id": 634676
+    },
+    {
+        "name": "Rb2S2O4F2",
+        "id": 6384
+    },
+    {
+        "name": "Cs2Zr1Cl6",
+        "id": 638729
+    },
+    {
+        "name": "Zn1Cu2Ge1S4",
+        "id": 6408
+    },
+    {
+        "name": "Cs2Sn1Br6",
+        "id": 641923
+    },
+    {
+        "name": "K2P2H4O4",
+        "id": 642648
+    },
+    {
+        "name": "Ca2H2Cl2O2",
+        "id": 642725
+    },
+    {
+        "name": "Mg2H6Os1",
+        "id": 643002
+    },
+    {
+        "name": "Rb2H6Pt1",
+        "id": 643101
+    },
+    {
+        "name": "Cs2H6Pt1",
+        "id": 643243
+    },
+    {
+        "name": "K2H4Pd1",
+        "id": 643257
+    },
+    {
+        "name": "Na2H4Pd1",
+        "id": 643260
+    },
+    {
+        "name": "Ba1Mg2Fe1H8",
+        "id": 643264
+    },
+    {
+        "name": "K2H6Pt1",
+        "id": 643279
+    },
+    {
+        "name": "Ba2Mg1H6",
+        "id": 643370
+    },
+    {
+        "name": "Cs1Ca1H3",
+        "id": 644203
+    },
+    {
+        "name": "K4Li2Al2P4",
+        "id": 6450
+    },
+    {
+        "name": "Ca1Mg1C2O6",
+        "id": 6459
+    },
+    {
+        "name": "Na2S1",
+        "id": 648
+    },
+    {
+        "name": "Ba2Y1Sb1O6",
+        "id": 6492
+    },
+    {
+        "name": "K2Ca1C2O6",
+        "id": 6494
+    },
+    {
+        "name": "K2S2O4F2",
+        "id": 6560
+    },
+    {
+        "name": "K2Na1Al1F6",
+        "id": 6586
+    },
+    {
+        "name": "Ba2Y1Ta1O6",
+        "id": 6613
+    },
+    {
+        "name": "Al2N2",
+        "id": 661
+    },
+    {
+        "name": "Cs2Li1Ga1F6",
+        "id": 6654
+    },
+    {
+        "name": "Ba2Na2B2O6",
+        "id": 6660
+    },
+    {
+        "name": "K2Na1In1F6",
+        "id": 6686
+    },
+    {
+        "name": "C2",
+        "id": 66
+    },
+    {
+        "name": "Cd2S2",
+        "id": 672
+    },
+    {
+        "name": "Cs1P1F6",
+        "id": 675011
+    },
+    {
+        "name": "Na3Y1Cl6",
+        "id": 675104
+    },
+    {
+        "name": "Na2La2S4",
+        "id": 675230
+    },
+    {
+        "name": "Na2Bi2S4",
+        "id": 675531
+    },
+    {
+        "name": "Y1Cu1Se2",
+        "id": 675902
+    },
+    {
+        "name": "Y2Ag2Se4",
+        "id": 676284
+    },
+    {
+        "name": "Cd3As1I3",
+        "id": 676464
+    },
+    {
+        "name": "Al1Sb1O4",
+        "id": 676861
+    },
+    {
+        "name": "Ga1P1O4",
+        "id": 677335
+    },
+    {
+        "name": "Ba2Na1Re1O6",
+        "id": 6798
+    },
+    {
+        "name": "Na1F1",
+        "id": 682
+    },
+    {
+        "name": "Ag1I1",
+        "id": 684580
+    },
+    {
+        "name": "Sc4Se6",
+        "id": 684690
+    },
+    {
+        "name": "Sc4S6",
+        "id": 684969
+    },
+    {
+        "name": "Ba2S4",
+        "id": 684
+    },
+    {
+        "name": "K1Ca1C1O3F1",
+        "id": 6867
+    },
+    {
+        "name": "K1Be2B1O3F2",
+        "id": 6870
+    },
+    {
+        "name": "Na2H6Pt1",
+        "id": 690785
+    },
+    {
+        "name": "K1N1O3",
+        "id": 6920
+    },
+    {
+        "name": "Ca2As2O7",
+        "id": 6929
+    },
+    {
+        "name": "Si3O6",
+        "id": 6930
+    },
+    {
+        "name": "Si2O4",
+        "id": 6947
+    },
+    {
+        "name": "In2F6",
+        "id": 6949
+    },
+    {
+        "name": "Rb1Cd1F3",
+        "id": 6951
+    },
+    {
+        "name": "Rb4Si2As4",
+        "id": 6960
+    },
+    {
+        "name": "Rb2H2S2",
+        "id": 696804
+    },
+    {
+        "name": "Mg2H6Ru1",
+        "id": 697030
+    },
+    {
+        "name": "Ba2H6Ru1",
+        "id": 697038
+    },
+    {
+        "name": "Ba2H6Os1",
+        "id": 697044
+    },
+    {
+        "name": "Na2H4Pt1",
+        "id": 697096
+    },
+    {
+        "name": "Cs2Ca1H4",
+        "id": 697133
+    },
+    {
+        "name": "Rb2H4N2",
+        "id": 697144
+    },
+    {
+        "name": "Y1Cu1O2",
+        "id": 6972
+    },
+    {
+        "name": "Cs2Na2S2",
+        "id": 6973
+    },
+    {
+        "name": "Sc1Cu1S2",
+        "id": 6980
+    },
+    {
+        "name": "Na4Ag4O4",
+        "id": 6983
+    },
+    {
+        "name": "K4Si2As4",
+        "id": 6984
+    },
+    {
+        "name": "Ba2Se2O6",
+        "id": 6989
+    },
+    {
+        "name": "Si3O6",
+        "id": 7000
+    },
+    {
+        "name": "Na1Nb1N2",
+        "id": 7017
+    },
+    {
+        "name": "In2B2O6",
+        "id": 7027
+    },
+    {
+        "name": "Ca1Hg1O2",
+        "id": 7041
+    },
+    {
+        "name": "La2Zn2P2O2",
+        "id": 7060
+    },
+    {
+        "name": "Ca1Cd2As2",
+        "id": 7067
+    },
+    {
+        "name": "K2Au2S2",
+        "id": 7077
+    },
+    {
+        "name": "K2Mg2Sb2",
+        "id": 7089
+    },
+    {
+        "name": "Na2Mg2Sb2",
+        "id": 7090
+    },
+    {
+        "name": "La2O2F2",
+        "id": 7100
+    },
+    {
+        "name": "Cs1Ca1F3",
+        "id": 7104
+    },
+    {
+        "name": "Cd1As2O6",
+        "id": 7128
+    },
+    {
+        "name": "Si2C2",
+        "id": 7140
+    },
+    {
+        "name": "K2Sr1Ta2O7",
+        "id": 7148
+    },
+    {
+        "name": "Sc1Sb1Pt1",
+        "id": 7173
+    },
+    {
+        "name": "Rb1La1Se2",
+        "id": 7176
+    },
+    {
+        "name": "Al2Os1",
+        "id": 7188
+    },
+    {
+        "name": "Na4Zr2Se6",
+        "id": 7219
+    },
+    {
+        "name": "Cs2Hg1O2",
+        "id": 7232
+    },
+    {
+        "name": "La2Se1O2",
+        "id": 7233
+    },
+    {
+        "name": "Ba2Y1Nb1O6",
+        "id": 7251
+    },
+    {
+        "name": "Cs2Sn1F6",
+        "id": 7297
+    },
+    {
+        "name": "P8Pt4",
+        "id": 730
+    },
+    {
+        "name": "Rb1Be2B1O3F2",
+        "id": 7323
+    },
+    {
+        "name": "Ge3O6",
+        "id": 733
+    },
+    {
+        "name": "Li6P2",
+        "id": 736
+    },
+    {
+        "name": "Ba2Cu4O4",
+        "id": 7374
+    },
+    {
+        "name": "K1Nb1O3",
+        "id": 7375
+    },
+    {
+        "name": "Na4Ag2Sb2",
+        "id": 7392
+    },
+    {
+        "name": "Ba1Ag2Ge1S4",
+        "id": 7394
+    },
+    {
+        "name": "K2Zn2As2",
+        "id": 7421
+    },
+    {
+        "name": "K2Cu2Te2",
+        "id": 7436
+    },
+    {
+        "name": "K2Zn2P2",
+        "id": 7437
+    },
+    {
+        "name": "K2Zn2Sb2",
+        "id": 7438
+    },
+    {
+        "name": "K3Cu3P2",
+        "id": 7439
+    },
+    {
+        "name": "Rb2N6",
+        "id": 743
+    },
+    {
+        "name": "Rb4S6",
+        "id": 7446
+    },
+    {
+        "name": "Rb4Se6",
+        "id": 7447
+    },
+    {
+        "name": "Cs4Se6",
+        "id": 7449
+    },
+    {
+        "name": "Sn4F8",
+        "id": 7457
+    },
+    {
+        "name": "Rb2Cu2O4",
+        "id": 7467
+    },
+    {
+        "name": "Na4Cu4O4",
+        "id": 7469
+    },
+    {
+        "name": "Rb4Cu4O4",
+        "id": 7470
+    },
+    {
+        "name": "Rb2Au2O4",
+        "id": 7472
+    },
+    {
+        "name": "Rb1Hg1F3",
+        "id": 7482
+    },
+    {
+        "name": "K4P4Pd2",
+        "id": 7505
+    },
+    {
+        "name": "Rb1N1O3",
+        "id": 752446
+    },
+    {
+        "name": "Rb3N3O6",
+        "id": 752580
+    },
+    {
+        "name": "Y2Se1O2",
+        "id": 752658
+    },
+    {
+        "name": "Ti2Bi4O10",
+        "id": 752676
+    },
+    {
+        "name": "Li1Cu1F2",
+        "id": 753098
+    },
+    {
+        "name": "La1Ag1O2",
+        "id": 753260
+    },
+    {
+        "name": "Ca1Cd1O2",
+        "id": 753287
+    },
+    {
+        "name": "Sc4Ti2O10",
+        "id": 753401
+    },
+    {
+        "name": "P2N2O2",
+        "id": 753671
+    },
+    {
+        "name": "Ta3O7F1",
+        "id": 753747
+    },
+    {
+        "name": "Sc2Ti2O7",
+        "id": 753802
+    },
+    {
+        "name": "Li1Co1S2",
+        "id": 753946
+    },
+    {
+        "name": "Y2H2O4",
+        "id": 754117
+    },
+    {
+        "name": "Sr1As2O6",
+        "id": 754118
+    },
+    {
+        "name": "Ba1Sr2I6",
+        "id": 754212
+    },
+    {
+        "name": "Na1Ag1O2",
+        "id": 754326
+    },
+    {
+        "name": "Cd2Sn2O6",
+        "id": 754329
+    },
+    {
+        "name": "Ba2Hf1O4",
+        "id": 754363
+    },
+    {
+        "name": "Na2Sb2O4",
+        "id": 754368
+    },
+    {
+        "name": "Sr1Ca2I6",
+        "id": 754517
+    },
+    {
+        "name": "La2Ag2O4",
+        "id": 754535
+    },
+    {
+        "name": "Rb2Ga2O4",
+        "id": 754596
+    },
+    {
+        "name": "Sr2Ca1I6",
+        "id": 754710
+    },
+    {
+        "name": "Ba2Se4",
+        "id": 7547
+    },
+    {
+        "name": "Cs2Sc2O4",
+        "id": 754826
+    },
+    {
+        "name": "Ba2Se6",
+        "id": 7548
+    },
+    {
+        "name": "Li5Ta1O5",
+        "id": 755013
+    },
+    {
+        "name": "Ca3Cd1O4",
+        "id": 755287
+    },
+    {
+        "name": "Sr4Sb2O1",
+        "id": 755293
+    },
+    {
+        "name": "Li3Nb1S4",
+        "id": 755309
+    },
+    {
+        "name": "Cd2Bi2O6",
+        "id": 755478
+    },
+    {
+        "name": "Na2La2O4",
+        "id": 755586
+    },
+    {
+        "name": "Y2Te1O2",
+        "id": 755756
+    },
+    {
+        "name": "Ba3Zr2O7",
+        "id": 755895
+    },
+    {
+        "name": "In2P2O8",
+        "id": 7566
+    },
+    {
+        "name": "K1As1F6",
+        "id": 7569
+    },
+    {
+        "name": "Mg2S2O8",
+        "id": 7572
+    },
+    {
+        "name": "Li1Zn1N1",
+        "id": 7575
+    },
+    {
+        "name": "Li6As2",
+        "id": 757
+    },
+    {
+        "name": "Mo1Se2",
+        "id": 7581
+    },
+    {
+        "name": "Nb4N4O4",
+        "id": 7596
+    },
+    {
+        "name": "Li3V1S4",
+        "id": 760375
+    },
+    {
+        "name": "Na5Bi1O5",
+        "id": 760400
+    },
+    {
+        "name": "Rb4I2O1",
+        "id": 760417
+    },
+    {
+        "name": "Mg3N1F3",
+        "id": 7604
+    },
+    {
+        "name": "Li2Pd1O2",
+        "id": 7608
+    },
+    {
+        "name": "Fe2Se4",
+        "id": 760
+    },
+    {
+        "name": "Li2Ca1Si1O4",
+        "id": 7610
+    },
+    {
+        "name": "Li2Ca1Ge1O4",
+        "id": 7611
+    },
+    {
+        "name": "Cs3Y1F6",
+        "id": 7618
+    },
+    {
+        "name": "K2S2O8",
+        "id": 7622
+    },
+    {
+        "name": "Si6C6",
+        "id": 7631
+    },
+    {
+        "name": "Na4Cu2P2",
+        "id": 7639
+    },
+    {
+        "name": "K4Ag2As2",
+        "id": 7642
+    },
+    {
+        "name": "K4Ag2Sb2",
+        "id": 7643
+    },
+    {
+        "name": "Rb2Sc2O4",
+        "id": 7650
+    },
+    {
+        "name": "K4S6",
+        "id": 7667
+    },
+    {
+        "name": "As4Ru2",
+        "id": 766
+    },
+    {
+        "name": "K4Se6",
+        "id": 7670
+    },
+    {
+        "name": "K4I2O1",
+        "id": 768368
+    },
+    {
+        "name": "Tl3As1Se3",
+        "id": 7684
+    },
+    {
+        "name": "Li2Sb2O6",
+        "id": 770932
+    },
+    {
+        "name": "Li4Ag4O4",
+        "id": 772290
+    },
+    {
+        "name": "K2Ca2Bi2",
+        "id": 773137
+    },
+    {
+        "name": "La2Se2F2",
+        "id": 7738
+    },
+    {
+        "name": "K1Li1Zn1S2",
+        "id": 774907
+    },
+    {
+        "name": "Sr3Sb1N1",
+        "id": 7752
+    },
+    {
+        "name": "Hf2O4",
+        "id": 776532
+    },
+    {
+        "name": "Sr1Zn2As2",
+        "id": 7770
+    },
+    {
+        "name": "Na4As2Au2",
+        "id": 7773
+    },
+    {
+        "name": "Na4Sb2Au2",
+        "id": 7774
+    },
+    {
+        "name": "Cs1Cu3S2",
+        "id": 7786
+    },
+    {
+        "name": "Ca2Ge2N4",
+        "id": 7801
+    },
+    {
+        "name": "Ba2P6",
+        "id": 7808
+    },
+    {
+        "name": "K2Ge1F6",
+        "id": 7825
+    },
+    {
+        "name": "Al1P1O4",
+        "id": 7848
+    },
+    {
+        "name": "Al1As1O4",
+        "id": 7849
+    },
+    {
+        "name": "Rb2Sn2O3",
+        "id": 7863
+    },
+    {
+        "name": "Cs2Rb1Y1F6",
+        "id": 7886
+    },
+    {
+        "name": "Mg3As2",
+        "id": 7891
+    },
+    {
+        "name": "Rb2O2",
+        "id": 7895
+    },
+    {
+        "name": "Cs2O2",
+        "id": 7896
+    },
+    {
+        "name": "Cs2Zr1F6",
+        "id": 7903
+    },
+    {
+        "name": "Al2Hg1S4",
+        "id": 7906
+    },
+    {
+        "name": "Al2Zn1Se4",
+        "id": 7907
+    },
+    {
+        "name": "Al2Zn1Te4",
+        "id": 7908
+    },
+    {
+        "name": "Al2Cd1Te4",
+        "id": 7909
+    },
+    {
+        "name": "Al2Hg1Te4",
+        "id": 7910
+    },
+    {
+        "name": "K4Cu4O4",
+        "id": 7911
+    },
+    {
+        "name": "Na1Sc1O2",
+        "id": 7914
+    },
+    {
+        "name": "Mg1Pd1F6",
+        "id": 7921
+    },
+    {
+        "name": "Ca1Pd1F6",
+        "id": 7922
+    },
+    {
+        "name": "K2Pt1S2",
+        "id": 7928
+    },
+    {
+        "name": "Rb2Pt1S2",
+        "id": 7929
+    },
+    {
+        "name": "Sr6P6",
+        "id": 7931
+    },
+    {
+        "name": "Li2Nb2S4",
+        "id": 7936
+    },
+    {
+        "name": "Na2Nb2S4",
+        "id": 7937
+    },
+    {
+        "name": "K2Nb2S4",
+        "id": 7938
+    },
+    {
+        "name": "Na2Nb2Se4",
+        "id": 7939
+    },
+    {
+        "name": "K2Nb2Se4",
+        "id": 7940
+    },
+    {
+        "name": "Li6Sb2",
+        "id": 7955
+    },
+    {
+        "name": "Na6Sb2",
+        "id": 7956
+    },
+    {
+        "name": "K1La1O2",
+        "id": 7958
+    },
+    {
+        "name": "Rb1La1O2",
+        "id": 7972
+    },
+    {
+        "name": "K2Pd1F6",
+        "id": 7979
+    },
+    {
+        "name": "Cs2O1",
+        "id": 7988
+    },
+    {
+        "name": "Sr1Sn1B2O6",
+        "id": 8000
+    },
+    {
+        "name": "Al2Cu2Se4",
+        "id": 8016
+    },
+    {
+        "name": "Al2Cu2Te4",
+        "id": 8017
+    },
+    {
+        "name": "Al1F3",
+        "id": 8039
+    },
+    {
+        "name": "Rb2S1",
+        "id": 8041
+    },
+    {
+        "name": "Zr2Ge2O8",
+        "id": 8042
+    },
+    {
+        "name": "Ga2N2",
+        "id": 804
+    },
+    {
+        "name": "Y2As2O8",
+        "id": 8058
+    },
+    {
+        "name": "Si1C1",
+        "id": 8062
+    },
+    {
+        "name": "In2Ga2O6",
+        "id": 8098
+    },
+    {
+        "name": "K2Mg1C2O6",
+        "id": 8127
+    },
+    {
+        "name": "Rb1Sc1O2",
+        "id": 8145
+    },
+    {
+        "name": "K4As4Pd2",
+        "id": 8147
+    },
+    {
+        "name": "Ca2Pd2F8",
+        "id": 8161
+    },
+    {
+        "name": "K1Tl1O2",
+        "id": 8175
+    },
+    {
+        "name": "Rb1Tl1O2",
+        "id": 8176
+    },
+    {
+        "name": "Hg1F2",
+        "id": 8177
+    },
+    {
+        "name": "Li2N2O6",
+        "id": 8180
+    },
+    {
+        "name": "K4Zn2O4",
+        "id": 8187
+    },
+    {
+        "name": "K1Sc1O2",
+        "id": 8188
+    },
+    {
+        "name": "Rb2Pt1F6",
+        "id": 8192
+    },
+    {
+        "name": "Ag4P8",
+        "id": 8200
+    },
+    {
+        "name": "Zn1Pt3O6",
+        "id": 8207
+    },
+    {
+        "name": "Mg1Pt3O6",
+        "id": 8208
+    },
+    {
+        "name": "Cd1Pt3O6",
+        "id": 8212
+    },
+    {
+        "name": "Cs2Ge1F6",
+        "id": 8217
+    },
+    {
+        "name": "Ca1Sn1F6",
+        "id": 8224
+    },
+    {
+        "name": "K4Si2P4",
+        "id": 8235
+    },
+    {
+        "name": "Ca1Pt1F6",
+        "id": 8255
+    },
+    {
+        "name": "Zn1Pt1F6",
+        "id": 8256
+    },
+    {
+        "name": "Na4Zn2S4",
+        "id": 8257
+    },
+    {
+        "name": "K4P6",
+        "id": 8262
+    },
+    {
+        "name": "K2P2S6",
+        "id": 8267
+    },
+    {
+        "name": "Sr1Zn2P2",
+        "id": 8276
+    },
+    {
+        "name": "Sr1Cd2P2",
+        "id": 8277
+    },
+    {
+        "name": "Ba1Mg2P2",
+        "id": 8278
+    },
+    {
+        "name": "Ba1Cd2P2",
+        "id": 8279
+    },
+    {
+        "name": "K2N6",
+        "id": 827
+    },
+    {
+        "name": "Ba1Mg2As2",
+        "id": 8280
+    },
+    {
+        "name": "Sn2F6",
+        "id": 8289
+    },
+    {
+        "name": "Ba1Ti1F6",
+        "id": 8291
+    },
+    {
+        "name": "Sr4P2O1",
+        "id": 8298
+    },
+    {
+        "name": "Sr4As2O1",
+        "id": 8299
+    },
+    {
+        "name": "Ba4As2O1",
+        "id": 8300
+    },
+    {
+        "name": "Ga1N1",
+        "id": 830
+    },
+    {
+        "name": "Si3Ni1P4",
+        "id": 8311
+    },
+    {
+        "name": "Ba2Zr1O4",
+        "id": 8335
+    },
+    {
+        "name": "Cs4Te4",
+        "id": 8361
+    },
+    {
+        "name": "Te4O8",
+        "id": 8377
+    },
+    {
+        "name": "Cs1Cd1F3",
+        "id": 8399
+    },
+    {
+        "name": "Rb1Mg1F3",
+        "id": 8402
+    },
+    {
+        "name": "Li3La1Sb2",
+        "id": 8405
+    },
+    {
+        "name": "Li3La1P2",
+        "id": 8407
+    },
+    {
+        "name": "K1Y1O2",
+        "id": 8409
+    },
+    {
+        "name": "Na4Ag2As2",
+        "id": 8411
+    },
+    {
+        "name": "Li4O4",
+        "id": 841
+    },
+    {
+        "name": "K2Se1",
+        "id": 8426
+    },
+    {
+        "name": "K2Li2S2",
+        "id": 8430
+    },
+    {
+        "name": "K4Cu2P2",
+        "id": 8446
+    },
+    {
+        "name": "Na2Li2S2",
+        "id": 8452
+    },
+    {
+        "name": "K1F1",
+        "id": 8454
+    },
+    {
+        "name": "Cs1F1",
+        "id": 8455
+    },
+    {
+        "name": "Cd2S2O8",
+        "id": 8459
+    },
+    {
+        "name": "Sn2O4",
+        "id": 856
+    },
+    {
+        "name": "Ba1Ag2S2",
+        "id": 8579
+    },
+    {
+        "name": "Nb2B2O8",
+        "id": 8615
+    },
+    {
+        "name": "Ba2As1Au1",
+        "id": 861937
+    },
+    {
+        "name": "Ir4S6",
+        "id": 861979
+    },
+    {
+        "name": "K2Pt1Se2",
+        "id": 8621
+    },
+    {
+        "name": "Rb2Pt1Se2",
+        "id": 8622
+    },
+    {
+        "name": "K2Te2Pt1",
+        "id": 8623
+    },
+    {
+        "name": "Ba2Sb1Au1",
+        "id": 862631
+    },
+    {
+        "name": "Pb2Br4",
+        "id": 862868
+    },
+    {
+        "name": "Pb2Cl4",
+        "id": 862871
+    },
+    {
+        "name": "Ba2Bi1Au1",
+        "id": 862947
+    },
+    {
+        "name": "Sb4Ir4S4",
+        "id": 8630
+    },
+    {
+        "name": "Mg2Mo2N4",
+        "id": 864954
+    },
+    {
+        "name": "Mg1Be2As2",
+        "id": 865185
+    },
+    {
+        "name": "K1Sr1C1O3F1",
+        "id": 865427
+    },
+    {
+        "name": "Na2Hf2O5",
+        "id": 865500
+    },
+    {
+        "name": "Cs2Na2Se2",
+        "id": 8658
+    },
+    {
+        "name": "Na2Tl1Sb1",
+        "id": 866132
+    },
+    {
+        "name": "Ti1Fe2Si1",
+        "id": 866141
+    },
+    {
+        "name": "Ag1Br1",
+        "id": 866291
+    },
+    {
+        "name": "Sr2Sb1Au1",
+        "id": 867168
+    },
+    {
+        "name": "Sr2Sn1Hg1",
+        "id": 867169
+    },
+    {
+        "name": "Sr2Bi1Au1",
+        "id": 867193
+    },
+    {
+        "name": "Sr1Mg2As2",
+        "id": 867194
+    },
+    {
+        "name": "Sr4Cd2As4",
+        "id": 867203
+    },
+    {
+        "name": "Sr4Ga2Ge2N2",
+        "id": 867219
+    },
+    {
+        "name": "Rb1Sr1C1O3F1",
+        "id": 867261
+    },
+    {
+        "name": "Rb2Hf2O5",
+        "id": 867300
+    },
+    {
+        "name": "K4Sb2Au2",
+        "id": 867335
+    },
+    {
+        "name": "Cs1K2Bi1",
+        "id": 867339
+    },
+    {
+        "name": "Li4Ti1S4",
+        "id": 867699
+    },
+    {
+        "name": "Cs4Sn2O6",
+        "id": 867730
+    },
+    {
+        "name": "Sc2B2O6",
+        "id": 8697
+    },
+    {
+        "name": "Na3Sb1Se4",
+        "id": 8703
+    },
+    {
+        "name": "K4Te2O6",
+        "id": 8724
+    },
+    {
+        "name": "Rb2Li2S2",
+        "id": 8751
+    },
+    {
+        "name": "Na4Cd1P2",
+        "id": 8752
+    },
+    {
+        "name": "K4Hg1P2",
+        "id": 8753
+    },
+    {
+        "name": "K2Li2Se2",
+        "id": 8756
+    },
+    {
+        "name": "Cs4Zr2O6",
+        "id": 8759
+    },
+    {
+        "name": "Ca4As2O1",
+        "id": 8789
+    },
+    {
+        "name": "Rb2Na2S2",
+        "id": 8799
+    },
+    {
+        "name": "Rb2Ge1F6",
+        "id": 8812
+    },
+    {
+        "name": "Ca2Zn1N2",
+        "id": 8818
+    },
+    {
+        "name": "Na1Rh1O2",
+        "id": 8830
+    },
+    {
+        "name": "Cs4As4Pd2",
+        "id": 8857
+    },
+    {
+        "name": "Rb2Mg1F4",
+        "id": 8861
+    },
+    {
+        "name": "Ga4O6",
+        "id": 886
+    },
+    {
+        "name": "Li1Ge1B1O4",
+        "id": 8873
+    },
+    {
+        "name": "Li1Si1B1O4",
+        "id": 8874
+    },
+    {
+        "name": "Al2P2",
+        "id": 8880
+    },
+    {
+        "name": "Al2As2",
+        "id": 8881
+    },
+    {
+        "name": "Ga2P2",
+        "id": 8882
+    },
+    {
+        "name": "Zn2Te2",
+        "id": 8884
+    },
+    {
+        "name": "K2Zr1B2O6",
+        "id": 8891
+    },
+    {
+        "name": "Cd1Sb2O6",
+        "id": 8922
+    },
+    {
+        "name": "K4Ge2As4",
+        "id": 8930
+    },
+    {
+        "name": "Rb4Sn2As4",
+        "id": 8931
+    },
+    {
+        "name": "Cs4Si2P4",
+        "id": 8932
+    },
+    {
+        "name": "Cs4Sn2As4",
+        "id": 8934
+    },
+    {
+        "name": "Pt2F8",
+        "id": 8943
+    },
+    {
+        "name": "Rb2Hg1F4",
+        "id": 8962
+    },
+    {
+        "name": "Cs2Hg1F4",
+        "id": 8963
+    },
+    {
+        "name": "Cs2Nb2N4",
+        "id": 8978
+    },
+    {
+        "name": "Ta2In2O8",
+        "id": 8979
+    },
+    {
+        "name": "Rb2Te2Au2",
+        "id": 9008
+    },
+    {
+        "name": "Rb2Au2S2",
+        "id": 9010
+    },
+    {
+        "name": "Rb6S6",
+        "id": 9062
+    },
+    {
+        "name": "Rb6Se6",
+        "id": 9063
+    },
+    {
+        "name": "Rb6Te6",
+        "id": 9064
+    },
+    {
+        "name": "Na2Zr2Cu2S6",
+        "id": 9107
+    },
+    {
+        "name": "Li1Zn1As1",
+        "id": 9124
+    },
+    {
+        "name": "Ca1Sb2O6",
+        "id": 9125
+    },
+    {
+        "name": "Sr1Sb2O6",
+        "id": 9126
+    },
+    {
+        "name": "Ba1Sb2O6",
+        "id": 9127
+    },
+    {
+        "name": "Li1P1F6",
+        "id": 9143
+    },
+    {
+        "name": "Li1As1F6",
+        "id": 9144
+    },
+    {
+        "name": "Li1Cu1O2",
+        "id": 9158
+    },
+    {
+        "name": "Mg1C1N2",
+        "id": 9166
+    },
+    {
+        "name": "Ba2Cu2Se2F2",
+        "id": 9195
+    },
+    {
+        "name": "Fe1Si4P4",
+        "id": 9198
+    },
+    {
+        "name": "K3Au1O1",
+        "id": 9200
+    },
+    {
+        "name": "K2Se2O4F2",
+        "id": 9205
+    },
+    {
+        "name": "Hf1Ni1Sn1",
+        "id": 924128
+    },
+    {
+        "name": "Zr1Ni1Sn1",
+        "id": 924129
+    },
+    {
+        "name": "Ti1Ni1Sn1",
+        "id": 924130
+    },
+    {
+        "name": "Li2B2C2",
+        "id": 9244
+    },
+    {
+        "name": "Rb2Li2Se2",
+        "id": 9250
+    },
+    {
+        "name": "Ba2Mg1B2O6",
+        "id": 9259
+    },
+    {
+        "name": "Cs2Pt1F6",
+        "id": 9262
+    },
+    {
+        "name": "K6Se6",
+        "id": 9268
+    },
+    {
+        "name": "Sb4Ir4S4",
+        "id": 9270
+    },
+    {
+        "name": "K3Sb2Au3",
+        "id": 9273
+    },
+    {
+        "name": "Rb3Sb2Au3",
+        "id": 9274
+    },
+    {
+        "name": "Cu4P8",
+        "id": 927
+    },
+    {
+        "name": "Ta1Cu3Te4",
+        "id": 9295
+    },
+    {
+        "name": "Sr2Zn1N2",
+        "id": 9306
+    },
+    {
+        "name": "Ba2Zn1N2",
+        "id": 9307
+    },
+    {
+        "name": "K2Zr2Cu2S6",
+        "id": 9317
+    },
+    {
+        "name": "Ba2Hf1S4",
+        "id": 9321
+    },
+    {
+        "name": "K1Rb2Sc1F6",
+        "id": 9348
+    },
+    {
+        "name": "Rb1La1S2",
+        "id": 9361
+    },
+    {
+        "name": "Sr1Zr1N2",
+        "id": 9382
+    },
+    {
+        "name": "Sr1Hf1N2",
+        "id": 9383
+    },
+    {
+        "name": "Cs1Au3S2",
+        "id": 9384
+    },
+    {
+        "name": "Rb1Au3Se2",
+        "id": 9385
+    },
+    {
+        "name": "Cs1Au3Se2",
+        "id": 9386
+    },
+    {
+        "name": "Nb1Fe1Sb1",
+        "id": 9437
+    },
+    {
+        "name": "K2Al1F5",
+        "id": 9486
+    },
+    {
+        "name": "Mg1Al2C2",
+        "id": 9514
+    },
+    {
+        "name": "Sr2Ti2N4",
+        "id": 9517
+    },
+    {
+        "name": "Li2Be2As2",
+        "id": 9562
+    },
+    {
+        "name": "Ca1Mg2As2",
+        "id": 9564
+    },
+    {
+        "name": "Ca1Mg2Sb2",
+        "id": 9565
+    },
+    {
+        "name": "Sr1Mg2Sb2",
+        "id": 9566
+    },
+    {
+        "name": "Ba1Mg2Sb2",
+        "id": 9567
+    },
+    {
+        "name": "Ca1Zn2P2",
+        "id": 9569
+    },
+    {
+        "name": "Ca1Cd2P2",
+        "id": 9570
+    },
+    {
+        "name": "Ca1Zn2As2",
+        "id": 9571
+    },
+    {
+        "name": "Na2Be2As2",
+        "id": 9573
+    },
+    {
+        "name": "Li2Be2Sb2",
+        "id": 9575
+    },
+    {
+        "name": "K2Zn1F4",
+        "id": 9583
+    },
+    {
+        "name": "Nb2In2O8",
+        "id": 9595
+    },
+    {
+        "name": "Li2C1N2",
+        "id": 9610
+    },
+    {
+        "name": "Ti1Te1Os1",
+        "id": 961646
+    },
+    {
+        "name": "K1Ba1P1",
+        "id": 961648
+    },
+    {
+        "name": "Zr1Fe1Te1",
+        "id": 961649
+    },
+    {
+        "name": "Y1Ni1P1",
+        "id": 961657
+    },
+    {
+        "name": "Ti1Si1Pd1",
+        "id": 961659
+    },
+    {
+        "name": "Ti1Fe1Se1",
+        "id": 961660
+    },
+    {
+        "name": "Zr1Si1Pd1",
+        "id": 961661
+    },
+    {
+        "name": "Ti1Fe1Te1",
+        "id": 961673
+    },
+    {
+        "name": "Sc1Ni1P1",
+        "id": 961675
+    },
+    {
+        "name": "Sc1Co1Te1",
+        "id": 961678
+    },
+    {
+        "name": "Ti1Sn1Pd1",
+        "id": 961682
+    },
+    {
+        "name": "Li1Mg1P1",
+        "id": 961683
+    },
+    {
+        "name": "Li1Ca1As1",
+        "id": 961684
+    },
+    {
+        "name": "Na1Ca1As1",
+        "id": 961685
+    },
+    {
+        "name": "Zr1Sn1Pd1",
+        "id": 961687
+    },
+    {
+        "name": "Zr1In1Au1",
+        "id": 961693
+    },
+    {
+        "name": "Li1Zn1P1",
+        "id": 961698
+    },
+    {
+        "name": "Ti1Si1Pt1",
+        "id": 961706
+    },
+    {
+        "name": "Zr1Si1Pt1",
+        "id": 961711
+    },
+    {
+        "name": "Zr1Sn1Pt1",
+        "id": 961713
+    },
+    {
+        "name": "Ba1Na1Sb1",
+        "id": 961774
+    },
+    {
+        "name": "Al2Ag2O4",
+        "id": 9631
+    },
+    {
+        "name": "Cs1Sb1F6",
+        "id": 9636
+    },
+    {
+        "name": "Li2As2O6",
+        "id": 9657
+    },
+    {
+        "name": "K6B2P4",
+        "id": 9664
+    },
+    {
+        "name": "In2P2",
+        "id": 966800
+    },
+    {
+        "name": "K4Ni2P4",
+        "id": 9672
+    },
+    {
+        "name": "Cs6B2P4",
+        "id": 9675
+    },
+    {
+        "name": "K4P2Au2",
+        "id": 9687
+    },
+    {
+        "name": "K4Ge2Se6",
+        "id": 9692
+    },
+    {
+        "name": "Rb6B2As4",
+        "id": 9718
+    },
+    {
+        "name": "K2O1",
+        "id": 971
+    },
+    {
+        "name": "Rb6B2P4",
+        "id": 9720
+    },
+    {
+        "name": "Sc2Al2C2O2",
+        "id": 972937
+    },
+    {
+        "name": "Sc1Ag1O2",
+        "id": 973185
+    },
+    {
+        "name": "Rb2Au2Se2",
+        "id": 9731
+    },
+    {
+        "name": "Ba3Na3P3",
+        "id": 9732
+    },
+    {
+        "name": "Rh4S6",
+        "id": 974381
+    },
+    {
+        "name": "Hg2F4",
+        "id": 974603
+    },
+    {
+        "name": "Rb2Tc2O8",
+        "id": 975115
+    },
+    {
+        "name": "Rb1Zn4P3",
+        "id": 975140
+    },
+    {
+        "name": "Hf2Ge2O8",
+        "id": 9755
+    },
+    {
+        "name": "Li2Br2",
+        "id": 976280
+    },
+    {
+        "name": "K2Pt1C2",
+        "id": 976876
+    },
+    {
+        "name": "Ba4Sb2O1",
+        "id": 9774
+    },
+    {
+        "name": "Na3Sr3As3",
+        "id": 9775
+    },
+    {
+        "name": "K4Ag2P2",
+        "id": 9778
+    },
+    {
+        "name": "Rb2Hf2Ag2Te6",
+        "id": 9780
+    },
+    {
+        "name": "Sn2I4",
+        "id": 978846
+    },
+    {
+        "name": "Sr1Ga1Ge1H1",
+        "id": 978847
+    },
+    {
+        "name": "Sr1Ga1Sn1H1",
+        "id": 978852
+    },
+    {
+        "name": "Sr1Ga1Si1H1",
+        "id": 979137
+    },
+    {
+        "name": "Rb4Ge2Se6",
+        "id": 9794
+    },
+    {
+        "name": "Sr1Al1Ge1H1",
+        "id": 980057
+    },
+    {
+        "name": "Zn2C2O6",
+        "id": 9812
+    },
+    {
+        "name": "Sr1F2",
+        "id": 981
+    },
+    {
+        "name": "Rb1Sb1F6",
+        "id": 9821
+    },
+    {
+        "name": "Cu2B2Se4",
+        "id": 983565
+    },
+    {
+        "name": "K2Li1Al1F6",
+        "id": 9839
+    },
+    {
+        "name": "Ba1Al2B2O7",
+        "id": 9844
+    },
+    {
+        "name": "Rb2Ca2As2",
+        "id": 9845
+    },
+    {
+        "name": "Rb2Ca2Sb2",
+        "id": 9846
+    },
+    {
+        "name": "Cs1Rb2Sb1",
+        "id": 984761
+    },
+    {
+        "name": "Na3Br1O1",
+        "id": 985586
+    },
+    {
+        "name": "K2Hf2Cu2S6",
+        "id": 9855
+    },
+    {
+        "name": "Cs4Zr2Se6",
+        "id": 9856
+    },
+    {
+        "name": "K4Be1P2",
+        "id": 9872
+    },
+    {
+        "name": "K2Au2Se2",
+        "id": 9881
+    },
+    {
+        "name": "Rb2Na1Ga1F6",
+        "id": 989400
+    },
+    {
+        "name": "Cs2Li1In1Br6",
+        "id": 989405
+    },
+    {
+        "name": "Y2W2N6",
+        "id": 989407
+    },
+    {
+        "name": "Sr2W2N6",
+        "id": 989513
+    },
+    {
+        "name": "Cs2Na1Sb1Cl6",
+        "id": 989514
+    },
+    {
+        "name": "Rb2Na1Bi1Cl6",
+        "id": 989520
+    },
+    {
+        "name": "Mg6Bi2P1N1",
+        "id": 989522
+    },
+    {
+        "name": "Rb2Na1As1F6",
+        "id": 989523
+    },
+    {
+        "name": "Cs2K1Tl1F6",
+        "id": 989526
+    },
+    {
+        "name": "Cs2Na1N1F6",
+        "id": 989527
+    },
+    {
+        "name": "Rb2K1In1Cl6",
+        "id": 989529
+    },
+    {
+        "name": "Cs2K1Ga1F6",
+        "id": 989531
+    },
+    {
+        "name": "Rb2Tl1In1F6",
+        "id": 989532
+    },
+    {
+        "name": "Cs2Al1In1H6",
+        "id": 989535
+    },
+    {
+        "name": "Cs2Li1N1F6",
+        "id": 989536
+    },
+    {
+        "name": "Cs2Tl1In1F6",
+        "id": 989537
+    },
+    {
+        "name": "Cs2In1Bi1F6",
+        "id": 989538
+    },
+    {
+        "name": "Rb2Al1Tl1H6",
+        "id": 989539
+    },
+    {
+        "name": "Rb2Na1Sb1F6",
+        "id": 989541
+    },
+    {
+        "name": "Rb2Na1Sb1Cl6",
+        "id": 989545
+    },
+    {
+        "name": "Rb2Na1In1Cl6",
+        "id": 989547
+    },
+    {
+        "name": "Rb2Na1Tl1F6",
+        "id": 989548
+    },
+    {
+        "name": "Cs2Tl1Ga1F6",
+        "id": 989558
+    },
+    {
+        "name": "Na1Tl2Ga1F6",
+        "id": 989561
+    },
+    {
+        "name": "Cs2Li1Tl1F6",
+        "id": 989562
+    },
+    {
+        "name": "Rb2Na1Tl1Cl6",
+        "id": 989563
+    },
+    {
+        "name": "Rb2Tl1Ga1F6",
+        "id": 989565
+    },
+    {
+        "name": "Rb2In1Ga1F6",
+        "id": 989566
+    },
+    {
+        "name": "Cs2Rb1Tl1F6",
+        "id": 989567
+    },
+    {
+        "name": "Cs2Ca1Sn1Cl6",
+        "id": 989570
+    },
+    {
+        "name": "Cs2Na1In1Cl6",
+        "id": 989571
+    },
+    {
+        "name": "Cs2Al1Tl1H6",
+        "id": 989575
+    },
+    {
+        "name": "Rb2Li1Tl1Cl6",
+        "id": 989579
+    },
+    {
+        "name": "Rb2Li1In1Cl6",
+        "id": 989583
+    },
+    {
+        "name": "Cs2Rb1In1F6",
+        "id": 989605
+    },
+    {
+        "name": "Cs2Na1As1Cl6",
+        "id": 989608
+    },
+    {
+        "name": "Cs2Na1In1H6",
+        "id": 989610
+    },
+    {
+        "name": "Ca2W2N6",
+        "id": 989616
+    },
+    {
+        "name": "Cs2Rb1Ga1F6",
+        "id": 989618
+    },
+    {
+        "name": "Sr2W2N6",
+        "id": 989625
+    },
+    {
+        "name": "Cs1Rb2Ga1F6",
+        "id": 989629
+    },
+    {
+        "name": "Ca2Mo2N6",
+        "id": 989635
+    },
+    {
+        "name": "Ca2Tc2N6",
+        "id": 989638
+    },
+    {
+        "name": "Cs2K1In1F6",
+        "id": 989639
+    },
+    {
+        "name": "Cs2Na1Al1H6",
+        "id": 989642
+    },
+    {
+        "name": "La2Co2N6",
+        "id": 989643
+    },
+    {
+        "name": "Ag4Ge2S6",
+        "id": 9900
+    },
+    {
+        "name": "Li2Be2P2",
+        "id": 9915
+    },
+    {
+        "name": "V1Cu3Te4",
+        "id": 991652
+    },
+    {
+        "name": "Nb1Cu3Te4",
+        "id": 991676
+    },
+    {
+        "name": "Li2Zn2Sb2",
+        "id": 9919
+    },
+    {
+        "name": "Cs2Rb1In1Br6",
+        "id": 996941
+    },
+    {
+        "name": "Cs2Na1In1Br6",
+        "id": 996943
+    },
+    {
+        "name": "Cs2Tl1In1Br6",
+        "id": 996944
+    },
+    {
+        "name": "Li2Au2O4",
+        "id": 996959
+    },
+    {
+        "name": "Li2Ag2O4",
+        "id": 996962
+    },
+    {
+        "name": "Ag2Au2O4",
+        "id": 996983
+    },
+    {
+        "name": "Li2Ag2O4",
+        "id": 996997
+    },
+    {
+        "name": "K2Au2O4",
+        "id": 997002
+    },
+    {
+        "name": "Cd2Au2O4",
+        "id": 997036
+    },
+    {
+        "name": "Na2Cu2O4",
+        "id": 997041
+    },
+    {
+        "name": "Sr2Ag2O4",
+        "id": 997086
+    },
+    {
+        "name": "Na1Au1O2",
+        "id": 997089
+    },
+    {
+        "name": "B1Sb1",
+        "id": 997618
+    },
+    {
+        "name": "Rb1Sn1Cl3",
+        "id": 998156
+    },
+    {
+        "name": "Rb1Ca1Br3",
+        "id": 998198
+    },
+    {
+        "name": "Cs1Sr1Br3",
+        "id": 998297
+    },
+    {
+        "name": "Cs2Se2Br6",
+        "id": 998413
+    },
+    {
+        "name": "Cs2Sr2Br6",
+        "id": 998433
+    },
+    {
+        "name": "Ba1Hf1O3",
+        "id": 998552
+    },
+    {
+        "name": "K2Ca2Br6",
+        "id": 998599
+    },
+    {
+        "name": "Rb2Pb2Br6",
+        "id": 998603
+    },
+    {
+        "name": "Rb2Pb2Cl6",
+        "id": 998604
+    },
+    {
+        "name": "K2Ge2Br6",
+        "id": 998612
+    },
+    {
+        "name": "Cs4Au4O4",
+        "id": 9986
+    },
+    {
+        "name": "N4",
+        "id": 999498
+    },
+    {
+        "name": "W1N2",
+        "id": 999549
+    }
+]

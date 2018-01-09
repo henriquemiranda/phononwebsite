@@ -21,27 +21,35 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
 
 <!-- jquery -->
-    <script src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
 
-<!-- highcharts script tags -->
-    <script src="highcharts/highcharts.js"></script>
+<!-- highcharts -->
+    <script type="text/javascript" src="js/highcharts.js"></script>
 
-<!-- page javascript -->
+<!-- threejs -->
     <script type="text/javascript" src="js/three.min.js"></script>
     <script type="text/javascript" src="js/TrackballControls.js"></script>
     <script type="text/javascript" src="js/Detector.js"></script>
     <script type="text/javascript" src="js/stats.min.js"></script>
-    <script type="text/javascript" src="js/complex.min.js"></script>
-    <script type="text/javascript" src="js/combinations.js"></script>
-    <script type="text/javascript" src="js/js-yaml.min.js"></script>
 
-    <script type="text/javascript" src="js/mat.js"></script>
-    <script type="text/javascript" src="js/atomic_data.js"></script>
+<!-- capture -->
     <script type="text/javascript" src="js/Whammy.js"></script>
     <script type="text/javascript" src="js/gif.js"></script>
     <script type="text/javascript" src="js/CCapture.js"></script>
+
+<!-- other deps -->
+    <script type="text/javascript" src="js/complex.min.js"></script>
+    <script type="text/javascript" src="js/js-yaml.min.js"></script>
+
+<!-- page javascript -->
+    <script type="text/javascript" src="js/combinations.js"></script>
+    <script type="text/javascript" src="js/mat.js"></script>
+    <script type="text/javascript" src="js/atomic_data.js"></script>
     <script type="text/javascript" src="js/vibcrystal.js"></script>
     <script type="text/javascript" src="js/export.js"></script>
+    <script type="text/javascript" src="js/localdb.js"></script>
+    <script type="text/javascript" src="js/phonondb.js"></script>
+    <script type="text/javascript" src="js/mpdb.js"></script>
     <script type="text/javascript" src="js/phononjson.js"></script>
     <script type="text/javascript" src="js/phononyaml.js"></script>
     <script type="text/javascript" src="js/phononhighcharts.js"></script>
@@ -63,124 +71,100 @@
 <body>
     <div class="container">
         <ul class="navigation">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="phonon.html">Phonons</a></li>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="phonon.html">Phonons</a></li>
         </ul>
-        <div class="material-name"><h1 id="t1">Material</h1></div>
+        <div class="material-name"><h1 id="name">Material</h1></div>
         <div class="flex-container">
-        <div class="flex-menu">
-            <div id="menu">
-            <div>
-            <h3>Materials:</h3>
-                <ul id="mat" class="materials">
-                    <li><a href="#" onclick="folder='graphene';">Graphene</a></li>
-                </ul>
-            </div>
+            <div class="flex-menu">
+                <div id="menu">
+                <div id="material-list">
+                    <h3>Materials:</h3>
+                    <ul id="mat"></ul>
+                    <ul id="ref"></ul>
+                </div>
 
-            <div id="div-phonodb">
-                <h3><a href="http://phonondb.mtl.kyoto-u.ac.jp/">Phonondb:</a></h3>
-                <ul id="phonodb" class="materials">
-                        <li><a href="#" onclick="folder='graphene';">Graphene</a></li>
-                </ul>
-            </div>
+                <div id="options-list">
+                    <div>
+                        <h3>Custom file:</h3>
+                        <input type="file" id="file-input" name="customfile"/>
+                    </div>
 
-            <div>
-                <h3>Custom file:</h3>
-                <input type="file" multiple id="file-input" name="customfile"/>
-            </div>
+                    <div>
+                        <h3>Lattice parameters (Ångström):</h3>
+                        <table id="lattice">
+                        </table>
+                    </div>
 
-            <div>
-            <h3>Unit cell:</h3>
-                <table>
-                    <tr>
-                        <td class="atypes-text">Number of Atoms:</td>
-                        <td id="uc_natoms" class="atypes-data"></td>
-                    </tr>
-                    <tr>
-                        <td class="atypes-text">Atom Types:</td>
-                        <td id="uc_atypes" class="atypes-data"></td>
-                    </tr>
-                </table>
-            </div>
+                    <div>
+                        <h3>Atomic positions (reduced):</h3>
+                        <div>
+                            <table id="atompos">
+                            </table>
+                        </div>
+                    </div>
 
-            <div>
-            <h3>Lattice parameters (Ångström):</h3>
-                <table class="lattice">
-                    <tr><td>x</td>          <td>y</td>          <td>z</td></tr>
-                    <tr><td id="uc_00"></td><td id="uc_01"></td><td id="uc_02"></td></tr>
-                    <tr><td id="uc_10"></td><td id="uc_11"></td><td id="uc_12"></td></tr>
-                    <tr><td id="uc_20"></td><td id="uc_21"></td><td id="uc_22"></td></tr>
-                </table>
-            </div>
+                    <div>
+                        <h3>Repetitions:</h3>
+                        <form>
+                            <input id="nx" value="3" type="number" name="quantity">
+                            <input id="ny" value="3" type="number" name="quantity">
+                            <input id="nz" value="3" type="number" name="quantity">
+                            <button id="update" type="button">update</button>
+                        </form>
+                    </div>
 
-            <div>
-                <h3>Atomic positions (reduced):</h3>
-                <div class="positions">
-                    <table id="atompos">
-                        <tr></tr>
-                    </table>
+                    <div style="display: table;">
+                        <div style="display: table-cell; padding-right: 5px;">
+                            <h3>Camera:</h3>
+                            <button id="camerax" type="button">x</button>
+                            <button id="cameray" type="button">y</button>
+                            <button id="cameraz" type="button">z</button>
+                        </div>
+                        <div style="display: table-cell; padding-right: 5px;">
+                            <h3>Cell:</h3>
+                            <input id="drawcell" type="checkbox">on</input>
+                        </div>
+                        <div style="display: table-cell;">
+                            <h3>Export movie:</h3>
+                            <button id="gifbutton"  type="button">gif</button>
+                            <button id="webmbutton" type="button">webm</button>
+                            <div id="progress"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3>Amplitude:</h3>
+                        <form>
+                        <input id="amplitude_range" type="range">
+                        <input id="amplitude_box"   type="number">
+                        </form>
+                    </div>
+
+                    <div>
+                        <h3>Vectors:</h3>
+                        <input id="vectors_amplitude_range" type="range">
+                        <input id="drawvectors" type="checkbox">on</input>
+                    </div>
+
+                    <div>
+                        <h3>Speed:</h3>
+                        <input id="speed_range" type="range">
+                        <button id="playpause" type="button">pause</button>
+                    </div>
+
+                    <div>
+                        <h3>Export displacement:</h3>
+                        Phase (°): 
+                        <input  id="phase" type="number" value="0.0" min="0.0" max="360.0" step ="45">
+                        <button id="xsf"    type="button">xsf</button>
+                        <button id="poscar" type="button">POSCAR</button>
+                    </div>
+                </div>
                 </div>
             </div>
-
-            <div>
-            <h3>Repetitions:</h3>
-                <form>
-                    <input class="input-rep" id="nx" value="3" type="number" name="quantity">
-                    <input class="input-rep" id="ny" value="3" type="number" name="quantity">
-                    <input class="input-rep" id="nz" value="3" type="number" name="quantity">
-                    <button type="button" onclick="p.update()">update</button>
-                </form>
-            </div>
-
-            <div>
-            <h3>Amplitude:</h3>
-            <form>
-                <input id="amplitude_range" type="range"  step ="0.01" value="0.2" min="0.0" max="1.0" 
-                       onchange="v.amplitude=this.value; p.amplitude=this.value; $('#amplitude_box').val(this.value)">
-                <input id="amplitude_box"   type="number" step ="0.01" value="0.2" min="0.0" max="1.0"
-                       onchange="v.amplitude=this.value; p.amplitude=this.value; $('#amplitude_range').val(this.value)">
-            </form>
-            </div>
-
-            <div>
-            <h3>Camera:</h3>
-                <button type="button" onclick="v.setCameraDirection('x')">x</button>
-                <button type="button" onclick="v.setCameraDirection('y')">y</button>
-                <button type="button" onclick="v.setCameraDirection('z')">z</button>
-            </div>
-
-            <div>
-            <h3>Vectors:</h3>
-                <input id="vamplitude_range" type="range" step ="0.02" value="2.5" min="0.1" max="5.0" onchange="v.arrowScale=this.value">
-                <input id="drawvectors" type="checkbox" onclick="v.arrows = this.checked; p.update()">on</input>
-            </div>
-            <div>
-            <h3>Cell:</h3>
-                <input id="drawcell"    type="checkbox" onclick="v.cell   = this.checked; p.update()">on</input>
-            </div>
-            <div>
-            <h3>Export displacement:</h3>
-                Phase (°): 
-                <input id="phase" type="number" value="0.0" min="0.0" max="360.0" step ="45">
-                <button type="button" onclick="p.exportXSF()">xsf</button>
-                <button type="button" onclick="p.exportPOSCAR()">POSCAR</button>
-            </div>
-
-            <div>
-            <h3>Export movie:</h3>
-                <button type="button" onclick="v.capturestart('gif')">gif</button>
-                <button id="webmbutton" type="button" onclick="v.capturestart('webm')">webm</button>
-                <div id="progress"></div>
-            </div>
-            <div>
-            <h3>Speed:</h3>
-                <input id="speed_range" type="range"  step="0.01" value="1.0" min="0.01" max="3.0" onchange="v.speed=this.value">
-                <button type="button" onclick="v.playpause()">pause</button>
-            </div>
-        </div>
-        </div>
-        <div class="flex-vibcrystal"><div id="vibcrystal"></div></div>
-        <div class="flex-highcharts"><div id="highcharts"></div></div>
+            <div class="flex-vibcrystal"><div id="vibcrystal"></div></div>
+            <div class="flex-highcharts"><div id="highcharts"></div></div>
     </div>
     </div>
 </body>
