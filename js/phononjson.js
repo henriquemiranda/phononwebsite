@@ -95,15 +95,14 @@ class PhononJson {
     }
 
     getFromREST(url,apikey,callback) {
-        self = this;
 
         let xhr = new XMLHttpRequest();
         xhr.open('GET', url, true);
         if (apikey) { xhr.setRequestHeader('x-api-key', apikey) };
         xhr.onload = function () {
             let json = JSON.parse(xhr.responseText);
-            self.getFromJson(json.response,callback);
-        }
+            this.getFromJson(json.response,callback);
+        }.bind(this)
         xhr.send(null);
     }
     
