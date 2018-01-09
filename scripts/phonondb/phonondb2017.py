@@ -22,6 +22,9 @@ def calculate_bs(material_id):
     force_sets_filename = os.path.join(folder,'FORCE_SETS')
     nac_filename = os.path.join(folder,'BORN')
 
+    #check if BORN exists
+    if not os.path.isfile(nac_filename): nac_filename = None
+
     #create phonopy object
     mpp = PhonopyPhonon.from_files(phonon_yaml_filename,force_sets_filename,nac_filename=nac_filename)
     mpp.set_bandstructure_seekpath()

@@ -11,7 +11,7 @@ from collections import Counter
 from .units import *
 
 def open_file_phononwebsite(filename,port=8000,
-                            website="http://henriquemiranda.github.io/phononwebsite",
+                            website="http://henriquemiranda.github.io",
                             host="localhost"):
     """
     take a file, detect the type and open it on the phonon website

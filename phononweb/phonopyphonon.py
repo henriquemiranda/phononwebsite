@@ -8,6 +8,7 @@
 import os
 import json
 import re
+import copy
 
 from phonopy import Phonopy
 from phonopy.units import Hartree, Bohr
@@ -101,6 +102,11 @@ class PhonopyPhonon():
             self.bands.append(kpath[start_k:end_k])
         self.labels.append(explicit_labels[-1])
 
+    def get_frequencies_with_eigenvectors(self,qpoint=(0,0,0)):
+        """calculate the eigenvalues and eigenvectors at a specific qpoint"""
+        frequencies, eigenvectors = self.phonon.get_frequencies_with_eigenvectors(qpoint)
+        return frequencies, eigenvectors
+
     def get_bandstructure(self, is_eigenvectors=True, is_band_connection=True):
         """calculate the bandstructure"""
         self.phonon.set_band_structure(self.bands, is_eigenvectors=is_eigenvectors, is_band_connection=is_band_connection)
@@ -113,6 +119,11 @@ class PhonopyPhonon():
         supercell = self.phonon.get_supercell()
         file_IO.write_disp_yaml(displacements, supercell, directions=directions, filename=filename)
 
-    def write_band_yaml(self,filename='band.yaml'):
+    def write_band_yaml(self,eigenvectors=True,filename='band.yaml'):
         """export a yaml file with the band-structure data"""
-        self.phonon.write_yaml_band_structure(filename=filename)
+        if eigenvectors:
+            phonon = self.phonon
+        else:
+            phonon = copy.deepcopy(self.phonon)
+            phonon._band_structure._eigenvectors = None
+        phonon.write_yaml_band_structure(filename=filename)

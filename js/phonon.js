@@ -461,7 +461,7 @@ class PhononWebpage {
         }
 
         //mp databse
-        for (let sourceclass of [LocalMaterialsProjectDB ]) {
+        for (let sourceclass of [MaterialsProjectDB, LocalMaterialsProjectDB ]) {
             source = new sourceclass;
             if (source.isAvailable()) {
                 source.get_materials(addMaterials);
