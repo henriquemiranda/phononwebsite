@@ -139,7 +139,7 @@ class PhononWebpage {
         }
         else if ("rest" in url_vars) {
             this.phonon = new PhononJson();
-            this.phonon.getFromREST(url_vars.rest,this.loadCallback.bind(this));
+            this.phonon.getFromREST(url_vars.rest,url_vars.apikey,this.loadCallback.bind(this));
         }
         else {
             alert("Ivalid url"); 
