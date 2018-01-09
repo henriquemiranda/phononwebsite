@@ -442,6 +442,10 @@ class PhononWebpage {
         let source = new LocalDB();
         source.get_materials(addMaterials);
 
+        //contributions database
+        source = new ContribDB();
+        source.get_materials(addMaterials);
+
         //phonondb2015 database
         for (let sourceclass of [PhononDB2015, LocalPhononDB2015 ]) {
             source = new sourceclass;

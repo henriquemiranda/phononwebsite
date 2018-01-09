@@ -21,8 +21,12 @@ def open_file_phononwebsite(filename,port=8000,
     import sys
 
     #python 2 and 3 http server
-    from http.server import SimpleHTTPRequestHandler
-    from http.server import HTTPServer
+    try:
+        from http.server import HTTPServer, SimpleHTTPRequestHandler
+    except ImportError:
+        from BaseHTTPServer import HTTPServer
+        # python 2 requires internal implementation
+        from SimpleHTTPServer import SimpleHTTPRequestHandler
 
     #create threads python
     from threading import Thread

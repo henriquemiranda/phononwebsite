@@ -22,6 +22,7 @@
 # ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+from __future__ import print_function
 from phononweb import *
 import json
 
@@ -30,7 +31,7 @@ ana = 'anaddb.out_PHBST.nc'
 hexagonal = [(0,'\Gamma'),(20,'M'),(30,'K'),(50,'\Gamma')]
 material_list = {
 "graphene":           [ AnaddbPhonon,     ana, hexagonal, [ 5, 5, 1], "Graphene"],
-"tise2_bulk":		  [ QePhonon,     'tise2', hexagonal, [ 5, 5, 1], "Bulk TiSe2"],
+#"tise2_bulk":		  [ QePhonon,     'tise2', hexagonal, [ 5, 5, 1], "Bulk TiSe2"],
 "mos2_bulk":		  [ AnaddbPhonon,     ana, hexagonal, [ 5, 5, 1], "Bulk MoS2"],
 "mos2_singlelayer":	  [ AnaddbPhonon,     ana, hexagonal, [ 5, 5, 1], "Layer MoS2"],
 "mote2_singlelayer":  [ QePhonon,     'mote2', hexagonal, [ 5, 5, 1], "Layer MoTe2"],

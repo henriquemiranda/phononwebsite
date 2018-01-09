@@ -1,26 +1,22 @@
 [
     {
-        "name": "Bulk TiSe2",
-        "folder": "localdb/tise2_bulk"
-    },
+        "folder": "localdb/mote2_bulk", 
+        "name": "Bulk MoTe2"
+    }, 
     {
-        "name": "Layer MoS2",
-        "folder": "localdb/mos2_singlelayer"
-    },
+        "folder": "localdb/graphene", 
+        "name": "Graphene"
+    }, 
     {
-        "name": "Layer MoTe2",
-        "folder": "localdb/mote2_singlelayer"
-    },
+        "folder": "localdb/mos2_bulk", 
+        "name": "Bulk MoS2"
+    }, 
     {
-        "name": "Bulk MoTe2",
-        "folder": "localdb/mote2_bulk"
-    },
+        "folder": "localdb/mos2_singlelayer", 
+        "name": "Layer MoS2"
+    }, 
     {
-        "name": "Graphene",
-        "folder": "localdb/graphene"
-    },
-    {
-        "name": "Bulk MoS2",
-        "folder": "localdb/mos2_bulk"
+        "folder": "localdb/mote2_singlelayer", 
+        "name": "Layer MoTe2"
     }
 ]
