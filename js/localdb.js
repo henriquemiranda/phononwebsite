@@ -63,8 +63,7 @@ class ContribDB {
                 m.source = name;
                 m.type = "json";
                
-                console.log(m.folder);
-                m.reference = m.author+", "+"<a href="+m.url+">"+name+"</a> ("+m.year+")";
+                m.reference = m.author+", "+"<a href="+m.url+">"+m.journal+"</a> ("+m.year+")";
         
 
                 //create the url
