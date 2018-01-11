@@ -1,19 +1,3 @@
-const pi = 3.14159265359;
-const bohr2ang = 0.529177249;
-
-function subscript_numbers(old_string) {
-    string = "";
-    for (a of old_string) {
-        if (!isNaN(a)) {
-            string += "<sub>"+a+"</sub>";
-        }
-        else {
-            string += a;
-        }
-    }
-    return string;
-}
-
 class PhononWebpage {
 
     constructor(visualizer, dispersion) {
