@@ -1,9 +1,8 @@
-define(['utils'], function() {
+define([], function() {
 
     thz2ev = 33.35641;
 
-    return
-    class PhononYaml {
+    return class PhononYaml {
 
         getFromURL(url,callback) {
             /*
