@@ -155,7 +155,6 @@ class PhononWebpage {
         if (Object.keys(vars).length < 1) {
             vars = {json: "localdb/graphene/data.json", name:"Graphene [1]"};
         }
-        console.log(vars);
 
         this.loadURL(vars);
     }
@@ -409,6 +408,7 @@ class PhononWebpage {
                     url_vars[m.type] = m.url;
                     url_vars.name = name_ref;
                     if ("link" in m) { url_vars.link = m.link }
+                    if ("apikey" in m) {url_vars.apikey = m.apikey}
                     self.loadURL(url_vars);
                 };
 
