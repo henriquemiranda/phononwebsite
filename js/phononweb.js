@@ -45,6 +45,7 @@ define(["mat","complex",
         setReferencesList(dom_ref)     { this.dom_ref = dom_ref; }    
         setAtomPositions(dom_atompos)  { this.dom_atompos = dom_atompos; }    
         setLattice(dom_lattice)        { this.dom_lattice = dom_lattice; }    
+        setTitle(dom_title)            { this.dom_title = dom_title; }
 
         setUpdateButton(dom_button) {
             self = this;
@@ -332,58 +333,62 @@ define(["mat","complex",
             /*
             lattice vectors table
             */
-            let lattice = this.dom_lattice;
-            lattice.empty();
-
-            for (let i=0; i<3; i++) {
-                let tr = document.createElement("TR");
-                for (let j=0; j<3; j++) {
-                    let td = document.createElement("TD");
-                    x = document.createTextNode(this.phonon.lat[i][j].toPrecision(4));
-                    td.appendChild(x);
-                    tr.append(td);
+    
+            if (this.dom_lattice)  {
+                this.dom_lattice.empty();
+                for (let i=0; i<3; i++) {
+                    let tr = document.createElement("TR");
+                    for (let j=0; j<3; j++) {
+                        let td = document.createElement("TD");
+                        x = document.createTextNode(this.phonon.lat[i][j].toPrecision(4));
+                        td.appendChild(x);
+                        tr.append(td);
+                    }
+                    this.dom_lattice.append(tr);
                 }
-                lattice.append(tr);
             }
 
             //atomic positions table
-            let pos = this.phonon.atom_pos_red;
-            let atompos = this.dom_atompos;
-            atompos.empty();
+            if (this.dom_atompos) {
+                this.dom_atompos.empty();
+                let pos = this.phonon.atom_pos_red;
+                for (let i=0; i<pos.length; i++) {
+                    let tr = document.createElement("TR");
 
-            for (let i=0; i<pos.length; i++) {
-                let tr = document.createElement("TR");
-
-                let td = document.createElement("TD");
-                let atom_type = document.createTextNode(this.phonon.atom_types[i]);
-                td.class = "ap";
-                td.appendChild(atom_type);
-                tr.append(td);
-
-                for (let j=0; j<3; j++) {
-                    td = document.createElement("TD");
-                    x = document.createTextNode(pos[i][j].toFixed(4));
-                    td.appendChild(x);
+                    let td = document.createElement("TD");
+                    let atom_type = document.createTextNode(this.phonon.atom_types[i]);
+                    td.class = "ap";
+                    td.appendChild(atom_type);
                     tr.append(td);
+
+                    for (let j=0; j<3; j++) {
+                        td = document.createElement("TD");
+                        x = document.createTextNode(pos[i][j].toFixed(4));
+                        td.appendChild(x);
+                        tr.append(td);
+                    }
+                    this.dom_atompos.append(tr);
                 }
-                atompos.append(tr);
             }
 
             //update title
-            let title = $('#name')[0];
-            while (title.hasChildNodes()) {
-                title.removeChild(title.lastChild);
-            }
+            if (this.dom_title) {
+                let title = this.dom_title[0];
+                while (title.hasChildNodes()) {
+                    title.removeChild(title.lastChild);
+                }
             
-            //make link
-            if ("link" in this) {
-                let a = document.createElement("A");
-                a.href = this.link;
-                a.innerHTML = this.name;
-                title.appendChild(a);
-            }
-            else {
-                title.innerHTML = this.name;
+                //make link
+                if ("link" in this) {
+                    let a = document.createElement("A");
+                    a.href = this.link;
+                    a.innerHTML = this.name;
+                    title.appendChild(a);
+                }
+                else {
+                    title.innerHTML = this.name;
+                }
+
             }
         }
 
@@ -397,10 +402,10 @@ define(["mat","complex",
 
             let self = this;
 
-            let materials_list = this.dom_mat;
-            materials_list.empty();
-
-            let references_list = this.dom_ref;
+            let dom_mat = this.dom_mat;
+            let dom_ref = this.dom_ref;
+            dom_mat.empty();
+            dom_ref.empty();
             let unique_references = {};
             let nreferences = 1;
 
@@ -435,16 +440,15 @@ define(["mat","complex",
                     a.innerHTML = name;
                     li.appendChild(a);
 
-                    materials_list.append(li);
+                    dom_mat.append(li);
                 }
 
                 //add references
-                references_list.empty();
                 for (let ref in unique_references) {
                     let i = unique_references[ref];
                     let li = document.createElement("LI");
                     li.innerHTML = "["+i+"] "+ref;
-                    references_list.append(li);
+                    dom_ref.append(li);
                     i += 1;
                 }
             }

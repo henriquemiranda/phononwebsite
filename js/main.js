@@ -49,6 +49,7 @@ requirejs(["jquery", "vibcrystal", "phononhighcharts","phononweb", "Detector"],
     p.setFileInput( $('#file-input') );
     p.setExportPOSCARButton($('#poscar'));
     p.setExportXSFButton($('#xsf'));
+    p.setTitle($('#name'));
 
     p.updateMenu();
     p.getUrlVars();
