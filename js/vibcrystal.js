@@ -104,7 +104,7 @@ class VibCrystal {
         */
         let isChrome = !!window.chrome && !!window.chrome.webstore;
         if (!isChrome) {
-            dom_button.style.visibility = 'hidden';
+            dom_button[0].style.visibility = 'hidden';
         }
 
         dom_button.click(function() { self.capturestart('webm'); }); 
