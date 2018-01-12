@@ -1,9 +1,9 @@
 define(["mat","complex",
-        "localdb", "localmpdb", "localphonondb2015", "localphonondb2017", "phonondb2015", "contribdb", "mpdb", "phonondb",
+        "localdb", "localmpdb", "localphonondb2015", "localphonondb2017", "phonondb2015", "contribdb", "mpdb",
         "phononjson", "phononyaml", "exportfiles", "utils"],
     function(mat, Complex,
              LocalDB, LocalMaterialsProjectDB, LocalPhononDB2015, LocalPhononDB2017, 
-             PhononDB2015, ContribDB, MaterialsProjectDB, PhononDB,
+             PhononDB2015, ContribDB, MaterialsProjectDB,
              PhononJson, PhononYaml, exportfiles) {
 
     function SubscriptNumbers(old_string) {
