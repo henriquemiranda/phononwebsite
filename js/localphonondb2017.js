@@ -1,17 +1,16 @@
 define([], function() {
 
-    return class MaterialsProjectDB {
-        /* 
-        Interact with the local database of phonons
-        Hosted on Github
+    return class LocalPhononDB2017 {
+        /*
+        Interact with the database of phonondb
+        Hosted in http://phonondb.mtl.kyoto-u.ac.jp/
         */
 
         constructor() {
-            this.name = "mpdb";
+            this.name = "phonondb";
+            this.author = "A. Togo";
             this.year = 2017;
-            this.author = "G. Petretto et al.";
-            this.url = "";
-            this.apikey = "fAGQ0aT2TsXeidxU";
+            this.url = "http://phonondb.mtl.kyoto-u.ac.jp/";
         }
 
         isAvailable() {
@@ -25,25 +24,22 @@ define([], function() {
             */
             let reference = this.author+", "+"<a href="+this.url+">"+this.name+"</a> ("+this.year+")";
             let name = this.name;
-            let apikey = this.apikey;
 
             function dothings(materials) {
 
                 for (let i=0; i<materials.length; i++) {
                     let m = materials[i];
+                    m.url = "localphonondb2017/band-"+m.id+".yaml";
                     m.source = name;
-                    m.type = "rest";
-                    m.reference = reference;
-                    m.url = "https://materialsproject.org/rest/v2/materials/mp-"+m.id+"/phononbs?web=true";
-                    m.name = m.name;
+                    m.type = "yaml";
                     m.link = "https://materialsproject.org/materials/mp-"+m.id;
-                    m.apikey = apikey;
+                    m.reference = reference;
                 }
-                callback(materials);
+                callback(materials)
             }
 
-            $.get('mpdb/models.json', dothings);
+            $.get('phonondb2017/phonondb.json', dothings);
         }
-
     }
+
 });

@@ -1,6 +1,6 @@
 define([], function() {
 
-    return class MaterialsProjectDB {
+    return class LocalMaterialsProjectDB {
         /* 
         Interact with the local database of phonons
         Hosted on Github
@@ -11,13 +11,13 @@ define([], function() {
             this.year = 2017;
             this.author = "G. Petretto et al.";
             this.url = "";
-            this.apikey = "fAGQ0aT2TsXeidxU";
+            this.list = 'localmpdb/models.json';
         }
 
         isAvailable() {
             return false;
         }
-
+        
         get_materials(callback) {
             /* 
             this function load the materials from a certain source and returns then to the callback
@@ -25,24 +25,22 @@ define([], function() {
             */
             let reference = this.author+", "+"<a href="+this.url+">"+this.name+"</a> ("+this.year+")";
             let name = this.name;
-            let apikey = this.apikey;
 
             function dothings(materials) {
 
                 for (let i=0; i<materials.length; i++) {
                     let m = materials[i];
                     m.source = name;
-                    m.type = "rest";
+                    m.type = "json";
                     m.reference = reference;
-                    m.url = "https://materialsproject.org/rest/v2/materials/mp-"+m.id+"/phononbs?web=true";
+                    m.url = "localmpdb/mp-"+m.id+".json";
                     m.name = m.name;
                     m.link = "https://materialsproject.org/materials/mp-"+m.id;
-                    m.apikey = apikey;
                 }
                 callback(materials);
             }
 
-            $.get('mpdb/models.json', dothings);
+            $.get(this.list, dothings);
         }
 
     }
