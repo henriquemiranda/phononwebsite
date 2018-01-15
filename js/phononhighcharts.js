@@ -144,7 +144,7 @@ define(['highcharts'], function() {
 
                     //add data
                     this.highcharts.push({
-                        name:  n.toString(),
+                        name:  n+"",
                         color: "#0066FF",
                         marker: { radius: 2, symbol: "circle"},
                         data: eig
