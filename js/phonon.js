@@ -22,6 +22,7 @@ class PhononWebpage {
     //functions to link the DOM buttons with this class
     setMaterialsList(dom_mat)      { this.dom_mat = dom_mat; }    
     setReferencesList(dom_ref)     { this.dom_ref = dom_ref; }    
+    setMenu(dom_menu)              { this.dom_menu = dom_menu; }    
     setAtomPositions(dom_atompos)  { this.dom_atompos = dom_atompos; }    
     setLattice(dom_lattice)        { this.dom_lattice = dom_lattice; }    
 
@@ -111,6 +112,9 @@ class PhononWebpage {
         }
         if ( "link" in url_vars ) {
             this.link = url_vars.link;
+        }
+        if ( "hidematlist" in url_vars ) {
+            this.dom_menu[0].style.display = 'none'
         }
 
         if ("yaml" in url_vars) {
@@ -480,6 +484,7 @@ $(document).ready(function() {
     //set dom objects phononwebsite
     p.setMaterialsList( $('#mat') );
     p.setReferencesList( $('#ref') );
+    p.setMenu( $('#material-list') );
     p.setAtomPositions( $('#atompos') );
     p.setLattice( $('#lattice') );
     p.setRepetitionsInput( $('#nx'), $('#ny'), $('#nz') );
