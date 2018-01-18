@@ -99,6 +99,7 @@ class PhononJson {
         let xhr = new XMLHttpRequest();
         xhr.open('GET', url, true);
         if (apikey) { xhr.setRequestHeader('x-api-key', apikey) };
+        xhr.setRequestHeader('x-requested-with', 'XMLHttpRequest');
         xhr.onload = function () {
             let json = JSON.parse(xhr.responseText);
             this.getFromJson(json.response,callback);
