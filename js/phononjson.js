@@ -101,8 +101,9 @@ class PhononJson {
         if (apikey) { xhr.setRequestHeader('x-api-key', apikey) };
         xhr.setRequestHeader('x-requested-with', 'XMLHttpRequest');
         xhr.onload = function () {
+            console.log(xhr.responseText);
             let json = JSON.parse(xhr.responseText);
-            this.getFromJson(json.response,callback);
+            this.getFromJson(json,callback);
         }.bind(this)
         xhr.send(null);
     }
