@@ -1,4 +1,4 @@
-define(['utils'], function(u) {
+define([], function(u) {
 
     return class LocalDB {
         /* 
@@ -11,6 +11,10 @@ define(['utils'], function(u) {
             this.year = 2015;
             this.author = "H. Miranda";
             this.url = "http://henriquemiranda.github.io/";
+        }
+
+        isAvailable() {
+            return false;
         }
 
         get_materials(callback) {

@@ -119,7 +119,7 @@ define(["mat","complex",
             }
         }
 
-        loadURL(url_vars) {  
+        loadURL(url_vars,callback) {  
             /*
             load file from post request in the url
             */
@@ -127,6 +127,9 @@ define(["mat","complex",
             this.k = 0;
             this.n = 0;
             delete this.link;
+            if (callback == null) {
+                callback = this.loadCallback.bind(this)
+            }
 
             if ( "name" in url_vars ) {
                 this.name = url_vars.name;
@@ -137,15 +140,15 @@ define(["mat","complex",
 
             if ("yaml" in url_vars) {
                 this.phonon = new PhononYaml();
-                this.phonon.getFromURL(url_vars.yaml,this.loadCallback.bind(this));
+                this.phonon.getFromURL(url_vars.yaml,callback);
             }
             else if ("json" in url_vars) {
                 this.phonon = new PhononJson();
-                this.phonon.getFromURL(url_vars.json,this.loadCallback.bind(this));
+                this.phonon.getFromURL(url_vars.json,callback);
             }
             else if ("rest" in url_vars) {
                 this.phonon = new PhononJson();
-                this.phonon.getFromREST(url_vars.rest,url_vars.apikey,this.loadCallback.bind(this));
+                this.phonon.getFromREST(url_vars.rest,url_vars.apikey,callback);
             }
             else {
                 alert("Ivalid url"); 
@@ -405,7 +408,6 @@ define(["mat","complex",
             let dom_mat = this.dom_mat;
             let dom_ref = this.dom_ref;
             dom_mat.empty();
-            dom_ref.empty();
             let unique_references = {};
             let nreferences = 1;
 
@@ -444,6 +446,7 @@ define(["mat","complex",
                 }
 
                 //add references
+                dom_ref.empty();
                 for (let ref in unique_references) {
                     let i = unique_references[ref];
                     let li = document.createElement("LI");

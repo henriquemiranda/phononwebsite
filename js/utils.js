@@ -57,7 +57,7 @@ function get_formula(atom_types) {
     }
 
     //make the name from the counter
-    name = "";
+    let name = "";
     for (let element in counts) {
         name += element+counts[element];
     }

@@ -217,7 +217,6 @@ define(['threejs','TrackballControls','stats','atomic_data', 'utils'], function(
             this.renderer.setPixelRatio( window.devicePixelRatio );
             this.renderer.shadowMap.enabled = false;
             this.renderer.setSize( this.dimensions.width , this.dimensions.height, false );
-            this.renderer.domElement.className = "vibcrystal-class";
             this.container0.appendChild( this.renderer.domElement );
             this.canvas = this.renderer.domElement;
 

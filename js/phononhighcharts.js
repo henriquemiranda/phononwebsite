@@ -99,7 +99,7 @@ define(['highcharts'], function() {
             for (let i=0; i<ticks.length ; i++ ) {
                 plotLines.push({ value: ticks[i],
                                  color: '#000000',
-                                 width: 2 })
+                                 width: 1 })
             }
 
             //actually set the eigenvalues
@@ -146,7 +146,7 @@ define(['highcharts'], function() {
                     this.highcharts.push({
                         name:  n+"",
                         color: "#0066FF",
-                        marker: { radius: 2, symbol: "circle"},
+                        marker: { radius: 1, symbol: "circle"},
                         data: eig
                        });
                 }
