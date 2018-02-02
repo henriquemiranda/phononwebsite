@@ -61,7 +61,7 @@ class PhononJson {
         */
 
         function onLoadEndHandler(text) {
-            this.getFromString(text,callback);
+            this.getFromJson(text,callback);
         };
 
         $.get(url,onLoadEndHandler.bind(this));
