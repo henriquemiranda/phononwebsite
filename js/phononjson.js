@@ -64,7 +64,7 @@ class PhononJson {
             this.getFromJson(text,callback);
         };
 
-        $.get(url,onLoadEndHandler.bind(this));
+        $.getJSON(url,onLoadEndHandler.bind(this));
 
     }
 
@@ -101,7 +101,6 @@ class PhononJson {
         if (apikey) { xhr.setRequestHeader('x-api-key', apikey) };
         xhr.setRequestHeader('x-requested-with', 'XMLHttpRequest');
         xhr.onload = function () {
-            console.log(xhr.responseText);
             let json = JSON.parse(xhr.responseText);
             this.getFromJson(json,callback);
         }.bind(this)
@@ -109,7 +108,7 @@ class PhononJson {
     }
     
     getFromJson(json,callback) {
-        if ('@class' in json) {
+        if (json.hasOwnProperty('@class')) {
             this.getFromPMGJson(json,callback);
         }
         else {
