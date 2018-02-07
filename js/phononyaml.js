@@ -1,4 +1,4 @@
-define([], function() {
+define(['js-yaml'], function(jsyaml) {
 
     thz2ev = 33.35641;
 

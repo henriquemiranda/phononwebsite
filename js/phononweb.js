@@ -62,7 +62,6 @@ define(["mat","complex",
      
         setRepetitionsInput(dom_nx,dom_ny,dom_nz) { 
 
-            self = this;
             this.dom_nx = dom_nx;
             this.dom_ny = dom_ny;
             this.dom_nz = dom_nz;
@@ -155,7 +154,7 @@ define(["mat","complex",
             }
         }
 
-        getUrlVars() {
+        getUrlVars(default_vars) {
             /* 
             get variables from the url
             from http://stackoverflow.com/questions/4656843/jquery-get-querystring-from-url
@@ -176,9 +175,9 @@ define(["mat","complex",
                 }
             }
 
-            //default
+            //if no argument is present use the default vars
             if (Object.keys(vars).length < 1) {
-                vars = {json: "localdb/graphene/data.json", name:"Graphene [1]"};
+                vars = default_vars;
             }
 
             this.loadURL(vars);
@@ -196,9 +195,9 @@ define(["mat","complex",
             /*
             read the number of repetitions in each direction and update it
             */
-            this.nx = this.dom_nx.val();
-            this.ny = this.dom_ny.val();
-            this.nz = this.dom_nz.val();
+            if (this.dom_nx) { this.nx = this.dom_nx.val(); }
+            if (this.dom_ny) { this.ny = this.dom_ny.val(); }
+            if (this.dom_nz) { this.nz = this.dom_nz.val(); }
         }
 
         setRepetitions(repetitions) {
@@ -212,9 +211,9 @@ define(["mat","complex",
                 this.nz = repetitions[2];
             }
 
-            this.dom_nx.val(this.nx);
-            this.dom_ny.val(this.ny);
-            this.dom_nz.val(this.nz);
+            if (this.dom_nx) { this.dom_nx.val(this.nx); }
+            if (this.dom_ny) { this.dom_ny.val(this.ny); }
+            if (this.dom_nz) { this.dom_nz.val(this.nz); }
         }
 
         getStructure(nx,ny,nz) {
@@ -407,52 +406,56 @@ define(["mat","complex",
 
             let dom_mat = this.dom_mat;
             let dom_ref = this.dom_ref;
-            dom_mat.empty();
+            if (dom_mat) { dom_mat.empty(); }
             let unique_references = {};
             let nreferences = 1;
 
             function addMaterials(materials) {
 
-                for (let i=0; i<materials.length; i++) {
+                if (dom_mat) {
+                    for (let i=0; i<materials.length; i++) {
 
-                    let m = materials[i];
-                    
-                    //reference
-                    let ref = m["reference"];
-                    if (!unique_references.hasOwnProperty(ref)) {
-                        unique_references[ref] = nreferences;
-                        nreferences+=1;
+                        let m = materials[i];
+                        
+                        //reference
+                        let ref = m["reference"];
+                        if (!unique_references.hasOwnProperty(ref)) {
+                            unique_references[ref] = nreferences;
+                            nreferences+=1;
+                        }
+
+                        //name + refenrece
+                        let name = SubscriptNumbers(m.name);
+                        let name_ref = name + " ["+unique_references[ref]+"]";
+
+                        let li = document.createElement("LI");
+                        let a = document.createElement("A");
+                       
+                        a.onclick = function() {
+                            let url_vars = {};
+                            url_vars[m.type] = m.url;
+                            url_vars.name = name_ref;
+                            if ("link" in m) { url_vars.link = m.link }
+                            self.loadURL(url_vars);
+                        };
+
+                        a.innerHTML = name;
+                        li.appendChild(a);
+
+                        dom_mat.append(li);
                     }
-
-                    //name + refenrece
-                    let name = SubscriptNumbers(m.name);
-                    let name_ref = name + " ["+unique_references[ref]+"]";
-
-                    let li = document.createElement("LI");
-                    let a = document.createElement("A");
-                   
-                    a.onclick = function() {
-                        let url_vars = {};
-                        url_vars[m.type] = m.url;
-                        url_vars.name = name_ref;
-                        if ("link" in m) { url_vars.link = m.link }
-                        self.loadURL(url_vars);
-                    };
-
-                    a.innerHTML = name;
-                    li.appendChild(a);
-
-                    dom_mat.append(li);
                 }
 
                 //add references
-                dom_ref.empty();
-                for (let ref in unique_references) {
-                    let i = unique_references[ref];
-                    let li = document.createElement("LI");
-                    li.innerHTML = "["+i+"] "+ref;
-                    dom_ref.append(li);
-                    i += 1;
+                if (dom_ref) {
+                    dom_ref.empty();
+                    for (let ref in unique_references) {
+                        let i = unique_references[ref];
+                        let li = document.createElement("LI");
+                        li.innerHTML = "["+i+"] "+ref;
+                        dom_ref.append(li);
+                        i += 1;
+                    }
                 }
             }
 

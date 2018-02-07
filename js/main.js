@@ -4,6 +4,7 @@ requirejs.config({
         'threejs': 'three.min',
         'complex': 'complex.min',
         'stats': 'stats.min',
+        'js-yaml': 'js-yaml.min'
     },
     shim: {
         'jquery': {
@@ -52,7 +53,7 @@ requirejs(["jquery", "vibcrystal", "phononhighcharts","phononweb", "Detector"],
     p.setTitle($('#name'));
 
     p.updateMenu();
-    p.getUrlVars();
+    p.getUrlVars({json: "localdb/graphene/data.json", name:"Graphene [1]"});
 
     //set dom objects vibcrystal
     v.setCameraDirectionButton($('#camerax'),'x');

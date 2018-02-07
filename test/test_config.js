@@ -5,6 +5,7 @@ requirejs.config({
         'threejs': '../js/three.min',
         'complex': '../js/complex.min',
         'stats': '../js/stats.min',
+        'js-yaml': 'js-yaml.min'
     },
     shim: {
         'jquery': {
@@ -31,9 +32,7 @@ requirejs.config({
 });
 
 require([
-  '../test/phononwebpage_test',
-  '../test/phononjson_test'
-
+  '../test/phononwebpage_test'
 ], function() {
   assert = chai.assert;
   if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
