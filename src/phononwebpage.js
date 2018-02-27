@@ -43,6 +43,9 @@ export class PhononWebpage {
         //bind some functions (TODO: improve this)
         this.exportXSF    = exportXSF.bind(this);
         this.exportPOSCAR = exportPOSCAR.bind(this);
+
+        //bind click event from highcharts with action
+        dispersion.setClickEvent(this);
     }
 
     //functions to link the DOM buttons with this class
@@ -155,11 +158,11 @@ export class PhononWebpage {
             this.phonon.getFromREST(url_vars.rest,url_vars.apikey,callback);
         }
         else {
-            alert("Ivalid url"); 
+            //alert("Ivalid url"); 
         }
     }
 
-    getUrlVars(default_vars,callback) {
+    getUrlVars(default_vars) {
         /* 
         get variables from the url
         from http://stackoverflow.com/questions/4656843/jquery-get-querystring-from-url
@@ -185,7 +188,7 @@ export class PhononWebpage {
             vars = default_vars;
         }
 
-        this.loadURL(vars,callback);
+        this.loadURL(vars);
     }
 
     loadCallback() {

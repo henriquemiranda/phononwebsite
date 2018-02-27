@@ -9,11 +9,22 @@
     <script src="node_modules/mocha/mocha.js"></script>
     <script src="node_modules/chai/chai.js"></script>
     <script>mocha.setup('bdd')</script>
-    <script data-main="test/test_config.js" src="libs/require.min.js"></script>
+    <script data-main="test/use_require.js" src="libs/require.min.js"></script>
 
     <div style="width: 100%; overflow: hidden;">
-        <div id="vibcrystal" style="height:500px; width:50%;"></div>
-        <div id="highcharts" style="height:500px; width:50%;"></div>
+        <div id="vibcrystaljsonweb" style="height:200px; width:50%;"></div>
+        <div id="highchartsjsonweb" style="height:200px; width:50%;"></div>
     </div>
+
+    <div style="width: 100%; overflow: hidden;">
+        <div id="vibcrystaljsonpmg" style="height:200px; width:50%;"></div>
+        <div id="highchartsjsonpmg" style="height:200px; width:50%;"></div>
+    </div>
+
+    <div style="width: 100%; overflow: hidden;">
+        <div id="vibcrystalyaml" style="height:200px; width:50%;"></div>
+        <div id="highchartsyaml" style="height:200px; width:50%;"></div>
+    </div>
+
   </body>
 </html>

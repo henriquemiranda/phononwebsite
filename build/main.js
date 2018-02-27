@@ -77,9 +77,6 @@ requirejs(["phononwebsite", "detector"], function(phononwebsite) {
     v.setAmplitudeInput($('#amplitude_box'),$('#amplitude_range'));
     v.setPlayPause($('#playpause'));
 
-    //bind click event from highcharts with action
-    d.setClickEvent(p);
-
     // check if webgl is available
     if ( ! Detector.webgl ) {
         Detector.addGetWebGLMessage();

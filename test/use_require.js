@@ -7,7 +7,9 @@ requirejs.config({
         'complex': '../libs/complex.min',
         'jsyaml': '../libs/jsyaml_amd_wrapper',
         'detector': '../libs/Detector',
-        'phononwebsite': '../build/phononwebsite'
+        'ccapture': '../libs/CCapture.min',
+        'gif': '../libs/gif',
+        'phononwebsite': '../build/phononwebsite.min',
     },
     shim: {
         'jquery': {
@@ -26,18 +28,24 @@ requirejs.config({
             deps: ["jquery"],
             exports: "Highcharts"
         },
+        'gif': {
+            exports: "GIF"
+        },
+        'ccapture': {
+            exports: "CCapture"
+        },
         'phononwebsite': {
-            deps: ['jquery', 'highcharts', 'complex', 'threejs','jsyaml'],
+            deps: ['jquery','highcharts','complex','threejs','jsyaml','ccapture','gif'],
             exports: ['VibCrystal','PhononHighcharts','PhononWebpage']
         }
     }
 });
 
-requirejs([
-  "phononwebsite_test"
-], function() {
+requirejs(["test_phononwebsite"], function() {
+
   assert = chai.assert;
   if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
   else { mocha.run(); }
+
 });
 

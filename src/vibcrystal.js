@@ -97,7 +97,7 @@ export class VibCrystal {
     /* Bind the action to set the direction of the camera using direction
        direction can be 'x','y','z'
     */
-        self = this;
+        let self = this;
         dom_button.click( function() { self.setCameraDirection(direction) } );
     }
 
@@ -106,7 +106,7 @@ export class VibCrystal {
     }
 
     setCellCheckbox(dom_checkbox) {
-        self = this;
+        let self = this;
         dom_checkbox.click( function() { 
             self.cell = this.checked;
             self.updatelocal();
@@ -114,7 +114,7 @@ export class VibCrystal {
     }
 
     setWebmButton(dom_button) {
-        self = this;
+        let self = this;
         /*
         check if its Chrome 1+ taken from
         http://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
@@ -129,12 +129,12 @@ export class VibCrystal {
     }
 
     setGifButton(dom_button) { 
-        self = this;
+        let self = this;
         dom_button.click(function() { self.capturestart('gif'); }); 
     } 
 
     setArrowsCheckbox(dom_checkbox) {
-        self = this;
+        let self = this;
         this.arrows = dom_checkbox.checked;
         dom_checkbox.click( function() { 
             self.arrows = this.checked; 
@@ -143,7 +143,7 @@ export class VibCrystal {
     }
 
     setArrowsInput(dom_range) {
-        self = this;
+        let self = this;
 
         dom_range.val(self.arrowScale);
         dom_range.attr('min',self.minArrowScale);
@@ -155,7 +155,7 @@ export class VibCrystal {
     }
 
    setAmplitudeInput(dom_number,dom_range) {
-        self = this;
+        let self = this;
 
         dom_number.val(self.amplitude);
         dom_number.keyup( function () {
@@ -176,7 +176,7 @@ export class VibCrystal {
     }
 
     setSpeedInput(dom_range) {
-        self = this;
+        let self = this;
 
         dom_range.val(self.speed);
         dom_range.attr('min',self.minSpeed);
