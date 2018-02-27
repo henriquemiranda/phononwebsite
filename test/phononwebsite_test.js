@@ -1,5 +1,9 @@
-define(["jquery", "vibcrystal", "phononhighcharts","phononweb", "Detector"],
-        function(jquery, VibCrystal, PhononHighcharts, PhononWebpage, Detector) {
+define(["phononwebsite"],
+        function(phononwebsite) {
+
+        VibCrystal = phononwebsite.VibCrystal;
+        PhononHighcharts = phononwebsite.PhononHighcharts;
+        PhononWebpage = phononwebsite.PhononWebpage;
 
         describe('PhononWebpage', function() {
             describe('initize all the classes', function() {
@@ -23,16 +27,21 @@ define(["jquery", "vibcrystal", "phononhighcharts","phononweb", "Detector"],
                     p.updateMenu();
                 });
 
+                function verify() {
+                    a = 1;
+                    //assert.isDefined(p.phonon.vec);
+                }
+
                 it('load a phononwebsite json file', function() {
-                    p.getUrlVars({json: "localdb/graphene/data.json", name:"Graphene Phononwebsite"});
+                    p.getUrlVars({json: "localdb/graphene/data.json", name:"Graphene Phononwebsite"},verify);
                 });
 
                 it('load a phonopy yaml', function() {
-                    p.getUrlVars({yaml: "tests/phonopy/band.yaml", name: "Graphene Phonopy"});
+                    p.getUrlVars({yaml: "tests/phonopy/band.yaml", name: "Graphene Phonopy"},verify);
                 });
 
                 it('load a pymatgen phonon json', function() {
-                    p.getUrlVars({json: "tests/pymatgen/mp-149_pmg_bs.json", name: "Silicon PMG"});
+                    p.getUrlVars({json: "tests/pymatgen/mp-149_pmg_bs.json", name: "Silicon PMG"},verify);
                 });
 
             });

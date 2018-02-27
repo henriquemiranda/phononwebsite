@@ -1,4 +1,5 @@
-jmol_colors = [
+
+export var jmol_colors = [
 [1.000,0.000,0.000] ,// None
 [1.000,1.000,1.000], // H
 [0.851,1.000,1.000], // He
@@ -111,7 +112,7 @@ jmol_colors = [
 [0.922,0.000,0.149]  // Mt
 ]
 
-atomic_number = {}
+export var atomic_number = {}
 atomic_number['H' ]  =1
 atomic_number['He']  =2
 atomic_number['Li']  =3
@@ -223,7 +224,7 @@ atomic_number['Hs']  =108
 atomic_number['Mt']  =109
 
 
-atomic_symbol = ['','H','He','Li','Be','B','C','N','O','F','Ne','Na','Mg','Al','Si',
+export var atomic_symbol = ['','H','He','Li','Be','B','C','N','O','F','Ne','Na','Mg','Al','Si',
 'P','S','Cl','Ar','K' ,'Ca','Sc','Ti','Vi','Cr','Mn','Fe','Co','Ni','Cu','Zn','Ga',
 'Ge','As','Se','Br','Kr','Rb','Sr','Y' ,'Zr','Nb','Mo','Tc','Ru','Rh','Pd','Ag',
 'Cd','In','Sn','Sb','Te','I' ,'Xe','Cs','Ba','La','Ce','Pr','Nd','Pm','Sm','Eu',
@@ -232,7 +233,7 @@ atomic_symbol = ['','H','He','Li','Be','B','C','N','O','F','Ne','Na','Mg','Al','
 'Cm','Bk','Cf','Es','Fm','Md','No','Lr','Rf','Db','Sg','Bh','Hs','Mt'];
 
 //from phonopy
-atomic_mass = [null,1.00794,4.002602,6.941,9.012182,10.811,12.0107,14.0067,15.9994,
+export var atomic_mass = [null,1.00794,4.002602,6.941,9.012182,10.811,12.0107,14.0067,15.9994,
 18.9984032,20.1797, 22.98976928,24.305,26.9815386,28.0855,30.973762,32.065,35.453,39.948,
 39.0983,40.078,44.955912,47.867,50.9415,51.9961,54.938045,55.845,58.933195,58.6934,63.546,
 65.38,69.723,72.64,74.9216,78.96,79.904,83.798,85.4678,87.62,88.90585,91.224,92.90638,95.96,
@@ -251,7 +252,7 @@ null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
   Dalton Trans., 2008, 2832-2838 DOI:10.1039/B801115J
   */
 
-covalent_radii = 
+export var covalent_radii = 
 [0.0,  0.31, 0.28, 1.28, 0.96, 0.84, 0.76, 0.71, 0.66, 0.57, //0 
  0.58, 1.66, 1.41, 1.21, 1.11, 1.07, 1.05, 1.02, 1.06, 2.03, //1
  1.76, 1.70, 1.60, 1.53, 1.39, 1.39, 1.32, 1.26, 1.24, 1.32, //2

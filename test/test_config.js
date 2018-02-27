@@ -1,11 +1,13 @@
 requirejs.config({
-    baseUrl: '../js',
+    baseURL: 'src',
     paths: {
-        'jquery': '../js/jquery.min',
-        'threejs': '../js/three.min',
-        'complex': '../js/complex.min',
-        'stats': '../js/stats.min',
-        'js-yaml': 'js-yaml.min'
+        'jquery': '../libs/jquery.min',
+        'threejs': '../libs/three.min',
+        'highcharts': '../libs/highcharts.min',
+        'complex': '../libs/complex.min',
+        'jsyaml': '../libs/jsyaml_amd_wrapper',
+        'detector': '../libs/Detector',
+        'phononwebsite': '../build/phononwebsite'
     },
     shim: {
         'jquery': {
@@ -17,22 +19,22 @@ requirejs.config({
         'complex': {
             exports: "Complex"
         },
+        'detector': {
+            exports: "Detector"
+        },
         'highcharts': {
             deps: ["jquery"],
             exports: "Highcharts"
         },
-        'Detector': {
-            exports: "Detector"
-        },
-        'TrackballControls': {
-            deps: ['threejs'],
-            exports: 'THREE.TrackballControls'
+        'phononwebsite': {
+            deps: ['jquery', 'highcharts', 'complex', 'threejs','jsyaml'],
+            exports: ['VibCrystal','PhononHighcharts','PhononWebpage']
         }
     }
 });
 
-require([
-  '../test/phononwebpage_test'
+requirejs([
+  "phononwebsite_test"
 ], function() {
   assert = chai.assert;
   if (window.mochaPhantomJS) { mochaPhantomJS.run(); }

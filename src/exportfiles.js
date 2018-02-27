@@ -1,4 +1,4 @@
-exportXSF = function () {
+export function exportXSF() {
     let string = "CRYSTAL\n"
     string += "PRIMVEC\n"
 
@@ -36,7 +36,7 @@ exportXSF = function () {
 
 }
 
-exportPOSCAR = function () {
+export function exportPOSCAR() {
 
     let atoms = jQuery.extend(true, [], this.atoms);
     let counter = {};
