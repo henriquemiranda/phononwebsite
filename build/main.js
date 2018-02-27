@@ -1,9 +1,12 @@
 requirejs.config({
+    baseURL: 'src',
     paths: {
-        'jquery': 'jquery.min',
-        'threejs': 'three.min',
-        'complex': 'complex.min',
-        'stats': 'stats.min',
+        'jquery': '../libs/jquery.min',
+        'threejs': '../libs/three.min',
+        'highcharts': '../libs/highcharts.min',
+        'complex': '../libs/complex.min',
+        'jsyaml': '../libs/jsyaml_amd_wrapper',
+        'detector': '../libs/Detector'
     },
     shim: {
         'jquery': {
@@ -15,29 +18,35 @@ requirejs.config({
         'complex': {
             exports: "Complex"
         },
+        'detector': {
+            exports: "Detector"
+        },
         'highcharts': {
             deps: ["jquery"],
             exports: "Highcharts"
         },
-        'Detector': {
-            exports: "Detector"
-        },
-        'TrackballControls': {
-            deps: ['threejs'],
-            exports: 'THREE.TrackballControls'
+        'phononwebsite': {
+            deps: ['jquery','jsyaml','highcharts','complex','threejs'],
+            exports: ['VibCrystal','PhononHighcharts','PhononWebpage']
         }
     }
 });
 
-requirejs(["jquery", "vibcrystal", "phononhighcharts","phononweb", "Detector"], 
-        function(jquery, VibCrystal, PhononHighcharts, PhononWebpage, Detector) {
+requirejs(["phononwebsite", "detector"], function(phononwebsite) {
+
+    console.log($);
+    console.log(Highcharts);
+    console.log(Complex);
+    console.log(THREE);
+    console.log(Detector);
+    console.log(jsyaml);
 
     //visualizer
-    v = new VibCrystal($('#vibcrystal'));
+    v = new phononwebsite.VibCrystal($('#vibcrystal'));
     //dispersion
-    d = new PhononHighcharts($('#highcharts'));
+    d = new phononwebsite.PhononHighcharts($('#highcharts'));
     //phonon class
-    p = new PhononWebpage(v,d);
+    p = new phononwebsite.PhononWebpage(v,d);
 
     //set dom objects phononwebsite
     p.setMaterialsList( $('#mat') );
@@ -52,7 +61,7 @@ requirejs(["jquery", "vibcrystal", "phononhighcharts","phononweb", "Detector"],
     p.setTitle($('#name'));
 
     p.updateMenu();
-    p.getUrlVars();
+    p.getUrlVars({json: "localdb/graphene/data.json", name:"Graphene [1]"});
 
     //set dom objects vibcrystal
     v.setCameraDirectionButton($('#camerax'),'x');
@@ -65,11 +74,8 @@ requirejs(["jquery", "vibcrystal", "phononhighcharts","phononweb", "Detector"],
     v.setArrowsCheckbox($('#drawvectors'));
     v.setArrowsInput($('#vectors_amplitude_range'));
     v.setSpeedInput($('#speed_range'));
-    v.setAmplitudeInput($('#amplitude_box'),$('#amplitude_range'))
-    v.setPlayPause($('#playpause'))
-
-    //bind click event from highcharts with action
-    d.setClickEvent(p);
+    v.setAmplitudeInput($('#amplitude_box'),$('#amplitude_range'));
+    v.setPlayPause($('#playpause'));
 
     // check if webgl is available
     if ( ! Detector.webgl ) {
