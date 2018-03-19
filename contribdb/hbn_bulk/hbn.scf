@@ -1,0 +1,39 @@
+ &control
+    calculation = 'scf'
+    restart_mode='from_scratch',
+    verbosity='high',
+    prefix='b-hbn',
+    pseudo_dir = '/work/projects/tss-physics/pseudos/espresso',
+    outdir='./'
+    wf_collect=.true.
+ /
+ &system    
+    ibrav=  4 
+    celldm(1) = 4.7177372151 
+    celldm(3) = 2.668101131
+    nat=  4
+    ntyp= 2
+    ecutwfc = 110.0 
+ /
+ &electrons
+    mixing_mode = 'plain'
+    mixing_beta = 0.7 
+    conv_thr =  1.0d-8
+ /
+ &ions
+        ion_dynamics = 'bfgs',
+ /&end
+ &cell
+        cell_dynamics = 'bfgs',
+         cell_dofree = '2Dxy',
+ /&end
+ATOMIC_SPECIES 
+ B 10.0  B.pz-vbc.UPF     
+ N 14.0  N.pz-vbc.UPF 
+ATOMIC_POSITIONS {crystal}
+N        0.666666667   0.333333333  0.0
+B        0.333333333   0.666666667  0.0
+B        0.666666667   0.333333333  0.5
+N        0.333333333    0.666666667  0.5
+K_POINTS automatic
+12 12 6 0 0 0
