@@ -4,10 +4,10 @@
 # This file is part of yambopy
 #
 #
-from qepy import *
 import os
 import re
 from math import sqrt
+from .lattice import *
 
 class PwIn():
     """
@@ -92,12 +92,13 @@ class PwIn():
             self.read_cell_parameters()
 
     def read_atomicspecies(self):
-        lines = iter(self.file_lines)
+        lines = self.file_lines
         #find ATOMIC_SPECIES keyword in file and read next line
-        for line in lines:
+        for n,line in enumerate(lines):
             if "ATOMIC_SPECIES" in line:
                 for i in range(int(self.system["ntyp"])):
-                    atype, mass, psp = lines.next().split()
+                    n+=1
+                    atype, mass, psp = lines[n].split()
                     self.atypes[atype] = [mass,psp]
 
     def get_symmetry_spglib(self):
@@ -175,14 +176,15 @@ class PwIn():
             self.atoms[i][1] = self.atoms[i][1] + mode[i].real*displacement*sqrt(small_mass)/sqrt(masses[i])
 
     def read_atoms(self):
-        lines = iter(self.file_lines)
+        lines = self.file_lines
         #find READ_ATOMS keyword in file and read next lines
-        for line in lines:
+        for n,line in enumerate(lines):
             if "ATOMIC_POSITIONS" in line:
                 atomic_pos_type = line
                 self.atomic_pos_type = re.findall('([A-Za-z]+)',line)[-1]
                 for i in range(int(self.system["nat"])):
-                    atype, x,y,z = lines.next().split()
+                    n+=1
+                    atype, x,y,z = lines[n].split()
                     self.atoms.append([atype,[float(i) for i in (x,y,z)]])
         self.atomic_pos_type = atomic_pos_type.replace('{','').replace('}','').strip().split()[1]
 
@@ -224,14 +226,15 @@ class PwIn():
             exit(1)
         
     def read_kpoints(self):
-        lines = iter(self.file_lines)
+        lines = self.file_lines
         #find K_POINTS keyword in file and read next line
-        for line in lines:
+        for n,line in enumerate(lines):
             if "K_POINTS" in line:
                 #chack if the type is automatic
                 if "automatic" in line:
+                    n+=1
                     self.ktype = "automatic"
-                    vals = list(map(float, lines.next().split()))
+                    vals = list(map(float, lines[n].split()))
                     self.kpoints, self.shiftk = vals[0:3], vals[3:6]
                 #otherwise read a list
                 else:

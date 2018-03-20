@@ -4,6 +4,9 @@
 # This file is part of the phononwebsite project
 #
 """ Code the dictionary in json format """
+import json
+import numpy as np
+
 class JsonEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, (np.ndarray,np.number)):
