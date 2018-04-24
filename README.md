@@ -69,7 +69,19 @@ Here are some examples of what can be added to the website link:
 
 You are free to use all the images generated with this website in your publications and presentations as long as you cite this work (a link to the website is enough). For the license terms of the data from [phonodb](http://phonondb.mtl.kyoto-u.ac.jp/) please refer to their website.
 
-In polar materials the LO-TO splitting is missing, we are working on adding these corrections.
+In polar materials the LO-TO splitting is missing in the phonodb.
+
+Change the colors
+============================
+
+The default colors of the atoms are the same ones used in [jmol](http://jmol.sourceforge.net/).
+Currently we don't provide a web interface to change them.
+If you still would like to change the colors, you can checkout locally the git repository from [Github](https://github.com/henriquemiranda/phononwebsite/).
+The colors of the atoms can be changed in `atomic_data.js` file inside the `js/` folder.
+The colors of the bonds and arrows can be changed in `vibcrystal.js` in the 
+variables `this.arrowcolor` and `this.bondscolor` respectively.
+You can run a http server locally (Mac or Linux) with `python -m http.server` (python 3) and 
+visit the page on your web browser in the address: [http://localhost:8000](http://localhost:8000).
 
 File Format
 =================

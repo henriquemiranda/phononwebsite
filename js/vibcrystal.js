@@ -68,6 +68,8 @@ class VibCrystal {
        
         this.fps = 60;
 
+        this.arrowcolor = 0xbbffbb;
+        this.bondscolor = 0xffffff;
         this.arrowobjects = [];
         this.atomobjects = [];
         this.bondobjects = [];
@@ -389,7 +391,7 @@ class VibCrystal {
             let axisGeometry  = new THREE.CylinderGeometry( this.arrowRadius, this.arrowRadius, 
                                                             this.arrowLength );
 
-            let AxisMaterial  = new THREE.MeshLambertMaterial( { color: 0xbbffbb, 
+            let AxisMaterial  = new THREE.MeshLambertMaterial( { color: this.arrowcolor, 
                                                                  blending: THREE.AdditiveBlending } );
 
             for (let i=0; i<atoms.length; i++) {
@@ -413,7 +415,7 @@ class VibCrystal {
         //obtain combinations two by two of all the atoms
         let combinations = getCombinations( this.atomobjects );
         let a, b, length;
-        let material = new THREE.MeshLambertMaterial( { color: 0xffffff,
+        let material = new THREE.MeshLambertMaterial( { color: this.bondscolor,
                                                         blending: THREE.AdditiveBlending } );
 
         //add bonds
