@@ -26,13 +26,23 @@ This only works with the newer version of phonopy as new tags were added to 'ban
 Abinit
 ------
 To read a phonon dispersion form `Abinit` we provide some python scripts to convert the data to a `.json` format.
-You can obtain these scripts from the [Github](https://github.com/henriquemiranda/phononwebsite/) page. To install them just do:
 
-    python setup.py install --user
+To do so you can use [abipy](https://github.com/abinit/abipy).
+This is the recommended way to represent phonon dispersions calculated with `Abinit`.
+Once you have generated a `DDB` file, you can create a JSON file with:
+    
+    $ abiopen.py mp-149_DDB
+
+    In [1]: phbst, phdos = abifile.anaget_phbst_and_phdos_files()
+    In [2]: phbst.phbands.view_phononwebsite()
+
+Alternatively you can use the scripts provided in the [Github](https://github.com/henriquemiranda/phononwebsite/) page. To install them just do:
+
+    $ python setup.py install --user
 
 In the folder where you ran `anaddb` you will find a netCDF file (if your `Abinit` version has netCDF compiled) with the name `anaddb.out_PHBST.nc`. To convert it to `.json` format just run:
 
-    read_anaddb_phonon.py anaddb.out_PHBST.nc <name_of_your_material>
+    $ read_anaddb_phonon.py anaddb.out_PHBST.nc <name_of_your_material>
 
 You can then select the resulting `.json` file with the `Choose files` button.
 
@@ -41,7 +51,7 @@ Quantum Espresso
 To read a Quantum Espresso calculation you need two files `<prefix>.scf` and `<prefix>.modes`. The first one is the input file for `pw.x` the second one can be generated with `dynmat.x`. The file that should be used is the one set with the `'filout'` tag in the dynmat input file as in it the modes are normalized with the atomic masses.
 After installing the python scripts (as in the case of an `Abinit` calculation) you can obtain the `.json` files:
 
-    read_qe_phonon.py prefix <name_of_your_material>
+    $ read_qe_phonon.py prefix <name_of_your_material>
 
 You can then select the resulting `.json` file with the `Choose files` button.
 
@@ -112,12 +122,6 @@ This project is the continuation of the work of Raoul Weber during an internship
 I decided to continue the project by optimizing the implementation, cleaning up the design and replacing JSmol by a self made applet using Three.js and WebGL called VibCrystal.
 Currently the website works also as a web application which means the user can visualize his own calculations made with `phonopy`.
 
-For more information about us and our work visit:  
-<http://wwwen.uni.lu/>
-
-The original implementation by Raoul Weber:  
-<http://tssphysics.jpsfs.com>
-
 My personal webpage:  
 <http://henriquemiranda.github.io>
 
@@ -129,12 +133,21 @@ Aknowledgments & Funding
 [Ludger Wirtz](http://wwwen.uni.lu/recherche/fstc/physics_and_materials_science_research_unit/research_areas/theoretical_solid_state_physics) for the original idea and important scientific advices.
 [Atsushi Togo](http://atztogo.github.io) the creator of [phonopy](http://atztogo.github.io/phonopy/) for providing phonon dispersion data from his [phonodb](http://phonondb.mtl.kyoto-u.ac.jp/) phonon database.
 [José Pedro Silva](http://jpsfs.com/) for very helpful advices on technical issues and the best web technologies to use.
+[Guido Petreto](https://scholar.google.com/citations?user=EaD98BIAAAAJ&hl=en) for many insightful comments, debugging, feature suggestions and the interface with [abipy](https://github.com/abinit/abipy).
 
-Fonds National de la Recherche Luxembourg (2013-present): <http://www.fnr.lu/>
+Fonds National de la Recherche Scientifique (2017-present): <http://www.fnrs.be/>
+
+<img src="figures/fnrs.png" width="150px">
+
+Université Catholique de Louvain (2017-present): <https://uclouvain.be>
+
+<img src="figures/ucl.jpg" width="150px">
+
+Fonds National de la Recherche Luxembourg (2013-2017): <http://www.fnr.lu/>
 
 <img src="figures/fnr.jpg" width="300px">
 
-University of Luxembourg (2013-present): <http://wwwen.uni.lu/>
+University of Luxembourg (2013-2017): <http://wwwen.uni.lu/>
 
 <img src="figures/unilu.png" width="150px">
 
