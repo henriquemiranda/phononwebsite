@@ -9,6 +9,9 @@ var quarternion = new THREE.Quaternion();
 class VibCrystal {
 
     constructor(container) {
+
+        this.display = 'jmol'; //use jmol or vesta displaystyle
+
         this.time = 0,
         this.arrows = false;
         this.cell = false;
@@ -34,8 +37,13 @@ class VibCrystal {
 
         //balls
         this.sphereRadius = 0.5;
-        this.sphereLat = 12;
-        this.sphereLon = 12;
+        if (this.display == 'vesta') {
+            this.sphereLat = 16;
+            this.sphereLon = 16;
+        } else {
+            this.sphereLat = 12;
+            this.sphereLon = 12;
+        }
 
         //bonds
         this.bondRadius = 0.1;
@@ -95,6 +103,14 @@ class VibCrystal {
             self.cell = this.checked;
             self.updatelocal();
         } ) 
+    }
+
+    setDisplayCombo(dom_combo) {
+        var self = this;
+        dom_combo[0].onchange = function() { 
+            self.display = dom_combo[0].options[dom_combo[0].selectedIndex].value;
+            self.updatelocal();
+        }
     }
 
     setWebmButton(dom_button) {
@@ -182,9 +198,15 @@ class VibCrystal {
         this.setCameraDirection('z');
 
         //add lights to the camera
-        let pointLight = new THREE.PointLight( 0xdddddd );
-        pointLight.position.set(1,1,2);
-        this.camera.add(pointLight);
+        if (this.display == 'vesta') {
+            let pointLight = new THREE.PointLight(  0xffffff, 1.2 );
+            pointLight.position.set(1, 1, 1);
+            this.camera.add(pointLight);
+        } else {
+            let pointLight = new THREE.PointLight( 0xdddddd );
+            pointLight.position.set(1,1,2);
+            this.camera.add(pointLight);
+        }
 
         //controls
         this.controls = new THREE.TrackballControls( this.camera, this.container0 );
@@ -275,13 +297,23 @@ class VibCrystal {
 
         for (let i=0; i < atom_numbers.length; i++) {
             let n = atom_numbers[i];
-            let r = jmol_colors[n][0];
-            let g = jmol_colors[n][1];
-            let b = jmol_colors[n][2];
+            if (this.display == 'vesta') {
+                 let r = vesta_colors[n][0];
+                 let g = vesta_colors[n][1];
+                 let b = vesta_colors[n][2];
 
-            let material = new THREE.MeshLambertMaterial( { blending: THREE.AdditiveBlending } );
-            material.color.setRGB (r, g, b);
-            this.materials.push( material );
+                 let material = new THREE.MeshPhongMaterial( {reflectivity:1, shininess: 80} );
+                 material.color.setRGB (r, g, b);
+                 this.materials.push( material );
+            } else {
+                let r = jmol_colors[n][0];
+                let g = jmol_colors[n][1];
+                let b = jmol_colors[n][2];
+
+                let material = new THREE.MeshLambertMaterial( { blending: THREE.AdditiveBlending } );
+                material.color.setRGB (r, g, b);
+                this.materials.push( material );
+            }
         }
     }
 
@@ -358,12 +390,17 @@ class VibCrystal {
         this.geometricCenter = geometricCenter;
 
         //atoms balls geometry
-        let sphereGeometry = new THREE.SphereGeometry( this.sphereRadius, this.sphereLat, 
-                                                       this.sphereLon);
+        let sphereGeometry = null;
+        if (this.display != 'vesta') { 
+            sphereGeometry = new THREE.SphereGeometry( this.sphereRadius, this.sphereLat, this.sphereLon); 
+        }
 
         //add a ball for each atom
         for (let i=0; i<atoms.length; i++) {
-           
+            if (this.display == 'vesta') { 
+                sphereGeometry = new THREE.SphereGeometry( covalent_radii[atom_numbers[atoms[i][0]]]/2.3, 
+                                                           this.sphereLat, this.sphereLon); 
+            }
             let object = new THREE.Mesh( sphereGeometry, this.materials[atoms[i][0]] );
             let pos = new THREE.Vector3(atoms[i][1], atoms[i][2], atoms[i][3]);
             pos.sub(geometricCenter);
@@ -431,6 +468,12 @@ class VibCrystal {
             let crb = covalent_radii[b.atom_number]
             if (length < cra + crb || length < this.nndist ) {
                 this.bonds.push( [ad,bd,length] );
+                if (this.display == 'vesta') {
+                    let cr = (vesta_colors[a.atom_number][0] + vesta_colors[b.atom_number][0]) / 2;
+                    let cg = (vesta_colors[a.atom_number][1] + vesta_colors[b.atom_number][1]) / 2;
+                    let cb = (vesta_colors[a.atom_number][2] + vesta_colors[b.atom_number][2]) / 2;
+                    material.color.setRGB( cr, cg, cb );
+                }
 
                 //get transformations
                 let bond = getBond(ad,bd);
@@ -442,7 +485,7 @@ class VibCrystal {
                 let object = new THREE.Mesh(cylinderGeometry, material);
 
                 object.setRotationFromQuaternion( bond.quaternion );
-                object.position.copy( bond.midpoint )
+                object.position.copy( bond.midpoint );
                 object.name = "bond";
 
                 this.scene.add( object );
@@ -612,4 +655,3 @@ function getBond( point1, point2 ) {
     return { quaternion: quarternion,
              midpoint: point1.clone().add( direction.multiplyScalar(0.5) ) };
 }
-

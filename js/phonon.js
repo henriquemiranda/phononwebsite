@@ -201,7 +201,7 @@ class PhononWebpage {
         let apc = this.phonon.atom_pos_car;
         let atoms = [];
 
-	    for (let ix=0;ix<nx;ix++) {
+        for (let ix=0;ix<nx;ix++) {
             for (let iy=0;iy<ny;iy++) {
                 for (let iz=0;iz<nz;iz++) {
                     for (let i=0;i<this.phonon.natoms;i++) {
@@ -501,6 +501,7 @@ $(document).ready(function() {
     v.setCameraDirectionButton($('#cameray'),'y');
     v.setCameraDirectionButton($('#cameraz'),'z');
     
+    v.setDisplayCombo($('#displaystyle'));
     v.setCellCheckbox($('#drawcell'));
     v.setWebmButton($('#webmbutton'));
     v.setGifButton($('#gifbutton'));
