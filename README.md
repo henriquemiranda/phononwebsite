@@ -36,6 +36,10 @@ Once you have generated a `DDB` file, you can create a JSON file with:
     In [1]: phbst, phdos = abifile.anaget_phbst_and_phdos_files()
     In [2]: phbst.phbands.view_phononwebsite()
 
+If you already have a PHBST.nc netcdf file produced by anaddb you can visualize it by doing:
+    
+    $ abiview.py phbands example_PHBST.nc -web
+
 Alternatively you can use the scripts provided in the [Github](https://github.com/henriquemiranda/phononwebsite/) page. To install them just do:
 
     $ python setup.py install --user
@@ -54,6 +58,14 @@ After installing the python scripts (as in the case of an `Abinit` calculation) 
     $ read_qe_phonon.py prefix <name_of_your_material>
 
 You can then select the resulting `.json` file with the `Choose files` button.
+
+Pages using this visualization tool
+========================================
+
+This visualization tool is currently being used in other websites:
+
+- <https://materialsproject.org/>
+- <https://www.materialscloud.org/>
 
 Features
 ========
@@ -133,7 +145,8 @@ Aknowledgments & Funding
 [Ludger Wirtz](http://wwwen.uni.lu/recherche/fstc/physics_and_materials_science_research_unit/research_areas/theoretical_solid_state_physics) for the original idea and important scientific advices.
 [Atsushi Togo](http://atztogo.github.io) the creator of [phonopy](http://atztogo.github.io/phonopy/) for providing phonon dispersion data from his [phonodb](http://phonondb.mtl.kyoto-u.ac.jp/) phonon database.
 [José Pedro Silva](http://jpsfs.com/) for very helpful advices on technical issues and the best web technologies to use.
-[Guido Petreto](https://scholar.google.com/citations?user=EaD98BIAAAAJ&hl=en) for many insightful comments, debugging, feature suggestions and the interface with [abipy](https://github.com/abinit/abipy).
+[Guido Petreto](https://scholar.google.com/citations?user=EaD98BIAAAAJ&hl=en) and [Matteo Giantomassi](https://scholar.google.be/citations?user=kW8FQgkAAAAJ&hl=en) for many insightful comments, debugging, feature suggestions and the interface with [abipy](https://github.com/abinit/abipy).
+[Nikolas Garofil](mailto:nikolas.garofil@uantwerpen.be) and [Annelinde Strobbe](mailto:annelinde.strobbe@uantwerpen.be) from the for the implementation of the Vesta mode.
 
 Fonds National de la Recherche Scientifique (2017-present): <http://www.fnrs.be/>
 
@@ -153,7 +166,7 @@ University of Luxembourg (2013-2017): <http://wwwen.uni.lu/>
 
 Contribute
 ==========
-The project is still under development!  
+The project is under development!  
 
 You can leave your suggestions and feature requests here:  
 <https://github.com/henriquemiranda/phononwebsite/issues>
@@ -167,7 +180,7 @@ Software used for this project
 - phonon dispersion using `highcharts`: <http://www.highcharts.com/>  
 - export animation using `CCapture.js`: <https://github.com/spite/ccapture.js>
 - gif animation is uses `gif.js`: <http://jnordberg.github.io/gif.js/>
-
 - `Abinit`: <http://www.abinit.org/>
+- `Abipy`: <https://github.com/abinit/abipy>
 - `Quantum Espresso`: <http://www.quantum-espresso.org/>
 - `phonopy`: <http://atztogo.github.io/phonopy/>
