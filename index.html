@@ -54,15 +54,29 @@ BAND_LABELS = Gamma M K
 BAND = (x1,y1,z1) (x2,y2,z2) (x3,y3,z3)</code></pre>
 <p>This only works with the newer version of phonopy as new tags were added to 'band.yaml' to have information about the atomic positions and the supercell.</p>
 <h2 id="abinit">Abinit</h2>
-<p>To read a phonon dispersion form <code>Abinit</code> we provide some python scripts to convert the data to a <code>.json</code> format. You can obtain these scripts from the <a href="https://github.com/henriquemiranda/phononwebsite/">Github</a> page. To install them just do:</p>
-<pre><code>python setup.py install --user</code></pre>
+<p>To read a phonon dispersion form <code>Abinit</code> we provide some python scripts to convert the data to a <code>.json</code> format.</p>
+<p>To do so you can use <a href="https://github.com/abinit/abipy">abipy</a>. This is the recommended way to represent phonon dispersions calculated with <code>Abinit</code>. Once you have generated a <code>DDB</code> file, you can create a JSON file with:</p>
+<pre><code>$ abiopen.py mp-149_DDB
+
+In [1]: phbst, phdos = abifile.anaget_phbst_and_phdos_files()
+In [2]: phbst.phbands.view_phononwebsite()</code></pre>
+<p>If you already have a PHBST.nc netcdf file produced by anaddb you can visualize it by doing:</p>
+<pre><code>$ abiview.py phbands example_PHBST.nc -web</code></pre>
+<p>Alternatively you can use the scripts provided in the <a href="https://github.com/henriquemiranda/phononwebsite/">Github</a> page. To install them just do:</p>
+<pre><code>$ python setup.py install --user</code></pre>
 <p>In the folder where you ran <code>anaddb</code> you will find a netCDF file (if your <code>Abinit</code> version has netCDF compiled) with the name <code>anaddb.out_PHBST.nc</code>. To convert it to <code>.json</code> format just run:</p>
-<pre><code>read_anaddb_phonon.py anaddb.out_PHBST.nc &lt;name_of_your_material&gt;</code></pre>
+<pre><code>$ read_anaddb_phonon.py anaddb.out_PHBST.nc &lt;name_of_your_material&gt;</code></pre>
 <p>You can then select the resulting <code>.json</code> file with the <code>Choose files</code> button.</p>
 <h2 id="quantum-espresso">Quantum Espresso</h2>
 <p>To read a Quantum Espresso calculation you need two files <code>&lt;prefix&gt;.scf</code> and <code>&lt;prefix&gt;.modes</code>. The first one is the input file for <code>pw.x</code> the second one can be generated with <code>dynmat.x</code>. The file that should be used is the one set with the <code>'filout'</code> tag in the dynmat input file as in it the modes are normalized with the atomic masses. After installing the python scripts (as in the case of an <code>Abinit</code> calculation) you can obtain the <code>.json</code> files:</p>
-<pre><code>read_qe_phonon.py prefix &lt;name_of_your_material&gt;</code></pre>
+<pre><code>$ read_qe_phonon.py prefix &lt;name_of_your_material&gt;</code></pre>
 <p>You can then select the resulting <code>.json</code> file with the <code>Choose files</code> button.</p>
+<h1 id="pages-using-this-visualization-tool">Pages using this visualization tool</h1>
+<p>This visualization tool is currently being used in other websites:</p>
+<ul>
+<li><a href="https://materialsproject.org/">https://materialsproject.org/</a></li>
+<li><a href="https://www.materialscloud.org/">https://www.materialscloud.org/</a></li>
+</ul>
 <h1 id="features">Features</h1>
 <p>You can export the lattice distorted according to the currently selected phonon mode to a <code>.xsf</code> or <code>POSCAR</code> file. The <code>phase</code> and <code>amplitude</code> sliders define a complex number that is multiplied by the phonon eigenvectors to obtain the displacements.</p>
 <p>You can export a animated <code>.gif</code> with a particular mode using the <code>gif</code> button in the Export movie section.</p>
@@ -78,7 +92,9 @@ name = name of the material</code></pre>
 <li><a href="http://henriquemiranda.github.io/phononwebsite/phonon.html?json=http://henriquemiranda.github.io/phononwebsite/graphene/data.json">?json=http://henriquemiranda.github.io/phononwebsite/graphene/data.json</a></li>
 </ul>
 <p>You are free to use all the images generated with this website in your publications and presentations as long as you cite this work (a link to the website is enough). For the license terms of the data from <a href="http://phonondb.mtl.kyoto-u.ac.jp/">phonodb</a> please refer to their website.</p>
-<p>In polar materials the LO-TO splitting is missing, we are working on adding these corrections.</p>
+<p>In polar materials the LO-TO splitting is missing in the phonodb.</p>
+<h1 id="change-the-colors">Change the colors</h1>
+<p>The default colors of the atoms are the same ones used in <a href="http://jmol.sourceforge.net/">jmol</a>. Currently we don't provide a web interface to change them. If you still would like to change the colors, you can checkout locally the git repository from <a href="https://github.com/henriquemiranda/phononwebsite/">Github</a>. The colors of the atoms can be changed in <code>atomic_data.js</code> file inside the <code>js/</code> folder. The colors of the bonds and arrows can be changed in <code>vibcrystal.js</code> in the variables <code>this.arrowcolor</code> and <code>this.bondscolor</code> respectively. You can run a http server locally (Mac or Linux) with <code>python -m http.server</code> (python 3) and visit the page on your web browser in the address: <a href="http://localhost:8000">http://localhost:8000</a>.</p>
 <h1 id="file-format">File Format</h1>
 <p>Here you can find a short description of the internal .json format used to show the phonon dispersions and animations on the website.</p>
 <pre><code>name:             name of the material that will be displayed on the website (string)
@@ -86,8 +102,6 @@ natoms:           number of atoms (integer)
 lattice:          lattice vectors (3x3 float array)
 atom_types:       atom type   for each atom in the system (array strings)
 atom_numbers:     atom number for each atom in the system (array integers)
-chemical_symbols: unique atom types   (array strings)
-atomic_numbers:   unique atom numbers (integer)
 formula:          chemical formula (string)
 repetitions:      default value for the repetititions (array 3 integers)
 atom_pos_car:     atomic positions in cartesian coordinates (Nx3 float array)
@@ -100,18 +114,30 @@ vectors:          eigenvectors (NqxN)</code></pre>
 <h1 id="authors">Authors</h1>
 <p>This project is the continuation of the work of Raoul Weber during an internship in the University of Luxembourg for 2 months in the Theoretical Solid State Physics group under the supervision of Ludger Wirtz and technical help from me.</p>
 <p>I decided to continue the project by optimizing the implementation, cleaning up the design and replacing JSmol by a self made applet using Three.js and WebGL called VibCrystal. Currently the website works also as a web application which means the user can visualize his own calculations made with <code>phonopy</code>.</p>
-<p>For more information about us and our work visit:<br /><a href="http://wwwen.uni.lu/">http://wwwen.uni.lu/</a></p>
-<p>The original implementation by Raoul Weber:<br /><a href="http://tssphysics.jpsfs.com">http://tssphysics.jpsfs.com</a></p>
 <p>My personal webpage:<br /><a href="http://henriquemiranda.github.io">http://henriquemiranda.github.io</a></p>
 <p>Contact me:<br />miranda.henrique at gmail.com</p>
 <h1 id="aknowledgments-funding">Aknowledgments &amp; Funding</h1>
-<p><a href="http://wwwen.uni.lu/recherche/fstc/physics_and_materials_science_research_unit/research_areas/theoretical_solid_state_physics">Ludger Wirtz</a> for the original idea and important scientific advices. <a href="http://atztogo.github.io">Atsushi Togo</a> the creator of <a href="http://atztogo.github.io/phonopy/">phonopy</a> for providing phonon dispersion data from his <a href="http://phonondb.mtl.kyoto-u.ac.jp/">phonodb</a> phonon database. <a href="http://jpsfs.com/">José Pedro Silva</a> for very helpful advices on technical issues and the best web technologies to use.</p>
-<p>Fonds National de la Recherche Luxembourg (2013-present): <a href="http://www.fnr.lu/">http://www.fnr.lu/</a></p>
-<p><img src="figures/fnr.jpg" style="width:60%;"></p>
-<p>University of Luxembourg (2013-present): <a href="http://wwwen.uni.lu/">http://wwwen.uni.lu/</a></p>
-<p><img src="figures/unilu.png" style="width:20%;"></p>
+<p><a href="http://wwwen.uni.lu/recherche/fstc/physics_and_materials_science_research_unit/research_areas/theoretical_solid_state_physics">Ludger Wirtz</a> for the original idea and important scientific advices. <a href="http://atztogo.github.io">Atsushi Togo</a> the creator of <a href="http://atztogo.github.io/phonopy/">phonopy</a> for providing phonon dispersion data from his <a href="http://phonondb.mtl.kyoto-u.ac.jp/">phonodb</a> phonon database. <a href="http://jpsfs.com/">José Pedro Silva</a> for very helpful advices on technical issues and the best web technologies to use. <a href="https://scholar.google.com/citations?user=EaD98BIAAAAJ&amp;hl=en">Guido Petreto</a> and <a href="https://scholar.google.be/citations?user=kW8FQgkAAAAJ&amp;hl=en">Matteo Giantomassi</a> for many insightful comments, debugging, feature suggestions and the interface with <a href="https://github.com/abinit/abipy">abipy</a>. <script type="text/javascript">
+<!--
+h='&#x75;&#x61;&#110;&#116;&#x77;&#x65;&#114;&#112;&#x65;&#110;&#46;&#98;&#x65;';a='&#64;';n='&#110;&#x69;&#x6b;&#x6f;&#108;&#x61;&#x73;&#46;&#x67;&#x61;&#114;&#x6f;&#102;&#x69;&#108;';e=n+a+h;
+document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'">'+'Nikolas Garofil'+'<\/'+'a'+'>');
+// -->
+</script><noscript>&#78;&#x69;&#x6b;&#x6f;&#108;&#x61;&#x73;&#32;&#x47;&#x61;&#114;&#x6f;&#102;&#x69;&#108;&#32;&#40;&#110;&#x69;&#x6b;&#x6f;&#108;&#x61;&#x73;&#46;&#x67;&#x61;&#114;&#x6f;&#102;&#x69;&#108;&#32;&#x61;&#116;&#32;&#x75;&#x61;&#110;&#116;&#x77;&#x65;&#114;&#112;&#x65;&#110;&#32;&#100;&#x6f;&#116;&#32;&#98;&#x65;&#x29;</noscript> and <script type="text/javascript">
+<!--
+h='&#x75;&#x61;&#110;&#116;&#x77;&#x65;&#114;&#112;&#x65;&#110;&#46;&#98;&#x65;';a='&#64;';n='&#x61;&#110;&#110;&#x65;&#108;&#x69;&#110;&#100;&#x65;&#46;&#x73;&#116;&#114;&#x6f;&#98;&#98;&#x65;';e=n+a+h;
+document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'">'+'Annelinde Strobbe'+'<\/'+'a'+'>');
+// -->
+</script><noscript>&#x41;&#110;&#110;&#x65;&#108;&#x69;&#110;&#100;&#x65;&#32;&#x53;&#116;&#114;&#x6f;&#98;&#98;&#x65;&#32;&#40;&#x61;&#110;&#110;&#x65;&#108;&#x69;&#110;&#100;&#x65;&#46;&#x73;&#116;&#114;&#x6f;&#98;&#98;&#x65;&#32;&#x61;&#116;&#32;&#x75;&#x61;&#110;&#116;&#x77;&#x65;&#114;&#112;&#x65;&#110;&#32;&#100;&#x6f;&#116;&#32;&#98;&#x65;&#x29;</noscript> from the for the implementation of the Vesta mode.</p>
+<p>Fonds National de la Recherche Scientifique (2017-present): <a href="http://www.fnrs.be/">http://www.fnrs.be/</a></p>
+<p><img src="figures/fnrs.png" width="150px"></p>
+<p>Université Catholique de Louvain (2017-present): <a href="https://uclouvain.be">https://uclouvain.be</a></p>
+<p><img src="figures/ucl.jpg" width="150px"></p>
+<p>Fonds National de la Recherche Luxembourg (2013-2017): <a href="http://www.fnr.lu/">http://www.fnr.lu/</a></p>
+<p><img src="figures/fnr.jpg" width="300px"></p>
+<p>University of Luxembourg (2013-2017): <a href="http://wwwen.uni.lu/">http://wwwen.uni.lu/</a></p>
+<p><img src="figures/unilu.png" width="150px"></p>
 <h1 id="contribute">Contribute</h1>
-<p>The project is still under development!</p>
+<p>The project is under development!</p>
 <p>You can leave your suggestions and feature requests here:<br /><a href="https://github.com/henriquemiranda/phononwebsite/issues">https://github.com/henriquemiranda/phononwebsite/issues</a></p>
 <p>If you would like to see some of your calculations published on this website please contact me.</p>
 <h1 id="software-used-for-this-project">Software used for this project</h1>
@@ -119,10 +145,11 @@ vectors:          eigenvectors (NqxN)</code></pre>
 <li>WebGL visualization using <code>Three.js</code>: <a href="http://threejs.org/">http://threejs.org/</a></li>
 <li>phonon dispersion using <code>highcharts</code>: <a href="http://www.highcharts.com/">http://www.highcharts.com/</a><br /></li>
 <li>export animation using <code>CCapture.js</code>: <a href="https://github.com/spite/ccapture.js">https://github.com/spite/ccapture.js</a></li>
-<li><p>gif animation is uses <code>gif.js</code>: <a href="http://jnordberg.github.io/gif.js/">http://jnordberg.github.io/gif.js/</a></p></li>
+<li>gif animation is uses <code>gif.js</code>: <a href="http://jnordberg.github.io/gif.js/">http://jnordberg.github.io/gif.js/</a></li>
 <li><code>Abinit</code>: <a href="http://www.abinit.org/">http://www.abinit.org/</a></li>
+<li><code>Abipy</code>: <a href="https://github.com/abinit/abipy">https://github.com/abinit/abipy</a></li>
 <li><code>Quantum Espresso</code>: <a href="http://www.quantum-espresso.org/">http://www.quantum-espresso.org/</a></li>
-<li><p><code>phonopy</code>: <a href="http://atztogo.github.io/phonopy/">http://atztogo.github.io/phonopy/</a></p></li>
+<li><code>phonopy</code>: <a href="http://atztogo.github.io/phonopy/">http://atztogo.github.io/phonopy/</a></li>
 </ul>
 
 </section>

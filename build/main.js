@@ -34,13 +34,6 @@ requirejs.config({
 
 requirejs(["phononwebsite", "detector"], function(phononwebsite) {
 
-    console.log($);
-    console.log(Highcharts);
-    console.log(Complex);
-    console.log(THREE);
-    console.log(Detector);
-    console.log(jsyaml);
-
     //visualizer
     v = new phononwebsite.VibCrystal($('#vibcrystal'));
     //dispersion

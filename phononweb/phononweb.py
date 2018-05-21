@@ -9,9 +9,11 @@ import json
 import numpy as np
 from collections import Counter
 from .units import *
+from .lattice import *
+from .jsonencoder import *
 
 def open_file_phononwebsite(filename,port=8000,
-                            website="http://henriquemiranda.github.io",
+                            website="http://henriquemiranda.github.io/phononwebsite",
                             host="localhost"):
     """
     take a file, detect the type and open it on the phonon website
@@ -325,7 +327,8 @@ class Phonon():
         else:      name = self.name
         filename = "%s/%s.json"%(folder,name)
 
-        open_file_phononwebsite(filename,localhost=localhost,port=port)
+        #deactivate for now
+        #open_file_phononwebsite(filename,host=host,port=port)
 
     def __str__(self):
         text = ""

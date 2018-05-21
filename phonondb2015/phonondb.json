@@ -1,2632 +1,2632 @@
 [
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-25.yaml",
         "name": "N2",
-        "id": 25
+        "id": 25,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-25.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-149.yaml",
         "name": "Si",
-        "id": 149
+        "id": 149,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-149.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-154.yaml",
         "name": "N2",
-        "id": 154
+        "id": 154,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-154.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-223.yaml",
         "name": "GeO2",
-        "id": 223
+        "id": 223,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-223.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-239.yaml",
         "name": "BaS3",
-        "id": 239
+        "id": 239,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-239.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-252.yaml",
         "name": "BeTe",
-        "id": 252
+        "id": 252,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-252.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-286.yaml",
         "name": "YbSe",
-        "id": 286
+        "id": 286,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-286.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-341.yaml",
         "name": "PbF4",
-        "id": 341
+        "id": 341,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-341.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-375.yaml",
         "name": "UO3",
-        "id": 375
+        "id": 375,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-375.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-380.yaml",
         "name": "ZnSe",
-        "id": 380
+        "id": 380,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-380.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-406.yaml",
         "name": "CdTe",
-        "id": 406
+        "id": 406,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-406.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-422.yaml",
         "name": "BeS",
-        "id": 422
+        "id": 422,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-422.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-463.yaml",
         "name": "KF",
-        "id": 463
+        "id": 463,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-463.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-470.yaml",
         "name": "GeO2",
-        "id": 470
+        "id": 470,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-470.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-617.yaml",
         "name": "PtO2",
-        "id": 617
+        "id": 617,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-617.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-661.yaml",
         "name": "AlN",
-        "id": 661
+        "id": 661,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-661.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-665.yaml",
         "name": "SnSe2",
-        "id": 665
+        "id": 665,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-665.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-672.yaml",
         "name": "CdS",
-        "id": 672
+        "id": 672,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-672.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-682.yaml",
         "name": "NaF",
-        "id": 682
+        "id": 682,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-682.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-720.yaml",
         "name": "TlF",
-        "id": 720
+        "id": 720,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-720.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-733.yaml",
         "name": "GeO2",
-        "id": 733
+        "id": 733,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-733.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-736.yaml",
         "name": "Li3P",
-        "id": 736
+        "id": 736,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-736.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-757.yaml",
         "name": "Li3As",
-        "id": 757
+        "id": 757,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-757.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-804.yaml",
         "name": "GaN",
-        "id": 804
+        "id": 804,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-804.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-830.yaml",
         "name": "GaN",
-        "id": 830
+        "id": 830,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-830.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-856.yaml",
         "name": "SnO2",
-        "id": 856
+        "id": 856,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-856.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-1000.yaml",
         "name": "BaTe",
-        "id": 1000
+        "id": 1000,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-1000.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-1039.yaml",
         "name": "MgTe",
-        "id": 1039
+        "id": 1039,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-1039.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-1070.yaml",
         "name": "CdSe",
-        "id": 1070
+        "id": 1070,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-1070.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-1087.yaml",
         "name": "SrS",
-        "id": 1087
+        "id": 1087,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-1087.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-1105.yaml",
         "name": "BaO2",
-        "id": 1105
+        "id": 1105,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-1105.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-1138.yaml",
         "name": "LiF",
-        "id": 1138
+        "id": 1138,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-1138.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-1186.yaml",
         "name": "ZrS2",
-        "id": 1186
+        "id": 1186,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-1186.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-1190.yaml",
         "name": "ZnSe",
-        "id": 1190
+        "id": 1190,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-1190.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-1216.yaml",
         "name": "YbO",
-        "id": 1216
+        "id": 1216,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-1216.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-1224.yaml",
         "name": "HgO",
-        "id": 1224
+        "id": 1224,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-1224.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-1249.yaml",
         "name": "MgF2",
-        "id": 1249
+        "id": 1249,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-1249.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-1253.yaml",
         "name": "BaSe",
-        "id": 1253
+        "id": 1253,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-1253.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-1265.yaml",
         "name": "MgO",
-        "id": 1265
+        "id": 1265,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-1265.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-1285.yaml",
         "name": "PtO2",
-        "id": 1285
+        "id": 1285,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-1285.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-1315.yaml",
         "name": "MgS",
-        "id": 1315
+        "id": 1315,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-1315.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-1342.yaml",
         "name": "BaO",
-        "id": 1342
+        "id": 1342,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-1342.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-1378.yaml",
         "name": "LiC",
-        "id": 1378
+        "id": 1378,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-1378.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-1415.yaml",
         "name": "CaSe",
-        "id": 1415
+        "id": 1415,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-1415.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-1479.yaml",
         "name": "BP",
-        "id": 1479
+        "id": 1479,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-1479.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-1500.yaml",
         "name": "BaS",
-        "id": 1500
+        "id": 1500,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-1500.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-1519.yaml",
         "name": "CaTe",
-        "id": 1519
+        "id": 1519,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-1519.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-1522.yaml",
         "name": "FeS2",
-        "id": 1522
+        "id": 1522,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-1522.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-1541.yaml",
         "name": "BeSe",
-        "id": 1541
+        "id": 1541,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-1541.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-1550.yaml",
         "name": "AlP",
-        "id": 1550
+        "id": 1550,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-1550.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-1672.yaml",
         "name": "CaS",
-        "id": 1672
+        "id": 1672,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-1672.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-1700.yaml",
         "name": "AlN",
-        "id": 1700
+        "id": 1700,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-1700.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-1779.yaml",
         "name": "YbTe",
-        "id": 1779
+        "id": 1779,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-1779.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-1784.yaml",
         "name": "CsF",
-        "id": 1784
+        "id": 1784,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-1784.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-1818.yaml",
         "name": "SiF4",
-        "id": 1818
+        "id": 1818,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-1818.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-1820.yaml",
         "name": "YbS",
-        "id": 1820
+        "id": 1820,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-1820.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-1873.yaml",
         "name": "ZnF2",
-        "id": 1873
+        "id": 1873,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-1873.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-1958.yaml",
         "name": "SrTe",
-        "id": 1958
+        "id": 1958,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-1958.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-1968.yaml",
         "name": "La2O3",
-        "id": 1968
+        "id": 1968,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-1968.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-1986.yaml",
         "name": "ZnO",
-        "id": 1986
+        "id": 1986,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-1986.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-2063.yaml",
         "name": "Pr2O3",
-        "id": 2063
+        "id": 2063,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-2063.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-2133.yaml",
         "name": "ZnO",
-        "id": 2133
+        "id": 2133,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-2133.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-2172.yaml",
         "name": "AlAs",
-        "id": 2172
+        "id": 2172,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-2172.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-2175.yaml",
         "name": "TlF",
-        "id": 2175
+        "id": 2175,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-2175.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-2176.yaml",
         "name": "ZnTe",
-        "id": 2176
+        "id": 2176,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-2176.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-2251.yaml",
         "name": "Li3N",
-        "id": 2251
+        "id": 2251,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-2251.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-2319.yaml",
         "name": "P2Os",
-        "id": 2319
+        "id": 2319,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-2319.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-2341.yaml",
         "name": "Li3N",
-        "id": 2341
+        "id": 2341,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-2341.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-2455.yaml",
         "name": "As2Os",
-        "id": 2455
+        "id": 2455,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-2455.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-2469.yaml",
         "name": "CdS",
-        "id": 2469
+        "id": 2469,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-2469.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-2472.yaml",
         "name": "SrO",
-        "id": 2472
+        "id": 2472,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-2472.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-2482.yaml",
         "name": "CaC2",
-        "id": 2482
+        "id": 2482,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-2482.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-2488.yaml",
         "name": "SiOs",
-        "id": 2488
+        "id": 2488,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-2488.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-2490.yaml",
         "name": "GaP",
-        "id": 2490
+        "id": 2490,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-2490.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-2542.yaml",
         "name": "BeO",
-        "id": 2542
+        "id": 2542,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-2542.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-2574.yaml",
         "name": "ZrO2",
-        "id": 2574
+        "id": 2574,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-2574.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-2605.yaml",
         "name": "CaO",
-        "id": 2605
+        "id": 2605,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-2605.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-2624.yaml",
         "name": "AlSb",
-        "id": 2624
+        "id": 2624,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-2624.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-2630.yaml",
         "name": "SrC2",
-        "id": 2630
+        "id": 2630,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-2630.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-2657.yaml",
         "name": "TiO2",
-        "id": 2657
+        "id": 2657,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-2657.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-2667.yaml",
         "name": "CsAu",
-        "id": 2667
+        "id": 2667,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-2667.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-2691.yaml",
         "name": "CdSe",
-        "id": 2691
+        "id": 2691,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-2691.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-2697.yaml",
         "name": "SrO2",
-        "id": 2697
+        "id": 2697,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-2697.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-2706.yaml",
         "name": "SnF4",
-        "id": 2706
+        "id": 2706,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-2706.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-2758.yaml",
         "name": "SrSe",
-        "id": 2758
+        "id": 2758,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-2758.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-2763.yaml",
         "name": "Nd2O3",
-        "id": 2763
+        "id": 2763,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-2763.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-2964.yaml",
         "name": "NaNO2",
-        "id": 2964
+        "id": 2964,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-2964.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-2998.yaml",
         "name": "BaTiO3",
-        "id": 2998
+        "id": 2998,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-2998.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-3104.yaml",
         "name": "BaZrN2",
-        "id": 3104
+        "id": 3104,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-3104.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-3136.yaml",
         "name": "NaNbO3",
-        "id": 3136
+        "id": 3136,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-3136.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-3211.yaml",
         "name": "Nd2SO2",
-        "id": 3211
+        "id": 3211,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-3211.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-3216.yaml",
         "name": "Li2ZrN2",
-        "id": 3216
+        "id": 3216,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-3216.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-3236.yaml",
         "name": "Pr2SO2",
-        "id": 3236
+        "id": 3236,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-3236.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-3448.yaml",
         "name": "KMgF3",
-        "id": 3448
+        "id": 3448,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-3448.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-3551.yaml",
         "name": "TbAgTe2",
-        "id": 3551
+        "id": 3551,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-3551.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-3556.yaml",
         "name": "Tm2SO2",
-        "id": 3556
+        "id": 3556,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-3556.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-3614.yaml",
         "name": "KTaO3",
-        "id": 3614
+        "id": 3614,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-3614.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-3654.yaml",
         "name": "RbCaF3",
-        "id": 3654
+        "id": 3654,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-3654.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-3762.yaml",
         "name": "VCu3S4",
-        "id": 3762
+        "id": 3762,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-3762.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-3810.yaml",
         "name": "Hg(AsO3)2",
-        "id": 3810
+        "id": 3810,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-3810.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-3821.yaml",
         "name": "K2PtF6",
-        "id": 3821
+        "id": 3821,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-3821.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-3834.yaml",
         "name": "BaZrO3",
-        "id": 3834
+        "id": 3834,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-3834.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-3931.yaml",
         "name": "SmSF",
-        "id": 3931
+        "id": 3931,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-3931.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-3970.yaml",
         "name": "K2TiF6",
-        "id": 3970
+        "id": 3970,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-3970.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-3992.yaml",
         "name": "PrSF",
-        "id": 3992
+        "id": 3992,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-3992.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-4002.yaml",
         "name": "Li2ZrF6",
-        "id": 4002
+        "id": 4002,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-4002.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-4024.yaml",
         "name": "DyAgTe2",
-        "id": 4024
+        "id": 4024,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-4024.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-4043.yaml",
         "name": "NbCu3Se4",
-        "id": 4043
+        "id": 4043,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-4043.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-4081.yaml",
         "name": "TaCu3Se4",
-        "id": 4081
+        "id": 4081,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-4081.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-4170.yaml",
         "name": "NaTaO3",
-        "id": 4170
+        "id": 4170,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-4170.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-4226.yaml",
         "name": "LiCrS2",
-        "id": 4226
+        "id": 4226,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-4226.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-4342.yaml",
         "name": "KNbO3",
-        "id": 4342
+        "id": 4342,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-4342.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-4419.yaml",
         "name": "NaNbO3",
-        "id": 4419
+        "id": 4419,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-4419.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-4495.yaml",
         "name": "KLiTe",
-        "id": 4495
+        "id": 4495,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-4495.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-4511.yaml",
         "name": "La2SO2",
-        "id": 4511
+        "id": 4511,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-4511.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-4551.yaml",
         "name": "SrHfO3",
-        "id": 4551
+        "id": 4551,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-4551.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-4555.yaml",
         "name": "Ca(AsO3)2",
-        "id": 4555
+        "id": 4555,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-4555.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-4675.yaml",
         "name": "NaTaO3",
-        "id": 4675
+        "id": 4675,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-4675.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-4764.yaml",
         "name": "Pr2SeO2",
-        "id": 4764
+        "id": 4764,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-4764.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-4824.yaml",
         "name": "NaZnP",
-        "id": 4824
+        "id": 4824,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-4824.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-4829.yaml",
         "name": "Na2ThF6",
-        "id": 4829
+        "id": 4829,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-4829.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-4950.yaml",
         "name": "KCaF3",
-        "id": 4950
+        "id": 4950,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-4950.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-5246.yaml",
         "name": "KNbO3",
-        "id": 5246
+        "id": 5246,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-5246.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-5304.yaml",
         "name": "LaAlO3",
-        "id": 5304
+        "id": 5304,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-5304.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-5339.yaml",
         "name": "CsNaTe",
-        "id": 5339
+        "id": 5339,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-5339.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-5347.yaml",
         "name": "KAlF4",
-        "id": 5347
+        "id": 5347,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-5347.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-5394.yaml",
         "name": "LaSF",
-        "id": 5394
+        "id": 5394,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-5394.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-5479.yaml",
         "name": "RbAlF4",
-        "id": 5479
+        "id": 5479,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-5479.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-5598.yaml",
         "name": "Sm2SO2",
-        "id": 5598
+        "id": 5598,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-5598.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-5606.yaml",
         "name": "AlTlF4",
-        "id": 5606
+        "id": 5606,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-5606.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-5621.yaml",
         "name": "NbCu3S4",
-        "id": 5621
+        "id": 5621,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-5621.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-5663.yaml",
         "name": "BaCeO3",
-        "id": 5663
+        "id": 5663,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-5663.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-5760.yaml",
         "name": "NdSF",
-        "id": 5760
+        "id": 5760,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-5760.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-5770.yaml",
         "name": "AgNO2",
-        "id": 5770
+        "id": 5770,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-5770.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-5777.yaml",
         "name": "BaTiO3",
-        "id": 5777
+        "id": 5777,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-5777.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-5795.yaml",
         "name": "CaMg2N2",
-        "id": 5795
+        "id": 5795,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-5795.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-5811.yaml",
         "name": "CsPbF3",
-        "id": 5811
+        "id": 5811,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-5811.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-5878.yaml",
         "name": "KZnF3",
-        "id": 5878
+        "id": 5878,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-5878.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-5962.yaml",
         "name": "NaMgAs",
-        "id": 5962
+        "id": 5962,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-5962.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-5986.yaml",
         "name": "BaTiO3",
-        "id": 5986
+        "id": 5986,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-5986.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-6867.yaml",
         "name": "KCaCO3F",
-        "id": 6867
+        "id": 6867,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-6867.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-6922.yaml",
         "name": "SiO2",
-        "id": 6922
+        "id": 6922,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-6922.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-6948.yaml",
         "name": "KNaO",
-        "id": 6948
+        "id": 6948,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-6948.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-6951.yaml",
         "name": "RbCdF3",
-        "id": 6951
+        "id": 6951,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-6951.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-6952.yaml",
         "name": "YbRbF3",
-        "id": 6952
+        "id": 6952,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-6952.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-6973.yaml",
         "name": "CsNaS",
-        "id": 6973
+        "id": 6973,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-6973.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-6980.yaml",
         "name": "ScCuS2",
-        "id": 6980
+        "id": 6980,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-6980.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-7000.yaml",
         "name": "SiO2",
-        "id": 7000
+        "id": 7000,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-7000.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-7089.yaml",
         "name": "KMgSb",
-        "id": 7089
+        "id": 7089,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-7089.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-7090.yaml",
         "name": "NaMgSb",
-        "id": 7090
+        "id": 7090,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-7090.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-7100.yaml",
         "name": "LaOF",
-        "id": 7100
+        "id": 7100,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-7100.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-7104.yaml",
         "name": "CsCaF3",
-        "id": 7104
+        "id": 7104,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-7104.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-7128.yaml",
         "name": "Cd(AsO3)2",
-        "id": 7128
+        "id": 7128,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-7128.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-7140.yaml",
         "name": "SiC",
-        "id": 7140
+        "id": 7140,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-7140.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-7223.yaml",
         "name": "Ca3AsN",
-        "id": 7223
+        "id": 7223,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-7223.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-7233.yaml",
         "name": "La2SeO2",
-        "id": 7233
+        "id": 7233,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-7233.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-7297.yaml",
         "name": "Cs2SnF6",
-        "id": 7297
+        "id": 7297,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-7297.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-7434.yaml",
         "name": "NaCuTe",
-        "id": 7434
+        "id": 7434,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-7434.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-7482.yaml",
         "name": "RbHgF3",
-        "id": 7482
+        "id": 7482,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-7482.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-7483.yaml",
         "name": "KHgF3",
-        "id": 7483
+        "id": 7483,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-7483.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-7548.yaml",
         "name": "BaSe3",
-        "id": 7548
+        "id": 7548,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-7548.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-7599.yaml",
         "name": "BeO",
-        "id": 7599
+        "id": 7599,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-7599.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-7604.yaml",
         "name": "Mg3NF3",
-        "id": 7604
+        "id": 7604,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-7604.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-7738.yaml",
         "name": "LaSeF",
-        "id": 7738
+        "id": 7738,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-7738.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-7768.yaml",
         "name": "Th2SeN2",
-        "id": 7768
+        "id": 7768,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-7768.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-7769.yaml",
         "name": "Th2SN2",
-        "id": 7769
+        "id": 7769,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-7769.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-7786.yaml",
         "name": "CsCu3S2",
-        "id": 7786
+        "id": 7786,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-7786.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-7824.yaml",
         "name": "K2ReF6",
-        "id": 7824
+        "id": 7824,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-7824.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-7825.yaml",
         "name": "K2GeF6",
-        "id": 7825
+        "id": 7825,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-7825.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-7891.yaml",
         "name": "Mg3As2",
-        "id": 7891
+        "id": 7891,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-7891.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-7895.yaml",
         "name": "RbO",
-        "id": 7895
+        "id": 7895,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-7895.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-7896.yaml",
         "name": "CsO",
-        "id": 7896
+        "id": 7896,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-7896.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-7949.yaml",
         "name": "Rb2GeF6",
-        "id": 7949
+        "id": 7949,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-7949.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-7950.yaml",
         "name": "ThSeO",
-        "id": 7950
+        "id": 7950,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-7950.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-7979.yaml",
         "name": "K2PdF6",
-        "id": 7979
+        "id": 7979,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-7979.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-8062.yaml",
         "name": "SiC",
-        "id": 8062
+        "id": 8062,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-8062.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-8136.yaml",
         "name": "ThSO",
-        "id": 8136
+        "id": 8136,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-8136.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-8152.yaml",
         "name": "Li2CeAs2",
-        "id": 8152
+        "id": 8152,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-8152.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-8181.yaml",
         "name": "Li2CeN2",
-        "id": 8181
+        "id": 8181,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-8181.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-8192.yaml",
         "name": "Rb2PtF6",
-        "id": 8192
+        "id": 8192,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-8192.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-8234.yaml",
         "name": "BaTe3",
-        "id": 8234
+        "id": 8234,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-8234.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-8276.yaml",
         "name": "Sr(ZnP)2",
-        "id": 8276
+        "id": 8276,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-8276.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-8277.yaml",
         "name": "Sr(CdP)2",
-        "id": 8277
+        "id": 8277,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-8277.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-8278.yaml",
         "name": "Ba(MgP)2",
-        "id": 8278
+        "id": 8278,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-8278.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-8279.yaml",
         "name": "Ba(CdP)2",
-        "id": 8279
+        "id": 8279,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-8279.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-8280.yaml",
         "name": "Ba(MgAs)2",
-        "id": 8280
+        "id": 8280,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-8280.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-8354.yaml",
         "name": "LaF3",
-        "id": 8354
+        "id": 8354,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-8354.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-8398.yaml",
         "name": "YbCsF3",
-        "id": 8398
+        "id": 8398,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-8398.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-8399.yaml",
         "name": "CsCdF3",
-        "id": 8399
+        "id": 8399,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-8399.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-8402.yaml",
         "name": "RbMgF3",
-        "id": 8402
+        "id": 8402,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-8402.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-8407.yaml",
         "name": "Li3LaP2",
-        "id": 8407
+        "id": 8407,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-8407.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-8430.yaml",
         "name": "KLiS",
-        "id": 8430
+        "id": 8430,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-8430.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-8452.yaml",
         "name": "NaLiS",
-        "id": 8452
+        "id": 8452,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-8452.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-8453.yaml",
         "name": "RbNaO",
-        "id": 8453
+        "id": 8453,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-8453.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-8579.yaml",
         "name": "Ba(AgS)2",
-        "id": 8579
+        "id": 8579,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-8579.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-8658.yaml",
         "name": "CsNaSe",
-        "id": 8658
+        "id": 8658,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-8658.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-8751.yaml",
         "name": "RbLiS",
-        "id": 8751
+        "id": 8751,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-8751.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-8756.yaml",
         "name": "KLiSe",
-        "id": 8756
+        "id": 8756,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-8756.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-8781.yaml",
         "name": "SnS",
-        "id": 8781
+        "id": 8781,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-8781.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-8799.yaml",
         "name": "RbNaS",
-        "id": 8799
+        "id": 8799,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-8799.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-8880.yaml",
         "name": "AlP",
-        "id": 8880
+        "id": 8880,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-8880.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-8881.yaml",
         "name": "AlAs",
-        "id": 8881
+        "id": 8881,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-8881.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-8882.yaml",
         "name": "GaP",
-        "id": 8882
+        "id": 8882,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-8882.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-8884.yaml",
         "name": "ZnTe",
-        "id": 8884
+        "id": 8884,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-8884.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-8922.yaml",
         "name": "Cd(SbO3)2",
-        "id": 8922
+        "id": 8922,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-8922.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-8976.yaml",
         "name": "Cu2WS4",
-        "id": 8976
+        "id": 8976,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-8976.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-9006.yaml",
         "name": "Ho2CF2",
-        "id": 9006
+        "id": 9006,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-9006.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-9125.yaml",
         "name": "Ca(SbO3)2",
-        "id": 9125
+        "id": 9125,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-9125.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-9126.yaml",
         "name": "Sr(SbO3)2",
-        "id": 9126
+        "id": 9126,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-9126.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-9127.yaml",
         "name": "Ba(SbO3)2",
-        "id": 9127
+        "id": 9127,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-9127.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-9200.yaml",
         "name": "K3AuO",
-        "id": 9200
+        "id": 9200,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-9200.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-9250.yaml",
         "name": "RbLiSe",
-        "id": 9250
+        "id": 9250,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-9250.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-9295.yaml",
         "name": "TaCu3Te4",
-        "id": 9295
+        "id": 9295,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-9295.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-9384.yaml",
         "name": "CsAu3S2",
-        "id": 9384
+        "id": 9384,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-9384.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-9385.yaml",
         "name": "RbAu3Se2",
-        "id": 9385
+        "id": 9385,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-9385.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-9386.yaml",
         "name": "CsAu3Se2",
-        "id": 9386
+        "id": 9386,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-9386.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-9486.yaml",
         "name": "K2AlF5",
-        "id": 9486
+        "id": 9486,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-9486.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-9514.yaml",
         "name": "Mg(AlC)2",
-        "id": 9514
+        "id": 9514,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-9514.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-9517.yaml",
         "name": "SrTiN2",
-        "id": 9517
+        "id": 9517,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-9517.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-9562.yaml",
         "name": "LiBeAs",
-        "id": 9562
+        "id": 9562,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-9562.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-9564.yaml",
         "name": "Ca(MgAs)2",
-        "id": 9564
+        "id": 9564,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-9564.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-9565.yaml",
         "name": "Ca(MgSb)2",
-        "id": 9565
+        "id": 9565,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-9565.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-9566.yaml",
         "name": "Sr(MgSb)2",
-        "id": 9566
+        "id": 9566,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-9566.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-9567.yaml",
         "name": "Ba(MgSb)2",
-        "id": 9567
+        "id": 9567,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-9567.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-9569.yaml",
         "name": "Ca(ZnP)2",
-        "id": 9569
+        "id": 9569,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-9569.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-9570.yaml",
         "name": "Ca(CdP)2",
-        "id": 9570
+        "id": 9570,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-9570.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-9575.yaml",
         "name": "LiBeSb",
-        "id": 9575
+        "id": 9575,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-9575.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-9582.yaml",
         "name": "Yb(ZnP)2",
-        "id": 9582
+        "id": 9582,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-9582.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-9732.yaml",
         "name": "BaNaP",
-        "id": 9732
+        "id": 9732,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-9732.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-9775.yaml",
         "name": "NaSrAs",
-        "id": 9775
+        "id": 9775,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-9775.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-9816.yaml",
         "name": "GeF4",
-        "id": 9816
+        "id": 9816,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-9816.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-9845.yaml",
         "name": "RbCaAs",
-        "id": 9845
+        "id": 9845,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-9845.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-9846.yaml",
         "name": "RbCaSb",
-        "id": 9846
+        "id": 9846,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-9846.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-9912.yaml",
         "name": "Li2CeP2",
-        "id": 9912
+        "id": 9912,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-9912.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-9915.yaml",
         "name": "LiBeP",
-        "id": 9915
+        "id": 9915,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-9915.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-10086.yaml",
         "name": "YSF",
-        "id": 10086
+        "id": 10086,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-10086.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-10175.yaml",
         "name": "KCdF3",
-        "id": 10175
+        "id": 10175,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-10175.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-10219.yaml",
         "name": "YOF",
-        "id": 10219
+        "id": 10219,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-10219.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-10250.yaml",
         "name": "BaLiF3",
-        "id": 10250
+        "id": 10250,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-10250.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-10322.yaml",
         "name": "BaHfN2",
-        "id": 10322
+        "id": 10322,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-10322.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-10341.yaml",
         "name": "SrGeTeO6",
-        "id": 10341
+        "id": 10341,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-10341.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-10401.yaml",
         "name": "Tl2SnF6",
-        "id": 10401
+        "id": 10401,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-10401.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-10402.yaml",
         "name": "TiTl2F6",
-        "id": 10402
+        "id": 10402,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-10402.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-10485.yaml",
         "name": "BaLiSb",
-        "id": 10485
+        "id": 10485,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-10485.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-10550.yaml",
         "name": "SrMg2N2",
-        "id": 10550
+        "id": 10550,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-10550.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-10615.yaml",
         "name": "BaLiP",
-        "id": 10615
+        "id": 10615,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-10615.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-10616.yaml",
         "name": "BaLiAs",
-        "id": 10616
+        "id": 10616,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-10616.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-10694.yaml",
         "name": "ScF3",
-        "id": 10694
+        "id": 10694,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-10694.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-10695.yaml",
         "name": "ZnS",
-        "id": 10695
+        "id": 10695,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-10695.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-10733.yaml",
         "name": "Sm2O3",
-        "id": 10733
+        "id": 10733,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-10733.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-10748.yaml",
         "name": "TaCu3S4",
-        "id": 10748
+        "id": 10748,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-10748.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-10760.yaml",
         "name": "MgSe",
-        "id": 10760
+        "id": 10760,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-10760.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-10851.yaml",
         "name": "SiO2",
-        "id": 10851
+        "id": 10851,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-10851.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-10918.yaml",
         "name": "Rb2PdC2",
-        "id": 10918
+        "id": 10918,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-10918.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-10919.yaml",
         "name": "Rb2PtC2",
-        "id": 10919
+        "id": 10919,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-10919.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-10930.yaml",
         "name": "TbSF",
-        "id": 10930
+        "id": 10930,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-10930.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-10931.yaml",
         "name": "HoSF",
-        "id": 10931
+        "id": 10931,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-10931.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-10932.yaml",
         "name": "ErSF",
-        "id": 10932
+        "id": 10932,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-10932.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-10933.yaml",
         "name": "Nd2TeS2",
-        "id": 10933
+        "id": 10933,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-10933.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-10996.yaml",
         "name": "Yb(MgSb)2",
-        "id": 10996
+        "id": 10996,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-10996.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-11107.yaml",
         "name": "Ac2O3",
-        "id": 11107
+        "id": 11107,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-11107.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-11147.yaml",
         "name": "Na5CuSO2",
-        "id": 11147
+        "id": 11147,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-11147.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-11718.yaml",
         "name": "RbF",
-        "id": 11718
+        "id": 11718,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-11718.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-11824.yaml",
         "name": "Ca3PN",
-        "id": 11824
+        "id": 11824,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-11824.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-11917.yaml",
         "name": "Mg(BeN)2",
-        "id": 11917
+        "id": 11917,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-11917.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-12620.yaml",
         "name": "NdSeF",
-        "id": 12620
+        "id": 12620,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-12620.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-12668.yaml",
         "name": "Tb2SO2",
-        "id": 12668
+        "id": 12668,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-12668.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-12669.yaml",
         "name": "Dy2SO2",
-        "id": 12669
+        "id": 12669,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-12669.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-12670.yaml",
         "name": "Ho2SO2",
-        "id": 12670
+        "id": 12670,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-12670.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-12671.yaml",
         "name": "Er2SO2",
-        "id": 12671
+        "id": 12671,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-12671.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-12673.yaml",
         "name": "Lu2SO2",
-        "id": 12673
+        "id": 12673,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-12673.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-12779.yaml",
         "name": "CdTe",
-        "id": 12779
+        "id": 12779,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-12779.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-12814.yaml",
         "name": "Ba3SbN",
-        "id": 12814
+        "id": 12814,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-12814.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-12894.yaml",
         "name": "Y2SO2",
-        "id": 12894
+        "id": 12894,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-12894.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-12902.yaml",
         "name": "ErAgTe2",
-        "id": 12902
+        "id": 12902,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-12902.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-12903.yaml",
         "name": "YAgTe2",
-        "id": 12903
+        "id": 12903,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-12903.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-12904.yaml",
         "name": "HoAgTe2",
-        "id": 12904
+        "id": 12904,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-12904.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-12908.yaml",
         "name": "ScAgSe2",
-        "id": 12908
+        "id": 12908,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-12908.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-12953.yaml",
         "name": "TmAgTe2",
-        "id": 12953
+        "id": 12953,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-12953.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-12992.yaml",
         "name": "BaTiO3",
-        "id": 12992
+        "id": 12992,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-12992.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-13031.yaml",
         "name": "MgSe",
-        "id": 13031
+        "id": 13031,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-13031.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-13032.yaml",
         "name": "MgS",
-        "id": 13032
+        "id": 13032,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-13032.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-13033.yaml",
         "name": "MgTe",
-        "id": 13033
+        "id": 13033,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-13033.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-13108.yaml",
         "name": "SrHfO3",
-        "id": 13108
+        "id": 13108,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-13108.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-13275.yaml",
         "name": "NaSrP",
-        "id": 13275
+        "id": 13275,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-13275.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-13276.yaml",
         "name": "SrLiP",
-        "id": 13276
+        "id": 13276,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-13276.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-13277.yaml",
         "name": "BaLiP",
-        "id": 13277
+        "id": 13277,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-13277.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-13548.yaml",
         "name": "Cs2Pt",
-        "id": 13548
+        "id": 13548,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-13548.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-13658.yaml",
         "name": "RbNO3",
-        "id": 13658
+        "id": 13658,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-13658.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-13946.yaml",
         "name": "Rb2ZrF6",
-        "id": 13946
+        "id": 13946,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-13946.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-13947.yaml",
         "name": "Rb2HfF6",
-        "id": 13947
+        "id": 13947,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-13947.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-13948.yaml",
         "name": "Cs2HfF6",
-        "id": 13948
+        "id": 13948,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-13948.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-13971.yaml",
         "name": "Nd2SeO2",
-        "id": 13971
+        "id": 13971,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-13971.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-13972.yaml",
         "name": "Sm2SeO2",
-        "id": 13972
+        "id": 13972,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-13972.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-13974.yaml",
         "name": "Ho2SeO2",
-        "id": 13974
+        "id": 13974,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-13974.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-13975.yaml",
         "name": "Er2SeO2",
-        "id": 13975
+        "id": 13975,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-13975.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-13978.yaml",
         "name": "Rb2ThF6",
-        "id": 13978
+        "id": 13978,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-13978.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-14099.yaml",
         "name": "ZnAgF3",
-        "id": 14099
+        "id": 14099,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-14099.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-14193.yaml",
         "name": "K2ThF6",
-        "id": 14193
+        "id": 14193,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-14193.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-15951.yaml",
         "name": "BeF2",
-        "id": 15951
+        "id": 15951,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-15951.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-19717.yaml",
         "name": "TePb",
-        "id": 19717
+        "id": 19717,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-19717.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-19845.yaml",
         "name": "TiPbO3",
-        "id": 19845
+        "id": 19845,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-19845.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-19921.yaml",
         "name": "PbO",
-        "id": 19921
+        "id": 19921,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-19921.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-20015.yaml",
         "name": "As2PbO6",
-        "id": 20015
+        "id": 20015,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-20015.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-20337.yaml",
         "name": "ZrPbO3",
-        "id": 20337
+        "id": 20337,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-20337.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-20459.yaml",
         "name": "TiPbO3",
-        "id": 20459
+        "id": 20459,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-20459.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-20727.yaml",
         "name": "Sb2PbO6",
-        "id": 20727
+        "id": 20727,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-20727.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-20878.yaml",
         "name": "PbO",
-        "id": 20878
+        "id": 20878,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-20878.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-21043.yaml",
         "name": "RbPbF3",
-        "id": 21043
+        "id": 21043,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-21043.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-21855.yaml",
         "name": "VCu3Se4",
-        "id": 21855
+        "id": 21855,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-21855.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-22535.yaml",
         "name": "HfPbO3",
-        "id": 22535
+        "id": 22535,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-22535.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-22862.yaml",
         "name": "NaCl",
-        "id": 22862
+        "id": 22862,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-22862.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-22865.yaml",
         "name": "CsCl",
-        "id": 22865
+        "id": 22865,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-22865.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-22867.yaml",
         "name": "RbBr",
-        "id": 22867
+        "id": 22867,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-22867.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-22875.yaml",
         "name": "TlBr",
-        "id": 22875
+        "id": 22875,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-22875.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-22880.yaml",
         "name": "FeBr2",
-        "id": 22880
+        "id": 22880,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-22880.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-22882.yaml",
         "name": "YbBr2",
-        "id": 22882
+        "id": 22882,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-22882.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-22885.yaml",
         "name": "XeF2",
-        "id": 22885
+        "id": 22885,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-22885.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-22888.yaml",
         "name": "CaBr2",
-        "id": 22888
+        "id": 22888,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-22888.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-22893.yaml",
         "name": "PbI2",
-        "id": 22893
+        "id": 22893,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-22893.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-22894.yaml",
         "name": "AgI",
-        "id": 22894
+        "id": 22894,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-22894.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-22896.yaml",
         "name": "LaCl3",
-        "id": 22896
+        "id": 22896,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-22896.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-22898.yaml",
         "name": "KI",
-        "id": 22898
+        "id": 22898,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-22898.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-22899.yaml",
         "name": "LiI",
-        "id": 22899
+        "id": 22899,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-22899.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-22903.yaml",
         "name": "RbI",
-        "id": 22903
+        "id": 22903,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-22903.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-22904.yaml",
         "name": "CaCl2",
-        "id": 22904
+        "id": 22904,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-22904.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-22905.yaml",
         "name": "LiCl",
-        "id": 22905
+        "id": 22905,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-22905.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-22906.yaml",
         "name": "CsBr",
-        "id": 22906
+        "id": 22906,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-22906.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-22914.yaml",
         "name": "CuCl",
-        "id": 22914
+        "id": 22914,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-22914.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-22916.yaml",
         "name": "NaBr",
-        "id": 22916
+        "id": 22916,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-22916.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-22917.yaml",
         "name": "CuBr",
-        "id": 22917
+        "id": 22917,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-22917.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-22922.yaml",
         "name": "AgCl",
-        "id": 22922
+        "id": 22922,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-22922.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-22925.yaml",
         "name": "AgI",
-        "id": 22925
+        "id": 22925,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-22925.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-22934.yaml",
         "name": "K2PtCl4",
-        "id": 22934
+        "id": 22934,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-22934.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-22939.yaml",
         "name": "BiClO",
-        "id": 22939
+        "id": 22939,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-22939.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-22950.yaml",
         "name": "CsNiCl3",
-        "id": 22950
+        "id": 22950,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-22950.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-22951.yaml",
         "name": "BaIF",
-        "id": 22951
+        "id": 22951,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-22951.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-22955.yaml",
         "name": "LiIO3",
-        "id": 22955
+        "id": 22955,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-22955.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-22956.yaml",
         "name": "K2PdCl4",
-        "id": 22956
+        "id": 22956,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-22956.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-22957.yaml",
         "name": "SrClF",
-        "id": 22957
+        "id": 22957,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-22957.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-22964.yaml",
         "name": "PbClF",
-        "id": 22964
+        "id": 22964,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-22964.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-22965.yaml",
         "name": "BiTeI",
-        "id": 22965
+        "id": 22965,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-22965.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-22991.yaml",
         "name": "CsVI3",
-        "id": 22991
+        "id": 22991,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-22991.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23004.yaml",
         "name": "CsMgCl3",
-        "id": 23004
+        "id": 23004,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23004.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23008.yaml",
         "name": "PbBrF",
-        "id": 23008
+        "id": 23008,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23008.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23023.yaml",
         "name": "LaBrO",
-        "id": 23023
+        "id": 23023,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23023.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23024.yaml",
         "name": "SrBrF",
-        "id": 23024
+        "id": 23024,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23024.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23025.yaml",
         "name": "LaClO",
-        "id": 23025
+        "id": 23025,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23025.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23037.yaml",
         "name": "CsPbCl3",
-        "id": 23037
+        "id": 23037,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23037.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23038.yaml",
         "name": "CsVBr3",
-        "id": 23038
+        "id": 23038,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23038.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23048.yaml",
         "name": "CsMnBr3",
-        "id": 23048
+        "id": 23048,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23048.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23058.yaml",
         "name": "NdClO",
-        "id": 23058
+        "id": 23058,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23058.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23070.yaml",
         "name": "BaBrF",
-        "id": 23070
+        "id": 23070,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23070.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23074.yaml",
         "name": "BiOF",
-        "id": 23074
+        "id": 23074,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23074.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23154.yaml",
         "name": "Br",
-        "id": 23154
+        "id": 23154,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23154.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23167.yaml",
         "name": "TlCl",
-        "id": 23167
+        "id": 23167,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23167.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23183.yaml",
         "name": "NdCl3",
-        "id": 23183
+        "id": 23183,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23183.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23193.yaml",
         "name": "KCl",
-        "id": 23193
+        "id": 23193,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23193.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23205.yaml",
         "name": "MgI2",
-        "id": 23205
+        "id": 23205,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23205.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23211.yaml",
         "name": "PrCl3",
-        "id": 23211
+        "id": 23211,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23211.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23214.yaml",
         "name": "CaCl2",
-        "id": 23214
+        "id": 23214,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23214.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23221.yaml",
         "name": "PrBr3",
-        "id": 23221
+        "id": 23221,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23221.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23231.yaml",
         "name": "AgBr",
-        "id": 23231
+        "id": 23231,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23231.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23251.yaml",
         "name": "KBr",
-        "id": 23251
+        "id": 23251,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23251.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23263.yaml",
         "name": "LaBr3",
-        "id": 23263
+        "id": 23263,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23263.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23268.yaml",
         "name": "NaI",
-        "id": 23268
+        "id": 23268,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23268.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23295.yaml",
         "name": "RbCl",
-        "id": 23295
+        "id": 23295,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23295.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23302.yaml",
         "name": "RbI",
-        "id": 23302
+        "id": 23302,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23302.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23364.yaml",
         "name": "CsLiCl2",
-        "id": 23364
+        "id": 23364,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23364.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23432.yaml",
         "name": "BaClF",
-        "id": 23432
+        "id": 23432,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23432.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23486.yaml",
         "name": "RbNiCl3",
-        "id": 23486
+        "id": 23486,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23486.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23703.yaml",
         "name": "LiH",
-        "id": 23703
+        "id": 23703,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23703.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23710.yaml",
         "name": "MgH2",
-        "id": 23710
+        "id": 23710,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23710.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23737.yaml",
         "name": "KMgH3",
-        "id": 23737
+        "id": 23737,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23737.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23759.yaml",
         "name": "SrH2",
-        "id": 23759
+        "id": 23759,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23759.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23803.yaml",
         "name": "GaHO2",
-        "id": 23803
+        "id": 23803,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23803.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23807.yaml",
         "name": "AlHO2",
-        "id": 23807
+        "id": 23807,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23807.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23818.yaml",
         "name": "BaLiH3",
-        "id": 23818
+        "id": 23818,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23818.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23856.yaml",
         "name": "LiHO",
-        "id": 23856
+        "id": 23856,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23856.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23859.yaml",
         "name": "CaHCl",
-        "id": 23859
+        "id": 23859,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23859.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23860.yaml",
         "name": "SrHCl",
-        "id": 23860
+        "id": 23860,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23860.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23861.yaml",
         "name": "BaHCl",
-        "id": 23861
+        "id": 23861,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23861.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23862.yaml",
         "name": "BaHI",
-        "id": 23862
+        "id": 23862,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23862.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23870.yaml",
         "name": "NaH",
-        "id": 23870
+        "id": 23870,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23870.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23879.yaml",
         "name": "Ca(HO)2",
-        "id": 23879
+        "id": 23879,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23879.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-23949.yaml",
         "name": "RbCaH3",
-        "id": 23949
+        "id": 23949,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-23949.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-24012.yaml",
         "name": "HoHSe",
-        "id": 24012
+        "id": 24012,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-24012.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-24084.yaml",
         "name": "KH",
-        "id": 24084
+        "id": 24084,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-24084.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-24423.yaml",
         "name": "SrHBr",
-        "id": 24423
+        "id": 24423,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-24423.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-24424.yaml",
         "name": "BaHBr",
-        "id": 24424
+        "id": 24424,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-24424.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-24721.yaml",
         "name": "RbH",
-        "id": 24721
+        "id": 24721,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-24721.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-27138.yaml",
         "name": "K2PdBr4",
-        "id": 27138
+        "id": 27138,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-27138.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-27243.yaml",
         "name": "K2PtBr4",
-        "id": 27243
+        "id": 27243,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-27243.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-27294.yaml",
         "name": "Ca3AsBr3",
-        "id": 27294
+        "id": 27294,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-27294.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-27418.yaml",
         "name": "KAuO2",
-        "id": 27418
+        "id": 27418,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-27418.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-27501.yaml",
         "name": "Cs2ThCl6",
-        "id": 27501
+        "id": 27501,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-27501.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-27546.yaml",
         "name": "CaClF",
-        "id": 27546
+        "id": 27546,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-27546.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-27616.yaml",
         "name": "ErSCl",
-        "id": 27616
+        "id": 27616,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-27616.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-27823.yaml",
         "name": "SmClO",
-        "id": 27823
+        "id": 27823,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-27823.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-27971.yaml",
         "name": "AcCl3",
-        "id": 27971
+        "id": 27971,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-27971.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-27972.yaml",
         "name": "AcBr3",
-        "id": 27972
+        "id": 27972,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-27972.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-27984.yaml",
         "name": "PrClO",
-        "id": 27984
+        "id": 27984,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-27984.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-27985.yaml",
         "name": "YClO",
-        "id": 27985
+        "id": 27985,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-27985.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-28013.yaml",
         "name": "MnI2",
-        "id": 28013
+        "id": 28013,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-28013.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-28065.yaml",
         "name": "ThNCl",
-        "id": 28065
+        "id": 28065,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-28065.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-28069.yaml",
         "name": "Ca3AsCl3",
-        "id": 28069
+        "id": 28069,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-28069.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-28166.yaml",
         "name": "K3BrO",
-        "id": 28166
+        "id": 28166,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-28166.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-28171.yaml",
         "name": "K3IO",
-        "id": 28171
+        "id": 28171,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-28171.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-28295.yaml",
         "name": "CsIO3",
-        "id": 28295
+        "id": 28295,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-28295.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-28306.yaml",
         "name": "MnBr2",
-        "id": 28306
+        "id": 28306,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-28306.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-28602.yaml",
         "name": "Na3ClO",
-        "id": 28602
+        "id": 28602,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-28602.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-28650.yaml",
         "name": "CsBr2F",
-        "id": 28650
+        "id": 28650,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-28650.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-28797.yaml",
         "name": "YHSe",
-        "id": 28797
+        "id": 28797,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-28797.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-28994.yaml",
         "name": "KLi2As",
-        "id": 28994
+        "id": 28994,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-28994.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-29266.yaml",
         "name": "CsS",
-        "id": 29266
+        "id": 29266,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-29266.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-29342.yaml",
         "name": "Ca3PCl3",
-        "id": 29342
+        "id": 29342,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-29342.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-29731.yaml",
         "name": "HoClO",
-        "id": 29731
+        "id": 29731,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-29731.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-29750.yaml",
         "name": "CsMgBr3",
-        "id": 29750
+        "id": 29750,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-29750.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-29763.yaml",
         "name": "RbMnBr3",
-        "id": 29763
+        "id": 29763,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-29763.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-29803.yaml",
         "name": "SiH",
-        "id": 29803
+        "id": 29803,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-29803.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-29889.yaml",
         "name": "Tl2PdCl4",
-        "id": 29889
+        "id": 29889,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-29889.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-30009.yaml",
         "name": "KrF2",
-        "id": 30009
+        "id": 30009,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-30009.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-30031.yaml",
         "name": "CaI2",
-        "id": 30031
+        "id": 30031,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-30031.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-30034.yaml",
         "name": "MgBr2",
-        "id": 30034
+        "id": 30034,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-30034.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-30056.yaml",
         "name": "CsCaBr3",
-        "id": 30056
+        "id": 30056,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-30056.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-30247.yaml",
         "name": "Mg(HO)2",
-        "id": 30247
+        "id": 30247,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-30247.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-30273.yaml",
         "name": "AcClO",
-        "id": 30273
+        "id": 30273,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-30273.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-30274.yaml",
         "name": "AcBrO",
-        "id": 30274
+        "id": 30274,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-30274.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-30284.yaml",
         "name": "HgAsO3",
-        "id": 30284
+        "id": 30284,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-30284.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-31220.yaml",
         "name": "AlSiTe3",
-        "id": 31220
+        "id": 31220,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-31220.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-32684.yaml",
         "name": "HBr",
-        "id": 32684
+        "id": 32684,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-32684.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-34337.yaml",
         "name": "H4NCl",
-        "id": 34337
+        "id": 34337,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-34337.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-34932.yaml",
         "name": "CaHN",
-        "id": 34932
+        "id": 34932,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-34932.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-36248.yaml",
         "name": "H4BrN",
-        "id": 36248
+        "id": 36248,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-36248.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-36582.yaml",
         "name": "NaHS",
-        "id": 36582
+        "id": 36582,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-36582.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-36734.yaml",
         "name": "CeThO4",
-        "id": 36734
+        "id": 36734,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-36734.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-38011.yaml",
         "name": "KHS",
-        "id": 38011
+        "id": 38011,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-38011.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-38975.yaml",
         "name": "PNO",
-        "id": 38975
+        "id": 38975,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-38975.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-504535.yaml",
         "name": "InHO2",
-        "id": 504535
+        "id": 504535,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-504535.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-505212.yaml",
         "name": "Cs3AuO",
-        "id": 505212
+        "id": 505212,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-505212.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-505825.yaml",
         "name": "Cs2PtC2",
-        "id": 505825
+        "id": 505825,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-505825.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-541899.yaml",
         "name": "CsCdBr3",
-        "id": 541899
+        "id": 541899,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-541899.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-546973.yaml",
         "name": "SrSnO3",
-        "id": 546973
+        "id": 546973,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-546973.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-549697.yaml",
         "name": "RbGeIO6",
-        "id": 549697
+        "id": 549697,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-549697.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-550172.yaml",
         "name": "SnO2",
-        "id": 550172
+        "id": 550172,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-550172.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-550908.yaml",
         "name": "SrHfO3",
-        "id": 550908
+        "id": 550908,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-550908.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-553303.yaml",
         "name": "CsCu3O2",
-        "id": 553303
+        "id": 553303,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-553303.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-553875.yaml",
         "name": "Zr2SN2",
-        "id": 553875
+        "id": 553875,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-553875.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-557483.yaml",
         "name": "YbClF",
-        "id": 557483
+        "id": 557483,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-557483.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-557835.yaml",
         "name": "TlF",
-        "id": 557835
+        "id": 557835,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-557835.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-558071.yaml",
         "name": "RbS",
-        "id": 558071
+        "id": 558071,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-558071.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-558118.yaml",
         "name": "BeF2",
-        "id": 558118
+        "id": 558118,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-558118.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-558134.yaml",
         "name": "TlF",
-        "id": 558134
+        "id": 558134,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-558134.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-558928.yaml",
         "name": "KrF2",
-        "id": 558928
+        "id": 558928,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-558928.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-560399.yaml",
         "name": "NaMgF3",
-        "id": 560399
+        "id": 560399,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-560399.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-560588.yaml",
         "name": "ZnS",
-        "id": 560588
+        "id": 560588,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-560588.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-561947.yaml",
         "name": "CsHgF3",
-        "id": 561947
+        "id": 561947,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-561947.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-567259.yaml",
         "name": "CdI2",
-        "id": 567259
+        "id": 567259,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-567259.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-567290.yaml",
         "name": "LaN",
-        "id": 567290
+        "id": 567290,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-567290.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-567558.yaml",
         "name": "CsAgCl2",
-        "id": 567558
+        "id": 567558,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-567558.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-567666.yaml",
         "name": "Ba3BiN",
-        "id": 567666
+        "id": 567666,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-567666.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-567680.yaml",
         "name": "BaCl2",
-        "id": 567680
+        "id": 567680,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-567680.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-567809.yaml",
         "name": "AgI",
-        "id": 567809
+        "id": 567809,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-567809.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-568005.yaml",
         "name": "YbCsBr3",
-        "id": 568005
+        "id": 568005,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-568005.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-568032.yaml",
         "name": "Cd(InSe2)2",
-        "id": 568032
+        "id": 568032,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-568032.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-568170.yaml",
         "name": "TbCl3",
-        "id": 568170
+        "id": 568170,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-568170.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-568273.yaml",
         "name": "LiI",
-        "id": 568273
+        "id": 568273,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-568273.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-568536.yaml",
         "name": "BaI2",
-        "id": 568536
+        "id": 568536,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-568536.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-568544.yaml",
         "name": "CsCdCl3",
-        "id": 568544
+        "id": 568544,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-568544.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-568560.yaml",
         "name": "TlBr",
-        "id": 568560
+        "id": 568560,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-568560.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-569346.yaml",
         "name": "CuI",
-        "id": 569346
+        "id": 569346,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-569346.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-569639.yaml",
         "name": "TlCl",
-        "id": 569639
+        "id": 569639,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-569639.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-570081.yaml",
         "name": "CuI",
-        "id": 570081
+        "id": 570081,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-570081.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-570223.yaml",
         "name": "CsGeBr3",
-        "id": 570223
+        "id": 570223,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-570223.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-570231.yaml",
         "name": "CsCdBr3",
-        "id": 570231
+        "id": 570231,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-570231.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-570256.yaml",
         "name": "Ag2HgI4",
-        "id": 570256
+        "id": 570256,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-570256.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-570259.yaml",
         "name": "MgCl2",
-        "id": 570259
+        "id": 570259,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-570259.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-570418.yaml",
         "name": "YbI2",
-        "id": 570418
+        "id": 570418,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-570418.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-570485.yaml",
         "name": "SrAlSiH",
-        "id": 570485
+        "id": 570485,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-570485.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-570747.yaml",
         "name": "N2",
-        "id": 570747
+        "id": 570747,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-570747.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-570935.yaml",
         "name": "LiI",
-        "id": 570935
+        "id": 570935,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-570935.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-571093.yaml",
         "name": "BaAlSiH",
-        "id": 571093
+        "id": 571093,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-571093.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-571102.yaml",
         "name": "TlI",
-        "id": 571102
+        "id": 571102,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-571102.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-571166.yaml",
         "name": "CaBr2",
-        "id": 571166
+        "id": 571166,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-571166.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-571222.yaml",
         "name": "CsBr",
-        "id": 571222
+        "id": 571222,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-571222.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-571458.yaml",
         "name": "RbGeI3",
-        "id": 571458
+        "id": 571458,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-571458.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-573697.yaml",
         "name": "CsCl",
-        "id": 573697
+        "id": 573697,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-573697.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-573755.yaml",
         "name": "CsTeAu",
-        "id": 573755
+        "id": 573755,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-573755.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-581833.yaml",
         "name": "RbN3",
-        "id": 581833
+        "id": 581833,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-581833.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-613442.yaml",
         "name": "LiIO3",
-        "id": 613442
+        "id": 613442,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-613442.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-614603.yaml",
         "name": "CsI",
-        "id": 614603
+        "id": 614603,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-614603.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-616378.yaml",
         "name": "CsSnI3",
-        "id": 616378
+        "id": 616378,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-616378.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-625051.yaml",
         "name": "NaHO",
-        "id": 625051
+        "id": 625051,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-625051.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-625052.yaml",
         "name": "NaHO",
-        "id": 625052
+        "id": 625052,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-625052.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-625548.yaml",
         "name": "Cd(HO)2",
-        "id": 625548
+        "id": 625548,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-625548.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-632229.yaml",
         "name": "HBr",
-        "id": 632229
+        "id": 632229,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-632229.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-632250.yaml",
         "name": "H2",
-        "id": 632250
+        "id": 632250,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-632250.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-632319.yaml",
         "name": "CsH",
-        "id": 632319
+        "id": 632319,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-632319.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-632667.yaml",
         "name": "YbH2",
-        "id": 632667
+        "id": 632667,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-632667.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-643370.yaml",
         "name": "Ba2MgH6",
-        "id": 643370
+        "id": 643370,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-643370.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-644203.yaml",
         "name": "CsCaH3",
-        "id": 644203
+        "id": 644203,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-644203.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-644225.yaml",
         "name": "Sr2MgH6",
-        "id": 644225
+        "id": 644225,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-644225.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-684580.yaml",
         "name": "AgI",
-        "id": 684580
+        "id": 684580,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-684580.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-752658.yaml",
         "name": "Y2SeO2",
-        "id": 752658
+        "id": 752658,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-752658.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-753287.yaml",
         "name": "CaCdO2",
-        "id": 753287
+        "id": 753287,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-753287.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-753594.yaml",
         "name": "BiOF",
-        "id": 753594
+        "id": 753594,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-753594.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-753920.yaml",
         "name": "Tm2SeO2",
-        "id": 753920
+        "id": 753920,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-753920.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-753946.yaml",
         "name": "LiCoS2",
-        "id": 753946
+        "id": 753946,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-753946.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-753947.yaml",
         "name": "LuHO2",
-        "id": 753947
+        "id": 753947,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-753947.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-754065.yaml",
         "name": "Hg(SbO3)2",
-        "id": 754065
+        "id": 754065,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-754065.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-754117.yaml",
         "name": "YHO2",
-        "id": 754117
+        "id": 754117,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-754117.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-754118.yaml",
         "name": "Sr(AsO3)2",
-        "id": 754118
+        "id": 754118,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-754118.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-754196.yaml",
         "name": "Ba2SrI6",
-        "id": 754196
+        "id": 754196,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-754196.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-754202.yaml",
         "name": "CsClO3",
-        "id": 754202
+        "id": 754202,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-754202.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-754212.yaml",
         "name": "BaSr2I6",
-        "id": 754212
+        "id": 754212,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-754212.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-754517.yaml",
         "name": "SrCa2I6",
-        "id": 754517
+        "id": 754517,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-754517.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-754629.yaml",
         "name": "WN2",
-        "id": 754629
+        "id": 754629,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-754629.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-754710.yaml",
         "name": "Sr2CaI6",
-        "id": 754710
+        "id": 754710,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-754710.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-755072.yaml",
         "name": "Na2O",
-        "id": 755072
+        "id": 755072,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-755072.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-755309.yaml",
         "name": "Li3NbS4",
-        "id": 755309
+        "id": 755309,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-755309.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-755340.yaml",
         "name": "Tb2SeO2",
-        "id": 755340
+        "id": 755340,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-755340.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-755543.yaml",
         "name": "HoHO2",
-        "id": 755543
+        "id": 755543,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-755543.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-774712.yaml",
         "name": "LiCuS",
-        "id": 774712
+        "id": 774712,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-774712.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-776532.yaml",
         "name": "HfO2",
-        "id": 776532
+        "id": 776532,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-776532.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-777422.yaml",
         "name": "DyHO2",
-        "id": 777422
+        "id": 777422,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-777422.yaml"
     },
     {
-        "url": "http://phonondb.mtl.kyoto-u.ac.jp/ph20151124/v/band-778079.yaml",
         "name": "BaYF5",
-        "id": 778079
+        "id": 778079,
+        "url": "https://s3.eu-central-1.amazonaws.com/phonondb/band-778079.yaml"
     }
 ]

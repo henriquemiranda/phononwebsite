@@ -46,6 +46,7 @@ export function exportPOSCAR() {
     for (i=0; i<atoms.length; i++) {
         var atom = atoms[i];
         atom[0] = this.phonon.atom_numbers[atom[0]];
+        atom.push(this.vibrations[i]);
         if ( $.inArray(atom[0].toString(), Object.keys(counter)) == -1 ) {
             order.push(atom[0]);
             counter[atom[0]] = 0;
@@ -71,7 +72,10 @@ export function exportPOSCAR() {
                   (lat[i][1]*this.ny).toFixed(12) + " " +
                   (lat[i][2]*this.nz).toFixed(12) + "\n";
     }
-
+    for (i=0; i<order.length; i++) {
+        string += atomic_symbol[order[i]] + " ";
+    }
+    string += "\n";
     for (i=0; i<order.length; i++) {
         string += counter[order[i]] + " ";
     }
@@ -82,7 +86,7 @@ export function exportPOSCAR() {
     let phase = Complex.Polar(this.amplitude,this.phase);
 
     for (i=0; i<atoms.length; i++) {
-        vibrations = this.vibrations[i];
+        vibrations = atoms[i][4];
         for (j=1; j<4; j++) {
             string += (atoms[i][j] + phase.mult(vibrations[j-1]).real()).toFixed(12) + " ";
         }

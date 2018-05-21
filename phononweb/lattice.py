@@ -4,6 +4,7 @@
 # This file is part of phononwebsite
 #
 """ Functions to manipulate the atoms and lattice"""
+import numpy as np
 
 def red_car(red,lat):
     """

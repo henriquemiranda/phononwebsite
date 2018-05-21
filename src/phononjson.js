@@ -16,7 +16,7 @@ export class PhononJson {
             this.getFromJson(text,callback);
         };
 
-        $.get(url,onLoadEndHandler.bind(this));
+        $.getJSON(url,onLoadEndHandler.bind(this));
 
     }
 
@@ -59,7 +59,7 @@ export class PhononJson {
     }
     
     getFromJson(json,callback) {
-        if ('@class' in json) {
+        if (json.hasOwnProperty('@class')) {
             this.getFromPMGJson(json,callback);
         }
         else {
