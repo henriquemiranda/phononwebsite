@@ -110,7 +110,8 @@ highsym_qpts:     list of high symmetry qpoints (Nx3 float arraay)
 qpoints:          list of q-point in the reciprocal space (Nx3 float array)
 distances:        list distances between the qpoints (Nq float array)
 eigenvalues:      eigenvalues in units of cm-1 (Nqx(N\*3))
-vectors:          eigenvectors (NqxN)</code></pre>
+vectors:          eigenvectors (NqxN)
+line_breaks:      list of tuples with start and end of each segment (Optional)</code></pre>
 <h1 id="authors">Authors</h1>
 <p>This project is the continuation of the work of Raoul Weber during an internship in the University of Luxembourg for 2 months in the Theoretical Solid State Physics group under the supervision of Ludger Wirtz and technical help from me.</p>
 <p>I decided to continue the project by optimizing the implementation, cleaning up the design and replacing JSmol by a self made applet using Three.js and WebGL called VibCrystal. Currently the website works also as a web application which means the user can visualize his own calculations made with <code>phonopy</code>.</p>

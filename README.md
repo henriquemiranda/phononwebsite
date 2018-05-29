@@ -124,7 +124,7 @@ phonon dispersions and animations on the website.
     distances:        list distances between the qpoints (Nq float array)
     eigenvalues:      eigenvalues in units of cm-1 (Nqx(N\*3))
     vectors:          eigenvectors (NqxN)
-
+    line_breaks:      list of tuples with start and end of each segment (Optional)
 
 Authors
 =======
