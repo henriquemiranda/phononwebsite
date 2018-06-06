@@ -55,6 +55,7 @@ class VibCrystal {
         this.arrowHeadLengthRatio = .25;
         this.arrowRadius = 0.1;
         this.arrowLength = 1.0;
+        this.arrowSegments = 8;
 
         //arrowscale
         this.arrowScale = 2.0;
@@ -423,10 +424,12 @@ class VibCrystal {
             //arrow geometry
             let arrowGeometry = new THREE.CylinderGeometry( 0, 
                                                             this.arrowHeadRadiusRatio*this.arrowRadius, 
-                                                            this.arrowLength*this.arrowHeadLengthRatio );
+                                                            this.arrowLength*this.arrowHeadLengthRatio,
+                                                            this.arrowSegments );
 
             let axisGeometry  = new THREE.CylinderGeometry( this.arrowRadius, this.arrowRadius, 
-                                                            this.arrowLength );
+                                                            this.arrowLength,
+                                                            this.arrowSegments );
 
             let AxisMaterial  = new THREE.MeshLambertMaterial( { color: this.arrowcolor, 
                                                                  blending: THREE.AdditiveBlending } );
