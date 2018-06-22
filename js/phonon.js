@@ -450,8 +450,8 @@ class PhononWebpage {
             }
         }
        
-        //phonondb2017 database 
-        for (let sourceclass of [LocalPhononDB2017 ]) {
+        //phonondb2018 database 
+        for (let sourceclass of [PhononDB2018, LocalPhononDB2018 ]) {
             source = new sourceclass;
             if (source.isAvailable()) {
                 source.get_materials(addMaterials);

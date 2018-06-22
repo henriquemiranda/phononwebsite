@@ -41,7 +41,7 @@ class LocalPhononDB2015 {
 }
 
 
-class LocalPhononDB2017 {
+class LocalPhononDB2018 {
     /*
     Interact with the database of phonondb
     Hosted in http://phonondb.mtl.kyoto-u.ac.jp/
@@ -50,7 +50,7 @@ class LocalPhononDB2017 {
     constructor() {
         this.name = "phonondb";
         this.author = "A. Togo";
-        this.year = 2017;
+        this.year = 2018;
         this.url = "http://phonondb.mtl.kyoto-u.ac.jp/";
     }
 
@@ -70,7 +70,7 @@ class LocalPhononDB2017 {
 
             for (let i=0; i<materials.length; i++) {
                 let m = materials[i];
-                m.url = "localphonondb2017/band-"+m.id+".yaml";
+                m.url = "localphonondb2018/band-"+m.id+".yaml";
                 m.source = name;
                 m.type = "yaml";
                 m.link = "https://materialsproject.org/materials/mp-"+m.id;
@@ -79,7 +79,7 @@ class LocalPhononDB2017 {
             callback(materials)
         }
 
-        $.get('phonondb2017/phonondb.json', dothings);
+        $.get('phonondb2018/phonondb.json', dothings);
     }
 }
 
@@ -124,6 +124,50 @@ class PhononDB2015 {
         }
 
         $.get('phonondb2015/phonondb.json', dothings);
+    }
+
+
+}
+
+
+class PhononDB2018 {
+    /*
+    Interact with the database of phonondb
+    Hosted in http://phonondb.mtl.kyoto-u.ac.jp/
+    */
+
+    constructor() {
+        this.name = "phonondb";
+        this.author = "A. Togo";
+        this.year = 2018;
+        this.url = "http://phonondb.mtl.kyoto-u.ac.jp/";
+    }
+
+    isAvailable() {
+        return true;
+    }
+
+    get_materials(callback) {
+        /* 
+        this function load the materials from a certain source and returns then to the callback
+        Some pre-processing of the data might be required and can be implemented here
+        */
+        let reference = this.author+", "+"<a href="+this.url+">"+this.name+"</a> ("+this.year+")";
+        let name = this.name;
+
+        function dothings(materials) {
+
+            for (let i=0; i<materials.length; i++) {
+                let m = materials[i];
+                m.source = name;
+                m.type = "yaml";
+                m.link = "https://materialsproject.org/materials/mp-"+m.id;
+                m.reference = reference;
+            }
+            callback(materials)
+        }
+
+        $.get('phonondb2018/phonondb.json', dothings);
     }
 
 
