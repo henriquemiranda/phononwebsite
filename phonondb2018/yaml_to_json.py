@@ -30,7 +30,7 @@ for mpid in data:
         continue
     mat_data = {'id': mpid,
                 'name': mpid_name[mpid],
-                'url': "http://phonondb.mtl.kyoto-u.ac.jp/ph20180417/v/bands-%d.yaml"%mpid }
+                'url': "http://phonondb.mtl.kyoto-u.ac.jp/ph20180417/v/band-%d.yaml"%mpid }
     json_data.append(mat_data)
 
 print("total materials: %d"%len(json_data))
