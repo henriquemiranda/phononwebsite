@@ -489,8 +489,8 @@ $(document).ready(function() {
     p.setRepetitionsInput( $('#nx'), $('#ny'), $('#nz') );
     p.setUpdateButton( $('#update') );
     p.setFileInput( $('#file-input') );
-    p.setExportPOSCARButton($('#poscar'));
-    p.setExportXSFButton($('#xsf'));
+    //p.setExportPOSCARButton($('#poscar'));
+    //p.setExportXSFButton($('#xsf'));
 
     p.updateMenu();
     p.getUrlVars();
