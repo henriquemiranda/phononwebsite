@@ -6,7 +6,6 @@ class PhononWebpage {
         this.nx = 1;
         this.ny = 1;
         this.nz = 1;
-        this.amplitude = 0.5;
 
         //select visualization
         this.visualizer = visualizer;

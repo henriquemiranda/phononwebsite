@@ -1,4 +1,6 @@
 exportXSF = function () {
+
+    let amplitude = this.visualizer.amplitude
     let string = "CRYSTAL\n"
     string += "PRIMVEC\n"
 
@@ -15,7 +17,7 @@ exportXSF = function () {
     string += "PRIMCOORD 1\n"
     string += atoms.length + " 1\n"
 
-    let phase = Complex.Polar(this.amplitude,parseFloat($("#phase").val())/360*2.0*pi);
+    let phase = Complex.Polar(amplitude,parseFloat($("#phase").val())/360*2.0*pi);
 
     for (i=0; i<atoms.length; i++) {
         vibrations = this.vibrations[i];
@@ -37,7 +39,8 @@ exportXSF = function () {
 }
 
 exportPOSCAR = function () {
-
+    
+    let amplitude = this.visualizer.amplitude
     let atoms = jQuery.extend(true, [], this.atoms);
     let counter = {};
     let order = [];
@@ -83,7 +86,7 @@ exportPOSCAR = function () {
 
     string += "Cartesian\n"
     this.phase = parseFloat($("#phase").val())/360*2.0*pi;
-    let phase = Complex.Polar(this.amplitude,this.phase);
+    let phase = Complex.Polar(amplitude,this.phase);
 
     for (i=0; i<atoms.length; i++) {
         vibrations = atoms[i][4];
