@@ -69,9 +69,6 @@ This visualization tool is currently being used in other websites:
 
 Features
 ========
-You can export the lattice distorted according to the currently selected phonon mode to a `.xsf` or `POSCAR` file.
-The `phase` and `amplitude` sliders define a complex number that is multiplied by the phonon eigenvectors to obtain the displacements.
-
 You can export a animated `.gif` with a particular mode using the `gif` button in the Export movie section.
 
 If you want to share your own data with someone else you can add to the url tags with the following format:
