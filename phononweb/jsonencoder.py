@@ -1,4 +1,4 @@
-# Copyright (c) 2017, Henrique Miranda
+# Copyright (c) 2018, Henrique Miranda
 # All rights reserved.
 #
 # This file is part of the phononwebsite project

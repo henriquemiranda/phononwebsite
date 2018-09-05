@@ -1,4 +1,4 @@
-# Copyright (c) 2017, Henrique Miranda
+# Copyright (c) 2018, Henrique Miranda
 # All rights reserved.
 #
 # This file is part of the phononwebsite project
@@ -96,10 +96,9 @@ class QePhonon(Phonon):
         self.nphons       = nphons
         self.eigenvalues  = eig#*eV/hartree_cm1
         self.eigenvectors = vec.view(dtype=float).reshape([self.nqpoints,nphons,nphons,2])
-        self.qpoints      = qpt
 
-        #convert to cartesian coordinates
-        self.qpoints = car_red(self.qpoints,self.rec)
+        #convert to reduced coordinates
+        self.qpoints = car_red(qpt,self.rec)
         return self.eigenvalues, self.eigenvectors, self.qpoints
 
     def read_atoms(self,filename):
@@ -107,10 +106,10 @@ class QePhonon(Phonon):
         read the data from a quantum espresso input file
         """
         pwin = PwIn(filename=filename)
-        self.cell, self.pos, self.atom_types = pwin.get_atoms()
-        self.cell = np.array(self.cell)*bohr_angstroem
-        self.rec = rec_lat(self.cell)*2*pi
-        self.pos = np.array(self.pos)
+        cell, pos, self.atom_types = pwin.get_atoms()
+        self.cell = np.array(cell)*bohr_angstroem
+        self.rec = rec_lat(cell)*pwin.alat
+        self.pos = np.array(pos)
         self.atom_numbers = [atomic_numbers[x] for x in self.atom_types]
         self.atomic_numbers = np.unique(self.atom_numbers)
         self.chemical_symbols = np.unique(self.atom_types).tolist()

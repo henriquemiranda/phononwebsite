@@ -1,4 +1,4 @@
-# Copyright (C) 2017 Henrique Pereira Coutada Miranda, Alejandro Molina Sanchez
+# Copyright (C) 2018 Henrique Pereira Coutada Miranda, Alejandro Molina Sanchez
 # All rights reserved.
 #
 # This file is part of yambopy
@@ -190,6 +190,8 @@ class PwIn():
 
     def read_cell_parameters(self):
         ibrav = int(self.system['ibrav'])
+        def rmchar(string,symbols): return ''.join([c for c in string if c not in symbols])
+
         if ibrav == 0:
             if 'celldm(1)' in list(self.system.keys()):
                 a = float(self.system['celldm(1)'])
@@ -198,12 +200,19 @@ class PwIn():
             lines = iter(self.file_lines)
             for line in lines:
                 if "CELL_PARAMETERS" in line:
-                    self.cell_units = line.translate(None, '{}()').split()[1]
-                    self.cell_parameters = [[1,0,0],[0,1,0],[0,0,1]]
+                    print(rmchar(line.strip(),'{}()'))
+                    units = rmchar(line.strip(),'{}()').split()
+                    self.cell_parameters = [[],[],[]]
+                    if len(units) > 1:
+                        self.cell_units = units[1]
+                    else:
+                        self.cell_units = 'bohr'
                     for i in range(3):
-                        self.cell_parameters[i] = [ float(x)*a for x in lines.next().split() ]
+                        self.cell_parameters[i] = [ float(x)*a for x in next(lines).split() ]
             if self.cell_units == 'angstrom' or self.cell_units == 'bohr':
                 if 'celldm(1)' in self.system: del self.system['celldm(1)']
+            if 'celldm(1)' not in list(self.system.keys()):
+                a = np.linalg.norm(self.cell_parameters[0])
         elif ibrav == 4:
             a = float(self.system['celldm(1)'])
             c = float(self.system['celldm(3)'])
@@ -222,8 +231,8 @@ class PwIn():
                                     [  0,   a,   0],
                                     [  0,   0, c*a]]
         else:
-            print('ibrav = %d not implemented'%ibrav)
-            exit(1)
+            raise NotImplementedError('ibrav = %d not implemented'%ibrav)
+        self.alat = a 
         
     def read_kpoints(self):
         lines = self.file_lines
@@ -252,7 +261,7 @@ class PwIn():
                         exit()
 
     def slicefile(self, keyword):
-        lines = re.findall('&%s(?:.?)+\n((?:.+\n)+?)(?:\s+)?\/'%keyword,"".join(self.file_lines),re.MULTILINE)
+        lines = re.findall('&%s(?:.?)+\n((?:.+\n)+?)(?:\s+)?[\/&]'%keyword,"".join(self.file_lines),re.MULTILINE)
         return lines
     
     def store(self,group,name):

@@ -7,16 +7,11 @@ from __future__ import print_function
 from phononweb import *
 import json
 
-root = "localdb"
-ana = 'anaddb.out_PHBST.nc'
+root = "contribdb"
 hexagonal = [(0,'\Gamma'),(20,'M'),(30,'K'),(50,'\Gamma')]
 material_list = {
-"graphene":           [ AnaddbPhonon,     ana, hexagonal, [ 5, 5, 1], "Graphene"],
-#"tise2_bulk":		  [ QePhonon,     'tise2', hexagonal, [ 5, 5, 1], "Bulk TiSe2"],
-"mos2_bulk":		  [ AnaddbPhonon,     ana, hexagonal, [ 5, 5, 1], "Bulk MoS2"],
-"mos2_singlelayer":	  [ AnaddbPhonon,     ana, hexagonal, [ 5, 5, 1], "Layer MoS2"],
-"mote2_singlelayer":  [ QePhonon,     'mote2', hexagonal, [ 5, 5, 1], "Layer MoTe2"],
-"mote2_bulk":         [ QePhonon,     'mote2', hexagonal, [ 5, 5, 1], "Bulk MoTe2"]}
+"tise2_bulk":		  [ QePhonon,     'tise2', hexagonal, [ 5, 5, 1], "Bulk TiSe2"],
+"hbn_bulk":           [ QePhonon,     'hbn',   hexagonal, [ 5, 5, 1], "Bulk hBN"]}
         
 #create the models file
 models = []
