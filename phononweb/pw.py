@@ -213,17 +213,27 @@ class PwIn():
                 if 'celldm(1)' in self.system: del self.system['celldm(1)']
             if 'celldm(1)' not in list(self.system.keys()):
                 a = np.linalg.norm(self.cell_parameters[0])
+        elif ibrav == 1:
+            a = float(self.system['celldm(1)'])
+            self.cell_parameters = [[  a,   0,   0],
+                                    [  0,   a,   0],
+                                    [  0,   0,   a]]
+        elif ibrav == 2:
+            a = float(self.system['celldm(1)'])
+            self.cell_parameters = [[ -a/2,   0, a/2],
+                                    [    0, a/2, a/2],
+                                    [ -a/2, a/2,   0]]
+        elif ibrav == 3:
+            a = float(self.system['celldm(1)'])
+            self.cell_parameters = [[ a/2,  a/2,  a/2],
+                                    [-a/2,  a/2,  a/2],
+                                    [-a/2, -a/2,  a/2]]
         elif ibrav == 4:
             a = float(self.system['celldm(1)'])
             c = float(self.system['celldm(3)'])
             self.cell_parameters = [[   a,          0,  0],
                                     [-a/2,sqrt(3)/2*a,  0],
                                     [   0,          0,c*a]]
-        elif ibrav == 2:
-            a = float(self.system['celldm(1)'])
-            self.cell_parameters = [[ -a/2,   0, a/2],
-                                    [    0, a/2, a/2],
-                                    [ -a/2, a/2,   0]]
         elif ibrav == 6:
             a = float(self.system['celldm(1)'])
             c = float(self.system['celldm(3)'])
