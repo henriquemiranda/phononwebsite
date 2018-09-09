@@ -19,14 +19,14 @@ class PwIn():
     To read a local file with name "mos2.in"
 
         .. code-block :: python
-        
+
             qe = PwIn('mos2.scf')
             print qe
 
     To start a file from scratch
 
         .. code-block :: python
-        
+
             qe = PwIn('mos2.scf')
             qe.atoms = [['N',[ 0.0, 0.0,0.0]],
                         ['B',[1./3,2./3,0.0]]]
@@ -48,10 +48,10 @@ class PwIn():
             qe.electrons['conv_thr'] = 1e-8
 
             print qe
-     
+
     Special care should be taken with string variables e.g. "'high'"
- 
-    """    
+
+    """
     _pw = 'pw.x'
 
     def __init__(self, filename=None):
@@ -92,13 +92,12 @@ class PwIn():
             self.read_cell_parameters()
 
     def read_atomicspecies(self):
-        lines = self.file_lines
+        lines = iter(self.file_lines)
         #find ATOMIC_SPECIES keyword in file and read next line
-        for n,line in enumerate(lines):
+        for line in lines:
             if "ATOMIC_SPECIES" in line:
                 for i in range(int(self.system["ntyp"])):
-                    n+=1
-                    atype, mass, psp = lines[n].split()
+                    atype, mass, psp = next(lines).split()
                     self.atypes[atype] = [mass,psp]
 
     def get_symmetry_spglib(self):
@@ -126,7 +125,7 @@ class PwIn():
         for atom in self.atoms:
             atype = self.atypes[atom[0]]
             mass = float(atype[0])
-            masses.append(mass) 
+            masses.append(mass)
         return masses
 
     def set_path(self,path):
@@ -176,15 +175,14 @@ class PwIn():
             self.atoms[i][1] = self.atoms[i][1] + mode[i].real*displacement*sqrt(small_mass)/sqrt(masses[i])
 
     def read_atoms(self):
-        lines = self.file_lines
+        lines = iter(self.file_lines)
         #find READ_ATOMS keyword in file and read next lines
-        for n,line in enumerate(lines):
+        for line in lines:
             if "ATOMIC_POSITIONS" in line:
                 atomic_pos_type = line
                 self.atomic_pos_type = re.findall('([A-Za-z]+)',line)[-1]
                 for i in range(int(self.system["nat"])):
-                    n+=1
-                    atype, x,y,z = lines[n].split()
+                    atype, x,y,z = next(lines).split()
                     self.atoms.append([atype,[float(i) for i in (x,y,z)]])
         self.atomic_pos_type = atomic_pos_type.replace('{','').replace('}','').strip().split()[1]
 
@@ -200,7 +198,6 @@ class PwIn():
             lines = iter(self.file_lines)
             for line in lines:
                 if "CELL_PARAMETERS" in line:
-                    print(rmchar(line.strip(),'{}()'))
                     units = rmchar(line.strip(),'{}()').split()
                     self.cell_parameters = [[],[],[]]
                     if len(units) > 1:
@@ -245,20 +242,19 @@ class PwIn():
         self.alat = a 
         
     def read_kpoints(self):
-        lines = self.file_lines
+        lines = iter(self.file_lines)
         #find K_POINTS keyword in file and read next line
-        for n,line in enumerate(lines):
+        for line in lines:
             if "K_POINTS" in line:
                 #chack if the type is automatic
                 if "automatic" in line:
-                    n+=1
                     self.ktype = "automatic"
-                    vals = list(map(float, lines[n].split()))
+                    vals = list(map(float, next(lines).split()))
                     self.kpoints, self.shiftk = vals[0:3], vals[3:6]
                 #otherwise read a list
                 else:
                     #read number of kpoints
-                    nkpoints = int(lines.next().split()[0])
+                    nkpoints = int(next(lines).split()[0])
                     self.klist = []
                     self.ktype = ""
                     try:
@@ -273,7 +269,7 @@ class PwIn():
     def slicefile(self, keyword):
         lines = re.findall('&%s(?:.?)+\n((?:.+\n)+?)(?:\s+)?[\/&]'%keyword,"".join(self.file_lines),re.MULTILINE)
         return lines
-    
+
     def store(self,group,name):
         """
         Save the variables specified in each of the groups on the structure
@@ -284,8 +280,8 @@ class PwIn():
 
     def stringify_group(self, keyword, group):
         if group != {}:
-            string='&%s\n' % keyword 
-            for keyword in group:
+            string='&%s\n' % keyword
+            for keyword in sorted(group): # Py2/3 discrepancy in keyword order
                 string += "%20s = %s\n" % (keyword, group[keyword])
             string += "/&end\n"
             return string
