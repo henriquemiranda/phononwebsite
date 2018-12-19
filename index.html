@@ -42,33 +42,33 @@
 
 <section>
 <h1 id="phonon-website">Phonon website</h1>
-<p>Visualize phonon vibrational modes.</p>
+<h4 id="visualize-phonon-vibrational-modes">Visualize phonon vibrational modes</h4>
 <p>This project aims to provide a simple way to visualize the lattice vibrations of different materials. The temperature of a material is related to the agitation of its atoms. The atoms can move in any of the three cartesian directions. Combining the different possible ways the atoms can vibrate we obtain the eigenvectors. Each mode has associated a frequency of vibration that is related with the forces between the atoms.</p>
 <h1 id="how-to-use">How to use?</h1>
-<p>In the phonon section you can click on any point in the dispersion relation and see an animation of how the atoms vibrate in that particular mode. By default you can visualize the phonon dispersion of some materials we calculated. If you want to see your own calculations, we currently support phonon calculations form <code>Abinit</code>, <code>Quantum Espresso</code> and <code>phononpy</code>.</p>
+<p>In the phonon section you can click on any point in the phonon dispersion and see an animation of how the atoms vibrate according to that particular mode. By default you can visualize the phonon dispersion of a few selected materials we calculated plus the ones calculated by A. Togo for <a href="http://phonondb.mtl.kyoto-u.ac.jp/">phonodb</a>. If you want to see your own calculations, we currently support phonon calculations from <code>Abinit</code>, <code>Quantum Espresso</code> and <code>phononpy</code>.</p>
 <h2 id="phonopy">phonopy</h2>
 <p>You can visualize your own <code>phonopy</code> files by clicking on the <code>Choose files</code> button and selecting a <code>band.yaml</code> file. The following options should be present in the <code>band.conf</code> file:</p>
 <pre><code>EIGENVECTORS = .TRUE.
 BAND_CONNECTION = .TRUE.
 BAND_LABELS = Gamma M K
 BAND = (x1,y1,z1) (x2,y2,z2) (x3,y3,z3)</code></pre>
-<p>This only works with the newer version of phonopy as new tags were added to 'band.yaml' to have information about the atomic positions and the supercell.</p>
+<p>This only works with the newer versions of phonopy as new tags were added to 'band.yaml' to have information about the atomic positions and the supercell.</p>
 <h2 id="abinit">Abinit</h2>
-<p>To read a phonon dispersion form <code>Abinit</code> we provide some python scripts to convert the data to a <code>.json</code> format.</p>
-<p>To do so you can use <a href="https://github.com/abinit/abipy">abipy</a>. This is the recommended way to represent phonon dispersions calculated with <code>Abinit</code>. Once you have generated a <code>DDB</code> file, you can create a JSON file with:</p>
+<p>To read a phonon dispersion from <code>Abinit</code> you need python scripts to convert the phonon dispersion data to the internal <code>.json</code> format used by the website.</p>
+<p>The recommended way to do so is to use <a href="https://github.com/abinit/abipy">abipy</a>. Once you have generated a <code>DDB</code> file, you can create a JSON file with:</p>
 <pre><code>$ abiopen.py mp-149_DDB
 
 In [1]: phbst, phdos = abifile.anaget_phbst_and_phdos_files()
 In [2]: phbst.phbands.view_phononwebsite()</code></pre>
-<p>If you already have a PHBST.nc netcdf file produced by anaddb you can visualize it by doing:</p>
+<p>If you already have a PHBST.nc netcdf file produced by anaddb you can visualize it with:</p>
 <pre><code>$ abiview.py phbands example_PHBST.nc -web</code></pre>
 <p>Alternatively you can use the scripts provided in the <a href="https://github.com/henriquemiranda/phononwebsite/">Github</a> page. To install them just do:</p>
 <pre><code>$ python setup.py install --user</code></pre>
-<p>In the folder where you ran <code>anaddb</code> you will find a netCDF file (if your <code>Abinit</code> version has netCDF compiled) with the name <code>anaddb.out_PHBST.nc</code>. To convert it to <code>.json</code> format just run:</p>
+<p>In the folder where you ran <code>anaddb</code> you will find a netCDF file (if you compiled <code>Abinit</code> with netCDF support) with the name <code>anaddb.out_PHBST.nc</code>. To convert it to <code>.json</code> format just run:</p>
 <pre><code>$ read_anaddb_phonon.py anaddb.out_PHBST.nc &lt;name_of_your_material&gt;</code></pre>
-<p>You can then select the resulting <code>.json</code> file with the <code>Choose files</code> button.</p>
+<p>You can then select the resulting <code>.json</code> file with the <code>Choose files</code> button on the <code>phononwebsite</code>.</p>
 <h2 id="quantum-espresso">Quantum Espresso</h2>
-<p>To read a Quantum Espresso calculation you need two files <code>&lt;prefix&gt;.scf</code> and <code>&lt;prefix&gt;.modes</code>. The first one is the input file for <code>pw.x</code> the second one can be generated with <code>dynmat.x</code>. The file that should be used is the one set with the <code>'filout'</code> tag in the dynmat input file as in it the modes are normalized with the atomic masses. After installing the python scripts (as in the case of an <code>Abinit</code> calculation) you can obtain the <code>.json</code> files:</p>
+<p>To read a Quantum Espresso calculation you need two files <code>&lt;prefix&gt;.scf</code> and <code>&lt;prefix&gt;.modes</code>. The first one is the input file for <code>pw.x</code> the second one can be generated with <code>dynmat.x</code>. The file that should be used is the one set with the <code>'filout'</code> tag in the dynmat input file as in it the modes are normalized with the atomic masses. After installing the python scripts (same as in the case of an <code>Abinit</code> calculation) you can obtain the <code>.json</code> files:</p>
 <pre><code>$ read_qe_phonon.py prefix &lt;name_of_your_material&gt;</code></pre>
 <p>You can then select the resulting <code>.json</code> file with the <code>Choose files</code> button.</p>
 <h1 id="pages-using-this-visualization-tool">Pages using this visualization tool</h1>

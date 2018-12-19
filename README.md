@@ -1,16 +1,16 @@
 Phonon website
 ==============
 
-Visualize phonon vibrational modes.
+#### Visualize phonon vibrational modes
 
 This project aims to provide a simple way to visualize the lattice vibrations of different materials. The temperature of a material is related to the agitation of its atoms. The atoms can move in any of the three cartesian directions. Combining the different possible ways the atoms can vibrate we obtain the eigenvectors. Each mode has associated a frequency of vibration that is related with the forces between the atoms.
 
 How to use?
 ===========
 
-In the phonon section you can click on any point in the dispersion relation and see an animation of how the atoms vibrate in that particular mode.
-By default you can visualize the phonon dispersion of some materials we calculated.
-If you want to see your own calculations, we currently support phonon calculations form `Abinit`, `Quantum Espresso` and `phononpy`.
+In the phonon section you can click on any point in the phonon dispersion and see an animation of how the atoms vibrate according to that particular mode.
+By default you can visualize the phonon dispersion of a few selected materials we calculated plus the ones calculated by A. Togo for [phonodb](http://phonondb.mtl.kyoto-u.ac.jp/).
+If you want to see your own calculations, we currently support phonon calculations from `Abinit`, `Quantum Espresso` and `phononpy`.
 
 phonopy
 -------
@@ -21,14 +21,13 @@ You can visualize your own `phonopy` files by clicking on the `Choose files` but
     BAND_LABELS = Gamma M K
     BAND = (x1,y1,z1) (x2,y2,z2) (x3,y3,z3)
 
-This only works with the newer version of phonopy as new tags were added to 'band.yaml' to have information about the atomic positions and the supercell.
+This only works with the newer versions of phonopy as new tags were added to 'band.yaml' to have information about the atomic positions and the supercell.
 
 Abinit
 ------
-To read a phonon dispersion form `Abinit` we provide some python scripts to convert the data to a `.json` format.
-
-To do so you can use [abipy](https://github.com/abinit/abipy).
-This is the recommended way to represent phonon dispersions calculated with `Abinit`.
+To read a phonon dispersion from `Abinit` you need python scripts to convert the phonon dispersion data to the internal `.json` format used by the website.
+ 
+The recommended way to do so is to use [abipy](https://github.com/abinit/abipy).
 Once you have generated a `DDB` file, you can create a JSON file with:
     
     $ abiopen.py mp-149_DDB
@@ -36,7 +35,7 @@ Once you have generated a `DDB` file, you can create a JSON file with:
     In [1]: phbst, phdos = abifile.anaget_phbst_and_phdos_files()
     In [2]: phbst.phbands.view_phononwebsite()
 
-If you already have a PHBST.nc netcdf file produced by anaddb you can visualize it by doing:
+If you already have a PHBST.nc netcdf file produced by anaddb you can visualize it with:
     
     $ abiview.py phbands example_PHBST.nc -web
 
@@ -44,16 +43,18 @@ Alternatively you can use the scripts provided in the [Github](https://github.co
 
     $ python setup.py install --user
 
-In the folder where you ran `anaddb` you will find a netCDF file (if your `Abinit` version has netCDF compiled) with the name `anaddb.out_PHBST.nc`. To convert it to `.json` format just run:
+In the folder where you ran `anaddb` you will find a netCDF file (if you compiled `Abinit` with netCDF support) with the name `anaddb.out_PHBST.nc`. To convert it to `.json` format just run:
 
     $ read_anaddb_phonon.py anaddb.out_PHBST.nc <name_of_your_material>
 
-You can then select the resulting `.json` file with the `Choose files` button.
+You can then select the resulting `.json` file with the `Choose files` button on the `phononwebsite`.
 
 Quantum Espresso
 ----------------
-To read a Quantum Espresso calculation you need two files `<prefix>.scf` and `<prefix>.modes`. The first one is the input file for `pw.x` the second one can be generated with `dynmat.x`. The file that should be used is the one set with the `'filout'` tag in the dynmat input file as in it the modes are normalized with the atomic masses.
-After installing the python scripts (as in the case of an `Abinit` calculation) you can obtain the `.json` files:
+To read a Quantum Espresso calculation you need two files `<prefix>.scf` and `<prefix>.modes`. 
+The first one is the input file for `pw.x` the second one can be generated with `dynmat.x`. 
+The file that should be used is the one set with the `'filout'` tag in the dynmat input file as in it the modes are normalized with the atomic masses.
+After installing the python scripts (same as in the case of an `Abinit` calculation) you can obtain the `.json` files:
 
     $ read_qe_phonon.py prefix <name_of_your_material>
 
