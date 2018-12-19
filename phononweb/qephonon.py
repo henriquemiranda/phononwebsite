@@ -50,8 +50,10 @@ class QePhonon(Phonon):
             file_list = f.readlines()
             file_str  = "".join(file_list)
 
-        #determine the numer of atoms
-        nphons = max([int(x) for x in re.findall( '(?:freq|omega) \((.+)\)', file_str )])
+        #determine the number of atoms
+        mode_index_re = re.findall( '(?:freq|omega) ?\((.+)\)', file_str )
+        if len(mode_index_re) < 1: raise ValueError("Failed reading number of phonon modes.")
+        nphons = max([int(x) for x in mode_index_re])
         atoms = int(nphons/3)
 
         #check if the number fo atoms is the same
