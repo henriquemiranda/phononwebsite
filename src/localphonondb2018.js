@@ -1,4 +1,4 @@
-export class LocalPhononDB2017 {
+export class LocalPhononDB2018 {
     /*
     Interact with the database of phonondb
     Hosted in http://phonondb.mtl.kyoto-u.ac.jp/
@@ -27,7 +27,7 @@ export class LocalPhononDB2017 {
 
             for (let i=0; i<materials.length; i++) {
                 let m = materials[i];
-                m.url = "localphonondb2017/band-"+m.id+".yaml";
+                m.url = "localphonondb2018/band-"+m.id+".yaml";
                 m.source = name;
                 m.type = "yaml";
                 m.link = "https://materialsproject.org/materials/mp-"+m.id;
@@ -36,6 +36,6 @@ export class LocalPhononDB2017 {
             callback(materials)
         }
 
-        $.get('phonondb2017/phonondb.json', dothings);
+        $.get('phonondb2018/phonondb.json', dothings);
     }
 }

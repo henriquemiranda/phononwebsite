@@ -1,8 +1,9 @@
 import { LocalDB } from './localdb.js';
 import { ContribDB } from './contribdb.js';
 import { PhononDB2015 } from './phonondb2015.js';
+import { PhononDB2018 } from './phonondb2018.js';
 import { LocalPhononDB2015 } from './localphonondb2015.js';
-import { LocalPhononDB2017 } from './localphonondb2017.js';
+import { LocalPhononDB2018 } from './localphonondb2018.js';
 import { MaterialsProjectDB } from './mpdb.js';
 import { LocalMaterialsProjectDB } from './localmpdb.js';
 import { PhononJson } from './phononjson.js';
