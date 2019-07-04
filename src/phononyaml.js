@@ -1,20 +1,10 @@
-const thz2ev = 33.35641;
+import * as atomic_data from './atomic_data.js';
+import * as utils from './utils.js';
+import * as mat from './mat.js';
 
-function getReasonableRepetitions(natoms,lat) {
-    /*
-    choose a reasonable number of repetitions
-    Some logic can be implemented here to improve 
-    in which directions the repetitions are made
-    */
+var thz2ev = 33.35641;
 
-    if (natoms < 4)        { return [3,3,3] };
-    if (4 < natoms < 15)   { return [2,2,2] };
-    if (15 < natoms < 50)  { return [2,2,1] };
-    if (50 < natoms)       { return [1,1,1] };
-
-}
-
-class PhononYaml {
+export class PhononYaml {
 
     getFromURL(url,callback) {
         /*
@@ -94,7 +84,7 @@ class PhononYaml {
         }
 
         //get the number of repetitions
-        let pmat = matrix_multiply(lat,tmat);
+        let pmat = mat.matrix_multiply(lat,tmat);
 
         //get the atoms inside the unit cell
         this.atom_types = [];
@@ -107,13 +97,13 @@ class PhononYaml {
             let atom = pc_atoms[i];
             let symbol   = PhononYaml.getYaml(['symbol'],atom);
             let position = PhononYaml.getYaml(['position','coordinates'],atom);
-            this.atom_numbers.push(atomic_number[symbol]);
+            this.atom_numbers.push(atomic_data.atomic_number[symbol]);
             this.atom_types.push(symbol);
             this.atom_pos_red.push(position);
-            this.atom_pos_car.push(red_car(position,lat));
+            this.atom_pos_car.push(utils.red_car(position,lat));
         }
 
-        this.formula = get_formula(this.atom_types);
+        this.formula = utils.get_formula(this.atom_types);
         this.name = this.formula;
 
         let check_high_sym_qpoint = function(phonon_qpoint,highsym_qpts) {
@@ -179,7 +169,7 @@ class PhononYaml {
         let average_mass = 0;
         let sqrt_atom_masses = [];
         for (let i=0;i<this.natoms;i++) {
-            let mass = atomic_mass[this.atom_numbers[i]]
+            let mass = atomic_data.atomic_mass[this.atom_numbers[i]]
             average_mass += mass;
             sqrt_atom_masses.push(Math.sqrt(mass));
         }
@@ -208,6 +198,6 @@ class PhononYaml {
 
         this.addatomphase = true;
         this.lat = lat;
-        this.repetitions = getReasonableRepetitions(this.natoms,lat);
+        this.repetitions = utils.getReasonableRepetitions(this.natoms,lat);
     }
 }

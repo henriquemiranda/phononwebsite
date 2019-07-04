@@ -1,4 +1,30 @@
-class PhononWebpage {
+import { LocalDB } from './localdb.js';
+import { ContribDB } from './contribdb.js';
+import { PhononDB2015 } from './phonondb2015.js';
+import { LocalPhononDB2015 } from './localphonondb2015.js';
+import { LocalPhononDB2017 } from './localphonondb2017.js';
+import { MaterialsProjectDB } from './mpdb.js';
+import { LocalMaterialsProjectDB } from './localmpdb.js';
+import { PhononJson } from './phononjson.js';
+import { PhononYaml } from './phononyaml.js';
+import { exportXSF, exportPOSCAR }  from './exportfiles.js';
+import * as mat from './mat.js';
+import * as utils from './utils.js';
+
+function SubscriptNumbers(old_string) {
+    let string = "";
+    for (let a of old_string) {
+        if (!isNaN(a)) {
+            string += "<sub>"+a+"</sub>";
+        }
+        else {
+            string += a;
+        }
+    }
+    return string;
+}
+
+export class PhononWebpage {
 
     constructor(visualizer, dispersion) {
         this.k = 0;
@@ -16,18 +42,21 @@ class PhononWebpage {
         //bind some functions (TODO: improve this)
         this.exportXSF    = exportXSF.bind(this);
         this.exportPOSCAR = exportPOSCAR.bind(this);
+
+        //bind click event from highcharts with action
+        dispersion.setClickEvent(this);
     }
 
     //functions to link the DOM buttons with this class
     setMaterialsList(dom_mat)      { this.dom_mat = dom_mat; }    
     setReferencesList(dom_ref)     { this.dom_ref = dom_ref; }    
-    setMenu(dom_menu)              { this.dom_menu = dom_menu; }    
     setAtomPositions(dom_atompos)  { this.dom_atompos = dom_atompos; }    
     setLattice(dom_lattice)        { this.dom_lattice = dom_lattice; }    
+    setTitle(dom_title)            { this.dom_title = dom_title; }
 
     setUpdateButton(dom_button) {
         self = this;
-        dom_button.click( function() { self.update() } )
+        dom_button.click( function() { self.update(); } );
     }
 
     setExportXSFButton(dom_button) {
@@ -40,7 +69,6 @@ class PhononWebpage {
  
     setRepetitionsInput(dom_nx,dom_ny,dom_nz) { 
 
-        self = this;
         this.dom_nx = dom_nx;
         this.dom_ny = dom_ny;
         this.dom_nz = dom_nz;
@@ -97,7 +125,7 @@ class PhononWebpage {
         }
     }
 
-    loadURL(url_vars) {  
+    loadURL(url_vars,callback) {  
         /*
         load file from post request in the url
         */
@@ -105,6 +133,9 @@ class PhononWebpage {
         this.k = 0;
         this.n = 0;
         delete this.link;
+        if (callback == null) {
+            callback = this.loadCallback.bind(this);
+        }
 
         if ( "name" in url_vars ) {
             this.name = url_vars.name;
@@ -112,28 +143,25 @@ class PhononWebpage {
         if ( "link" in url_vars ) {
             this.link = url_vars.link;
         }
-        if ( "hidematlist" in url_vars ) {
-            this.dom_menu[0].style.display = 'none'
-        }
 
         if ("yaml" in url_vars) {
             this.phonon = new PhononYaml();
-            this.phonon.getFromURL(url_vars.yaml,this.loadCallback.bind(this));
+            this.phonon.getFromURL(url_vars.yaml,callback);
         }
         else if ("json" in url_vars) {
             this.phonon = new PhononJson();
-            this.phonon.getFromURL(url_vars.json,this.loadCallback.bind(this));
+            this.phonon.getFromURL(url_vars.json,callback);
         }
         else if ("rest" in url_vars) {
             this.phonon = new PhononJson();
-            this.phonon.getFromREST(url_vars.rest,url_vars.apikey,this.loadCallback.bind(this));
+            this.phonon.getFromREST(url_vars.rest,url_vars.apikey,callback);
         }
         else {
-            alert("Ivalid url"); 
+            //alert("Ivalid url"); 
         }
     }
 
-    getUrlVars() {
+    getUrlVars(default_vars) {
         /* 
         get variables from the url
         from http://stackoverflow.com/questions/4656843/jquery-get-querystring-from-url
@@ -154,9 +182,9 @@ class PhononWebpage {
             }
         }
 
-        //default
+        //if no argument is present use the default vars
         if (Object.keys(vars).length < 1) {
-            vars = {json: "localdb/graphene/data.json", name:"Graphene [1]"};
+            vars = default_vars;
         }
 
         this.loadURL(vars);
@@ -167,16 +195,16 @@ class PhononWebpage {
         Fuunction to be called once the file is loaded
         */
         this.setRepetitions(this.phonon.repetitions);
-        this.update() 
+        this.update(); 
     }
 
     getRepetitions() {
         /*
         read the number of repetitions in each direction and update it
         */
-        this.nx = this.dom_nx.val();
-        this.ny = this.dom_ny.val();
-        this.nz = this.dom_nz.val();
+        if (this.dom_nx) { this.nx = this.dom_nx.val(); }
+        if (this.dom_ny) { this.ny = this.dom_ny.val(); }
+        if (this.dom_nz) { this.nz = this.dom_nz.val(); }
     }
 
     setRepetitions(repetitions) {
@@ -190,9 +218,9 @@ class PhononWebpage {
             this.nz = repetitions[2];
         }
 
-        this.dom_nx.val(this.nx);
-        this.dom_ny.val(this.ny);
-        this.dom_nz.val(this.nz);
+        if (this.dom_nx) { this.dom_nx.val(this.nx); }
+        if (this.dom_ny) { this.dom_ny.val(this.ny); }
+        if (this.dom_nz) { this.dom_nz.val(this.nz); }
     }
 
     getStructure(nx,ny,nz) {
@@ -226,13 +254,13 @@ class PhononWebpage {
         */
         let atoms = this.getStructure(2,2,2);
 
-        let combinations = getCombinations( atoms );
+        let combinations = utils.getCombinations( atoms );
         let min = 1e9;
         for (let i=0; i<combinations.length; i++ ) {
             let a = combinations[i][0];
             let b = combinations[i][1];
 
-            let dist = distance(a.slice(1),b.slice(1));
+            let dist = mat.distance(a.slice(1),b.slice(1));
             if (min > dist) {
                 min = dist;
             }
@@ -250,10 +278,10 @@ class PhononWebpage {
         let kpt = phonon.kpoints[this.k];
 
         //additional phase if necessary
-        let atom_phase = []
+        let atom_phase = [];
         if (phonon.addatomphase) {
             for (let i=0; i<phonon.natoms; i++) {
-                let phase = vec_dot(kpt,phonon.atom_pos_red[i]);
+                let phase = mat.vec_dot(kpt,phonon.atom_pos_red[i]);
                 atom_phase.push(phase);
             }
         }
@@ -268,8 +296,8 @@ class PhononWebpage {
                 for (let iz=0; iz<nz; iz++) {
 
                     for (let i=0; i<phonon.natoms; i++) {
-                        let sprod = vec_dot(kpt,[ix,iy,iz]) + atom_phase[i];
-                        let phase = Complex.Polar(1.0,sprod*2.0*pi);
+                        let sprod = mat.vec_dot(kpt,[ix,iy,iz]) + atom_phase[i];
+                        let phase = Complex.Polar(1.0,sprod*2.0*mat.pi);
 
                         //Displacements of the atoms
                         let x = Complex(veckn[i][0][0],veckn[i][0][1]).mult(phase);
@@ -314,58 +342,62 @@ class PhononWebpage {
         /*
         lattice vectors table
         */
-        let lattice = this.dom_lattice;
-        lattice.empty();
 
-        for (let i=0; i<3; i++) {
-            let tr = document.createElement("TR");
-            for (let j=0; j<3; j++) {
-                let td = document.createElement("TD");
-                x = document.createTextNode(this.phonon.lat[i][j].toPrecision(4));
-                td.appendChild(x);
-                tr.append(td);
+        if (this.dom_lattice)  {
+            this.dom_lattice.empty();
+            for (let i=0; i<3; i++) {
+                let tr = document.createElement("TR");
+                for (let j=0; j<3; j++) {
+                    let td = document.createElement("TD");
+                    let x = document.createTextNode(this.phonon.lat[i][j].toPrecision(4));
+                    td.appendChild(x);
+                    tr.append(td);
+                }
+                this.dom_lattice.append(tr);
             }
-            lattice.append(tr);
         }
 
         //atomic positions table
-        let pos = this.phonon.atom_pos_red;
-        let atompos = this.dom_atompos;
-        atompos.empty();
+        if (this.dom_atompos) {
+            this.dom_atompos.empty();
+            let pos = this.phonon.atom_pos_red;
+            for (let i=0; i<pos.length; i++) {
+                let tr = document.createElement("TR");
 
-        for (let i=0; i<pos.length; i++) {
-            let tr = document.createElement("TR");
-
-            let td = document.createElement("TD");
-            let atom_type = document.createTextNode(this.phonon.atom_types[i]);
-            td.class = "ap";
-            td.appendChild(atom_type);
-            tr.append(td);
-
-            for (let j=0; j<3; j++) {
-                td = document.createElement("TD");
-                x = document.createTextNode(pos[i][j].toFixed(4));
-                td.appendChild(x);
+                let td = document.createElement("TD");
+                let atom_type = document.createTextNode(this.phonon.atom_types[i]);
+                td.class = "ap";
+                td.appendChild(atom_type);
                 tr.append(td);
+
+                for (let j=0; j<3; j++) {
+                    let td = document.createElement("TD");
+                    let x = document.createTextNode(pos[i][j].toFixed(4));
+                    td.appendChild(x);
+                    tr.append(td);
+                }
+                this.dom_atompos.append(tr);
             }
-            atompos.append(tr);
         }
 
         //update title
-        let title = $('#name')[0];
-        while (title.hasChildNodes()) {
-            title.removeChild(title.lastChild);
-        }
+        if (this.dom_title) {
+            let title = this.dom_title[0];
+            while (title.hasChildNodes()) {
+                title.removeChild(title.lastChild);
+            }
         
-        //make link
-        if ("link" in this) {
-            let a = document.createElement("A");
-            a.href = this.link;
-            a.innerHTML = this.name;
-            title.appendChild(a);
-        }
-        else {
-            title.innerHTML = this.name;
+            //make link
+            if ("link" in this) {
+                let a = document.createElement("A");
+                a.href = this.link;
+                a.innerHTML = this.name;
+                title.appendChild(a);
+            }
+            else {
+                title.innerHTML = this.name;
+            }
+
         }
     }
 
@@ -379,56 +411,58 @@ class PhononWebpage {
 
         let self = this;
 
-        let materials_list = this.dom_mat;
-        materials_list.empty();
-
-        let references_list = this.dom_ref;
+        let dom_mat = this.dom_mat;
+        let dom_ref = this.dom_ref;
+        if (dom_mat) { dom_mat.empty(); }
         let unique_references = {};
         let nreferences = 1;
 
         function addMaterials(materials) {
 
-            for (let i=0; i<materials.length; i++) {
+            if (dom_mat) {
+                for (let i=0; i<materials.length; i++) {
 
-                let m = materials[i];
-                
-                //reference
-                let ref = m["reference"];
-                if (!unique_references.hasOwnProperty(ref)) {
-                    unique_references[ref] = nreferences;
-                    nreferences+=1;
+                    let m = materials[i];
+                    
+                    //reference
+                    let ref = m["reference"];
+                    if (!unique_references.hasOwnProperty(ref)) {
+                        unique_references[ref] = nreferences;
+                        nreferences+=1;
+                    }
+
+                    //name + refenrece
+                    let name = SubscriptNumbers(m.name);
+                    let name_ref = name + " ["+unique_references[ref]+"]";
+
+                    let li = document.createElement("LI");
+                    let a = document.createElement("A");
+                   
+                    a.onclick = function() {
+                        let url_vars = {};
+                        url_vars[m.type] = m.url;
+                        url_vars.name = name_ref;
+                        if ("link" in m) { url_vars.link = m.link }
+                        self.loadURL(url_vars);
+                    };
+
+                    a.innerHTML = name;
+                    li.appendChild(a);
+
+                    dom_mat.append(li);
                 }
-
-                //name + refenrece
-                let name = subscript_numbers(m.name);
-                let name_ref = name + " ["+unique_references[ref]+"]";
-
-                let li = document.createElement("LI");
-                let a = document.createElement("A");
-               
-                a.onclick = function() {
-                    let url_vars = {};
-                    url_vars[m.type] = m.url;
-                    url_vars.name = name_ref;
-                    if ("link" in m) { url_vars.link = m.link }
-                    if ("apikey" in m) {url_vars.apikey = m.apikey}
-                    self.loadURL(url_vars);
-                };
-
-                a.innerHTML = name;
-                li.appendChild(a);
-
-                materials_list.append(li);
             }
 
             //add references
-            references_list.empty();
-            for (let ref in unique_references) {
-                let i = unique_references[ref];
-                let li = document.createElement("LI");
-                li.innerHTML = "["+i+"] "+ref;
-                references_list.append(li);
-                i += 1;
+            if (dom_ref) {
+                dom_ref.empty();
+                for (let ref in unique_references) {
+                    let i = unique_references[ref];
+                    let li = document.createElement("LI");
+                    li.innerHTML = "["+i+"] "+ref;
+                    dom_ref.append(li);
+                    i += 1;
+                }
             }
         }
 
@@ -470,51 +504,3 @@ class PhononWebpage {
     }
 
 }
-
-$(document).ready(function() {
-
-    //visualizer
-    v = new VibCrystal($('#vibcrystal'));
-    //dispersion
-    d = new PhononHighcharts($('#highcharts'));
-    //phonon class
-    p = new PhononWebpage(v,d);
-
-    //set dom objects phononwebsite
-    p.setMaterialsList( $('#mat') );
-    p.setReferencesList( $('#ref') );
-    p.setMenu( $('#material-list') );
-    p.setAtomPositions( $('#atompos') );
-    p.setLattice( $('#lattice') );
-    p.setRepetitionsInput( $('#nx'), $('#ny'), $('#nz') );
-    p.setUpdateButton( $('#update') );
-    p.setFileInput( $('#file-input') );
-    //p.setExportPOSCARButton($('#poscar'));
-    //p.setExportXSFButton($('#xsf'));
-
-    p.updateMenu();
-    p.getUrlVars();
-
-    //set dom objects vibcrystal
-    v.setCameraDirectionButton($('#camerax'),'x');
-    v.setCameraDirectionButton($('#cameray'),'y');
-    v.setCameraDirectionButton($('#cameraz'),'z');
-    
-    v.setDisplayCombo($('#displaystyle'));
-    v.setCellCheckbox($('#drawcell'));
-    v.setWebmButton($('#webmbutton'));
-    v.setGifButton($('#gifbutton'));
-    v.setArrowsCheckbox($('#drawvectors'));
-    v.setArrowsInput($('#vectors_amplitude_range'));
-    v.setSpeedInput($('#speed_range'));
-    v.setAmplitudeInput($('#amplitude_box'),$('#amplitude_range'))
-    v.setPlayPause($('#playpause'))
-
-    //bind click event from highcharts with action
-    d.setClickEvent(p);
-
-    // check if webgl is available
-    if ( ! Detector.webgl ) {
-        Detector.addGetWebGLMessage();
-    }
-});

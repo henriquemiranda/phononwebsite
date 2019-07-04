@@ -1,4 +1,4 @@
-exportXSF = function () {
+export function exportXSF() {
 
     let amplitude = this.visualizer.amplitude
     let string = "CRYSTAL\n"
@@ -38,8 +38,8 @@ exportXSF = function () {
 
 }
 
-exportPOSCAR = function () {
-    
+export function exportPOSCAR() {
+
     let amplitude = this.visualizer.amplitude
     let atoms = jQuery.extend(true, [], this.atoms);
     let counter = {};

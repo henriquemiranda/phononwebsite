@@ -1,7 +1,8 @@
-class PhononHighcharts {
+
+export class PhononHighcharts {
 
     constructor(container) {
-    
+   
         this.container = container;
 
         this.phonon = { highsym_qpts: [] }
@@ -97,7 +98,7 @@ class PhononHighcharts {
         for (let i=0; i<ticks.length ; i++ ) {
             plotLines.push({ value: ticks[i],
                              color: '#000000',
-                             width: 2 })
+                             width: 1 })
         }
 
         //actually set the eigenvalues
@@ -142,14 +143,13 @@ class PhononHighcharts {
 
                 //add data
                 this.highcharts.push({
-                    name:  n.toString(),
+                    name:  n+"",
                     color: "#0066FF",
-                    marker: { radius: 2, symbol: "circle"},
+                    marker: { radius: 1, symbol: "circle"},
                     data: eig
                    });
             }
         }
     }
 }
-
 

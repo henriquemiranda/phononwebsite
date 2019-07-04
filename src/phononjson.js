@@ -1,59 +1,11 @@
-const thz2cm1 = 33.35641;
-const ev2cm1 = 8065.73;
+import * as atomic_data from './atomic_data.js';
+import * as utils from './utils.js';
+import * as mat from './mat.js';
 
-function rec_lat(lat) {
-    /* Calculate the reciprocal lattice
-    */
-    let a1 = lat[0];
-    let a2 = lat[1];
-    let a3 = lat[2];
-    let b1 = vec_cross(a2,a3);
-    let b2 = vec_cross(a3,a1);
-    let b3 = vec_cross(a1,a2);
-    let v = vec_dot(a1,b1);
-    b1 = vec_scale(b1,1/v);
-    b2 = vec_scale(b2,1/v);
-    b3 = vec_scale(b3,1/v);
-    return [b1,b2,b3] 
-}
+var thz2cm1 = 33.35641;
+var ev2cm1 = 8065.73;
 
-function point_in_list(point,points) {
-    /* 
-    Return the index of the point if it is present in a list of points
-    */
-    for (let i=0; i<points.length; i++) {
-        if (distance(point,points[i]) < 1e-4) {
-            return {found:true,index:i};
-        }
-    }
-    return {found:false};
-}
-
-function red_car_list(red,lat) {
-    let car = [];
-    for (let i=0; i<red.length; i++) {
-        car.push(red_car(red[i],lat));
-    }
-    return car;
-}
-
-function get_formula(atom_types) {
-    //create the name from the elements
-    //from https://stackoverflow.com/questions/15052702/count-unique-elements-in-array-without-sorting
-    let counts = {};
-    for (var i = 0; i < atom_types.length; i++) {
-        counts[atom_types[i]] = 1 + (counts[atom_types[i]] || 0);
-    }
-
-    //make the name from the counter
-    name = "";
-    for (let element in counts) {
-        name += element+counts[element];
-    }
-    return name;
-}
-
-class PhononJson { 
+export class PhononJson { 
 
     getFromURL(url,callback) {
         /*
@@ -99,10 +51,9 @@ class PhononJson {
         let xhr = new XMLHttpRequest();
         xhr.open('GET', url, true);
         if (apikey) { xhr.setRequestHeader('x-api-key', apikey) };
-        xhr.setRequestHeader('x-requested-with', 'XMLHttpRequest');
         xhr.onload = function () {
             let json = JSON.parse(xhr.responseText);
-            this.getFromJson(json,callback);
+            this.getFromJson(json.response,callback);
         }.bind(this)
         xhr.send(null);
     }
@@ -168,7 +119,7 @@ class PhononJson {
 
         //lattice 
         this.lat = structure["lattice"]["matrix"];
-        let rlat = rec_lat(this.lat);
+        let rlat = utils.rec_lat(this.lat);
         this.repetitions = [3,3,3];
 
         this.atom_pos_car = [];
@@ -182,13 +133,13 @@ class PhononJson {
             
             let atom_type = site['label'];
             this.atom_types.push(atom_type);
-            this.atom_numbers.push(atomic_number[atom_type]);
+            this.atom_numbers.push(atomic_data.atomic_number[atom_type]);
             this.atom_pos_car.push(site['xyz']);
             this.atom_pos_red.push(site['abc']);
         }
 
         this.natoms = sites.length;
-        this.name = get_formula(this.atom_types);
+        this.name = utils.get_formula(this.atom_types);
 
         //dispersion
         let qpoints_red = data['qpoints'];
@@ -209,10 +160,10 @@ class PhononJson {
             high_symmetry_labels.push(label);
         }
 
-        let high_symmetry_points_car = red_car_list(high_symmetry_points_red,rlat); 
+        let high_symmetry_points_car = utils.red_car_list(high_symmetry_points_red,rlat); 
         let highsym_qpts_index = {}
         for (let nq=0; nq<qpoints_car.length; nq++) {
-            let result = point_in_list(qpoints_car[nq],high_symmetry_points_car);
+            let result = utils.point_in_list(qpoints_car[nq],high_symmetry_points_car);
             if (result["found"]) {
                 let label = high_symmetry_labels[result["index"]]
                 highsym_qpts_index[nq] = label;
@@ -235,7 +186,7 @@ class PhononJson {
             }
             else 
             {
-                dist = dist + distance(this.kpoints[nq-1],this.kpoints[nq]);
+                dist = dist + mat.distance(this.kpoints[nq-1],this.kpoints[nq]);
             }
             this.distances.push(dist);
         }

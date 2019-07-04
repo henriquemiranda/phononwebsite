@@ -1,12 +1,30 @@
-/*
-Class to show phonon vibrations using Three.js and WebGl
-*/
-var vec_y = new THREE.Vector3( 0, 1, 0 );
-var vec_0 = new THREE.Vector3( 0, 0, 0 );
-var direction = new THREE.Vector3( 0, 0, 0 );
-var quarternion = new THREE.Quaternion();
+import { TrackballControls } from './static_libs/TrackballControls.js';
+THREE.TrackballControls =  TrackballControls;
+import { Stats } from './static_libs/stats.min.js';
+import * as atomic_data from './atomic_data.js';
+import * as utils from './utils.js';
+import * as mat from './mat.js';
 
-class VibCrystal {
+const vec_y = new THREE.Vector3( 0, 1, 0 );
+const vec_0 = new THREE.Vector3( 0, 0, 0 );
+const direction = new THREE.Vector3( 0, 0, 0 );
+const quaternion = new THREE.Quaternion();
+
+function getBond( point1, point2 ) {
+    /*
+    get a quaternion and midpoint that links two points
+    */
+    direction.subVectors(point2, point1);
+    quaternion.setFromUnitVectors( vec_y, direction.clone().normalize() );
+
+    return { quaternion: quaternion,
+             midpoint: point1.clone().add( direction.multiplyScalar(0.5) ) };
+}
+
+export class VibCrystal {
+    /*
+    Class to show phonon vibrations using Three.js and WebGl
+    */
 
     constructor(container) {
 
@@ -89,8 +107,8 @@ class VibCrystal {
     /* Bind the action to set the direction of the camera using direction
        direction can be 'x','y','z'
     */
-        var self = this;
-        dom_button.click( function() { self.setCameraDirection(direction) } )
+        let self = this;
+        dom_button.click( function() { self.setCameraDirection(direction) } );
     }
 
     setPlayPause(dom_input) {
@@ -98,7 +116,7 @@ class VibCrystal {
     }
 
     setCellCheckbox(dom_checkbox) {
-        var self = this;
+        let self = this;
         dom_checkbox.click( function() { 
             self.cell = this.checked;
             self.updatelocal();
@@ -114,7 +132,7 @@ class VibCrystal {
     }
 
     setWebmButton(dom_button) {
-        var self = this;
+        let self = this;
         /*
         check if its Chrome 1+ taken from
         http://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
@@ -122,19 +140,19 @@ class VibCrystal {
         */
         let isChrome = !!window.chrome && !!window.chrome.webstore;
         if (!isChrome) {
-            dom_button[0].style.visibility = 'hidden';
+            dom_button.style.visibility = 'hidden';
         }
 
         dom_button.click(function() { self.capturestart('webm'); }); 
     }
 
     setGifButton(dom_button) { 
-        var self = this;
+        let self = this;
         dom_button.click(function() { self.capturestart('gif'); }); 
     } 
 
     setArrowsCheckbox(dom_checkbox) {
-        var self = this;
+        let self = this;
         this.arrows = dom_checkbox.checked;
         dom_checkbox.click( function() { 
             self.arrows = this.checked; 
@@ -143,7 +161,7 @@ class VibCrystal {
     }
 
     setArrowsInput(dom_range) {
-        var self = this;
+        let self = this;
 
         dom_range.val(self.arrowScale);
         dom_range.attr('min',self.minArrowScale);
@@ -155,7 +173,7 @@ class VibCrystal {
     }
 
    setAmplitudeInput(dom_number,dom_range) {
-        var self = this;
+        let self = this;
 
         dom_number.val(self.amplitude);
         dom_number.keyup( function () {
@@ -176,7 +194,7 @@ class VibCrystal {
     }
 
     setSpeedInput(dom_range) {
-        var self = this;
+        let self = this;
 
         dom_range.val(self.speed);
         dom_range.attr('min',self.minSpeed);
@@ -192,6 +210,7 @@ class VibCrystal {
         Initialize the phonon animation 
         */
 
+        
         //add camera
         this.camera = new THREE.PerspectiveCamera( this.cameraViewAngle, this.dimensions.ratio, 
                                                    this.cameraNear, this.cameraFar );
@@ -228,9 +247,10 @@ class VibCrystal {
         this.renderer.setPixelRatio( window.devicePixelRatio );
         this.renderer.shadowMap.enabled = false;
         this.renderer.setSize( this.dimensions.width , this.dimensions.height, false );
-        this.renderer.domElement.className = "vibcrystal-class";
         this.container0.appendChild( this.renderer.domElement );
         this.canvas = this.renderer.domElement;
+        this.canvas.style.width = this.dimensions.width + "px";
+        this.canvas.style.height = this.dimensions.height + "px";
 
         //frame counter
         this.stats = new Stats();
@@ -298,17 +318,17 @@ class VibCrystal {
         for (let i=0; i < atom_numbers.length; i++) {
             let n = atom_numbers[i];
             if (this.display == 'vesta') {
-                 let r = vesta_colors[n][0];
-                 let g = vesta_colors[n][1];
-                 let b = vesta_colors[n][2];
+                 let r = atomic_data.vesta_colors[n][0];
+                 let g = atomic_data.vesta_colors[n][1];
+                 let b = atomic_data.vesta_colors[n][2];
 
                  let material = new THREE.MeshPhongMaterial( {reflectivity:1, shininess: 80} );
                  material.color.setRGB (r, g, b);
                  this.materials.push( material );
             } else {
-                let r = jmol_colors[n][0];
-                let g = jmol_colors[n][1];
-                let b = jmol_colors[n][2];
+                let r = atomic_data.jmol_colors[n][0];
+                let g = atomic_data.jmol_colors[n][1];
+                let b = atomic_data.jmol_colors[n][2];
 
                 let material = new THREE.MeshLambertMaterial( { blending: THREE.AdditiveBlending } );
                 material.color.setRGB (r, g, b);
@@ -450,7 +470,7 @@ class VibCrystal {
         }
 
         //obtain combinations two by two of all the atoms
-        let combinations = getCombinations( this.atomobjects );
+        let combinations = utils.getCombinations( this.atomobjects );
         let a, b, length;
         let material = new THREE.MeshLambertMaterial( { color: this.bondscolor,
                                                         blending: THREE.AdditiveBlending } );
@@ -464,14 +484,14 @@ class VibCrystal {
 
             //if the separation is smaller than the sum of the bonding radius create a bond
             length = ad.distanceTo(bd)
-            let cra = covalent_radii[a.atom_number]
-            let crb = covalent_radii[b.atom_number]
+            let cra = atomic_data.covalent_radii[a.atom_number]
+            let crb = atomic_data.covalent_radii[b.atom_number]
             if (length < cra + crb || length < this.nndist ) {
                 this.bonds.push( [ad,bd,length] );
                 if (this.display == 'vesta') {
-                    let cr = (vesta_colors[a.atom_number][0] + vesta_colors[b.atom_number][0]) / 2;
-                    let cg = (vesta_colors[a.atom_number][1] + vesta_colors[b.atom_number][1]) / 2;
-                    let cb = (vesta_colors[a.atom_number][2] + vesta_colors[b.atom_number][2]) / 2;
+                    let cr = (atomic_data.vesta_colors[a.atom_number][0] + atomic_data.vesta_colors[b.atom_number][0]) / 2;
+                    let cg = (atomic_data.vesta_colors[a.atom_number][1] + atomic_data.vesta_colors[b.atom_number][1]) / 2;
+                    let cb = (atomic_data.vesta_colors[a.atom_number][2] + atomic_data.vesta_colors[b.atom_number][2]) / 2;
                     material.color.setRGB( cr, cg, cb );
                 }
 
@@ -587,11 +607,11 @@ class VibCrystal {
         //get the current time in miliseconds and convert to seconds
         let currentTime = Date.now()/1000.0;
         let t = currentTime * this.speed;
-        let phase = Complex.Polar(this.amplitude,t*2.0*pi);
+        let phase = Complex.Polar(this.amplitude,t*2.0*mat.pi);
         let v = new THREE.Vector3();
 
         if (!this.paused) {
-            
+
             //update positions according to vibrational modes
             for (let i=0; i<this.atomobjects.length; i++) {
                 let atom       = this.atomobjects[i];
@@ -643,15 +663,4 @@ class VibCrystal {
 
         this.stats.update();
     }
-}
-
-function getBond( point1, point2 ) {
-    /*
-    get a quarternion and midpoint that links two points
-    */
-    direction.subVectors(point2, point1);
-    quarternion.setFromUnitVectors( vec_y, direction.clone().normalize() );
-
-    return { quaternion: quarternion,
-             midpoint: point1.clone().add( direction.multiplyScalar(0.5) ) };
 }
