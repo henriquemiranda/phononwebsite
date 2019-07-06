@@ -19,7 +19,7 @@ export class PhononYaml {
 
     }
 
-    static getYaml(tags,object) {
+    static getYaml(tags,object,noerror=false) {
         /*
         check if the tags are present and if so return their value 
         */
@@ -31,6 +31,7 @@ export class PhononYaml {
                 return object[tag];
             }
         }
+        if (noerror) {return}
         alert(tags + " not found in the file."+
               "Please generate the file again with the lastest version of phonopy.");
         throw new Error(tags + " not found in the file.");
@@ -153,7 +154,7 @@ export class PhononYaml {
         let phonon   = PhononYaml.getYaml(['phonon'],phononyaml);
 
         // get the units
-        let calculator = PhononYaml.getYaml(['calculator'],phononyaml);
+        let calculator = PhononYaml.getYaml(['calculator'],phononyaml,noerror=true);
         let units = PhononYaml.getUnits(calculator);
 
         //convert the lattice to Angstroem
