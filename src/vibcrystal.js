@@ -284,7 +284,7 @@ export class VibCrystal {
         let progress = document.getElementById( 'progress' );
 
         let options = { format: format,
-                        workersPath: 'js/',
+                        workersPath: 'libs/',
                         verbose: true,
                         frameMax: this.fps,
                         end: this.captureend.bind(this,format),
@@ -634,7 +634,7 @@ export class VibCrystal {
                     v.set(vx,vy,vz);
                     let vlength = v.length()/this.amplitude;
                     let s = .5*this.arrowScale/this.amplitude;
-     
+
                     this.arrowobjects[i].position.set(x+vx*s,y+vy*s,z+vz*s);
                     this.arrowobjects[i].scale.y = vlength*this.arrowScale;
                     this.arrowobjects[i].quaternion.setFromUnitVectors(vec_y,v.normalize());

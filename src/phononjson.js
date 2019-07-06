@@ -143,7 +143,6 @@ export class PhononJson {
 
         //dispersion
         let qpoints_red = data['qpoints'];
-        let qpoints_car = red_car_list(qpoints_red,rlat)
         this.kpoints = qpoints_red; 
 
         /*

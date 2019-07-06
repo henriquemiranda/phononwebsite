@@ -31,7 +31,8 @@ export class PhononYaml {
                 return object[tag];
             }
         }
-        alert(tags + " not found in the file. Please generate the file again with the lastest version of phonopy.");
+        alert(tags + " not found in the file."+
+              "Please generate the file again with the lastest version of phonopy.");
         throw new Error(tags + " not found in the file.");
     }
 
@@ -39,7 +40,7 @@ export class PhononYaml {
         /*
         file is a javascript file object with the "band.yaml" file
         */
- 
+
         let yaml_reader = new FileReader();
 
         function onLoadEndHandler() {
@@ -153,9 +154,7 @@ export class PhononYaml {
 
         // get the units
         let calculator = PhononYaml.getYaml(['calculator'],phononyaml);
-        alert(calculator)
         let units = PhononYaml.getUnits(calculator);
-        alert(units['distance_to_A'])
 
         //convert the lattice to Angstroem
         lat = mat.matrix_scale(lat,units['distance_to_A'])
