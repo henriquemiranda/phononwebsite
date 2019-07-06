@@ -66,7 +66,8 @@ requirejs(["phononwebsite", "detector"], function(phononwebsite) {
     v.setCameraDirectionButton($('#camerax'),'x');
     v.setCameraDirectionButton($('#cameray'),'y');
     v.setCameraDirectionButton($('#cameraz'),'z');
-    
+
+    v.setDisplayCombo($('#displaystyle'));
     v.setCellCheckbox($('#drawcell'));
     v.setWebmButton($('#webmbutton'));
     v.setGifButton($('#gifbutton'));

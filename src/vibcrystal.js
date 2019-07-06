@@ -418,7 +418,7 @@ export class VibCrystal {
         //add a ball for each atom
         for (let i=0; i<atoms.length; i++) {
             if (this.display == 'vesta') { 
-                sphereGeometry = new THREE.SphereGeometry( covalent_radii[atom_numbers[atoms[i][0]]]/2.3, 
+                sphereGeometry = new THREE.SphereGeometry( atomic_data.covalent_radii[atom_numbers[atoms[i][0]]]/2.3, 
                                                            this.sphereLat, this.sphereLon); 
             }
             let object = new THREE.Mesh( sphereGeometry, this.materials[atoms[i][0]] );
