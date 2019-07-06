@@ -62,6 +62,85 @@ export class PhononYaml {
         callback();
     }
 
+    static getUnits(interface_mode) {
+
+        let kb_J = 1.3806504e-23  // [J/K]
+        let PlanckConstant = 4.13566733e-15 // [eV s]
+        let Hbar = PlanckConstant/(2*mat.pi) // [eV s]
+        let Avogadro = 6.02214179e23
+        let SpeedOfLight = 299792458  // [m/s]
+        let AMU = 1.6605402e-27  // [kg]
+        let Newton = 1.0         // [kg m / s^2]
+        let Joule = 1.0          // [kg m^2 / s^2]
+        let EV = 1.60217733e-19  // [J]
+        let Angstrom = 1.0e-10   // [m]
+        let THz = 1.0e12         // [/s]
+        let Mu0 = 4.0e-7 * mat.pi    // [Hartree/m]
+        let Epsilon0 = 1.0 / Mu0 / SpeedOfLight**2  // [C^2 / N m^2]
+        let Me = 9.10938215e-31
+
+        let Bohr = 4e10 * mat.pi * Epsilon0 * Hbar**2 / Me   // Bohr radius [A] 0.5291772
+        let Hartree = Me * EV / 16 / mat.pi**2 / Epsilon0**2 / Hbar**2  // Hartree [eV] 27.211398
+        let Rydberg = Hartree / 2  // Rydberg [eV] 13.6056991
+
+        let units = {}
+        if (interface_mode == 'abinit') {
+            units['nac_factor'] = Hartree / Bohr
+            units['distance_to_A'] = Bohr
+            units['force_constants_unit'] = 'eV/Angstrom.au'
+            units['length_unit'] = 'au'
+        }
+        else if (interface_mode == 'qe' || interface_mode == 'pwscf') {
+            units['nac_factor'] = 2.0
+            units['distance_to_A'] = Bohr
+            units['force_constants_unit'] = 'Ry/au^2'
+            units['length_unit'] = 'au'
+        }
+        else if (interface_mode == 'wien2k') {
+            units['nac_factor'] = 2000.0
+            units['distance_to_A'] = Bohr
+            units['force_constants_unit'] = 'mRy/au^2'
+            units['length_unit'] = 'au'
+        }
+        else if (interface_mode == 'elk') {
+            units['nac_factor'] = 1.0
+            units['distance_to_A'] = Bohr
+            units['force_constants_unit'] = 'hartree/au^2'
+            units['length_unit'] = 'au'
+        }
+        else if (interface_mode == 'siesta') {
+            units['nac_factor'] = Hartree / Bohr
+            units['distance_to_A'] = Bohr
+            units['force_constants_unit'] = 'eV/Angstrom.au'
+            units['length_unit'] = 'au'
+        }
+        else if (interface_mode == 'cp2k') {
+            units['nac_factor'] = Hartree / Bohr  // in a.u.
+            units['distance_to_A'] = Bohr
+            units['force_constants_unit'] = 'hartree/au^2'
+            units['length_unit'] = 'Angstrom'
+        }
+        else if (interface_mode == 'crystal') {
+            units['nac_factor'] = Hartree * Bohr
+            units['distance_to_A'] = 1.0
+            units['force_constants_unit'] = 'eV/Angstrom^2'
+            units['length_unit'] = 'Angstrom'
+        }
+        else if (interface_mode == 'dftbp') {
+            units['nac_factor'] = Hartree * Bohr
+            units['distance_to_A'] = Bohr
+            units['force_constants_unit'] = 'hartree/au^2'
+            units['length_unit'] = 'au'
+        }
+        else { // interface_mode == 'vasp' or others
+            units['nac_factor'] = Hartree * Bohr
+            units['distance_to_A'] = 1.0
+            units['force_constants_unit'] = 'eV/Angstrom^2'
+            units['length_unit'] = 'Angstrom'
+        }
+        return units
+    }
+
     getFromYaml(phononyaml) {
 
         //read the yaml files
@@ -71,6 +150,22 @@ export class PhononYaml {
         let tmat     = PhononYaml.getYaml(['supercell_matrix'],phononyaml);
         let pc_atoms = PhononYaml.getYaml(['points','atoms'],phononyaml);
         let phonon   = PhononYaml.getYaml(['phonon'],phononyaml);
+
+        // get the units
+        let calculator = PhononYaml.getYaml(['calculator'],phononyaml);
+        alert(calculator)
+        let units = PhononYaml.getUnits(calculator);
+        alert(units['distance_to_A'])
+
+        //convert the lattice to Angstroem
+        lat = mat.matrix_scale(lat,units['distance_to_A'])
+
+        //verify if the eigenvectors tag is prsent
+        let has_eigenvectors = phonon[0]['band'][0].hasOwnProperty('eigenvector');
+        if (!has_eigenvectors) {
+            alert("Eigenvectors not found in band.yaml file."+
+                  "Please regenerate with the EIGENVECTORS=.true. tag.");
+        }
 
         let segment_nqpoint;
         if ('segment_nqpoint' in phononyaml) {
@@ -92,7 +187,7 @@ export class PhononYaml {
         this.atom_pos_car = [];
         this.atom_pos_red = [];
         this.natoms = pc_atoms.length;
-        
+
         for (let i=0; i<this.natoms; i++) {
             let atom = pc_atoms[i];
             let symbol   = PhononYaml.getYaml(['symbol'],atom);
@@ -114,7 +209,7 @@ export class PhononYaml {
             else       {  highsym_qpts[dist] = '';    }
         }
 
-        //iterate over the different segments of the path        
+        //iterate over the different segments of the path
         this.kpoints     = [];
         this.eigenvalues = [];
         this.vec         = [];
