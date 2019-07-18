@@ -1414,8 +1414,8 @@ class VibCrystal {
         this.renderer.setSize( this.dimensions.width , this.dimensions.height, false );
         this.container0.appendChild( this.renderer.domElement );
         this.canvas = this.renderer.domElement;
-        this.canvas.style.width = this.dimensions.width + "px";
-        this.canvas.style.height = this.dimensions.height + "px";
+        //this.canvas.style.width = this.dimensions.width + "px";
+        //this.canvas.style.height = this.dimensions.height + "px";
 
         //frame counter
         this.stats = new Stats();
