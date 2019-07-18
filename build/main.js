@@ -5,7 +5,8 @@ requirejs.config({
         'threejs': '../libs/three.min',
         'highcharts': '../libs/highcharts.min',
         'complex': '../libs/complex.min',
-        'jsyaml': '../libs/jsyaml_amd_wrapper',
+        'jsyamlwrapper': '../libs/jsyaml_amd_wrapper',
+        'jsyaml': '../libs/js-yaml.min',
         'detector': '../libs/Detector',
         'ccapture': '../libs/CCapture',
         'gif': '../libs/gif',
@@ -32,7 +33,7 @@ requirejs.config({
             deps: ["whammy","gif"]
         },
         'phononwebsite': {
-            deps: ['jquery','jsyaml','highcharts','complex','threejs','ccapture'],
+            deps: ['jquery','jsyamlwrapper','highcharts','complex','threejs','ccapture'],
             exports: ['VibCrystal','PhononHighcharts','PhononWebpage']
         }
     }
