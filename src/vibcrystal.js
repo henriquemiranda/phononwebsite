@@ -140,16 +140,16 @@ export class VibCrystal {
         */
         let isChrome = !!window.chrome && !!window.chrome.webstore;
         if (!isChrome) {
-            dom_button.style.visibility = 'hidden';
+            dom_button.hide();
         }
 
         dom_button.click(function() { self.capturestart('webm'); }); 
     }
 
-    setGifButton(dom_button) { 
+    setGifButton(dom_button) {
         let self = this;
         dom_button.click(function() { self.capturestart('gif'); }); 
-    } 
+    }
 
     setArrowsCheckbox(dom_checkbox) {
         let self = this;

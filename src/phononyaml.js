@@ -154,7 +154,7 @@ export class PhononYaml {
         let phonon   = PhononYaml.getYaml(['phonon'],phononyaml);
 
         // get the units
-        let calculator = PhononYaml.getYaml(['calculator'],phononyaml,noerror=true);
+        let calculator = PhononYaml.getYaml(['calculator'],phononyaml,true);
         let units = PhononYaml.getUnits(calculator);
 
         //convert the lattice to Angstroem
