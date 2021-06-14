@@ -149,7 +149,6 @@ export class PhononYaml {
         let lat      = PhononYaml.getYaml(['lattice'],phononyaml);
         let nqpoint  = PhononYaml.getYaml(['nqpoint'],phononyaml);
         let npath    = PhononYaml.getYaml(['npath'],phononyaml);
-        let tmat     = PhononYaml.getYaml(['supercell_matrix'],phononyaml);
         let pc_atoms = PhononYaml.getYaml(['points','atoms'],phononyaml);
         let phonon   = PhononYaml.getYaml(['phonon'],phononyaml);
 
@@ -177,9 +176,6 @@ export class PhononYaml {
                 segment_nqpoint.push(nqpoint/npath);
             }
         }
-
-        //get the number of repetitions
-        let pmat = mat.matrix_multiply(lat,tmat);
 
         //get the atoms inside the unit cell
         this.atom_types = [];

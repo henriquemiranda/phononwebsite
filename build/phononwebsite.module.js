@@ -1013,49 +1013,6 @@ var covalent_radii =
 
 const pi$1 = 3.14159265359;
 
-/*
-from http://jsperf.com/ie-3x3-matrix-multiply
-*/
-function matrix_multiply(m1, m2) {
-    var m1_0 = m1[0];
-    var m1_1 = m1[1];
-    var m1_2 = m1[2];
-    var m2_0 = m2[0];
-    var m2_1 = m2[1];
-    var m2_2 = m2[2];
-
-    var m1_0_0 = m1_0[0];
-    var m1_0_1 = m1_0[1];
-    var m1_0_2 = m1_0[2];
-    var m1_1_0 = m1_1[0];
-    var m1_1_1 = m1_1[1];
-    var m1_1_2 = m1_1[2];
-    var m1_2_0 = m1_2[0];
-    var m1_2_1 = m1_2[1];
-    var m1_2_2 = m1_2[2];
-
-    var m2_0_0 = m2_0[0];
-    var m2_0_1 = m2_0[1];
-    var m2_0_2 = m2_0[2];
-    var m2_1_0 = m2_1[0];
-    var m2_1_1 = m2_1[1];
-    var m2_1_2 = m2_1[2];
-    var m2_2_0 = m2_2[0];
-    var m2_2_1 = m2_2[1];
-    var m2_2_2 = m2_2[2];
-
-    return [
-    [m1_0_0 * m2_0_0 + m1_0_1 * m2_1_0 + m1_0_2 * m2_2_0, 
-     m1_0_0 * m2_0_1 + m1_0_1 * m2_1_1 + m1_0_2 * m2_2_1, 
-     m1_0_0 * m2_0_2 + m1_0_1 * m2_1_2 + m1_0_2 * m2_2_2], 
-    [m1_1_0 * m2_0_0 + m1_1_1 * m2_1_0 + m1_1_2 * m2_2_0, 
-     m1_1_0 * m2_0_1 + m1_1_1 * m2_1_1 + m1_1_2 * m2_2_1, 
-     m1_1_0 * m2_0_2 + m1_1_1 * m2_1_2 + m1_1_2 * m2_2_2], 
-    [m1_2_0 * m2_0_0 + m1_2_1 * m2_1_0 + m1_2_2 * m2_2_0, 
-     m1_2_0 * m2_0_1 + m1_2_1 * m2_1_1 + m1_2_2 * m2_2_1, 
-     m1_2_0 * m2_0_2 + m1_2_1 * m2_1_2 + m1_2_2 * m2_2_2]];
-}
-
 function matrix_scale(a,scale) {
   return [a[0].map(function(x) {return x*scale}),
           a[1].map(function(x) {return x*scale}),
@@ -1779,7 +1736,7 @@ class VibCrystal {
 
             //update positions according to vibrational modes
             for (let i=0; i<this.atomobjects.length; i++) {
-                let atom       = this.atomobjects[i];
+                this.atomobjects[i];
                 let atompos    = this.atompos[i];
                 let vibrations = this.vibrations[i];
 
@@ -1837,7 +1794,7 @@ class PhononHighcharts {
         this.container = container;
 
         this.phonon = { highsym_qpts: [] };
-        let phonon = this.phonon;
+        this.phonon;
 
         this.labels_formatter = function(phonon) {
             return function() {
@@ -2723,7 +2680,6 @@ class PhononYaml {
         let lat      = PhononYaml.getYaml(['lattice'],phononyaml);
         let nqpoint  = PhononYaml.getYaml(['nqpoint'],phononyaml);
         let npath    = PhononYaml.getYaml(['npath'],phononyaml);
-        let tmat     = PhononYaml.getYaml(['supercell_matrix'],phononyaml);
         let pc_atoms = PhononYaml.getYaml(['points','atoms'],phononyaml);
         let phonon   = PhononYaml.getYaml(['phonon'],phononyaml);
 
@@ -2751,9 +2707,6 @@ class PhononYaml {
                 segment_nqpoint.push(nqpoint/npath);
             }
         }
-
-        //get the number of repetitions
-        let pmat = matrix_multiply(lat,tmat);
 
         //get the atoms inside the unit cell
         this.atom_types = [];
@@ -3123,6 +3076,7 @@ class PhononWebpage {
             this.phonon = new PhononJson();
             this.phonon.getFromREST(url_vars.rest,url_vars.apikey,callback);
         }
+        else ;
     }
 
     getUrlVars(default_vars) {
