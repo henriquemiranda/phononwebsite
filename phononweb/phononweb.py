@@ -107,8 +107,10 @@ class Phonon():
         """
         #vector transformations
         dim = (self.nqpoints, self.nphons, self.nphons)
-        vectors = self.eigenvectors.view(complex).reshape(dim)
-        
+        vectors = self.eigenvectors.reshape(sum((dim, (2,)), ()))
+        vectors = vectors[:,:,:,0] + 1j*vectors[:,:,:,1]
+        vectors = vectors.reshape(dim)
+
         eig = np.zeros([self.nqpoints,self.nphons])
         eiv = np.zeros([self.nqpoints,self.nphons,self.nphons],dtype=complex)
         #set order at gamma
@@ -120,8 +122,8 @@ class Phonon():
             for n,i in enumerate(order):
                 eig[k,n] = self.eigenvalues[k,i]
                 eiv[k,n] = vectors[k,i]
-        
-        #update teh eigenvales with the ordered version
+
+        #update the eigenvalues with the ordered version
         self.eigenvalues  = eig
         dim = (self.nqpoints,self.nphons,self.natoms,3,2)
         self.eigenvectors = eiv.view(float).reshape(dim)
