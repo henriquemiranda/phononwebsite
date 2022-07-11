@@ -2,7 +2,7 @@
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
 	(global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.phononwebsite = {}));
-}(this, (function (exports) { 'use strict';
+})(this, (function (exports) { 'use strict';
 
 	/**
 	 * @author Eberhard Graether / http://egraether.com/
@@ -2382,7 +2382,7 @@
 	        //get high symmetry qpoints
 	        this.highsym_qpts = {};
 	        for (let i=0; i<data["highsym_qpts"].length; i++) {
-	            let dist = this.distances[data["highsym_qpts"][i][0]];
+	            let dist = this.distances[data["highsym_qpts"][i][0]-1];
 	            this.highsym_qpts[dist] = data["highsym_qpts"][i][1];
 	        }
 
@@ -3435,4 +3435,4 @@
 
 	Object.defineProperty(exports, '__esModule', { value: true });
 
-})));
+}));

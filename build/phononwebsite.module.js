@@ -2376,7 +2376,7 @@ class PhononJson {
         //get high symmetry qpoints
         this.highsym_qpts = {};
         for (let i=0; i<data["highsym_qpts"].length; i++) {
-            let dist = this.distances[data["highsym_qpts"][i][0]];
+            let dist = this.distances[data["highsym_qpts"][i][0]-1];
             this.highsym_qpts[dist] = data["highsym_qpts"][i][1];
         }
 
