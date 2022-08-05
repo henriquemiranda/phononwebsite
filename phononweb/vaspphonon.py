@@ -21,7 +21,7 @@ class VaspPhonon(Phonon):
         self.name = name
         self.filename = filename
 
-        vaspout = h5py.File('vaspout.h5','r')
+        vaspout = h5py.File(filename,'r')
 
         #get reps
         sc_lat = vaspout['/input/poscar/lattice_vectors'][:]
@@ -100,7 +100,7 @@ class VaspPhonon(Phonon):
         self.chemical_symbols = ion_type
         self.atom_types = atom_types
         self.atom_numbers = [atomic_numbers[x] for x in self.atom_types]
-        #self.atomic_numbers = np.unique(self.atom_numbers)
+        self.atomic_numbers = np.unique(self.atom_numbers)
         self.chemical_symbols  = vaspout['/results/phonons/primitive/ion_types'][:]
         self.natoms = len(self.pos)
         self.chemical_formula = self.get_chemical_formula()
