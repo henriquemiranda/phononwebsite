@@ -92,8 +92,12 @@ name = name of the material</code></pre>
 </ul>
 <p>You are free to use all the images generated with this website in your publications and presentations as long as you cite this work (a link to the website is enough). For the license terms of the data from <a href="http://phonondb.mtl.kyoto-u.ac.jp/">phonodb</a> please refer to their website.</p>
 <p>In polar materials the LO-TO splitting is missing in the phonodb.</p>
-<h1 id="change-the-colors">Change the colors</h1>
-<p>The default colors of the atoms are the same ones used in <a href="http://jmol.sourceforge.net/">jmol</a>. Currently we don't provide a web interface to change them. If you still would like to change the colors, you can checkout locally the git repository from <a href="https://github.com/henriquemiranda/phononwebsite/">Github</a>. The colors of the atoms can be changed in <code>atomic_data.js</code> file inside the <code>js/</code> folder. The colors of the bonds and arrows can be changed in <code>vibcrystal.js</code> in the variables <code>this.arrowcolor</code> and <code>this.bondscolor</code> respectively. You can run a http server locally (Mac or Linux) with <code>python -m http.server</code> (python 3) and visit the page on your web browser in the address: <a href="http://localhost:8000">http://localhost:8000</a>.</p>
+<h1 id="change-the-colors">Modify the website</h1>
+<b>Change the colors</b>
+<p>The default colors of the atoms are the same ones used in <a href="http://jmol.sourceforge.net/">jmol</a>. Currently we don't provide a web interface to change them. If you still would like to change the colors, you can checkout locally the git repository from <a href="https://github.com/henriquemiranda/phononwebsite/">Github</a>. The colors of the atoms can be changed in <code>atomic_data.js</code> file inside the <code>js/</code> folder. The colors of the bonds and arrows can be changed in <code>vibcrystal.js</code> in the variables <code>this.arrowcolor</code> and <code>this.bondscolor</code> respectively.</p>
+<b>Compile and run locally</b>
+<p> To bundle the code i.e. join all the javascript files in the src folder into a single javascript module run <code>rollup -c</code>.
+You can run a http server locally (Mac or Linux) with <code>python -m http.server</code> (python 3) and visit the page on your web browser in the address: <a href="http://localhost:8000">http://localhost:8000</a>.</p>
 <h1 id="file-format">File Format</h1>
 <p>Here you can find a short description of the internal .json format used to show the phonon dispersions and animations on the website.</p>
 <pre><code>name:             name of the material that will be displayed on the website (string)
