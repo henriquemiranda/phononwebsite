@@ -231,6 +231,18 @@ class PwIn():
             self.cell_parameters = [[   a,          0,  0],
                                     [-a/2,sqrt(3)/2*a,  0],
                                     [   0,          0,c*a]]
+        elif ibrav == -5:
+            a = float(self.system['celldm(1)'])
+            c = float(self.system['celldm(4)'])
+            tx = sqrt((1.0-c)/2.0)
+            ty = sqrt((1.0-c)/6.0)
+            tz = sqrt((1.0+2.0*c)/3.0)
+            u = tz - 2.0*sqrt(2.0)*ty
+            v = tz + sqrt(2.0)*ty
+            aa = a/sqrt(3.0)	    
+            self.cell_parameters = [[aa*u, aa*v, aa*v],
+                                    [aa*v, aa*u, aa*v],
+                                    [aa*v, aa*v, aa*u]]
         elif ibrav == 6:
             a = float(self.system['celldm(1)'])
             c = float(self.system['celldm(3)'])
