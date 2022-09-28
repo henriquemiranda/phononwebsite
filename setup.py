@@ -2,6 +2,7 @@ from setuptools import setup
 
 scripts_phononwebsite = ['scripts/read_qe_phonon.py',
                          'scripts/read_anaddb_phonon.py',
+                         'scripts/read_vasp_phonon.py',
                          'scripts/phononwebsite.py']
 packages_phononwebsite = ['phononweb']
 
