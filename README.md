@@ -60,6 +60,15 @@ After installing the python scripts (same as in the case of an `Abinit` calculat
 
 You can then select the resulting `.json` file with the `Choose files` button.
 
+VASP
+----------
+To read a VASP calculation you need the `vaspout.h5` file containing a phonon dispersion calculation. 
+You can find the instructions of how to compute the phonon dispersion from a supercell calculation in the [VASP wiki](https://www.vasp.at/wiki/index.php/Computing_the_phonon_dispersion)
+
+    $ read_vasp_phonon.py vaspout.h5 <name_of_your_material>
+
+You can then select the resulting `.json` file with the `Choose files` button.
+
 Pages using this visualization tool
 ========================================
 
@@ -85,23 +94,27 @@ The available tags are:
 Here are some examples of what can be added to the website link:
 
   - [?yaml=http://henriquemiranda.github.io/phononwebsite/tests/phonopy/band.yaml](http://henriquemiranda.github.io/phononwebsite/phonon.html?yaml=http://henriquemiranda.github.io/phononwebsite/tests/phonopy/band.yaml)
-  - [?json=http://henriquemiranda.github.io/phononwebsite/graphene/data.json](http://henriquemiranda.github.io/phononwebsite/phonon.html?json=http://henriquemiranda.github.io/phononwebsite/graphene/data.json)
+  - [?json=http://henriquemiranda.github.io/phononwebsite/localdb/graphene/data.json](http://henriquemiranda.github.io/phononwebsite/phonon.html?json=http://henriquemiranda.github.io/phononwebsite/localdb/graphene/data.json)
 
 You are free to use all the images generated with this website in your publications and presentations as long as you cite this work (a link to the website is enough). For the license terms of the data from [phonodb](http://phonondb.mtl.kyoto-u.ac.jp/) please refer to their website.
 
 In polar materials the LO-TO splitting is missing in the phonodb.
 
-Change the colors
-============================
+Modify the website
+===================
+
+**Change the colors**
 
 The default colors of the atoms are the same ones used in [jmol](http://jmol.sourceforge.net/).
 Currently we don't provide a web interface to change them.
 If you still would like to change the colors, you can checkout locally the git repository from [Github](https://github.com/henriquemiranda/phononwebsite/).
 The colors of the atoms can be changed in `atomic_data.js` file inside the `js/` folder.
-The colors of the bonds and arrows can be changed in `vibcrystal.js` in the 
-variables `this.arrowcolor` and `this.bondscolor` respectively.
-You can run a http server locally (Mac or Linux) with `python -m http.server` (python 3) and 
-visit the page on your web browser in the address: [http://localhost:8000](http://localhost:8000).
+The colors of the bonds and arrows can be changed in `vibcrystal.js` in the variables `this.arrowcolor` and `this.bondscolor` respectively.
+
+**Compile and run locally**
+
+To bundle the code i.e. join all the javascript files in the src folder into a single javascript module run `rollup -c`.
+You can run a http server locally (Mac or Linux) with `python -m http.server` (python 3) and visit the page on your web browser in the address: [http://localhost:8000](http://localhost:8000).
 
 File Format
 =================
@@ -146,11 +159,15 @@ Aknowledgments & Funding
 [Guido Petreto](https://scholar.google.com/citations?user=EaD98BIAAAAJ&hl=en) and [Matteo Giantomassi](https://scholar.google.be/citations?user=kW8FQgkAAAAJ&hl=en) for many insightful comments, debugging, feature suggestions and the interface with [abipy](https://github.com/abinit/abipy).
 [Nikolas Garofil](mailto:nikolas.garofil@uantwerpen.be) and [Annelinde Strobbe](mailto:annelinde.strobbe@uantwerpen.be) from the for the implementation of the Vesta mode.
 
-Fonds National de la Recherche Scientifique (2017-present): <http://www.fnrs.be/>
+VASP Software GmbH (2019-present): <http://www.vasp.at>
+
+<img src="figures/vasp.png" width="150px">
+
+Fonds National de la Recherche Scientifique (2017-2019): <http://www.fnrs.be/>
 
 <img src="figures/fnrs.png" width="150px">
 
-Université Catholique de Louvain (2017-present): <https://uclouvain.be>
+Université Catholique de Louvain (2017-2019): <https://uclouvain.be>
 
 <img src="figures/ucl.jpg" width="150px">
 
@@ -175,10 +192,11 @@ Software used for this project
 ==============================
 
 - WebGL visualization using `Three.js`: <http://threejs.org/>
-- phonon dispersion using `highcharts`: <http://www.highcharts.com/>  
+- phonon dispersion using `highcharts`: <http://www.highcharts.com/>
 - export animation using `CCapture.js`: <https://github.com/spite/ccapture.js>
 - gif animation is uses `gif.js`: <http://jnordberg.github.io/gif.js/>
 - `Abinit`: <http://www.abinit.org/>
 - `Abipy`: <https://github.com/abinit/abipy>
 - `Quantum Espresso`: <http://www.quantum-espresso.org/>
 - `phonopy`: <http://atztogo.github.io/phonopy/>
+- `VASP`: <http://www.vasp.at>

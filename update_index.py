@@ -1,6 +1,6 @@
 import os
 
-os.system('pandoc README.md -f markdown -t html -o readme.html')
+os.system('pandoc --columns 10000 --email-obfuscation=javascript README.md -f markdown -t html -o readme.html')
 
 print("Reading readme.html")
 with open('readme.html') as f:
