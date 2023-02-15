@@ -158,6 +158,7 @@ Aknowledgments & Funding
 [José Pedro Silva](http://jpsfs.com/) for very helpful advices on technical issues and the best web technologies to use.
 [Guido Petreto](https://scholar.google.com/citations?user=EaD98BIAAAAJ&hl=en) and [Matteo Giantomassi](https://scholar.google.be/citations?user=kW8FQgkAAAAJ&hl=en) for many insightful comments, debugging, feature suggestions and the interface with [abipy](https://github.com/abinit/abipy).
 [Nikolas Garofil](mailto:nikolas.garofil@uantwerpen.be) and [Annelinde Strobbe](mailto:annelinde.strobbe@uantwerpen.be) from the for the implementation of the Vesta mode.
+[José María Castelo](https://github.com/jmcastelo) for adding the possibility to change the covalent radii of the atomic species which is used to draw the bonds between the atoms.
 
 VASP Software GmbH (2019-present): <http://www.vasp.at>
 
