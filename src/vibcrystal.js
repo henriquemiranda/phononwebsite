@@ -100,6 +100,7 @@ export class VibCrystal {
         this.atomobjects = [];
         this.bondobjects = [];
         this.bonds = [];
+		this.modified_covalent_radii = JSON.parse(JSON.stringify(atomic_data.covalent_radii));
     }
 
     //functions to link the DOM buttons with this class
@@ -202,6 +203,42 @@ export class VibCrystal {
         dom_range.attr('step',self.stepSpeed);
         dom_range.change( function () {
             self.speed = this.value;
+        });
+    }
+
+    setCovalentRadiiSelect(dom_select,dom_input) {
+        let self = this;
+        this.dom_covalent_radii_select = dom_select;
+        this.dom_covalent_radii_input = dom_input;
+        dom_select.change( function() {
+            dom_input.val(self.modified_covalent_radii[this.value]);
+        });
+    }
+
+    adjustCovalentRadiiSelect() {
+        let unique_atom_numbers = this.atom_numbers.filter((v, i, a) => a.indexOf(v) === i);
+
+        this.dom_covalent_radii_select.empty();
+        for (let i=0; i<unique_atom_numbers.length; i++) {
+            this.dom_covalent_radii_select.append('<option value="' + unique_atom_numbers[i] + '">' + atomic_data.atomic_symbol[unique_atom_numbers[i]] + '</option>');
+        }
+        this.dom_covalent_radii_input.val(this.modified_covalent_radii[this.dom_covalent_radii_select.val()]);
+    }
+
+    setCovalentRadiiButton(dom_select,dom_input,dom_button) {
+        let self = this;
+        dom_button.click( function() {
+            self.modified_covalent_radii[dom_select.val()] = parseFloat(dom_input.val());
+            self.updatelocal();
+        });
+    }
+
+    setCovalentRadiiResetButton(dom_select,dom_input,dom_button) {
+        let self = this;
+        dom_button.click( function() {
+            self.modified_covalent_radii = JSON.parse(JSON.stringify(atomic_data.covalent_radii));
+            dom_input.val(self.modified_covalent_radii[dom_select.val()]);
+            self.updatelocal();
         });
     }
 
@@ -483,9 +520,9 @@ export class VibCrystal {
             let bd = b.position;
 
             //if the separation is smaller than the sum of the bonding radius create a bond
-            length = ad.distanceTo(bd)
-            let cra = atomic_data.covalent_radii[a.atom_number]
-            let crb = atomic_data.covalent_radii[b.atom_number]
+            length = ad.distanceTo(bd);
+            let cra = this.modified_covalent_radii[a.atom_number];
+            let crb = this.modified_covalent_radii[b.atom_number];
             if (length < cra + crb || length < this.nndist ) {
                 this.bonds.push( [ad,bd,length] );
                 if (this.display == 'vesta') {
@@ -560,6 +597,7 @@ export class VibCrystal {
         this.getAtypes(this.phonon.atom_numbers);
         this.addStructure(this.atoms,this.phonon.atom_numbers);
         this.addCell(this.phonon.lat);
+        this.adjustCovalentRadiiSelect();
         this.animate();
     }
 

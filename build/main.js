@@ -77,6 +77,9 @@ requirejs(["phononwebsite", "detector"], function(phononwebsite) {
     v.setSpeedInput($('#speed_range'));
     v.setAmplitudeInput($('#amplitude_box'),$('#amplitude_range'));
     v.setPlayPause($('#playpause'));
+    v.setCovalentRadiiSelect($('#covalent_radii_select'),$('#covalent_radii_input'));
+    v.setCovalentRadiiButton($('#covalent_radii_select'),$('#covalent_radii_input'),$('#covalent_radii_button'));
+    v.setCovalentRadiiResetButton($('#covalent_radii_select'),$('#covalent_radii_input'),$('#covalent_radii_reset_button'));
 
     // check if webgl is available
     if ( ! Detector.webgl ) {
