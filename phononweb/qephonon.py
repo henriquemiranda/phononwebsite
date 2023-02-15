@@ -104,7 +104,7 @@ class QePhonon(Phonon):
         return self.eigenvalues, self.eigenvectors, self.qpoints
 
     def read_atoms(self,filename):
-        """ 
+        """
         read the data from a quantum espresso input file
         """
         pwin = PwIn(filename=filename)
@@ -119,10 +119,10 @@ class QePhonon(Phonon):
         self.chemical_formula = self.get_chemical_formula()
 
         pos_type = pwin.atomic_pos_type.lower()
-        if pos_type == "cartesian":
+        if ("cartesian" in pos_type):
             #convert to reduced coordinates
             self.pos = car_red(self.pos,self.cell)
-        elif pos_type == "crystal" or pos_type == 'alat':
+        elif ("crystal" in pos_type) or ("alat" in pos_type):
             #already in reduced coordinates
             pass
         else:
