@@ -984,6 +984,15 @@
 	atomic_number['Hs']  =108;
 	atomic_number['Mt']  =109;
 
+
+	var atomic_symbol$1 = ['','H','He','Li','Be','B','C','N','O','F','Ne','Na','Mg','Al','Si',
+	'P','S','Cl','Ar','K' ,'Ca','Sc','Ti','Vi','Cr','Mn','Fe','Co','Ni','Cu','Zn','Ga',
+	'Ge','As','Se','Br','Kr','Rb','Sr','Y' ,'Zr','Nb','Mo','Tc','Ru','Rh','Pd','Ag',
+	'Cd','In','Sn','Sb','Te','I' ,'Xe','Cs','Ba','La','Ce','Pr','Nd','Pm','Sm','Eu',
+	'Gd','Tb','Dy','Ho','Er','Tm','Yb','Lu','Hf','Ta','W' ,'Re','Os','Ir','Pt','Au',
+	'Hg','Tl','Pb','Bi','Po','At','Rn','Fr','Ra','Ac','Th','Pa','U' ,'Np','Pu','Am',
+	'Cm','Bk','Cf','Es','Fm','Md','No','Lr','Rf','Db','Sg','Bh','Hs','Mt'];
+
 	//from phonopy
 	var atomic_mass = [null,1.00794,4.002602,6.941,9.012182,10.811,12.0107,14.0067,15.9994,
 	18.9984032,20.1797, 22.98976928,24.305,26.9815386,28.0855,30.973762,32.065,35.453,39.948,
@@ -1228,6 +1237,7 @@
 	        this.atomobjects = [];
 	        this.bondobjects = [];
 	        this.bonds = [];
+			this.modified_covalent_radii = JSON.parse(JSON.stringify(covalent_radii));
 	    }
 
 	    //functions to link the DOM buttons with this class
@@ -1330,6 +1340,42 @@
 	        dom_range.attr('step',self.stepSpeed);
 	        dom_range.change( function () {
 	            self.speed = this.value;
+	        });
+	    }
+
+	    setCovalentRadiiSelect(dom_select,dom_input) {
+	        let self = this;
+	        this.dom_covalent_radii_select = dom_select;
+	        this.dom_covalent_radii_input = dom_input;
+	        dom_select.change( function() {
+	            dom_input.val(self.modified_covalent_radii[this.value]);
+	        });
+	    }
+
+	    adjustCovalentRadiiSelect() {
+	        let unique_atom_numbers = this.atom_numbers.filter((v, i, a) => a.indexOf(v) === i);
+
+	        this.dom_covalent_radii_select.empty();
+	        for (let i=0; i<unique_atom_numbers.length; i++) {
+	            this.dom_covalent_radii_select.append('<option value="' + unique_atom_numbers[i] + '">' + atomic_symbol$1[unique_atom_numbers[i]] + '</option>');
+	        }
+	        this.dom_covalent_radii_input.val(this.modified_covalent_radii[this.dom_covalent_radii_select.val()]);
+	    }
+
+	    setCovalentRadiiButton(dom_select,dom_input,dom_button) {
+	        let self = this;
+	        dom_button.click( function() {
+	            self.modified_covalent_radii[dom_select.val()] = parseFloat(dom_input.val());
+	            self.updatelocal();
+	        });
+	    }
+
+	    setCovalentRadiiResetButton(dom_select,dom_input,dom_button) {
+	        let self = this;
+	        dom_button.click( function() {
+	            self.modified_covalent_radii = JSON.parse(JSON.stringify(covalent_radii));
+	            dom_input.val(self.modified_covalent_radii[dom_select.val()]);
+	            self.updatelocal();
 	        });
 	    }
 
@@ -1612,8 +1658,8 @@
 
 	            //if the separation is smaller than the sum of the bonding radius create a bond
 	            length = ad.distanceTo(bd);
-	            let cra = covalent_radii[a.atom_number];
-	            let crb = covalent_radii[b.atom_number];
+	            let cra = this.modified_covalent_radii[a.atom_number];
+	            let crb = this.modified_covalent_radii[b.atom_number];
 	            if (length < cra + crb || length < this.nndist ) {
 	                this.bonds.push( [ad,bd,length] );
 	                if (this.display == 'vesta') {
@@ -1688,6 +1734,7 @@
 	        this.getAtypes(this.phonon.atom_numbers);
 	        this.addStructure(this.atoms,this.phonon.atom_numbers);
 	        this.addCell(this.phonon.lat);
+	        this.adjustCovalentRadiiSelect();
 	        this.animate();
 	    }
 
