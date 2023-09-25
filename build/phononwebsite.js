@@ -1013,8 +1013,8 @@
 	  Dalton Trans., 2008, 2832-2838 DOI:10.1039/B801115J
 	  */
 
-	var covalent_radii = 
-	[0.0,  0.31, 0.28, 1.28, 0.96, 0.84, 0.76, 0.71, 0.66, 0.57, //0 
+	var covalent_radii =
+	[0.0,  0.31, 0.28, 1.28, 0.96, 0.84, 0.76, 0.71, 0.66, 0.57, //0
 	 0.58, 1.66, 1.41, 1.21, 1.11, 1.07, 1.05, 1.02, 1.06, 2.03, //1
 	 1.76, 1.70, 1.60, 1.53, 1.39, 1.39, 1.32, 1.26, 1.24, 1.32, //2
 	 1.22, 1.22, 1.20, 1.19, 1.20, 1.20, 1.16, 2.20, 1.95, 1.90, //3
@@ -1023,7 +1023,7 @@
 	 2.01, 1.99, 1.98, 1.98, 1.96, 1.94, 1.92, 1.92, 1.89, 1.90, //6
 	 1.87, 1.87, 1.75, 1.70, 1.62, 1.51, 1.44, 1.41, 1.36, 1.36, //7
 	 1.32, 1.45, 1.46, 1.48, 1.40, 1.50, 1.50, 2.60, 2.21, 2.15, //8
-	 2.06, 2.00, 1.96, 1.90, 1.87, 1.80, 1.69, 0,    0,    0,    //9 
+	 2.06, 2.00, 1.96, 1.90, 1.87, 1.80, 1.69, 0,    0,    0,    //9
 	 0,    0,    0,    0 ];                                       //10
 
 	const pi$1 = 3.14159265359;
@@ -1058,7 +1058,7 @@
 	}
 
 	function getCombinations(elements) {
-	    /* 
+	    /*
 	    Get combintations 2 by two based on:
 	    http://stackoverflow.com/questions/29169011/javascript-arrays-finding-the-number-of-combinations-of-2-elements
 	    */
@@ -1082,11 +1082,11 @@
 	    b1 = vec_scale(b1,1/v);
 	    b2 = vec_scale(b2,1/v);
 	    b3 = vec_scale(b3,1/v);
-	    return [b1,b2,b3] 
+	    return [b1,b2,b3]
 	}
 
 	function point_in_list(point,points) {
-	    /* 
+	    /*
 	    Return the index of the point if it is present in a list of points
 	    */
 	    for (let i=0; i<points.length; i++) {
@@ -1133,7 +1133,7 @@
 	function getReasonableRepetitions(natoms,lat) {
 	    /*
 	    choose a reasonable number of repetitions
-	    Some logic can be implemented here to improve 
+	    Some logic can be implemented here to improve
 	    in which directions the repetitions are made
 	    */
 
@@ -1228,7 +1228,7 @@
 	        this.minSpeed = 0.01;
 	        this.maxSpeed = 3.0;
 	        this.stepSpeed = 0.01;
-	       
+
 	        this.fps = 60;
 
 	        this.arrowcolor = 0xbbffbb;
@@ -1255,15 +1255,15 @@
 
 	    setCellCheckbox(dom_checkbox) {
 	        let self = this;
-	        dom_checkbox.click( function() { 
+	        dom_checkbox.click( function() {
 	            self.cell = this.checked;
 	            self.updatelocal();
-	        } ); 
+	        } );
 	    }
 
 	    setDisplayCombo(dom_combo) {
 	        var self = this;
-	        dom_combo[0].onchange = function() { 
+	        dom_combo[0].onchange = function() {
 	            self.display = dom_combo[0].options[dom_combo[0].selectedIndex].value;
 	            self.updatelocal();
 	        };
@@ -1281,19 +1281,19 @@
 	            dom_button.hide();
 	        }
 
-	        dom_button.click(function() { self.capturestart('webm'); }); 
+	        dom_button.click(function() { self.capturestart('webm'); });
 	    }
 
 	    setGifButton(dom_button) {
 	        let self = this;
-	        dom_button.click(function() { self.capturestart('gif'); }); 
+	        dom_button.click(function() { self.capturestart('gif'); });
 	    }
 
 	    setArrowsCheckbox(dom_checkbox) {
 	        let self = this;
 	        this.arrows = dom_checkbox.checked;
-	        dom_checkbox.click( function() { 
-	            self.arrows = this.checked; 
+	        dom_checkbox.click( function() {
+	            self.arrows = this.checked;
 	            self.updatelocal();
 	        });
 	    }
@@ -1380,13 +1380,13 @@
 	    }
 
 	    init(phonon) {
-	        /* 
-	        Initialize the phonon animation 
+	        /*
+	        Initialize the phonon animation
 	        */
 
-	        
+
 	        //add camera
-	        this.camera = new THREE.PerspectiveCamera( this.cameraViewAngle, this.dimensions.ratio, 
+	        this.camera = new THREE.PerspectiveCamera( this.cameraViewAngle, this.dimensions.ratio,
 	                                                   this.cameraNear, this.cameraFar );
 	        this.setCameraDirection('z');
 
@@ -1525,7 +1525,7 @@
 	          let x = new THREE.Vector3(lat[0][0], lat[0][1], lat[0][2]);
 	          let y = new THREE.Vector3(lat[1][0], lat[1][1], lat[1][2]);
 	          let z = new THREE.Vector3(lat[2][0], lat[2][1], lat[2][2]);
-	          
+
 	          //lower part
 	          c.copy(zero);
 	          c.sub(o); geometry.vertices.push(c.clone());
@@ -1533,7 +1533,7 @@
 	          c.add(y); geometry.vertices.push(c.clone());
 	          c.sub(x); geometry.vertices.push(c.clone());
 	          c.sub(y); geometry.vertices.push(c.clone());
-	                 
+
 	          //upper part
 	          c.copy(zero); c.add(z);
 	          c.sub(o); geometry.vertices.push(c.clone());
@@ -1541,25 +1541,25 @@
 	          c.add(y); geometry.vertices.push(c.clone());
 	          c.sub(x); geometry.vertices.push(c.clone());
 	          c.sub(y); geometry.vertices.push(c.clone());
-	          
+
 	          //vertical lines
-	          c.copy(zero); 
+	          c.copy(zero);
 	          c.sub(o); geometry.vertices.push(c.clone());
 	          c.add(z); geometry.vertices.push(c.clone());
-	          
+
 	          c.add(x); geometry.vertices.push(c.clone());
 	          c.sub(z); geometry.vertices.push(c.clone());
-	          
+
 	          c.add(y); geometry.vertices.push(c.clone());
 	          c.add(z); geometry.vertices.push(c.clone());
-	          
+
 	          c.sub(x); geometry.vertices.push(c.clone());
 	          c.sub(z); geometry.vertices.push(c.clone());
 
 	          let line = new THREE.Line(geometry, material);
 	          this.scene.add(line);
 	        }
-	        
+
 	    }
 
 	    addStructure(atoms,atom_numbers) {
@@ -1568,7 +1568,7 @@
 	        */
 	        this.atomobjects  = [];
 	        this.bondobjects  = [];
-	        this.arrowobjects = []; 
+	        this.arrowobjects = [];
 	        this.atompos = [];
 	        this.atomvel = [];
 	        this.bonds = [];
@@ -1585,15 +1585,15 @@
 
 	        //atoms balls geometry
 	        let sphereGeometry = null;
-	        if (this.display != 'vesta') { 
-	            sphereGeometry = new THREE.SphereGeometry( this.sphereRadius, this.sphereLat, this.sphereLon); 
+	        if (this.display != 'vesta') {
+	            sphereGeometry = new THREE.SphereGeometry( this.sphereRadius, this.sphereLat, this.sphereLon);
 	        }
 
 	        //add a ball for each atom
 	        for (let i=0; i<atoms.length; i++) {
-	            if (this.display == 'vesta') { 
-	                sphereGeometry = new THREE.SphereGeometry( covalent_radii[atom_numbers[atoms[i][0]]]/2.3, 
-	                                                           this.sphereLat, this.sphereLon); 
+	            if (this.display == 'vesta') {
+	                sphereGeometry = new THREE.SphereGeometry( covalent_radii[atom_numbers[atoms[i][0]]]/2.3,
+	                                                           this.sphereLat, this.sphereLon);
 	            }
 	            let object = new THREE.Mesh( sphereGeometry, this.materials[atoms[i][0]] );
 	            let pos = new THREE.Vector3(atoms[i][1], atoms[i][2], atoms[i][3]);
@@ -1615,14 +1615,14 @@
 	        if (this.arrows) {
 
 	            //arrow geometry
-	            let arrowGeometry = new THREE.CylinderGeometry( 0, 
-	                                                            this.arrowHeadRadiusRatio*this.arrowRadius, 
+	            let arrowGeometry = new THREE.CylinderGeometry( 0,
+	                                                            this.arrowHeadRadiusRatio*this.arrowRadius,
 	                                                            this.arrowLength*this.arrowHeadLengthRatio );
 
-	            let axisGeometry  = new THREE.CylinderGeometry( this.arrowRadius, this.arrowRadius, 
+	            let axisGeometry  = new THREE.CylinderGeometry( this.arrowRadius, this.arrowRadius,
 	                                                            this.arrowLength );
 
-	            let AxisMaterial  = new THREE.MeshLambertMaterial( { color: this.arrowcolor, 
+	            let AxisMaterial  = new THREE.MeshLambertMaterial( { color: this.arrowcolor,
 	                                                                 blending: THREE.AdditiveBlending } );
 
 	            for (let i=0; i<atoms.length; i++) {
@@ -1630,14 +1630,14 @@
 	                //add an arrow for each atom
 	                let ArrowMesh = new THREE.Mesh( arrowGeometry, AxisMaterial );
 	                let length = (this.arrowLength+this.arrowLength*this.arrowHeadLengthRatio)/2;
-	                ArrowMesh.position.y = length; 
+	                ArrowMesh.position.y = length;
 
 	                //merge form of the arrow with cylinder
 	                ArrowMesh.updateMatrix();
 	                axisGeometry.merge(ArrowMesh.geometry,ArrowMesh.matrix);
 	                let object = new THREE.Mesh( axisGeometry, AxisMaterial );
 	                object.position.copy( geometricCenter );
-	 
+
 	                this.scene.add( object );
 	                this.arrowobjects.push( object );
 	            }
@@ -1707,14 +1707,14 @@
 
 	    update(phononweb) {
 	        /*
-	        this is the entry point of the phononweb 
+	        this is the entry point of the phononweb
 	        structure.
 	        It must contain:
 	            1. atoms
 	            2. vibrations
 	            3. phonon
 	        */
-	        
+
 	        this.phonon     = phononweb.phonon;
 	        this.vibrations = phononweb.vibrations;
 	        this.atoms      = phononweb.atoms;
@@ -1739,7 +1739,7 @@
 	    }
 
 	    getContainerDimensions() {
-	        let w = this.container.width(); 
+	        let w = this.container.width();
 	        let h = this.container.height();
 	        let dimensions = { width: w,
 	                           height: h,
@@ -1843,7 +1843,7 @@
 	class PhononHighcharts {
 
 	    constructor(container) {
-	   
+
 	        this.container = container;
 
 	        this.phonon = { highsym_qpts: [] };
@@ -1899,7 +1899,7 @@
 	                         }
 	        };
 	    }
-	    
+
 	    setClickEvent( phononweb ) {
 	        let click_event = function () {
 	            phononweb.k = phononweb.phonon.qindex[this.x];
@@ -1907,14 +1907,14 @@
 	            phononweb.setVibrations();
 	            phononweb.visualizer.update(phononweb);
 	        };
-	        this.HighchartsOptions.plotOptions.series.point.events.click = click_event; 
+	        this.HighchartsOptions.plotOptions.series.point.events.click = click_event;
 	    }
 
 	    update(phonon) {
 	        /*
 	        update phonon dispersion plot
 	        */
-	        
+
 	        this.phonon = phonon;
 
 	        //set the minimum of the plot with the smallest phonon frequency
@@ -1954,15 +1954,15 @@
 	    }
 
 	    getGraph(phonon) {
-	        /* 
+	        /*
 	        From a phonon object containing:
-	            distances : distance between the k-points 
+	            distances : distance between the k-points
 	            eigenvalues : eigenvalues
-	        put the data in the highcharts format 
+	        put the data in the highcharts format
 	        */
 
 	        let eival = phonon.eigenvalues;
-	        let dists = phonon.distances; 
+	        let dists = phonon.distances;
 	        let line_breaks = phonon.line_breaks;
 
 	        let nbands = eival[0].length;
@@ -1995,7 +1995,7 @@
 	}
 
 	class LocalDB {
-	    /* 
+	    /*
 	    Interact with the local database of phonons
 	    Hosted on Github
 	    */
@@ -2012,7 +2012,7 @@
 	    }
 
 	    get_materials(callback) {
-	        /* 
+	        /*
 	        this function load the materials from a certain source and returns then to the callback
 	        Some pre-processing of the data might be required and can be implemented here
 	        */
@@ -2040,7 +2040,7 @@
 	}
 
 	class ContribDB {
-	    /* 
+	    /*
 	    Interact with the local database of phonons contributed by users
 	    Hosted on Github
 	    */
@@ -2050,7 +2050,7 @@
 	    }
 
 	    get_materials(callback) {
-	        /* 
+	        /*
 	        this function load the materials from a certain source and returns then to the callback
 	        Some pre-processing of the data might be required and can be implemented here
 	        */
@@ -2062,9 +2062,9 @@
 	                let m = materials[i];
 	                m.source = name;
 	                m.type = "json";
-	               
+
 	                m.reference = m.author+", "+"<a href="+m.url+">"+m.journal+"</a> ("+m.year+")";
-	        
+
 
 	                //create the url
 	                m.url = m.folder+"/data.json";
@@ -2077,177 +2077,8 @@
 
 	}
 
-	class PhononDB2015 {
-	    /*
-	    Interact with the database of phonondb
-	    Hosted in http://phonondb.mtl.kyoto-u.ac.jp/
-	    */
-
-	    constructor() {
-	        this.name = "phonondb";
-	        this.author = "A. Togo";
-	        this.year = 2015;
-	        this.url = "http://phonondb.mtl.kyoto-u.ac.jp/";
-	    }
-
-	    isAvailable() {
-	        return true;
-	    }
-
-	    get_materials(callback) {
-	        /* 
-	        this function load the materials from a certain source and returns then to the callback
-	        Some pre-processing of the data might be required and can be implemented here
-	        */
-	        let reference = this.author+", "+"<a href="+this.url+">"+this.name+"</a> ("+this.year+")";
-	        let name = this.name;
-
-	        function dothings(materials) {
-
-	            for (let i=0; i<materials.length; i++) {
-	                let m = materials[i];
-	                m.source = name;
-	                m.type = "yaml";
-	                m.link = "https://materialsproject.org/materials/mp-"+m.id;
-	                m.reference = reference;
-	            }
-	            callback(materials);
-	        }
-
-	        $.get('phonondb2015/phonondb.json', dothings);
-	    }
-	}
-
-	class PhononDB2018 {
-
-	    /*
-	    Interact with the database of phonondb
-	    Hosted in http://phonondb.mtl.kyoto-u.ac.jp/
-	    */
-
-	    constructor() {
-	        this.name = "phonondb";
-	        this.author = "A. Togo";
-	        this.year = 2018;
-	        this.url = "http://phonondb.mtl.kyoto-u.ac.jp/";
-	    }
-
-	    isAvailable() {
-	        return true;
-	    }
-
-	    get_materials(callback) {
-	        /*
-	        this function load the materials from a certain source and returns then to the callback
-	        Some pre-processing of the data might be required and can be implemented here
-	        */
-	        let reference = this.author+", "+"<a href="+this.url+">"+this.name+"</a> ("+this.year+")";
-	        let name = this.name;
-
-	        function dothings(materials) {
-
-	            for (let i=0; i<materials.length; i++) {
-	                let m = materials[i];
-	                m.source = name;
-	                m.type = "yaml";
-	                m.link = "https://materialsproject.org/materials/mp-"+m.id;
-	                m.reference = reference;
-	            }
-	            callback(materials);
-	        }
-
-	        $.get('phonondb2018/phonondb.json', dothings);
-	    }
-
-
-	}
-
-	class LocalPhononDB2015 {
-	    /*
-	    Interact with the database of phonondb
-	    Hosted in http://phonondb.mtl.kyoto-u.ac.jp/
-	    */
-
-	    constructor() {
-	        this.name = "phonondb";
-	        this.author = "A. Togo";
-	        this.year = 2015;
-	        this.url = "http://phonondb.mtl.kyoto-u.ac.jp/";
-	    }
-
-	    isAvailable() {
-	        return false;
-	    }
-
-	    get_materials(callback) {
-	        /* 
-	        this function load the materials from a certain source and returns then to the callback
-	        Some pre-processing of the data might be required and can be implemented here
-	        */
-	        let reference = this.author+", "+"<a href="+this.url+">"+this.name+"</a> ("+this.year+")";
-	        let name = this.name;
-
-	        function dothings(materials) {
-
-	            for (let i=0; i<materials.length; i++) {
-	                let m = materials[i];
-	                m.url = "localphonondb2015/band-"+m.id+".yaml";
-	                m.source = name;
-	                m.type = "yaml";
-	                m.link = "https://materialsproject.org/materials/mp-"+m.id;
-	                m.reference = reference;
-	            }
-	            callback(materials);
-	        }
-
-	        $.get('phonondb2015/phonondb.json', dothings);
-	    }
-	}
-
-	class LocalPhononDB2018 {
-	    /*
-	    Interact with the database of phonondb
-	    Hosted in http://phonondb.mtl.kyoto-u.ac.jp/
-	    */
-
-	    constructor() {
-	        this.name = "phonondb";
-	        this.author = "A. Togo";
-	        this.year = 2017;
-	        this.url = "http://phonondb.mtl.kyoto-u.ac.jp/";
-	    }
-
-	    isAvailable() {
-	        return false;
-	    }
-
-	    get_materials(callback) {
-	        /* 
-	        this function load the materials from a certain source and returns then to the callback
-	        Some pre-processing of the data might be required and can be implemented here
-	        */
-	        let reference = this.author+", "+"<a href="+this.url+">"+this.name+"</a> ("+this.year+")";
-	        let name = this.name;
-
-	        function dothings(materials) {
-
-	            for (let i=0; i<materials.length; i++) {
-	                let m = materials[i];
-	                m.url = "localphonondb2018/band-"+m.id+".yaml";
-	                m.source = name;
-	                m.type = "yaml";
-	                m.link = "https://materialsproject.org/materials/mp-"+m.id;
-	                m.reference = reference;
-	            }
-	            callback(materials);
-	        }
-
-	        $.get('phonondb2018/phonondb.json', dothings);
-	    }
-	}
-
 	class MaterialsProjectDB {
-	    /* 
+	    /*
 	    Interact with the local database of phonons
 	    Hosted on Github
 	    */
@@ -2265,7 +2096,7 @@
 	    }
 
 	    get_materials(callback) {
-	        /* 
+	        /*
 	        this function load the materials from a certain source and returns then to the callback
 	        Some pre-processing of the data might be required and can be implemented here
 	        */
@@ -2294,7 +2125,7 @@
 	}
 
 	class LocalMaterialsProjectDB {
-	    /* 
+	    /*
 	    Interact with the local database of phonons
 	    Hosted on Github
 	    */
@@ -2310,9 +2141,9 @@
 	    isAvailable() {
 	        return false;
 	    }
-	    
+
 	    get_materials(callback) {
-	        /* 
+	        /*
 	        this function load the materials from a certain source and returns then to the callback
 	        Some pre-processing of the data might be required and can be implemented here
 	        */
@@ -2340,7 +2171,7 @@
 
 	var thz2cm1 = 33.35641;
 
-	class PhononJson { 
+	class PhononJson {
 
 	    getFromURL(url,callback) {
 	        /*
@@ -2356,7 +2187,7 @@
 
 	    getFromFile(file,callback) {
 	        /*
-	        file is a javasccript file object with the ".json" file in data 
+	        file is a javasccript file object with the ".json" file in data
 	        */
 
 	        let json_reader = new FileReader();
@@ -2389,7 +2220,7 @@
 	        }.bind(this);
 	        xhr.send(null);
 	    }
-	    
+
 	    getFromJson(json,callback) {
 	        if (json.hasOwnProperty('@class')) {
 	            this.getFromPMGJson(json,callback);
@@ -2401,7 +2232,7 @@
 
 	    getFromInternalJson(data,callback) {
 	        /*
-	        It was determined the json dictionary is the internal format        
+	        It was determined the json dictionary is the internal format
 	        */
 
 	        this.addatomphase = false;
@@ -2435,10 +2266,10 @@
 
 	        //get line breaks
 	        this.getLineBreaks(data);
-	                
+
 	        callback();
 	    }
-	    
+
 	    getFromPMGJson(data,callback) {
 	        /*
 	        It was determined that the json dictionary is the pymatgen format
@@ -2449,20 +2280,20 @@
 	        //system information (not needed for now)
 	        let structure = data["structure"];
 
-	        //lattice 
+	        //lattice
 	        this.lat = structure["lattice"]["matrix"];
 	        let rlat = rec_lat(this.lat);
 	        this.repetitions = [3,3,3];
 
 	        this.atom_pos_car = [];
 	        this.atom_pos_red = [];
-	        this.atom_types = []; 
+	        this.atom_types = [];
 	        this.atom_numbers = [];
-	 
+
 	        let sites = structure["sites"];
 	        for (let i=0; i<sites.length; i++) {
 	            let site = sites[i];
-	            
+
 	            let atom_type = site['label'];
 	            this.atom_types.push(atom_type);
 	            this.atom_numbers.push(atomic_number[atom_type]);
@@ -2475,13 +2306,13 @@
 
 	        //dispersion
 	        let qpoints_red = data['qpoints'];
-	        this.kpoints = qpoints_red; 
+	        this.kpoints = qpoints_red;
 
 	        /*
 	        get high symmetry qpoints
 	        Where we have to match the qpoint with a certain label with the
 	        high-symmetry point
-	        */ 
+	        */
 	        let labels_dict = data["labels_dict"];
 	        let high_symmetry_points_red = [];
 	        let high_symmetry_labels = [];
@@ -2491,7 +2322,7 @@
 	            high_symmetry_labels.push(label);
 	        }
 
-	        let high_symmetry_points_car = red_car_list(high_symmetry_points_red,rlat); 
+	        let high_symmetry_points_car = red_car_list(high_symmetry_points_red,rlat);
 	        let highsym_qpts_index = {};
 	        for (let nq=0; nq<qpoints_car.length; nq++) {
 	            let result = point_in_list(qpoints_car[nq],high_symmetry_points_car);
@@ -2515,7 +2346,7 @@
 	                this.line_breaks.push([nqstart,nq]);
 	                nqstart = nq;
 	            }
-	            else 
+	            else
 	            {
 	                dist = dist + distance(this.kpoints[nq-1],this.kpoints[nq]);
 	            }
@@ -2524,7 +2355,7 @@
 	        this.line_breaks.push([nqstart,this.kpoints.length]);
 
 	        this.highsym_qpts = {};
-	        for (let nq in highsym_qpts_index) { 
+	        for (let nq in highsym_qpts_index) {
 	            let dist = this.distances[nq];
 	            let label = highsym_qpts_index[nq];
 	            this.highsym_qpts[dist] = label;
@@ -2561,10 +2392,10 @@
 
 	            for (let n=0; n<nbands; n++) {
 	                eig_qpoint.push(eig[n][nq]*thz2cm1);
-	              
+
 	                let eiv_qpoint_atoms = [];
 
-	                for (let a=0; a<this.natoms; a++) { 
+	                for (let a=0; a<this.natoms; a++) {
 	                    let real = eiv["real"][n][nq][a];
 	                    let imag = eiv["imag"][n][nq][a];
 
@@ -2614,7 +2445,7 @@
 
 	    static getYaml(tags,object,noerror=false) {
 	        /*
-	        check if the tags are present and if so return their value 
+	        check if the tags are present and if so return their value
 	        */
 
 	        let ntags = tags.length;
@@ -2640,7 +2471,7 @@
 	        function onLoadEndHandler() {
 	            this.getFromString(yaml_reader.result,callback);
 	        }
-	 
+
 	        //read the files
 	        yaml_reader.onloadend = onLoadEndHandler.bind(this);
 	        yaml_reader.readAsText(file);
@@ -2839,7 +2670,7 @@
 	            qpoint += size_segment;
 	            check_high_sym_qpoint(phonon[qpoint-1],this.highsym_qpts);
 	        }
-	        
+
 	        //get average mass (for normalization purposes)
 	        let average_mass = 0;
 	        let sqrt_atom_masses = [];
@@ -3021,10 +2852,10 @@
 	    }
 
 	    //functions to link the DOM buttons with this class
-	    setMaterialsList(dom_mat)      { this.dom_mat = dom_mat; }    
-	    setReferencesList(dom_ref)     { this.dom_ref = dom_ref; }    
-	    setAtomPositions(dom_atompos)  { this.dom_atompos = dom_atompos; }    
-	    setLattice(dom_lattice)        { this.dom_lattice = dom_lattice; }    
+	    setMaterialsList(dom_mat)      { this.dom_mat = dom_mat; }
+	    setReferencesList(dom_ref)     { this.dom_ref = dom_ref; }
+	    setAtomPositions(dom_atompos)  { this.dom_atompos = dom_atompos; }
+	    setLattice(dom_lattice)        { this.dom_lattice = dom_lattice; }
 	    setTitle(dom_title)            { this.dom_title = dom_title; }
 
 	    setUpdateButton(dom_button) {
@@ -3039,8 +2870,8 @@
 	    setExportPOSCARButton(dom_button) {
 	        dom_button.click(this.exportPOSCAR.bind(this));
 	    }
-	 
-	    setRepetitionsInput(dom_nx,dom_ny,dom_nz) { 
+
+	    setRepetitionsInput(dom_nx,dom_ny,dom_nz) {
 
 	        this.dom_nx = dom_nx;
 	        this.dom_ny = dom_ny;
@@ -3059,7 +2890,7 @@
 
 	    setFileInput(dom_input) {
 	        /* Load a custom file button
-	        */ 
+	        */
 	        dom_input.change( this.loadCustomFile.bind(this) );
 	        dom_input.click( function() { this.value = '';} );
 	    }
@@ -3070,7 +2901,7 @@
 
 	        two formats available:
 	            1. band.yaml generated with phonopy with eigenvectors
-	            2. internal .json format description available in 
+	            2. internal .json format description available in
 	            http://henriquemiranda.github.io/phononwebsite/
 	            3. pymatgen phononBS format
 	        */
@@ -3080,7 +2911,7 @@
 
 	        function set_name() {
 	            delete self.link;
-	            self.name = self.phonon.name; 
+	            self.name = self.phonon.name;
 	            self.loadCallback();
 	        }
 
@@ -3089,16 +2920,16 @@
 	            this.phonon = new PhononYaml();
 	            this.phonon.getFromFile(file, set_name );
 	         }
-	        else if (file.name.indexOf(".json") > -1) { 
+	        else if (file.name.indexOf(".json") > -1) {
 	            this.phonon = new PhononJson();
 	            this.phonon.getFromFile(file, set_name );
 	        }
-	        else { 
-	            alert("Ivalid file"); 
+	        else {
+	            alert("Ivalid file");
 	        }
 	    }
 
-	    loadURL(url_vars,callback) {  
+	    loadURL(url_vars,callback) {
 	        /*
 	        load file from post request in the url
 	        */
@@ -3133,11 +2964,11 @@
 	    }
 
 	    getUrlVars(default_vars) {
-	        /* 
+	        /*
 	        get variables from the url
 	        from http://stackoverflow.com/questions/4656843/jquery-get-querystring-from-url
 
-	        currently the possible options are: 
+	        currently the possible options are:
 	            json : load a json file from location
 	            yaml : load a yaml file from location
 	            name : change the display name of the material
@@ -3166,7 +2997,7 @@
 	        Fuunction to be called once the file is loaded
 	        */
 	        this.setRepetitions(this.phonon.repetitions);
-	        this.update(); 
+	        this.update();
 	    }
 
 	    getRepetitions() {
@@ -3182,7 +3013,7 @@
 	        /*
 	        set the number of repetitions on the interface
 	        */
-	    
+
 	        if (repetitions) {
 	            this.nx = repetitions[0];
 	            this.ny = repetitions[1];
@@ -3293,7 +3124,7 @@
 	        Update all the aspects fo the webpage
 	        */
 
-	        //update structure       
+	        //update structure
 	        this.getRepetitions();
 	        this.atoms = this.getStructure(this.nx,this.ny,this.nz);
 	        this.vibrations = this.getVibrations(this.nx,this.ny,this.nz);
@@ -3357,7 +3188,7 @@
 	            while (title.hasChildNodes()) {
 	                title.removeChild(title.lastChild);
 	            }
-	        
+
 	            //make link
 	            if ("link" in this) {
 	                let a = document.createElement("A");
@@ -3394,7 +3225,7 @@
 	                for (let i=0; i<materials.length; i++) {
 
 	                    let m = materials[i];
-	                    
+
 	                    //reference
 	                    let ref = m["reference"];
 	                    if (!unique_references.hasOwnProperty(ref)) {
@@ -3408,7 +3239,7 @@
 
 	                    let li = document.createElement("LI");
 	                    let a = document.createElement("A");
-	                   
+
 	                    a.onclick = function() {
 	                        let url_vars = {};
 	                        url_vars[m.type] = m.url;
@@ -3445,6 +3276,7 @@
 	        source = new ContribDB();
 	        source.get_materials(addMaterials);
 
+	        /*
 	        //phonondb2015 database
 	        for (let sourceclass of [PhononDB2015, LocalPhononDB2015 ]) {
 	            source = new sourceclass;
@@ -3453,15 +3285,15 @@
 	                break;
 	            }
 	        }
-	       
-	        //phonondb2018 database 
+
+	        //phonondb2018 database
 	        for (let sourceclass of [PhononDB2018, LocalPhononDB2018 ]) {
 	            source = new sourceclass;
 	            if (source.isAvailable()) {
 	                source.get_materials(addMaterials);
 	                break;
 	            }
-	        }
+	        }*/
 
 	        //mp databse
 	        for (let sourceclass of [MaterialsProjectDB, LocalMaterialsProjectDB ]) {
@@ -3479,7 +3311,5 @@
 	exports.PhononHighcharts = PhononHighcharts;
 	exports.PhononWebpage = PhononWebpage;
 	exports.VibCrystal = VibCrystal;
-
-	Object.defineProperty(exports, '__esModule', { value: true });
 
 }));

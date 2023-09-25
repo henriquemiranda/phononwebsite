@@ -475,6 +475,7 @@ export class PhononWebpage {
         source = new ContribDB();
         source.get_materials(addMaterials);
 
+        /*
         //phonondb2015 database
         for (let sourceclass of [PhononDB2015, LocalPhononDB2015 ]) {
             source = new sourceclass;
@@ -491,7 +492,7 @@ export class PhononWebpage {
                 source.get_materials(addMaterials);
                 break;
             }
-        }
+        }*/
 
         //mp databse
         for (let sourceclass of [MaterialsProjectDB, LocalMaterialsProjectDB ]) {
