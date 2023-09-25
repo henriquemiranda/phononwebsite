@@ -5,7 +5,7 @@ import * as mat from './mat.js';
 var thz2cm1 = 33.35641;
 var ev2cm1 = 8065.73;
 
-export class PhononJson { 
+export class PhononJson {
 
     getFromURL(url,callback) {
         /*
@@ -22,7 +22,7 @@ export class PhononJson {
 
     getFromFile(file,callback) {
         /*
-        file is a javasccript file object with the ".json" file in data 
+        file is a javasccript file object with the ".json" file in data
         */
 
         let json_reader = new FileReader();
@@ -57,7 +57,7 @@ export class PhononJson {
         }.bind(this)
         xhr.send(null);
     }
-    
+
     getFromJson(json,callback) {
         if (json.hasOwnProperty('@class')) {
             this.getFromPMGJson(json,callback);
@@ -69,7 +69,7 @@ export class PhononJson {
 
     getFromInternalJson(data,callback) {
         /*
-        It was determined the json dictionary is the internal format        
+        It was determined the json dictionary is the internal format
         */
 
         this.addatomphase = false;
@@ -103,10 +103,10 @@ export class PhononJson {
 
         //get line breaks
         this.getLineBreaks(data);
-                
+
         callback();
     }
-    
+
     getFromPMGJson(data,callback) {
         /*
         It was determined that the json dictionary is the pymatgen format
@@ -117,20 +117,20 @@ export class PhononJson {
         //system information (not needed for now)
         let structure = data["structure"];
 
-        //lattice 
+        //lattice
         this.lat = structure["lattice"]["matrix"];
         let rlat = utils.rec_lat(this.lat);
         this.repetitions = [3,3,3];
 
         this.atom_pos_car = [];
         this.atom_pos_red = [];
-        this.atom_types = []; 
+        this.atom_types = [];
         this.atom_numbers = [];
- 
+
         let sites = structure["sites"];
         for (let i=0; i<sites.length; i++) {
             let site = sites[i];
-            
+
             let atom_type = site['label'];
             this.atom_types.push(atom_type);
             this.atom_numbers.push(atomic_data.atomic_number[atom_type]);
@@ -143,13 +143,13 @@ export class PhononJson {
 
         //dispersion
         let qpoints_red = data['qpoints'];
-        this.kpoints = qpoints_red; 
+        this.kpoints = qpoints_red;
 
         /*
         get high symmetry qpoints
         Where we have to match the qpoint with a certain label with the
         high-symmetry point
-        */ 
+        */
         let labels_dict = data["labels_dict"];
         let high_symmetry_points_red = [];
         let high_symmetry_labels = [];
@@ -159,7 +159,7 @@ export class PhononJson {
             high_symmetry_labels.push(label);
         }
 
-        let high_symmetry_points_car = utils.red_car_list(high_symmetry_points_red,rlat); 
+        let high_symmetry_points_car = utils.red_car_list(high_symmetry_points_red,rlat);
         let highsym_qpts_index = {}
         for (let nq=0; nq<qpoints_car.length; nq++) {
             let result = utils.point_in_list(qpoints_car[nq],high_symmetry_points_car);
@@ -183,7 +183,7 @@ export class PhononJson {
                 this.line_breaks.push([nqstart,nq]);
                 nqstart = nq;
             }
-            else 
+            else
             {
                 dist = dist + mat.distance(this.kpoints[nq-1],this.kpoints[nq]);
             }
@@ -192,7 +192,7 @@ export class PhononJson {
         this.line_breaks.push([nqstart,this.kpoints.length]);
 
         this.highsym_qpts = {}
-        for (let nq in highsym_qpts_index) { 
+        for (let nq in highsym_qpts_index) {
             let dist = this.distances[nq];
             let label = highsym_qpts_index[nq];
             this.highsym_qpts[dist] = label;
@@ -229,10 +229,10 @@ export class PhononJson {
 
             for (let n=0; n<nbands; n++) {
                 eig_qpoint.push(eig[n][nq]*thz2cm1);
-              
+
                 let eiv_qpoint_atoms = [];
 
-                for (let a=0; a<this.natoms; a++) { 
+                for (let a=0; a<this.natoms; a++) {
                     let real = eiv["real"][n][nq][a];
                     let imag = eiv["imag"][n][nq][a];
 

@@ -49,10 +49,10 @@ export class PhononWebpage {
     }
 
     //functions to link the DOM buttons with this class
-    setMaterialsList(dom_mat)      { this.dom_mat = dom_mat; }    
-    setReferencesList(dom_ref)     { this.dom_ref = dom_ref; }    
-    setAtomPositions(dom_atompos)  { this.dom_atompos = dom_atompos; }    
-    setLattice(dom_lattice)        { this.dom_lattice = dom_lattice; }    
+    setMaterialsList(dom_mat)      { this.dom_mat = dom_mat; }
+    setReferencesList(dom_ref)     { this.dom_ref = dom_ref; }
+    setAtomPositions(dom_atompos)  { this.dom_atompos = dom_atompos; }
+    setLattice(dom_lattice)        { this.dom_lattice = dom_lattice; }
     setTitle(dom_title)            { this.dom_title = dom_title; }
 
     setUpdateButton(dom_button) {
@@ -67,8 +67,8 @@ export class PhononWebpage {
     setExportPOSCARButton(dom_button) {
         dom_button.click(this.exportPOSCAR.bind(this));
     }
- 
-    setRepetitionsInput(dom_nx,dom_ny,dom_nz) { 
+
+    setRepetitionsInput(dom_nx,dom_ny,dom_nz) {
 
         this.dom_nx = dom_nx;
         this.dom_ny = dom_ny;
@@ -87,7 +87,7 @@ export class PhononWebpage {
 
     setFileInput(dom_input) {
         /* Load a custom file button
-        */ 
+        */
         dom_input.change( this.loadCustomFile.bind(this) );
         dom_input.click( function() { this.value = '';} );
     }
@@ -98,7 +98,7 @@ export class PhononWebpage {
 
         two formats available:
             1. band.yaml generated with phonopy with eigenvectors
-            2. internal .json format description available in 
+            2. internal .json format description available in
             http://henriquemiranda.github.io/phononwebsite/
             3. pymatgen phononBS format
         */
@@ -108,7 +108,7 @@ export class PhononWebpage {
 
         function set_name() {
             delete self.link;
-            self.name = self.phonon.name; 
+            self.name = self.phonon.name;
             self.loadCallback();
         }
 
@@ -117,16 +117,16 @@ export class PhononWebpage {
             this.phonon = new PhononYaml();
             this.phonon.getFromFile(file, set_name );
          }
-        else if (file.name.indexOf(".json") > -1) { 
+        else if (file.name.indexOf(".json") > -1) {
             this.phonon = new PhononJson();
             this.phonon.getFromFile(file, set_name );
         }
-        else { 
-            alert("Ivalid file"); 
+        else {
+            alert("Ivalid file");
         }
     }
 
-    loadURL(url_vars,callback) {  
+    loadURL(url_vars,callback) {
         /*
         load file from post request in the url
         */
@@ -158,16 +158,16 @@ export class PhononWebpage {
             this.phonon.getFromREST(url_vars.rest,url_vars.apikey,callback);
         }
         else {
-            //alert("Ivalid url"); 
+            //alert("Ivalid url");
         }
     }
 
     getUrlVars(default_vars) {
-        /* 
+        /*
         get variables from the url
         from http://stackoverflow.com/questions/4656843/jquery-get-querystring-from-url
 
-        currently the possible options are: 
+        currently the possible options are:
             json : load a json file from location
             yaml : load a yaml file from location
             name : change the display name of the material
@@ -196,7 +196,7 @@ export class PhononWebpage {
         Fuunction to be called once the file is loaded
         */
         this.setRepetitions(this.phonon.repetitions);
-        this.update(); 
+        this.update();
     }
 
     getRepetitions() {
@@ -212,7 +212,7 @@ export class PhononWebpage {
         /*
         set the number of repetitions on the interface
         */
-    
+
         if (repetitions) {
             this.nx = repetitions[0];
             this.ny = repetitions[1];
@@ -323,7 +323,7 @@ export class PhononWebpage {
         Update all the aspects fo the webpage
         */
 
-        //update structure       
+        //update structure
         this.getRepetitions();
         this.atoms = this.getStructure(this.nx,this.ny,this.nz);
         this.vibrations = this.getVibrations(this.nx,this.ny,this.nz);
@@ -387,7 +387,7 @@ export class PhononWebpage {
             while (title.hasChildNodes()) {
                 title.removeChild(title.lastChild);
             }
-        
+
             //make link
             if ("link" in this) {
                 let a = document.createElement("A");
@@ -424,7 +424,7 @@ export class PhononWebpage {
                 for (let i=0; i<materials.length; i++) {
 
                     let m = materials[i];
-                    
+
                     //reference
                     let ref = m["reference"];
                     if (!unique_references.hasOwnProperty(ref)) {
@@ -438,7 +438,7 @@ export class PhononWebpage {
 
                     let li = document.createElement("LI");
                     let a = document.createElement("A");
-                   
+
                     a.onclick = function() {
                         let url_vars = {};
                         url_vars[m.type] = m.url;
@@ -483,8 +483,8 @@ export class PhononWebpage {
                 break;
             }
         }
-       
-        //phonondb2018 database 
+
+        //phonondb2018 database
         for (let sourceclass of [PhononDB2018, LocalPhononDB2018 ]) {
             source = new sourceclass;
             if (source.isAvailable()) {

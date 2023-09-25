@@ -1,5 +1,5 @@
 export class ContribDB {
-    /* 
+    /*
     Interact with the local database of phonons contributed by users
     Hosted on Github
     */
@@ -9,7 +9,7 @@ export class ContribDB {
     }
 
     get_materials(callback) {
-        /* 
+        /*
         this function load the materials from a certain source and returns then to the callback
         Some pre-processing of the data might be required and can be implemented here
         */
@@ -21,9 +21,9 @@ export class ContribDB {
                 let m = materials[i];
                 m.source = name;
                 m.type = "json";
-               
+
                 m.reference = m.author+", "+"<a href="+m.url+">"+m.journal+"</a> ("+m.year+")";
-        
+
 
                 //create the url
                 m.url = m.folder+"/data.json";

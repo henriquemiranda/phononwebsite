@@ -1,7 +1,7 @@
 import * as mat from './mat.js';
 
 export function getCombinations(elements) {
-    /* 
+    /*
     Get combintations 2 by two based on:
     http://stackoverflow.com/questions/29169011/javascript-arrays-finding-the-number-of-combinations-of-2-elements
     */
@@ -25,11 +25,11 @@ export function rec_lat(lat) {
     b1 = mat.vec_scale(b1,1/v);
     b2 = mat.vec_scale(b2,1/v);
     b3 = mat.vec_scale(b3,1/v);
-    return [b1,b2,b3] 
+    return [b1,b2,b3]
 }
 
 export function point_in_list(point,points) {
-    /* 
+    /*
     Return the index of the point if it is present in a list of points
     */
     for (let i=0; i<points.length; i++) {
@@ -76,7 +76,7 @@ export function get_formula(atom_types) {
 export function getReasonableRepetitions(natoms,lat) {
     /*
     choose a reasonable number of repetitions
-    Some logic can be implemented here to improve 
+    Some logic can be implemented here to improve
     in which directions the repetitions are made
     */
 

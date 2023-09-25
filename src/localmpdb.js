@@ -1,5 +1,5 @@
 export class LocalMaterialsProjectDB {
-    /* 
+    /*
     Interact with the local database of phonons
     Hosted on Github
     */
@@ -15,9 +15,9 @@ export class LocalMaterialsProjectDB {
     isAvailable() {
         return false;
     }
-    
+
     get_materials(callback) {
-        /* 
+        /*
         this function load the materials from a certain source and returns then to the callback
         Some pre-processing of the data might be required and can be implemented here
         */

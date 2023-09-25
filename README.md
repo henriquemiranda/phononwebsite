@@ -3,7 +3,11 @@ Phonon website
 
 #### Visualize phonon vibrational modes
 
-This project aims to provide a simple way to visualize the lattice vibrations of different materials. The temperature of a material is related to the agitation of its atoms. The atoms can move in any of the three cartesian directions. Combining the different possible ways the atoms can vibrate we obtain the eigenvectors. Each mode has associated a frequency of vibration that is related with the forces between the atoms.
+This project aims to provide a simple way to visualize the lattice vibrations of different materials.
+The temperature of a material is related to the agitation of its atoms.
+The atoms can move in any of the three cartesian directions.
+Combining the different possible ways the atoms can vibrate we obtain the eigenvectors.
+Each mode has associated a frequency of vibration that is related with the forces between the atoms.
 
 How to use?
 ===========
@@ -26,17 +30,17 @@ This only works with the newer versions of phonopy as new tags were added to 'ba
 Abinit
 ------
 To read a phonon dispersion from `Abinit` you need python scripts to convert the phonon dispersion data to the internal `.json` format used by the website.
- 
+
 The recommended way to do so is to use [abipy](https://github.com/abinit/abipy).
 Once you have generated a `DDB` file, you can create a JSON file with:
-    
+
     $ abiopen.py mp-149_DDB
 
     In [1]: phbst, phdos = abifile.anaget_phbst_and_phdos_files()
     In [2]: phbst.phbands.view_phononwebsite()
 
 If you already have a PHBST.nc netcdf file produced by anaddb you can visualize it with:
-    
+
     $ abiview.py phbands example_PHBST.nc -web
 
 Alternatively you can use the scripts provided in the [Github](https://github.com/henriquemiranda/phononwebsite/) page. To install them just do:
@@ -51,8 +55,8 @@ You can then select the resulting `.json` file with the `Choose files` button on
 
 Quantum Espresso
 ----------------
-To read a Quantum Espresso calculation you need two files `<prefix>.scf` and `<prefix>.modes`. 
-The first one is the input file for `pw.x` the second one can be generated with `dynmat.x`. 
+To read a Quantum Espresso calculation you need two files `<prefix>.scf` and `<prefix>.modes`.
+The first one is the input file for `pw.x` the second one can be generated with `dynmat.x`.
 The file that should be used is the one set with the `'filout'` tag in the dynmat input file as in it the modes are normalized with the atomic masses.
 After installing the python scripts (same as in the case of an `Abinit` calculation) you can obtain the `.json` files:
 
@@ -62,7 +66,7 @@ You can then select the resulting `.json` file with the `Choose files` button.
 
 VASP
 ----------
-To read a VASP calculation you need the `vaspout.h5` file containing a phonon dispersion calculation. 
+To read a VASP calculation you need the `vaspout.h5` file containing a phonon dispersion calculation.
 You can find the instructions of how to compute the phonon dispersion from a supercell calculation in the [VASP wiki](https://www.vasp.at/wiki/index.php/Computing_the_phonon_dispersion)
 
     $ read_vasp_phonon.py vaspout.h5 <name_of_your_material>
@@ -145,10 +149,10 @@ This project is the continuation of the work of Raoul Weber during an internship
 I decided to continue the project by optimizing the implementation, cleaning up the design and replacing JSmol by a self made applet using Three.js and WebGL called VibCrystal.
 Currently the website works also as a web application which means the user can visualize his own calculations made with `phonopy`.
 
-My personal webpage:  
+My personal webpage:
 <http://henriquemiranda.github.io>
 
-Contact me:  
+Contact me:
 miranda.henrique at gmail.com
 
 Aknowledgments & Funding
@@ -182,9 +186,9 @@ University of Luxembourg (2013-2017): <http://wwwen.uni.lu/>
 
 Contribute
 ==========
-The project is under development!  
+The project is under development!
 
-You can leave your suggestions and feature requests here:  
+You can leave your suggestions and feature requests here:
 <https://github.com/henriquemiranda/phononwebsite/issues>
 
 If you would like to see some of your calculations published on this website please contact me.

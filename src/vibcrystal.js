@@ -91,7 +91,7 @@ export class VibCrystal {
         this.minSpeed = 0.01;
         this.maxSpeed = 3.0;
         this.stepSpeed = 0.01;
-       
+
         this.fps = 60;
 
         this.arrowcolor = 0xbbffbb;
@@ -118,15 +118,15 @@ export class VibCrystal {
 
     setCellCheckbox(dom_checkbox) {
         let self = this;
-        dom_checkbox.click( function() { 
+        dom_checkbox.click( function() {
             self.cell = this.checked;
             self.updatelocal();
-        } ) 
+        } )
     }
 
     setDisplayCombo(dom_combo) {
         var self = this;
-        dom_combo[0].onchange = function() { 
+        dom_combo[0].onchange = function() {
             self.display = dom_combo[0].options[dom_combo[0].selectedIndex].value;
             self.updatelocal();
         }
@@ -144,19 +144,19 @@ export class VibCrystal {
             dom_button.hide();
         }
 
-        dom_button.click(function() { self.capturestart('webm'); }); 
+        dom_button.click(function() { self.capturestart('webm'); });
     }
 
     setGifButton(dom_button) {
         let self = this;
-        dom_button.click(function() { self.capturestart('gif'); }); 
+        dom_button.click(function() { self.capturestart('gif'); });
     }
 
     setArrowsCheckbox(dom_checkbox) {
         let self = this;
         this.arrows = dom_checkbox.checked;
-        dom_checkbox.click( function() { 
-            self.arrows = this.checked; 
+        dom_checkbox.click( function() {
+            self.arrows = this.checked;
             self.updatelocal();
         });
     }
@@ -243,13 +243,13 @@ export class VibCrystal {
     }
 
     init(phonon) {
-        /* 
-        Initialize the phonon animation 
+        /*
+        Initialize the phonon animation
         */
 
-        
+
         //add camera
-        this.camera = new THREE.PerspectiveCamera( this.cameraViewAngle, this.dimensions.ratio, 
+        this.camera = new THREE.PerspectiveCamera( this.cameraViewAngle, this.dimensions.ratio,
                                                    this.cameraNear, this.cameraFar );
         this.setCameraDirection('z');
 
@@ -388,7 +388,7 @@ export class VibCrystal {
           let x = new THREE.Vector3(lat[0][0], lat[0][1], lat[0][2]);
           let y = new THREE.Vector3(lat[1][0], lat[1][1], lat[1][2]);
           let z = new THREE.Vector3(lat[2][0], lat[2][1], lat[2][2]);
-          
+
           //lower part
           c.copy(zero);
           c.sub(o); geometry.vertices.push(c.clone());
@@ -396,7 +396,7 @@ export class VibCrystal {
           c.add(y); geometry.vertices.push(c.clone());
           c.sub(x); geometry.vertices.push(c.clone());
           c.sub(y); geometry.vertices.push(c.clone());
-                 
+
           //upper part
           c.copy(zero); c.add(z);
           c.sub(o); geometry.vertices.push(c.clone());
@@ -404,25 +404,25 @@ export class VibCrystal {
           c.add(y); geometry.vertices.push(c.clone());
           c.sub(x); geometry.vertices.push(c.clone());
           c.sub(y); geometry.vertices.push(c.clone());
-          
+
           //vertical lines
-          c.copy(zero); 
+          c.copy(zero);
           c.sub(o); geometry.vertices.push(c.clone());
           c.add(z); geometry.vertices.push(c.clone());
-          
+
           c.add(x); geometry.vertices.push(c.clone());
           c.sub(z); geometry.vertices.push(c.clone());
-          
+
           c.add(y); geometry.vertices.push(c.clone());
           c.add(z); geometry.vertices.push(c.clone());
-          
+
           c.sub(x); geometry.vertices.push(c.clone());
           c.sub(z); geometry.vertices.push(c.clone());
 
           let line = new THREE.Line(geometry, material);
           this.scene.add(line);
         }
-        
+
     }
 
     addStructure(atoms,atom_numbers) {
@@ -431,7 +431,7 @@ export class VibCrystal {
         */
         this.atomobjects  = [];
         this.bondobjects  = [];
-        this.arrowobjects = []; 
+        this.arrowobjects = [];
         this.atompos = [];
         this.atomvel = [];
         this.bonds = [];
@@ -448,15 +448,15 @@ export class VibCrystal {
 
         //atoms balls geometry
         let sphereGeometry = null;
-        if (this.display != 'vesta') { 
-            sphereGeometry = new THREE.SphereGeometry( this.sphereRadius, this.sphereLat, this.sphereLon); 
+        if (this.display != 'vesta') {
+            sphereGeometry = new THREE.SphereGeometry( this.sphereRadius, this.sphereLat, this.sphereLon);
         }
 
         //add a ball for each atom
         for (let i=0; i<atoms.length; i++) {
-            if (this.display == 'vesta') { 
-                sphereGeometry = new THREE.SphereGeometry( atomic_data.covalent_radii[atom_numbers[atoms[i][0]]]/2.3, 
-                                                           this.sphereLat, this.sphereLon); 
+            if (this.display == 'vesta') {
+                sphereGeometry = new THREE.SphereGeometry( atomic_data.covalent_radii[atom_numbers[atoms[i][0]]]/2.3,
+                                                           this.sphereLat, this.sphereLon);
             }
             let object = new THREE.Mesh( sphereGeometry, this.materials[atoms[i][0]] );
             let pos = new THREE.Vector3(atoms[i][1], atoms[i][2], atoms[i][3]);
@@ -478,14 +478,14 @@ export class VibCrystal {
         if (this.arrows) {
 
             //arrow geometry
-            let arrowGeometry = new THREE.CylinderGeometry( 0, 
-                                                            this.arrowHeadRadiusRatio*this.arrowRadius, 
+            let arrowGeometry = new THREE.CylinderGeometry( 0,
+                                                            this.arrowHeadRadiusRatio*this.arrowRadius,
                                                             this.arrowLength*this.arrowHeadLengthRatio );
 
-            let axisGeometry  = new THREE.CylinderGeometry( this.arrowRadius, this.arrowRadius, 
+            let axisGeometry  = new THREE.CylinderGeometry( this.arrowRadius, this.arrowRadius,
                                                             this.arrowLength );
 
-            let AxisMaterial  = new THREE.MeshLambertMaterial( { color: this.arrowcolor, 
+            let AxisMaterial  = new THREE.MeshLambertMaterial( { color: this.arrowcolor,
                                                                  blending: THREE.AdditiveBlending } );
 
             for (let i=0; i<atoms.length; i++) {
@@ -493,14 +493,14 @@ export class VibCrystal {
                 //add an arrow for each atom
                 let ArrowMesh = new THREE.Mesh( arrowGeometry, AxisMaterial );
                 let length = (this.arrowLength+this.arrowLength*this.arrowHeadLengthRatio)/2;
-                ArrowMesh.position.y = length; 
+                ArrowMesh.position.y = length;
 
                 //merge form of the arrow with cylinder
                 ArrowMesh.updateMatrix();
                 axisGeometry.merge(ArrowMesh.geometry,ArrowMesh.matrix);
                 let object = new THREE.Mesh( axisGeometry, AxisMaterial );
                 object.position.copy( geometricCenter );
- 
+
                 this.scene.add( object );
                 this.arrowobjects.push( object );
             }
@@ -570,14 +570,14 @@ export class VibCrystal {
 
     update(phononweb) {
         /*
-        this is the entry point of the phononweb 
+        this is the entry point of the phononweb
         structure.
         It must contain:
             1. atoms
             2. vibrations
             3. phonon
         */
-        
+
         this.phonon     = phononweb.phonon;
         this.vibrations = phononweb.vibrations;
         this.atoms      = phononweb.atoms;
@@ -602,7 +602,7 @@ export class VibCrystal {
     }
 
     getContainerDimensions() {
-        let w = this.container.width(); 
+        let w = this.container.width();
         let h = this.container.height();
         let dimensions = { width: w,
                            height: h,

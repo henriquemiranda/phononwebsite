@@ -2,7 +2,7 @@
 export class PhononHighcharts {
 
     constructor(container) {
-   
+
         this.container = container;
 
         this.phonon = { highsym_qpts: [] }
@@ -58,7 +58,7 @@ export class PhononHighcharts {
                          }
         };
     }
-    
+
     setClickEvent( phononweb ) {
         let click_event = function () {
             phononweb.k = phononweb.phonon.qindex[this.x];
@@ -66,14 +66,14 @@ export class PhononHighcharts {
             phononweb.setVibrations();
             phononweb.visualizer.update(phononweb);
         }
-        this.HighchartsOptions.plotOptions.series.point.events.click = click_event 
+        this.HighchartsOptions.plotOptions.series.point.events.click = click_event
     }
 
     update(phonon) {
         /*
         update phonon dispersion plot
         */
-        
+
         this.phonon = phonon;
 
         //set the minimum of the plot with the smallest phonon frequency
@@ -113,15 +113,15 @@ export class PhononHighcharts {
     }
 
     getGraph(phonon) {
-        /* 
+        /*
         From a phonon object containing:
-            distances : distance between the k-points 
+            distances : distance between the k-points
             eigenvalues : eigenvalues
-        put the data in the highcharts format 
+        put the data in the highcharts format
         */
 
         let eival = phonon.eigenvalues;
-        let dists = phonon.distances; 
+        let dists = phonon.distances;
         let line_breaks = phonon.line_breaks;
 
         let nbands = eival[0].length;

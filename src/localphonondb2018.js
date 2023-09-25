@@ -16,7 +16,7 @@ export class LocalPhononDB2018 {
     }
 
     get_materials(callback) {
-        /* 
+        /*
         this function load the materials from a certain source and returns then to the callback
         Some pre-processing of the data might be required and can be implemented here
         */
