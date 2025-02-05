@@ -45,7 +45,7 @@ If you already have a PHBST.nc netcdf file produced by anaddb you can visualize 
 
 Alternatively you can use the scripts provided in the [Github](https://github.com/henriquemiranda/phononwebsite/) page. To install them just do:
 
-    $ python setup.py install --user
+    $ pip install -e .
 
 In the folder where you ran `anaddb` you will find a netCDF file (if you compiled `Abinit` with netCDF support) with the name `anaddb.out_PHBST.nc`. To convert it to `.json` format just run:
 
@@ -149,10 +149,10 @@ This project is the continuation of the work of Raoul Weber during an internship
 I decided to continue the project by optimizing the implementation, cleaning up the design and replacing JSmol by a self made applet using Three.js and WebGL called VibCrystal.
 Currently the website works also as a web application which means the user can visualize his own calculations made with `phonopy`.
 
-My personal webpage:
+My personal webpage:  
 <http://henriquemiranda.github.io>
 
-Contact me:
+Contact me:  
 miranda.henrique at gmail.com
 
 Aknowledgments & Funding
@@ -188,7 +188,7 @@ Contribute
 ==========
 The project is under development!
 
-You can leave your suggestions and feature requests here:
+You can leave your suggestions and feature requests here:  
 <https://github.com/henriquemiranda/phononwebsite/issues>
 
 If you would like to see some of your calculations published on this website please contact me.

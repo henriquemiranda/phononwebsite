@@ -63,7 +63,7 @@ In [2]: phbst.phbands.view_phononwebsite()</code></pre>
 <p>If you already have a PHBST.nc netcdf file produced by anaddb you can visualize it with:</p>
 <pre><code>$ abiview.py phbands example_PHBST.nc -web</code></pre>
 <p>Alternatively you can use the scripts provided in the <a href="https://github.com/henriquemiranda/phononwebsite/">Github</a> page. To install them just do:</p>
-<pre><code>$ python setup.py install --user</code></pre>
+<pre><code>$ pip install -e .</code></pre>
 <p>In the folder where you ran <code>anaddb</code> you will find a netCDF file (if you compiled <code>Abinit</code> with netCDF support) with the name <code>anaddb.out_PHBST.nc</code>. To convert it to <code>.json</code> format just run:</p>
 <pre><code>$ read_anaddb_phonon.py anaddb.out_PHBST.nc &lt;name_of_your_material&gt;</code></pre>
 <p>You can then select the resulting <code>.json</code> file with the <code>Choose files</code> button on the <code>phononwebsite</code>.</p>
