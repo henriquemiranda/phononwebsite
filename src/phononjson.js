@@ -49,11 +49,12 @@ export class PhononJson {
     getFromREST(url,apikey,callback) {
 
         let xhr = new XMLHttpRequest();
-        xhr.open('GET', url, true);
+        let urld = decodeURIComponent(url);
+        xhr.open('GET', urld, true);
         if (apikey) { xhr.setRequestHeader('x-api-key', apikey) };
         xhr.onload = function () {
             let json = JSON.parse(xhr.responseText);
-            this.getFromJson(json.response,callback);
+            this.getFromJson(json,callback);
         }.bind(this)
         xhr.send(null);
     }
@@ -61,10 +62,14 @@ export class PhononJson {
     getFromJson(json,callback) {
         if (json.hasOwnProperty('@class')) {
             this.getFromPMGJson(json,callback);
-        }
-        else {
-            this.getFromInternalJson(json,callback);
-        }
+        } else if (
+            json.hasOwnProperty('data') &&
+            Array.isArray(json['data']) &&
+            json['data'].length === 1 &&
+            json['data'][0].hasOwnProperty('ph_bs')
+        ) {
+            this.getFromPMGJson(json['data'][0]['ph_bs'],callback);
+        } else { this.getFromInternalJson(json,callback); }
     }
 
     getFromInternalJson(data,callback) {
@@ -161,8 +166,8 @@ export class PhononJson {
 
         let high_symmetry_points_car = utils.red_car_list(high_symmetry_points_red,rlat);
         let highsym_qpts_index = {}
-        for (let nq=0; nq<qpoints_car.length; nq++) {
-            let result = utils.point_in_list(qpoints_car[nq],high_symmetry_points_car);
+        for (let nq=0; nq<qpoints_red.length; nq++) {
+            let result = utils.point_in_list(qpoints_red[nq],high_symmetry_points_car);
             if (result["found"]) {
                 let label = high_symmetry_labels[result["index"]]
                 highsym_qpts_index[nq] = label;
