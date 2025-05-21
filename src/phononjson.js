@@ -49,26 +49,37 @@ export class PhononJson {
     getFromREST(url,apikey,callback) {
 
         let xhr = new XMLHttpRequest();
+        console.log(url);
         let urld = decodeURIComponent(url);
-        xhr.open('GET', urld, true);
-        if (apikey) { xhr.setRequestHeader('x-api-key', apikey) };
-        xhr.onload = function () {
+        console.log(urld);
+        let params = new URLSearchParams(urld.split("?")[1]);
+        let field;
+        if (params.has("_fields")) {
+          field = params.get("_fields").split(",")[0];
+        }
+        console.log(field);
+        if (field) {
+          xhr.open('GET', urld, true);
+          if (apikey) { xhr.setRequestHeader('x-api-key', apikey) };
+          xhr.onload = function () {
             let json = JSON.parse(xhr.responseText);
-            this.getFromJson(json,callback);
-        }.bind(this)
-        xhr.send(null);
+            this.getFromJson(json,callback,field);
+          }.bind(this)
+          xhr.send(null);
+        }
     }
 
-    getFromJson(json,callback) {
+    getFromJson(json,callback,field="ph_bs") {
         if (json.hasOwnProperty('@class')) {
             this.getFromPMGJson(json,callback);
         } else if (
+            field &&
             json.hasOwnProperty('data') &&
             Array.isArray(json['data']) &&
             json['data'].length === 1 &&
-            json['data'][0].hasOwnProperty('ph_bs')
+            json['data'][0].hasOwnProperty(field)
         ) {
-            this.getFromPMGJson(json['data'][0]['ph_bs'],callback);
+            this.getFromPMGJson(json['data'][0][field],callback);
         } else { this.getFromInternalJson(json,callback); }
     }
 

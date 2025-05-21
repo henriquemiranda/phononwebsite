@@ -14,7 +14,7 @@
 	var TrackballControls = function ( object, domElement ) {
 
 		var _this = this;
-		var STATE = { NONE: - 1, ROTATE: 0, ZOOM: 1, PAN: 2, TOUCH_ROTATE: 3, TOUCH_ZOOM_PAN: 4 };
+		var STATE = { NONE: -1, ROTATE: 0, ZOOM: 1, PAN: 2, TOUCH_ROTATE: 3, TOUCH_ZOOM_PAN: 4 };
 
 		this.object = object;
 		this.domElement = ( domElement !== undefined ) ? domElement : document;
@@ -641,7 +641,7 @@
 
 	// stats.js - http://github.com/mrdoob/stats.js
 	var Stats=function(){function f(a,e,b){a=document.createElement(a);a.id=e;a.style.cssText=b;return a}function l(a,e,b){var c=f("div",a,"padding:0 0 3px 3px;text-align:left;background:"+b),d=f("div",a+"Text","font-family:Helvetica,Arial,sans-serif;font-size:9px;font-weight:bold;line-height:15px;color:"+e);d.innerHTML=a.toUpperCase();c.appendChild(d);a=f("div",a+"Graph","width:74px;height:30px;background:"+e);c.appendChild(a);for(e=0;74>e;e++)a.appendChild(f("span","","width:1px;height:30px;float:left;opacity:0.9;background:"+
-	b));return c}function m(a){for(var b=c.children,d=0;d<b.length;d++)b[d].style.display=d===a?"block":"none";n=a;}function p(a,b){a.appendChild(a.firstChild).style.height=Math.min(30,30-30*b)+"px";}var q=self.performance&&self.performance.now?self.performance.now.bind(performance):Date.now,k=q(),r=k,t=0,n=0,c=f("div","stats","width:80px;opacity:0.9;cursor:pointer");c.addEventListener("mousedown",function(a){a.preventDefault();m(++n%c.children.length);},!1);var d=0,u=Infinity,v=0,b=l("fps","#0ff","#002"),
+	b));return c}function m(a){for(var b=c.children,d=0;d<b.length;d++)b[d].style.display=d===a?"block":"none";n=a;}function p(a,b){a.appendChild(a.firstChild).style.height=Math.min(30,30-30*b)+"px";}var q=self.performance&&self.performance.now?self.performance.now.bind(performance):Date.now,k=q(),r=k,t=0,n=0,c=f("div","stats","width:80px;opacity:0.9;cursor:pointer");c.addEventListener("mousedown",function(a){a.preventDefault();m(++n%c.children.length);},false);var d=0,u=Infinity,v=0,b=l("fps","#0ff","#002"),
 	A=b.children[0],B=b.children[1];c.appendChild(b);var g=0,w=Infinity,x=0,b=l("ms","#0f0","#020"),C=b.children[0],D=b.children[1];c.appendChild(b);if(self.performance&&self.performance.memory){var h=0,y=Infinity,z=0,b=l("mb","#f08","#201"),E=b.children[0],F=b.children[1];c.appendChild(b);}m(n);return {REVISION:14,domElement:c,setMode:m,begin:function(){k=q();},end:function(){var a=q();g=a-k;w=Math.min(w,g);x=Math.max(x,g);C.textContent=(g|0)+" MS ("+(w|0)+"-"+(x|0)+")";p(D,g/200);t++;if(a>r+1E3&&(d=Math.round(1E3*
 	t/(a-r)),u=Math.min(u,d),v=Math.max(v,d),A.textContent=d+" FPS ("+u+"-"+v+")",p(B,d/100),r=a,t=0,void 0!==h)){var b=performance.memory.usedJSHeapSize,c=performance.memory.jsHeapSizeLimit;h=Math.round(9.54E-7*b);y=Math.min(y,h);z=Math.max(z,h);E.textContent=h+" MB ("+y+"-"+z+")";p(F,b/c);}return a},update:function(){k=this.end();}}};"object"===typeof module&&(module.exports=Stats);
 
@@ -2213,21 +2213,37 @@
 	    getFromREST(url,apikey,callback) {
 
 	        let xhr = new XMLHttpRequest();
-	        xhr.open('GET', url, true);
-	        if (apikey) { xhr.setRequestHeader('x-api-key', apikey); }        xhr.onload = function () {
+	        console.log(url);
+	        let urld = decodeURIComponent(url);
+	        console.log(urld);
+	        let params = new URLSearchParams(urld.split("?")[1]);
+	        let field;
+	        if (params.has("_fields")) {
+	          field = params.get("_fields").split(",")[0];
+	        }
+	        console.log(field);
+	        if (field) {
+	          xhr.open('GET', urld, true);
+	          if (apikey) { xhr.setRequestHeader('x-api-key', apikey); }          xhr.onload = function () {
 	            let json = JSON.parse(xhr.responseText);
-	            this.getFromJson(json.response,callback);
-	        }.bind(this);
-	        xhr.send(null);
+	            this.getFromJson(json,callback,field);
+	          }.bind(this);
+	          xhr.send(null);
+	        }
 	    }
 
-	    getFromJson(json,callback) {
+	    getFromJson(json,callback,field="ph_bs") {
 	        if (json.hasOwnProperty('@class')) {
 	            this.getFromPMGJson(json,callback);
-	        }
-	        else {
-	            this.getFromInternalJson(json,callback);
-	        }
+	        } else if (
+	            field &&
+	            json.hasOwnProperty('data') &&
+	            Array.isArray(json['data']) &&
+	            json['data'].length === 1 &&
+	            json['data'][0].hasOwnProperty(field)
+	        ) {
+	            this.getFromPMGJson(json['data'][0][field],callback);
+	        } else { this.getFromInternalJson(json,callback); }
 	    }
 
 	    getFromInternalJson(data,callback) {
@@ -2324,8 +2340,8 @@
 
 	        let high_symmetry_points_car = red_car_list(high_symmetry_points_red,rlat);
 	        let highsym_qpts_index = {};
-	        for (let nq=0; nq<qpoints_car.length; nq++) {
-	            let result = point_in_list(qpoints_car[nq],high_symmetry_points_car);
+	        for (let nq=0; nq<qpoints_red.length; nq++) {
+	            let result = point_in_list(qpoints_red[nq],high_symmetry_points_car);
 	            if (result["found"]) {
 	                let label = high_symmetry_labels[result["index"]];
 	                highsym_qpts_index[nq] = label;
