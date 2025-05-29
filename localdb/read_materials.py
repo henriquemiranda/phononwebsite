@@ -9,7 +9,7 @@ import json
 
 root = "localdb"
 ana = 'anaddb.out_PHBST.nc'
-hexagonal = [(0,'\Gamma'),(21,'M'),(31,'K'),(51,'\Gamma')]
+hexagonal = [(0,'\Gamma'),(20,'M'),(30,'K'),(50,'\Gamma')]
 material_list = {
 "graphene":           [ AnaddbPhonon,     ana, hexagonal, [ 5, 5, 1], "Graphene"],
 #"tise2_bulk":		  [ QePhonon,     'tise2', hexagonal, [ 5, 5, 1], "Bulk TiSe2"],
