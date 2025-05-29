@@ -63,7 +63,13 @@ export class PhononJson {
           if (apikey) { xhr.setRequestHeader('x-api-key', apikey) };
           xhr.onload = function () {
             let json = JSON.parse(xhr.responseText);
-            this.getFromJson(json,callback,field);
+            if (xhr.status === 200) {
+                this.getFromJson(json,callback,field);
+            } else if (xhr.status === 401) {
+                alert("Materials Project API says:",json["message"]);
+            } else {
+                alert("Unknown error occurred:",xhr.status,json);
+            }
           }.bind(this)
           xhr.send(null);
         }

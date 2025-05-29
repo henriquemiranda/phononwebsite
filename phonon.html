@@ -60,12 +60,10 @@
 
                     <div>
                         <h3>Repetitions:</h3>
-                        <form>
-                            <input id="nx" value="3" type="number" name="quantity">
-                            <input id="ny" value="3" type="number" name="quantity">
-                            <input id="nz" value="3" type="number" name="quantity">
-                            <button id="update" type="button">update</button>
-                        </form>
+                        <input id="nx" value="3" type="number">
+                        <input id="ny" value="3" type="number">
+                        <input id="nz" value="3" type="number">
+                        <button id="update" type="button">update</button>
                     </div>
 
                     <div style="display: table;">
@@ -96,10 +94,8 @@
 
                     <div>
                         <h3>Amplitude:</h3>
-                        <form>
                         <input id="amplitude_range" type="range">
                         <input id="amplitude_box"   type="number">
-                        </form>
                     </div>
 
                     <div>
@@ -116,11 +112,16 @@
 
                     <div>
                         <h3>Covalent radii:</h3>
-                        <form>
                         <select id="covalent_radii_select"></select>
                         <input id="covalent_radii_input" type="number" min="0" step="0.01">
-						<button id="covalent_radii_button" type="button">update</button>
-						<button id="covalent_radii_reset_button" type="button">reset</button>
+                        <button id="covalent_radii_button" type="button">update</button>
+                        <button id="covalent_radii_reset_button" type="button">reset</button>
+                    </div>
+
+                    <div>
+                        <h3>Materials project API key:</h3>
+                        <input id="mp_api_key_input" type="text">
+                        <button id="mp_api_key_button" type="button">update</button>
                     </div>
 
                     <!--

@@ -46,6 +46,9 @@ export class PhononWebpage {
 
         //bind click event from highcharts with action
         dispersion.setClickEvent(this);
+
+        // set null materials project API key
+        this.mpapikey = null;
     }
 
     //functions to link the DOM buttons with this class
@@ -90,6 +93,26 @@ export class PhononWebpage {
         */
         dom_input.change( this.loadCustomFile.bind(this) );
         dom_input.click( function() { this.value = '';} );
+    }
+
+    setMaterialsProjectAPIKey(dom_input, dom_button) {
+        let self = this;
+
+        // Handle button click
+        dom_button.click(function () {
+            console.log('click');
+            self.mpapikey = dom_input[0].value;
+            self.updateMenu();
+        });
+
+        // Handle Enter key press
+        dom_input.keypress(function (event) {
+            if (event.keyCode === 13) { // Check if Enter key is pressed
+                console.log('enter');
+                self.mpapikey = dom_input[0].value;
+                //self.updateMenu();
+            }
+        });
     }
 
     loadCustomFile(event) {
@@ -443,6 +466,7 @@ export class PhononWebpage {
                         let url_vars = {};
                         url_vars[m.type] = m.url;
                         url_vars.name = name_ref;
+                        url_vars.apikey = m.apikey;
                         if ("link" in m) { url_vars.link = m.link }
                         self.loadURL(url_vars);
                     };
@@ -475,6 +499,15 @@ export class PhononWebpage {
         source = new ContribDB();
         source.get_materials(addMaterials);
 
+        //materials project database
+        source = new MaterialsProjectDB(self.mpapikey);
+        //get materials but only if the api key is valid
+        let callback = function() {
+                     //TODO change something in the interface to know that the API key is valid
+                     source.get_materials(addMaterials);
+                   }.bind(this)
+        source.isAPIKeyValid(self.mpapikey,callback);
+
         /*
         //phonondb2015 database
         for (let sourceclass of [PhononDB2015, LocalPhononDB2015 ]) {
@@ -492,16 +525,16 @@ export class PhononWebpage {
                 source.get_materials(addMaterials);
                 break;
             }
-        }*/
+        }
 
         //mp databse
         for (let sourceclass of [MaterialsProjectDB, LocalMaterialsProjectDB ]) {
-            source = new sourceclass;
+            source = new sourceclass(self.mpapikey);
             if (source.isAvailable()) {
                 source.get_materials(addMaterials);
                 break;
             }
-        }
+        }*/
 
     }
 

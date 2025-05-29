@@ -4,12 +4,32 @@ export class MaterialsProjectDB {
     Hosted on Github
     */
 
-    constructor() {
+    constructor(apikey) {
         this.name = "mpdb";
         this.year = 2017;
         this.author = "G. Petretto et al.";
         this.url = "";
-        this.apikey = "fAGQ0aT2TsXeidxU";
+        this.apikey = apikey;
+    }
+
+    isAPIKeyValid(apikey,callback) {
+        if (typeof apikey != 'string') {
+            return false
+        }
+        if (apikey.length != 32) {
+            return false
+        }
+        // now we make a simple request and check if APIkey is valid
+        let xhr = new XMLHttpRequest();
+        let url = "https://api.materialsproject.org/materials/phonon/?material_ids=mp-149&_fields=material_id"
+        xhr.open('GET', url, true);
+        xhr.setRequestHeader('x-api-key', apikey);
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                callback();
+            }
+        }.bind(this)
+        xhr.send(null);
     }
 
     isAvailable() {
@@ -32,7 +52,7 @@ export class MaterialsProjectDB {
                 m.source = name;
                 m.type = "rest";
                 m.reference = reference;
-                m.url = "https://materialsproject.org/rest/v2/materials/mp-"+m.id+"/phononbs?web=true";
+                m.url = "https://api.materialsproject.org/materials/phonon/?material_ids=mp-"+m.id+"&_fields=ph_bs";
                 m.name = m.name;
                 m.link = "https://materialsproject.org/materials/mp-"+m.id;
                 m.apikey = apikey;

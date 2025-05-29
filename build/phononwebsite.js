@@ -14,7 +14,7 @@
 	var TrackballControls = function ( object, domElement ) {
 
 		var _this = this;
-		var STATE = { NONE: -1, ROTATE: 0, ZOOM: 1, PAN: 2, TOUCH_ROTATE: 3, TOUCH_ZOOM_PAN: 4 };
+		var STATE = { NONE: - 1, ROTATE: 0, ZOOM: 1, PAN: 2, TOUCH_ROTATE: 3, TOUCH_ZOOM_PAN: 4 };
 
 		this.object = object;
 		this.domElement = ( domElement !== undefined ) ? domElement : document;
@@ -641,7 +641,7 @@
 
 	// stats.js - http://github.com/mrdoob/stats.js
 	var Stats=function(){function f(a,e,b){a=document.createElement(a);a.id=e;a.style.cssText=b;return a}function l(a,e,b){var c=f("div",a,"padding:0 0 3px 3px;text-align:left;background:"+b),d=f("div",a+"Text","font-family:Helvetica,Arial,sans-serif;font-size:9px;font-weight:bold;line-height:15px;color:"+e);d.innerHTML=a.toUpperCase();c.appendChild(d);a=f("div",a+"Graph","width:74px;height:30px;background:"+e);c.appendChild(a);for(e=0;74>e;e++)a.appendChild(f("span","","width:1px;height:30px;float:left;opacity:0.9;background:"+
-	b));return c}function m(a){for(var b=c.children,d=0;d<b.length;d++)b[d].style.display=d===a?"block":"none";n=a;}function p(a,b){a.appendChild(a.firstChild).style.height=Math.min(30,30-30*b)+"px";}var q=self.performance&&self.performance.now?self.performance.now.bind(performance):Date.now,k=q(),r=k,t=0,n=0,c=f("div","stats","width:80px;opacity:0.9;cursor:pointer");c.addEventListener("mousedown",function(a){a.preventDefault();m(++n%c.children.length);},false);var d=0,u=Infinity,v=0,b=l("fps","#0ff","#002"),
+	b));return c}function m(a){for(var b=c.children,d=0;d<b.length;d++)b[d].style.display=d===a?"block":"none";n=a;}function p(a,b){a.appendChild(a.firstChild).style.height=Math.min(30,30-30*b)+"px";}var q=self.performance&&self.performance.now?self.performance.now.bind(performance):Date.now,k=q(),r=k,t=0,n=0,c=f("div","stats","width:80px;opacity:0.9;cursor:pointer");c.addEventListener("mousedown",function(a){a.preventDefault();m(++n%c.children.length);},!1);var d=0,u=Infinity,v=0,b=l("fps","#0ff","#002"),
 	A=b.children[0],B=b.children[1];c.appendChild(b);var g=0,w=Infinity,x=0,b=l("ms","#0f0","#020"),C=b.children[0],D=b.children[1];c.appendChild(b);if(self.performance&&self.performance.memory){var h=0,y=Infinity,z=0,b=l("mb","#f08","#201"),E=b.children[0],F=b.children[1];c.appendChild(b);}m(n);return {REVISION:14,domElement:c,setMode:m,begin:function(){k=q();},end:function(){var a=q();g=a-k;w=Math.min(w,g);x=Math.max(x,g);C.textContent=(g|0)+" MS ("+(w|0)+"-"+(x|0)+")";p(D,g/200);t++;if(a>r+1E3&&(d=Math.round(1E3*
 	t/(a-r)),u=Math.min(u,d),v=Math.max(v,d),A.textContent=d+" FPS ("+u+"-"+v+")",p(B,d/100),r=a,t=0,void 0!==h)){var b=performance.memory.usedJSHeapSize,c=performance.memory.jsHeapSizeLimit;h=Math.round(9.54E-7*b);y=Math.min(y,h);z=Math.max(z,h);E.textContent=h+" MB ("+y+"-"+z+")";p(F,b/c);}return a},update:function(){k=this.end();}}};"object"===typeof module&&(module.exports=Stats);
 
@@ -2083,16 +2083,36 @@
 	    Hosted on Github
 	    */
 
-	    constructor() {
+	    constructor(apikey) {
 	        this.name = "mpdb";
 	        this.year = 2017;
 	        this.author = "G. Petretto et al.";
 	        this.url = "";
-	        this.apikey = "fAGQ0aT2TsXeidxU";
+	        this.apikey = apikey;
+	    }
+
+	    isAPIKeyValid(apikey,callback) {
+	        if (typeof apikey != 'string') {
+	            return false
+	        }
+	        if (apikey.length != 32) {
+	            return false
+	        }
+	        // now we make a simple request and check if APIkey is valid
+	        let xhr = new XMLHttpRequest();
+	        let url = "https://api.materialsproject.org/materials/phonon/?material_ids=mp-149&_fields=material_id";
+	        xhr.open('GET', url, true);
+	        xhr.setRequestHeader('x-api-key', apikey);
+	        xhr.onload = function () {
+	            if (xhr.status === 200) {
+	                callback();
+	            }
+	        }.bind(this);
+	        xhr.send(null);
 	    }
 
 	    isAvailable() {
-	        return false;
+	        return false
 	    }
 
 	    get_materials(callback) {
@@ -2111,7 +2131,7 @@
 	                m.source = name;
 	                m.type = "rest";
 	                m.reference = reference;
-	                m.url = "https://materialsproject.org/rest/v2/materials/mp-"+m.id+"/phononbs?web=true";
+	                m.url = "https://api.materialsproject.org/materials/phonon/?material_ids=mp-"+m.id+"&_fields=ph_bs";
 	                m.name = m.name;
 	                m.link = "https://materialsproject.org/materials/mp-"+m.id;
 	                m.apikey = apikey;
@@ -2120,51 +2140,6 @@
 	        }
 
 	        $.get('mpdb/models.json', dothings);
-	    }
-
-	}
-
-	class LocalMaterialsProjectDB {
-	    /*
-	    Interact with the local database of phonons
-	    Hosted on Github
-	    */
-
-	    constructor() {
-	        this.name = "mpdb";
-	        this.year = 2017;
-	        this.author = "G. Petretto et al.";
-	        this.url = "";
-	        this.list = 'localmpdb/models.json';
-	    }
-
-	    isAvailable() {
-	        return false;
-	    }
-
-	    get_materials(callback) {
-	        /*
-	        this function load the materials from a certain source and returns then to the callback
-	        Some pre-processing of the data might be required and can be implemented here
-	        */
-	        let reference = this.author+", "+"<a href="+this.url+">"+this.name+"</a> ("+this.year+")";
-	        let name = this.name;
-
-	        function dothings(materials) {
-
-	            for (let i=0; i<materials.length; i++) {
-	                let m = materials[i];
-	                m.source = name;
-	                m.type = "json";
-	                m.reference = reference;
-	                m.url = "localmpdb/mp-"+m.id+".json";
-	                m.name = m.name;
-	                m.link = "https://materialsproject.org/materials/mp-"+m.id;
-	            }
-	            callback(materials);
-	        }
-
-	        $.get(this.list, dothings);
 	    }
 
 	}
@@ -2226,7 +2201,13 @@
 	          xhr.open('GET', urld, true);
 	          if (apikey) { xhr.setRequestHeader('x-api-key', apikey); }          xhr.onload = function () {
 	            let json = JSON.parse(xhr.responseText);
-	            this.getFromJson(json,callback,field);
+	            if (xhr.status === 200) {
+	                this.getFromJson(json,callback,field);
+	            } else if (xhr.status === 401) {
+	                alert("Materials Project API says:",json["message"]);
+	            } else {
+	                alert("Unknown error occurred:",xhr.status,json);
+	            }
 	          }.bind(this);
 	          xhr.send(null);
 	        }
@@ -2865,6 +2846,9 @@
 
 	        //bind click event from highcharts with action
 	        dispersion.setClickEvent(this);
+
+	        // set null materials project API key
+	        this.mpapikey = null;
 	    }
 
 	    //functions to link the DOM buttons with this class
@@ -2909,6 +2893,26 @@
 	        */
 	        dom_input.change( this.loadCustomFile.bind(this) );
 	        dom_input.click( function() { this.value = '';} );
+	    }
+
+	    setMaterialsProjectAPIKey(dom_input, dom_button) {
+	        let self = this;
+
+	        // Handle button click
+	        dom_button.click(function () {
+	            console.log('click');
+	            self.mpapikey = dom_input[0].value;
+	            self.updateMenu();
+	        });
+
+	        // Handle Enter key press
+	        dom_input.keypress(function (event) {
+	            if (event.keyCode === 13) { // Check if Enter key is pressed
+	                console.log('enter');
+	                self.mpapikey = dom_input[0].value;
+	                //self.updateMenu();
+	            }
+	        });
 	    }
 
 	    loadCustomFile(event) {
@@ -3260,6 +3264,7 @@
 	                        let url_vars = {};
 	                        url_vars[m.type] = m.url;
 	                        url_vars.name = name_ref;
+	                        url_vars.apikey = m.apikey;
 	                        if ("link" in m) { url_vars.link = m.link; }
 	                        self.loadURL(url_vars);
 	                    };
@@ -3292,6 +3297,15 @@
 	        source = new ContribDB();
 	        source.get_materials(addMaterials);
 
+	        //materials project database
+	        source = new MaterialsProjectDB(self.mpapikey);
+	        //get materials but only if the api key is valid
+	        let callback = function() {
+	                     //TODO change something in the interface to know that the API key is valid
+	                     source.get_materials(addMaterials);
+	                   }.bind(this);
+	        source.isAPIKeyValid(self.mpapikey,callback);
+
 	        /*
 	        //phonondb2015 database
 	        for (let sourceclass of [PhononDB2015, LocalPhononDB2015 ]) {
@@ -3309,16 +3323,16 @@
 	                source.get_materials(addMaterials);
 	                break;
 	            }
-	        }*/
+	        }
 
 	        //mp databse
 	        for (let sourceclass of [MaterialsProjectDB, LocalMaterialsProjectDB ]) {
-	            source = new sourceclass;
+	            source = new sourceclass(self.mpapikey);
 	            if (source.isAvailable()) {
 	                source.get_materials(addMaterials);
 	                break;
 	            }
-	        }
+	        }*/
 
 	    }
 
