@@ -2819,7 +2819,9 @@
 	    let string = "";
 	    for (let a of old_string) {
 	        if (!isNaN(a)) {
-	            string += "<sub>"+a+"</sub>";
+	            if (a!=1) {
+	                string += "<sub>"+a+"</sub>";
+	            }
 	        }
 	        else {
 	            string += a;
