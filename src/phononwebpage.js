@@ -100,7 +100,6 @@ export class PhononWebpage {
 
         // Handle button click
         dom_button.click(function () {
-            console.log('click');
             self.mpapikey = dom_input[0].value;
             self.updateMenu();
         });
@@ -108,7 +107,6 @@ export class PhononWebpage {
         // Handle Enter key press
         dom_input.keypress(function (event) {
             if (event.keyCode === 13) { // Check if Enter key is pressed
-                console.log('enter');
                 self.mpapikey = dom_input[0].value;
                 //self.updateMenu();
             }

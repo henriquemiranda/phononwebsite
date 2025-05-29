@@ -2101,12 +2101,15 @@ class MaterialsProjectDB {
             if (xhr.status === 200) {
                 callback();
             }
+            else {
+                console.log(apikey,xhr.status);
+            }
         }.bind(this);
         xhr.send(null);
     }
 
     isAvailable() {
-        return false
+        return false;
     }
 
     get_materials(callback) {
@@ -2894,7 +2897,6 @@ class PhononWebpage {
 
         // Handle button click
         dom_button.click(function () {
-            console.log('click');
             self.mpapikey = dom_input[0].value;
             self.updateMenu();
         });
@@ -2902,7 +2904,6 @@ class PhononWebpage {
         // Handle Enter key press
         dom_input.keypress(function (event) {
             if (event.keyCode === 13) { // Check if Enter key is pressed
-                console.log('enter');
                 self.mpapikey = dom_input[0].value;
                 //self.updateMenu();
             }

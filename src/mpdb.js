@@ -28,6 +28,9 @@ export class MaterialsProjectDB {
             if (xhr.status === 200) {
                 callback();
             }
+            else {
+                console.log(apikey,xhr.status);
+            }
         }.bind(this)
         xhr.send(null);
     }
