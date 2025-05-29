@@ -3019,6 +3019,7 @@
 	        /*
 	        Fuunction to be called once the file is loaded
 	        */
+	        this.name = this.phonon.name;
 	        this.setRepetitions(this.phonon.repetitions);
 	        this.update();
 	    }
