@@ -15,5 +15,3 @@ class JsonEncoder(json.JSONEncoder):
             else:
                 return obj.tolist()
         return(json.JSONEncoder.default(self, obj))
-
-

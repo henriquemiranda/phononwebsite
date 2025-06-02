@@ -7,7 +7,7 @@
 import os
 import re
 from math import sqrt
-from .lattice import *
+from phononweb.lattice import *
 
 class PwIn():
     """

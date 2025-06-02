@@ -6,8 +6,9 @@
 """ Read phonon dispersion from quantum espresso """
 from math import pi
 import numpy as np
-from .pw import *
-from .phononweb import Phonon, bohr_angstroem, atomic_numbers
+from phononweb.pw import *
+from phononweb.phonon import Phonon
+from phononweb.units import bohr_angstroem, atomic_numbers
 
 class QePhonon(Phonon):
     """

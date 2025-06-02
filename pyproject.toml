@@ -1,9 +1,27 @@
 [build-system]
-requires = ["setuptools"]
+requires = ["setuptools","numpy"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "phononwebsite"
-version = "0.1"
-authors = [{name = "Henrique Miranda", email = "miranda.henrique@gmail.com"}]
-description = "Read abinit and quantum espresso phonon dispersions to visualize on the phonon website."
+version = "0.2"
+description = "Read Abinit, Quantum Espresso, Phonopy and VASP phonon dispersions to visualize on the phonon website."
+authors = [
+    { name="Henrique Miranda", email="miranda.henrique@gmail.com" }
+]
+readme = ""
+requires-python = ">=3.7"
+dependencies = []
+
+[project.scripts]
+read_qe_phonon = "phononweb.scripts.read_qe_phonon:main"
+read_anaddb_phonon = "phononweb.scripts.read_anaddb_phonon:main"
+read_vasp_phonon = "phononweb.scripts.read_vasp_phonon:main"
+phononwebsite = "phononweb.scripts.phononwebsite:main"
+
+[project.urls]
+"Homepage" = "https://henriquemiranda.github.io/phononwebsite/"
+"Bug Tracker" = "https://github.com/henriquemiranda/phononwebsite/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]

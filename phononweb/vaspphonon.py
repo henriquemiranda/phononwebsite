@@ -3,11 +3,11 @@
 #
 # This file is part of the phononwebsite project
 #
-""" Read phonon dispersion from quantum espresso """
+""" Read phonon dispersion from VASP """
 from math import pi
 import numpy as np
 from phononweb import Phonon, bohr_angstroem, atomic_numbers
-from .lattice import *
+from phononweb.lattice import *
 
 class VaspPhonon(Phonon):
     """

@@ -9,8 +9,7 @@ import argparse
 import sys
 from phononweb.anaddbphonon import *
 
-if __name__ == "__main__":
-   
+def main():
     parser = argparse.ArgumentParser(description='Read anaddb netCDF file and write a .json file to use in the phononwebsite')
     parser.add_argument('filename',         help='netCDF filename')
     parser.add_argument('name',             help='name of the material')
@@ -37,3 +36,7 @@ if __name__ == "__main__":
     else:
         q.write_json()
         q.open_json()
+
+if __name__ == "__main__":
+    main()
+    

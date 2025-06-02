@@ -7,8 +7,8 @@
 import os
 from math import sqrt
 import numpy as np
-from .phononweb import Phonon
-from .units import *
+from phononweb.phonon import Phonon
+from phononweb.units import *
 
 class AnaddbPhonon(Phonon):
     """
