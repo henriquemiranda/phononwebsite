@@ -165,6 +165,7 @@ export class PhononJson {
 
         //dispersion
         let qpoints_red = data['qpoints'];
+        let qpoints_car = utils.red_car_list(qpoints_red,rlat);
         this.kpoints = qpoints_red;
 
         /*
@@ -183,8 +184,8 @@ export class PhononJson {
 
         let high_symmetry_points_car = utils.red_car_list(high_symmetry_points_red,rlat);
         let highsym_qpts_index = {}
-        for (let nq=0; nq<qpoints_red.length; nq++) {
-            let result = utils.point_in_list(qpoints_red[nq],high_symmetry_points_car);
+        for (let nq=0; nq<qpoints_car.length; nq++) {
+            let result = utils.point_in_list(qpoints_car[nq],high_symmetry_points_car);
             if (result["found"]) {
                 let label = high_symmetry_labels[result["index"]]
                 highsym_qpts_index[nq] = label;

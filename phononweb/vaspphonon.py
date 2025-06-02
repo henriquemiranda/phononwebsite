@@ -4,7 +4,6 @@
 # This file is part of the phononwebsite project
 #
 """ Read phonon dispersion from VASP """
-from math import pi
 import numpy as np
 from phononweb import Phonon, bohr_angstroem, atomic_numbers
 from phononweb.lattice import *
