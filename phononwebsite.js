@@ -3347,4 +3347,6 @@
 	exports.PhononWebpage = PhononWebpage;
 	exports.VibCrystal = VibCrystal;
 
+	Object.defineProperty(exports, '__esModule', { value: true });
+
 }));

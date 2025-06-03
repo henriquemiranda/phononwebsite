@@ -1,5 +1,0 @@
- &input
-   fildyn = 'gr.dyn',
-     zasr = 'simple',
-    flfrc = 'gr.fc'
- /
