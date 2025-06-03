@@ -1,16 +1,16 @@
 requirejs.config({
     baseURL: 'src',
     paths: {
-        'jquery': '../libs/jquery.min',
-        'threejs': '../libs/three.min',
-        'highcharts': '../libs/highcharts.min',
-        'complex': '../libs/complex.min',
-        'jsyamlwrapper': '../libs/jsyaml_amd_wrapper',
-        'jsyaml': '../libs/js-yaml.min',
-        'detector': '../libs/Detector',
-        'ccapture': '../libs/CCapture',
-        'gif': '../libs/gif',
-        'whammy': '../libs/Whammy'
+        'jquery': 'libs/jquery.min',
+        'threejs': 'libs/three.min',
+        'highcharts': 'libs/highcharts.min',
+        'complex': 'libs/complex.min',
+        'jsyamlwrapper': 'libs/jsyaml_amd_wrapper',
+        'jsyaml': 'libs/js-yaml.min',
+        'detector': 'libs/Detector',
+        'ccapture': 'libs/CCapture',
+        'gif': 'libs/gif',
+        'whammy': 'libs/Whammy'
     },
     shim: {
         'jquery': {

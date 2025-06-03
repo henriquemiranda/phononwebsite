@@ -18,14 +18,15 @@ jobs:
           node-version: '20' # Or your preferred Node.js version
 
       - name: Install dependencies
-        run: npm install # Or yarn install
+        run: npm install
 
       - name: Build with Rollup
         run: npm run build
 
       - name: Copy extra files
         run: |
-          cp -r index.html src/main.js phonon.html css libs contribdb localdb build/
+          cp index.html src/main.js phonon.html build/
+          cp -r figures css libs contribdb localdb build/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
