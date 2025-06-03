@@ -21,7 +21,11 @@ jobs:
         run: npm install # Or yarn install
 
       - name: Build with Rollup
-        run: npm run build # Assuming you have a 'build' script in your package.json that runs rollup
+        run: npm run build
+
+      - name: Copy extra files
+        run: |
+          cp -r index.html src/main.js phonon.html css libs contribdb localdb build/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
