@@ -1,6 +1,6 @@
 {
   "name": "phononwebsite",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Javascript web app to visualise lattice vibrations",
   "main": "build/phononwebsite.js",
   "directories": {
@@ -11,12 +11,13 @@
     "assert": "^1.4.1"
   },
   "devDependencies": {
-    "chai": "^4.1.2",
-    "mocha": "^5.0.0",
+    "chai": "^5.2.0",
+    "mocha": "^11.5.0",
     "rollup": "^2.79.0"
   },
   "scripts": {
     "test": "mocha",
+    "copy": "cp -r figures css libs contribdb localdb mpdb README.md index.html src/main.js phonon.html build/",
     "build": "rollup -c",
     "build-uglify": "rollup -c && uglifyjs build/phononwebsite.js -cm > build/phononwebsite.min.js"
   },

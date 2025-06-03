@@ -24,9 +24,7 @@ jobs:
         run: npm run build
 
       - name: Copy extra files
-        run: |
-          cp README.md index.html src/main.js phonon.html build/
-          cp -r figures css libs contribdb localdb mpdb build/
+        run: npm run copy
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
