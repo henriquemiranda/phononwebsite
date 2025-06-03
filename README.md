@@ -67,7 +67,7 @@ You can then select the resulting `.json` file with the `Choose files` button.
 VASP
 ----------
 To read a VASP calculation you need the `vaspout.h5` file containing a phonon dispersion calculation.
-You can find the instructions of how to compute the phonon dispersion from a supercell calculation in the [VASP wiki](https://www.vasp.at/wiki/index.php/Computing_the_phonon_dispersion)
+You can find the instructions of how to compute the phonon dispersion from a supercell calculation in the [VASP wiki](https://www.vasp.at/wiki/index.php/Computing_the_phonon_dispersion_and_DOS)
 
     $ read_vasp_phonon.py vaspout.h5 <name_of_your_material>
 
