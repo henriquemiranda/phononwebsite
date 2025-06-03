@@ -25,7 +25,7 @@ jobs:
 
       - name: Copy extra files
         run: |
-          cp index.html src/main.js phonon.html build/
+          cp README.md index.html src/main.js phonon.html build/
           cp -r figures css libs contribdb localdb build/
 
       - name: Deploy to GitHub Pages
