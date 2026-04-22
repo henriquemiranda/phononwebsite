@@ -644,25 +644,25 @@ export class PhononWebpage {
     plotRaman() {
         if (!this.phonon || !this.phonon.raman_intensities) return;
         window.app = this; 
-    
+        
         const phononContainer = document.getElementById('highcharts');
         if (phononContainer) phononContainer.style.display = 'none';
-    
+        
         const ramanContainer = document.getElementById('raman-spectrum');
         if (ramanContainer) ramanContainer.style.display = 'block';
-    
+        
         let self = this;
         let gamma_idx = this.phonon.gamma_index || 0;
         let frequencies = this.phonon.eigenvalues[gamma_idx];
         let intensities = this.phonon.raman_intensities;
-    
+        
         let gamma = 2.0;
         let maxFreq = Math.max(...frequencies) + 50;
-    
+        
         let continuousData = [];
         let stickData = [];  
         let allModes = [];   
-    
+        
         for (let i = 0; i < frequencies.length; i++) {
             let I_at_peak = 0;
             for (let j = 0; j < frequencies.length; j++) {
@@ -671,21 +671,21 @@ export class PhononWebpage {
                     I_at_peak += intensities[j] * ((gamma * gamma) / (dw * dw + gamma * gamma));
                 }
             }
-    
+        
             let isActive = intensities[i] > 0;
-    
+        
             allModes.push({ 
                 x: frequencies[i], 
                 y: I_at_peak, 
                 modeIndex: i, 
                 active: isActive 
             });
-    
+        
             if (isActive) {
                 stickData.push({ x: frequencies[i], y: I_at_peak, modeIndex: i });
             }
         }
-    
+        
         for (let w = 0; w < maxFreq; w += 1) {
             let I_total = 0;
             for (let i = 0; i < frequencies.length; i++) {
@@ -696,11 +696,11 @@ export class PhononWebpage {
             }
             continuousData.push([w, I_total]);
         }
-    
+        
         if (typeof Highcharts !== 'undefined') {
             let existingChart = Highcharts.charts.find(c => c && c.renderTo && c.renderTo.id === 'raman-spectrum');
             if (existingChart) existingChart.destroy();
-    
+        
             Highcharts.chart('raman-spectrum', {
                 title: { text: 'Raman Spectrum: BaZrS₃' },
                 xAxis: { title: { text: 'Frequency (cm⁻¹)' } },
@@ -731,44 +731,44 @@ export class PhononWebpage {
                 ]
             });
         }
-    
+        
         const maxI = Math.max(...allModes.filter(m => m.active).map(d => d.y));
-    
-        let existingTable = document.getElementById('raman-table');
-        if (existingTable) existingTable.remove();
-    
+        let existingContainer = document.getElementById('raman-table-container');
+        if (existingContainer) existingContainer.remove();
         let tableHTML = `
-            <table id="raman-table" style="width:100%; border-collapse:collapse; margin-top:16px; font-size:14px; font-family:sans-serif;">
-                <thead>
-                    <tr style="background:#2c3e50; color:white;">
-                        <th style="padding:10px; text-align:center;">Mode #</th>
-                        <th style="padding:10px; text-align:center;">Frequency (cm⁻¹)</th>
-                        <th style="padding:10px; text-align:center;">Intensity (norm.)</th>
-                        <th style="padding:10px; text-align:center;">Raman Active</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${allModes
-                        .sort((a, b) => a.x - b.x)
-                        .map((d, i) => `
-                            <tr style="border-bottom: 1px solid #eee; background:${d.active ? '#fff3f3' : (i % 2 === 0 ? '#f9f9f9' : 'white')};">
-                                <td style="padding:8px; text-align:center;">${d.modeIndex + 1}</td>
-                                
-                                <td style="padding:8px; text-align:center;">
-                                    <span style="color:#3498db; text-decoration:underline; cursor:pointer; font-weight:bold;"
-                                          onclick="window.app.selectModeByBandIndex(${gamma_idx}, ${d.modeIndex})"
-                                          title="Visualize this phonon mode">
-                                        ${d.x.toFixed(2)}
-                                    </span>
-                                </td>
-    
-                                <td style="padding:8px; text-align:center;">${d.active ? (d.y / maxI).toFixed(4) : '—'}</td>
-                                <td style="padding:8px; text-align:center; color:#e74c3c;">${d.active ? '<b>✓</b>' : ''}</td>
-                            </tr>`)
-                        .join('')}
-                </tbody>
-            </table>`;
-    
+            <div id="raman-table-container" style="max-height: 400px; overflow-y: auto; margin-top: 16px; border: 1px solid #ccc;">
+                <table id="raman-table" style="width:100%; border-collapse:collapse; font-size:14px; font-family:sans-serif;">
+                    <thead style="position: sticky; top: 0; z-index: 10;">
+                        <tr style="background:#2c3e50; color:white;">
+                            <th style="padding:10px; text-align:center; background:#2c3e50;">Mode #</th>
+                            <th style="padding:10px; text-align:center; background:#2c3e50;">Frequency (cm⁻¹)</th>
+                            <th style="padding:10px; text-align:center; background:#2c3e50;">Intensity (norm.)</th>
+                            <th style="padding:10px; text-align:center; background:#2c3e50;">Raman Active</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${allModes
+                            .sort((a, b) => a.x - b.x)
+                            .map((d, i) => `
+                                <tr style="border-bottom: 1px solid #eee; background:${d.active ? '#fff3f3' : (i % 2 === 0 ? '#f9f9f9' : 'white')};">
+                                    <td style="padding:8px; text-align:center;">${d.modeIndex + 1}</td>
+                                    
+                                    <td style="padding:8px; text-align:center;">
+                                        <span style="color:#3498db; text-decoration:underline; cursor:pointer; font-weight:bold;"
+                                              onclick="window.app.selectModeByBandIndex(${gamma_idx}, ${d.modeIndex})"
+                                              title="Visualize this phonon mode">
+                                            ${d.x.toFixed(2)}
+                                        </span>
+                                    </td>
+                                    
+                                    <td style="padding:8px; text-align:center;">${d.active ? (d.y / maxI).toFixed(4) : '—'}</td>
+                                    <td style="padding:8px; text-align:center; color:#e74c3c;">${d.active ? '<b>✓</b>' : ''}</td>
+                                </tr>`)
+                            .join('')}
+                    </tbody>
+                </table>
+            </div>`;
+        
         const flexHighcharts = document.querySelector('.flex-highcharts');
         if (flexHighcharts) {
             flexHighcharts.insertAdjacentHTML('beforeend', tableHTML);
