@@ -17,6 +17,7 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" type="text/css" href="css/style.css">
 
+    <!-- Alloy-page layout overrides — does not affect any other page -->
     <style>
         .flex-container {
             -webkit-flex-flow: row nowrap;
@@ -47,6 +48,63 @@
             height: 100%;
             width: 100%;
         }
+
+        .material-panel {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+        .material-panel h3 {
+            margin: 0 0 6px 0;
+        }
+        .mat-filter {
+            width: 100%;
+            font-size: 12px;
+            padding: 3px;
+            margin-bottom: 4px;
+            box-sizing: border-box;
+        }
+        .mat-list-container {
+            height: 150px; 
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            background: #fff;
+            margin-bottom: 4px;
+        }
+        
+        #compare-panel {
+            margin-top: 10px;
+            padding: 8px 0 4px 0;
+            border-top: 1px solid #ddd;
+        }
+        #compare-clear {
+            display: none;
+            font-size: 11px;
+            padding: 2px 8px;
+            cursor: pointer;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            align-self: flex-start;
+        }
+        #compare-clear:hover {
+            background: #c0392b;
+        }
+        #compare-legend {
+            margin-top: 4px;
+            font-size: 11px;
+            color: #555;
+        }
+        .compare-swatch {
+            display: inline-block;
+            width: 24px;
+            height: 3px;
+            background: #e67e22;
+            border-top: 2px dashed #e67e22;
+            vertical-align: middle;
+            margin-right: 4px;
+        }
     </style>
 
     <script src="alloy.min.js" type="module"></script>
@@ -66,10 +124,27 @@
             <div class="flex-menu">
                 <div id="menu">
                 <div id="material-list">
-                    <h3>Materials:</h3>
-                    <input id="materials_filter" type="text" placeholder="Filter materials or elements, e.g. Be C">
-                    <ul id="mat"></ul>
-                    <ul id="ref"></ul>
+                    <div class="material-panel">
+                        <h3>Material 1:</h3>
+                        <input id="materials_filter" class="mat-filter" type="text" placeholder="Filter materials or elements, e.g. Be C">
+                        <div class="mat-list-container">
+                            <ul id="mat"></ul>
+                            <ul id="ref"></ul>
+                        </div>
+                    </div>
+
+                    <div id="compare-panel" class="material-panel">
+                        <h3>Material 2:</h3>
+                        <input id="compare_filter" class="mat-filter" type="text" placeholder="Filter materials or elements, e.g. Be C">
+                        
+                        <select id="compare-select" class="mat-list-container" size="6" style="width: 100%; border: 1px solid #ddd; outline: none; padding: 2px; box-sizing: border-box;">
+                        </select>
+                        
+                        <button id="compare-clear" type="button" style="margin-top: 4px;">✕ clear</button>
+                        <div id="compare-legend">
+                            <span class="compare-swatch"></span>orange dashed = comparison
+                        </div>
+                    </div>
                 </div>
 
                 <div id="options-list">
