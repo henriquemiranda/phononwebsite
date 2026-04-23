@@ -1,18 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>TSS Physics - Visualization of phonons</title>
-<!-- META TAGS about the Website-->
+    <title>Alloy Phonon Visualizer</title>
     <meta name="author" content="Henrique Miranda, Raoul Weber">
     <meta name="copyright" content="2014 Theoretical Solid-State Physics Group of University of Luxembourg">
     <meta http-equiv="content-language" content="text/html; charset=utf-8; en">
-    <meta name="title" content="Theoretical Solid-State Physics: Phonon visualizations">
-    <meta name="description" content="Interactive website for the visualization of phonons (lattice vibrations).">
-    <meta name="keywords" content="University of Luxembourg, theoretical
-        solid-state physics, phonons, lattice vibrations, visualization of phonons, phonon dispersion">
-
-<!-- META TAGS start Jmol animation -->
-    <meta name="Title" content="Phonon animation">
+    <meta name="title" content="Alloy Phonon Visualizations">
+    <meta name="description" content="Interactive visualization of phonons for custom alloy structures.">
+    <meta name="keywords" content="phonons, lattice vibrations, alloys, visualization">
+    <meta name="Title" content="Alloy Phonon Animation">
     <meta name="Format" content="text/html">
     <meta name="Language" content="en">
     <meta charset="utf-8">
@@ -20,24 +16,64 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <script src="build/main.min.js" type="module"></script>
 
+    <style>
+        .flex-container {
+            -webkit-flex-flow: row nowrap;
+            flex-flow: row nowrap;
+            align-items: stretch;
+            height: calc(100vh - 80px);
+        }
+        .flex-menu {
+            width: auto;
+            min-width: 200px;
+            max-width: 260px;
+            flex: 1 1 220px;
+            overflow-y: auto;
+        }
+        .flex-vibcrystal {
+            width: auto;
+            flex: 2 1 0;
+            min-height: 500px;
+            position: relative;
+        }
+        .flex-highcharts {
+            width: auto;
+            flex: 2 1 0;
+            overflow-y: auto;
+        }
+        #vibcrystal {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+
+    <script src="alloy.min.js" type="module"></script>
 </head>
 
 <body>
     <div class="container">
-        <div class="material-name"><h1 id="name" hidden=true>Material</h1></div>
+        <ul class="navigation">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="phonon.html">Phonons</a></li>
+            <li><a href="alloy.html">Alloys</a></li>
+            <li><a href="exciton.html">Excitons</a></li>
+            <li><a href="structure.html">Structures</a></li>
+        </ul>
+        <div class="material-name"><h1 id="name">Material</h1></div>
         <div class="flex-container">
             <div class="flex-menu">
                 <div id="menu">
-                <div id="material-list" hidden=true>
+                <div id="material-list">
                     <h3>Materials:</h3>
+                    <input id="materials_filter" type="text" placeholder="Filter materials or elements, e.g. Be C">
                     <ul id="mat"></ul>
                     <ul id="ref"></ul>
                 </div>
 
                 <div id="options-list">
-                    <div hidden=true>
+                    <div>
                         <h3>Custom file:</h3>
                         <input type="file" id="file-input" name="customfile"/>
                     </div>
@@ -58,18 +94,16 @@
 
                     <div>
                         <h3>Repetitions:</h3>
-                        <form>
-                            <input id="nx" value="3" type="number" name="quantity">
-                            <input id="ny" value="3" type="number" name="quantity">
-                            <input id="nz" value="3" type="number" name="quantity">
-                            <button id="update" type="button">update</button>
-                        </form>
+                        <input id="nx" value="3" type="number">
+                        <input id="ny" value="3" type="number">
+                        <input id="nz" value="3" type="number">
+                        <button id="update" type="button">update</button>
                     </div>
 
                     <div>
                         <h3>Mode selection:</h3>
-                        k-index <input id="kindex" value="0" type="number">
-                        band <input id="nindex" value="0" type="number">
+                        k-index <input id="kindex" value="1" type="number">
+                        band <input id="nindex" value="1" type="number">
                         <button id="modeselect" type="button">apply</button>
                     </div>
 
@@ -84,10 +118,6 @@
                             <h3>Cell:</h3>
                             <input id="drawcell" type="checkbox">on</input>
                         </div>
-                        <div style="display: table-cell; padding-right: 5px;">
-                            <h3>Shading:</h3>
-                            <input id="drawshading" type="checkbox" checked>on</input>
-                        </div>
                         <div style="display: table-cell;">
                             <h3>Export movie:</h3>
                             <button id="gifbutton"  type="button">gif</button>
@@ -97,11 +127,14 @@
                     </div>
 
                     <div>
+                        <input id="mode_weights_plot" type="checkbox">mode weights</input>
+                        <input id="drawshading" type="checkbox" checked>shading</input>
+                    </div>
+
+                    <div>
                         <h3>Amplitude:</h3>
-                        <form>
                         <input id="amplitude_range" type="range">
                         <input id="amplitude_box"   type="number">
-                        </form>
                     </div>
 
                     <div>
@@ -120,15 +153,15 @@
                             </select>
                         </div>
                         <div class="appearance-row">
-                            <label for="appearance_atom_list">atom type</label>
+                            <label for="appearance_atom_list">type</label>
                             <div id="appearance_atom_list" class="appearance-atom-list"></div>
                         </div>
                         <div class="appearance-row">
-                            <label for="atom_color_input">atom color</label>
+                            <label for="atom_color_input">color</label>
                             <input id="atom_color_input" type="color">
                         </div>
                         <div class="appearance-row">
-                            <label for="atom_radius_input">atom radius</label>
+                            <label for="atom_radius_input">radius</label>
                             <div class="appearance-controls">
                                 <input id="atom_radius_input" type="number" min="0.1" max="5.0" step="0.05" value="1.0">
                                 <button id="appearance_reset_atom_button" type="button">reset</button>
@@ -136,14 +169,14 @@
                         </div>
                         <div class="appearance-subsection">Bonds</div>
                         <div class="appearance-row">
-                            <label for="bond_color_input">bond color</label>
+                            <label for="bond_color_input">color</label>
                             <div class="appearance-controls">
                                 <input id="bond_color_input" type="color">
                                 <button id="appearance_reset_bonds_button" type="button">reset</button>
                             </div>
                         </div>
                         <div class="appearance-row">
-                            <label for="bond_radius_input">bond radius</label>
+                            <label for="bond_radius_input">radius</label>
                             <input id="bond_radius_input" type="number" min="0.01" max="1.0" step="0.01" value="0.1">
                         </div>
                         <div class="appearance-row">
@@ -153,11 +186,11 @@
                             </div>
                         </div>
                         <div class="appearance-row">
-                            <label for="bond_rules_list">bond types</label>
+                            <label for="bond_rules_list">types</label>
                             <div id="bond_rules_list"></div>
                         </div>
                         <div class="appearance-row">
-                            <label for="bond_add_atom_a">add bond</label>
+                            <label for="bond_add_atom_a">bond</label>
                             <div class="appearance-controls">
                                 <select id="bond_add_atom_a"></select>
                                 <select id="bond_add_atom_b"></select>
@@ -168,7 +201,7 @@
 
                         <div class="appearance-subsection">Vectors</div>
                         <div class="appearance-row">
-                            <label for="arrow_color_input">arrow color</label>
+                            <label for="arrow_color_input">color</label>
                             <input id="arrow_color_input" type="color">
                         </div>
                         <div class="appearance-row">
@@ -178,11 +211,11 @@
                             </div>
                         </div>
                         <div class="appearance-row">
-                            <label for="vectors_amplitude_range">vector size</label>
+                            <label for="vectors_amplitude_range">size</label>
                             <input id="vectors_amplitude_range" type="range">
                         </div>
                         <div class="appearance-row">
-                            <label for="arrow_radius_input">vector radius</label>
+                            <label for="arrow_radius_input">radius</label>
                             <div class="appearance-controls">
                                 <input id="arrow_radius_input" type="number" min="0.01" max="1.0" step="0.01" value="0.1">
                                 <button id="appearance_reset_vectors_button" type="button">reset</button>
@@ -190,20 +223,15 @@
                         </div>
                     </div>
 
-                    <!--
-                    <div>
-                        <h3>Export displacement:</h3>
-                        Phase (°): 
-                        <input  id="phase" type="number" value="0.0" min="0.0" max="360.0" step ="45">
-                        <button id="xsf"    type="button">xsf</button>
-                        <button id="poscar" type="button">POSCAR</button>
-                    </div>-->
                 </div>
                 </div>
             </div>
             <div class="flex-vibcrystal"><div id="vibcrystal"></div></div>
-            <div class="flex-highcharts"><div id="highcharts"></div></div>
-    </div>
+            <div class="flex-highcharts">
+                <div id="highcharts"></div>
+                <div id="raman-spectrum" style="height: 400px; width: 100%; margin-top: 20px;"></div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
