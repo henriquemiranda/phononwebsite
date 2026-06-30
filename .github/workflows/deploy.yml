@@ -12,11 +12,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          lfs: true
+#        with:
+#          lfs: true
 
-      - name: Fetch Git LFS objects
-        run: git lfs pull
+#      - name: Fetch Git LFS objects
+#        run: git lfs pull
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
