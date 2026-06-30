@@ -702,7 +702,7 @@ export class PhononWebpage {
             if (existingChart) existingChart.destroy();
         
             Highcharts.chart('raman-spectrum', {
-                title: { text: 'Raman Spectrum: BaZrS₃' },
+                title: { text: 'Raman Spectrum' },
                 xAxis: { title: { text: 'Frequency (cm⁻¹)' } },
                 yAxis: { title: { text: 'Intensity' } },
                 series: [

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ZMO Raman Visualizer</title>
+    <meta name="author" content="Henrique Miranda, Raoul Weber">
+    <meta name="copyright" content="2014 Theoretical Solid-State Physics Group of University of Luxembourg">
+    <meta http-equiv="content-language" content="text/html; charset=utf-8; en">
+    <meta name="title" content="ZMO Raman Visualizations">
+    <meta name="description" content="Interactive visualization of Raman spectra for Zn₂Mo₃O₈ (ZMO) with Porto notation geometry selection.">
+    <meta name="keywords" content="phonons, Raman, ZMO, Zn2Mo3O8, Porto notation, visualization">
+    <meta name="Title" content="ZMO Raman Animation">
+    <meta name="Format" content="text/html">
+    <meta name="Language" content="en">
+    <meta charset="utf-8">
+
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+    <style>
+        .flex-container {
+            -webkit-flex-flow: row nowrap;
+            flex-flow: row nowrap;
+            align-items: stretch;
+            height: calc(100vh - 80px);
+        }
+        .flex-menu {
+            width: auto;
+            min-width: 220px;
+            max-width: 290px;
+            flex: 1 1 250px;
+            overflow-y: auto;
+        }
+        .flex-vibcrystal {
+            width: auto;
+            flex: 2 1 0;
+            min-height: 500px;
+            position: relative;
+        }
+        .flex-highcharts {
+            width: auto;
+            flex: 2 1 0;
+            overflow-y: auto;
+        }
+        #vibcrystal {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+        }
+
+        .porto-panel {
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .porto-panel h3 {
+            margin: 6px 0 8px 0;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .porto-panel h3 .stripe {
+            display: inline-block;
+            width: 22px;
+            height: 4px;
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+        .stripe-1 { background: #2c3e50; }
+        .stripe-2 {
+            background: repeating-linear-gradient(
+                90deg, #e67e22 0px, #e67e22 4px, transparent 4px, transparent 7px);
+            border: 1px solid #e67e22;
+        }
+
+        .porto-notation {
+            font-family: monospace;
+            font-size: 13px;
+            font-weight: bold;
+            color: #2c3e50;
+            text-align: center;
+            margin: 4px 0 8px 0;
+            letter-spacing: 0.03em;
+        }
+        .porto-notation.notation-2 { color: #e67e22; }
+
+        .porto-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 6px;
+            font-size: 12px;
+        }
+        .porto-row label {
+            width: 28px;
+            font-weight: bold;
+            flex-shrink: 0;
+            font-style: italic;
+            color: #333;
+        }
+        .porto-row select {
+            flex: 1;
+            min-width: 0;
+            font-size: 12px;
+            padding: 1px 2px;
+            border: 1px solid #b6c2cf;
+            border-radius: 3px;
+        }
+        .porto-row select:focus {
+            outline: none;
+            border-color: deepskyblue;
+        }
+
+        .zumba-name {
+            font-size: 11px;
+            color: #777;
+            margin-top: 2px;
+            word-break: break-all;
+            font-family: monospace;
+            min-height: 14px;
+        }
+
+        #ref { list-style: none; margin: 4px 0 0 0; padding: 0; font-size: 11px; color: #666; }
+        #mat, #ref { display: none; }
+        #material-list > h3 { display: none; }
+        #material-list > input { display: none; }
+        #material-list { margin: 0; padding: 0; height: 0; overflow: hidden; }
+    </style>
+
+    <script src="zumba.min.js" type="module"></script>
+
+    <style>
+        .material-name h1 sub,
+        .material-name h1 sup {
+            font-size: 0.55em;
+            line-height: 0;
+        }
+        .zumba-name sub,
+        .zumba-name sup {
+            font-size: 0.85em;
+            line-height: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <ul class="navigation">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="phonon.html">Phonons</a></li>
+            <li><a href="zumba.html">ZMO</a></li>
+            <li><a href="exciton.html">Excitons</a></li>
+            <li><a href="structure.html">Structures</a></li>
+        </ul>
+
+        <div class="material-name"><h1 id="name">Zn₂Mo₃O₈</h1></div>
+
+        <div class="flex-container">
+
+            <div class="flex-menu">
+                <div id="menu">
+
+                    <div style="display:none;">
+                        <div id="material-list">
+                            <h3>Materials:</h3>
+                            <input id="materials_filter" type="text" placeholder="">
+                            <ul id="mat"></ul>
+                            <ul id="ref"></ul>
+                        </div>
+                    </div>
+
+                    <div class="porto-panel" id="panel1">
+                        <h3>
+                            <span class="stripe stripe-1"></span>
+                            Geometry 1
+                        </h3>
+
+                        <div class="porto-row">
+                            <label>e<sub>i</sub></label>
+                            <select id="m1-ei">
+                                <option value="x">x</option>
+                                <option value="y">y</option>
+                                <option value="z">z</option>
+                            </select>
+                        </div>
+                        <div class="porto-row">
+                            <label>e<sub>s</sub></label>
+                            <select id="m1-es">
+                                <option value="x">x</option>
+                                <option value="y">y</option>
+                                <option value="z">z</option>
+                            </select>
+                        </div>
+                        <div class="porto-row">
+                            <label>pol</label>
+                            <select id="m1-pol">
+                                <option value="x">x</option>
+                                <option value="y">y</option>
+                                <option value="z">z</option>
+                            </select>
+                        </div>
+
+                        <div class="porto-notation" id="m1-notation">x(xx)x</div>
+                        <div class="zumba-name" id="m1-name">—</div>
+                    </div>
+
+                    <div class="porto-panel" id="panel2">
+                        <h3>
+                            <span class="stripe stripe-2"></span>
+                            Geometry 2
+                            <label style="font-weight:normal;font-size:11px;color:#888;margin-left:4px;cursor:pointer;">
+                                <input type="checkbox" id="g2-toggle" checked
+                                       style="vertical-align:middle;margin-right:2px;">
+                                overlay
+                            </label>
+                        </h3>
+
+                        <div class="porto-row">
+                            <label>e<sub>i</sub></label>
+                            <select id="m2-ei">
+                                <option value="x">x</option>
+                                <option value="y">y</option>
+                                <option value="z">z</option>
+                            </select>
+                        </div>
+                        <div class="porto-row">
+                            <label>e<sub>s</sub></label>
+                            <select id="m2-es">
+                                <option value="x">x</option>
+                                <option value="y">y</option>
+                                <option value="z">z</option>
+                            </select>
+                        </div>
+                        <div class="porto-row">
+                            <label>pol</label>
+                            <select id="m2-pol">
+                                <option value="x">x</option>
+                                <option value="y">y</option>
+                                <option value="z">z</option>
+                            </select>
+                        </div>
+
+                        <div class="porto-notation notation-2" id="m2-notation">x(xx)x</div>
+                        <div class="zumba-name" id="m2-name">—</div>
+                    </div>
+
+                    <div id="options-list">
+                        <div>
+                            <h3>Custom file:</h3>
+                            <input type="file" id="file-input" name="customfile"/>
+                        </div>
+
+                        <div>
+                            <h3>Lattice parameters (Ångström):</h3>
+                            <table id="lattice"></table>
+                        </div>
+
+                        <div>
+                            <h3>Atomic positions (reduced):</h3>
+                            <div><table id="atompos"></table></div>
+                        </div>
+
+                        <div>
+                            <h3>Repetitions:</h3>
+                            <input id="nx" value="2" type="number">
+                            <input id="ny" value="2" type="number">
+                            <input id="nz" value="1" type="number">
+                            <button id="update" type="button">update</button>
+                        </div>
+
+                        <div>
+                            <h3>Mode selection:</h3>
+                            k-index <input id="kindex" value="1" type="number">
+                            band    <input id="nindex"  value="1" type="number">
+                            <button id="modeselect" type="button">apply</button>
+                        </div>
+
+                        <div style="display: table;">
+                            <div style="display: table-cell; padding-right: 5px;">
+                                <h3>Camera:</h3>
+                                <button id="camerax" type="button">x</button>
+                                <button id="cameray" type="button">y</button>
+                                <button id="cameraz" type="button">z</button>
+                            </div>
+                            <div style="display: table-cell; padding-right: 5px;">
+                                <h3>Cell:</h3>
+                                <input id="drawcell" type="checkbox">on</input>
+                            </div>
+                            <div style="display: table-cell;">
+                                <h3>Export movie:</h3>
+                                <button id="gifbutton"  type="button">gif</button>
+                                <button id="webmbutton" type="button">webm</button>
+                                <div id="progress"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <input id="mode_weights_plot" type="checkbox">mode weights</input>
+                            <input id="drawshading" type="checkbox" checked>shading</input>
+                        </div>
+
+                        <div>
+                            <h3>Amplitude:</h3>
+                            <input id="amplitude_range" type="range">
+                            <input id="amplitude_box"   type="number">
+                        </div>
+
+                        <div>
+                            <h3>Speed:</h3>
+                            <input id="speed_range" type="range">
+                            <button id="playpause" type="button">pause</button>
+                        </div>
+
+                        <div class="advanced-appearance">
+                            <div class="appearance-subsection">Atom</div>
+                            <div class="appearance-row">
+                                <label for="displaystyle">display</label>
+                                <select id='displaystyle'>
+                                    <option value="jmol">Jmol</option>
+                                    <option value="vesta">Vesta</option>
+                                </select>
+                            </div>
+                            <div class="appearance-row">
+                                <label for="appearance_atom_list">type</label>
+                                <div id="appearance_atom_list" class="appearance-atom-list"></div>
+                            </div>
+                            <div class="appearance-row">
+                                <label for="atom_color_input">color</label>
+                                <input id="atom_color_input" type="color">
+                            </div>
+                            <div class="appearance-row">
+                                <label for="atom_radius_input">radius</label>
+                                <div class="appearance-controls">
+                                    <input id="atom_radius_input" type="number"
+                                           min="0.1" max="5.0" step="0.05" value="1.0">
+                                    <button id="appearance_reset_atom_button" type="button">reset</button>
+                                </div>
+                            </div>
+                            <div class="appearance-subsection">Bonds</div>
+                            <div class="appearance-row">
+                                <label for="bond_color_input">color</label>
+                                <div class="appearance-controls">
+                                    <input id="bond_color_input" type="color">
+                                    <button id="appearance_reset_bonds_button" type="button">reset</button>
+                                </div>
+                            </div>
+                            <div class="appearance-row">
+                                <label for="bond_radius_input">radius</label>
+                                <input id="bond_radius_input" type="number"
+                                       min="0.01" max="1.0" step="0.01" value="0.1">
+                            </div>
+                            <div class="appearance-row">
+                                <label for="bond_color_by_atom_checkbox">split colors</label>
+                                <div class="appearance-controls">
+                                    <input id="bond_color_by_atom_checkbox" type="checkbox">on</input>
+                                </div>
+                            </div>
+                            <div class="appearance-row">
+                                <label for="bond_rules_list">types</label>
+                                <div id="bond_rules_list"></div>
+                            </div>
+                            <div class="appearance-row">
+                                <label for="bond_add_atom_a">bond</label>
+                                <div class="appearance-controls">
+                                    <select id="bond_add_atom_a"></select>
+                                    <select id="bond_add_atom_b"></select>
+                                    <input id="bond_add_cutoff_input" type="number"
+                                           min="0.01" step="0.01" placeholder="max">
+                                    <button id="bond_add_button" type="button">add</button>
+                                </div>
+                            </div>
+                            <div class="appearance-subsection">Vectors</div>
+                            <div class="appearance-row">
+                                <label for="arrow_color_input">color</label>
+                                <input id="arrow_color_input" type="color">
+                            </div>
+                            <div class="appearance-row">
+                                <label for="drawvectors">visible</label>
+                                <div class="appearance-controls">
+                                    <input id="drawvectors" type="checkbox">on</input>
+                                </div>
+                            </div>
+                            <div class="appearance-row">
+                                <label for="vectors_amplitude_range">size</label>
+                                <input id="vectors_amplitude_range" type="range">
+                            </div>
+                            <div class="appearance-row">
+                                <label for="arrow_radius_input">radius</label>
+                                <div class="appearance-controls">
+                                    <input id="arrow_radius_input" type="number"
+                                           min="0.01" max="1.0" step="0.01" value="0.1">
+                                    <button id="appearance_reset_vectors_button" type="button">reset</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="flex-vibcrystal"><div id="vibcrystal"></div></div>
+
+            <div class="flex-highcharts">
+                <div id="highcharts"></div>
+                <div id="raman-spectrum"
+                     style="height: 400px; width: 100%; margin-top: 20px;"></div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

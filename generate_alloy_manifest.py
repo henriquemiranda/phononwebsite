@@ -34,9 +34,6 @@ def main():
         json.dump(files, fp, indent=2)
         fp.write("\n")
 
-    print(f"Written {len(files)} entries to {MANIFEST}")
-    for f in files:
-        print(f"  {f}")
 
 if __name__ == "__main__":
     main()
