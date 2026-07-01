@@ -83,24 +83,16 @@ function getActiveSymmetries(pol, ei, es) {
     return PORTO_RULES[`${pol}(${ei},${es})${pol}`] || new Set([]);
 }
 
-const FALLBACK_SYMMETRY = [
-    'A_1','E_1','E_1','E_2','E_2','E_2','E_2','B_1','E_1','E_1',
-    'E_2','E_2','E_1','E_1','A_2','B_2','A_1','B_1','E_1','E_1',
-    'A_1','E_2','E_2','B_1','E_2','E_2','E_1','E_1','E_1','E_1',
-    'E_2','E_2','B_1','A_1','E_1','E_1','E_2','E_2','A_2','B_2',
-    'B_1','A_1','E_2','E_2','B_2','E_1','E_1','A_2','A_1','B_1',
-    'E_1','E_1','E_2','E_2','E_2','E_2','E_1','E_1','A_1','E_2',
-    'E_2','E_1','E_1','B_1','E_1','E_1','E_2','E_2','A_1','B_1',
-    'E_1','E_1','E_2','E_2','A_1','B_1','A_1','B_1',
-];
-
 function getModeSymmetry() {
+    if (g1Symmetries.length > 0) return g1Symmetries;
     if (p.phonon && p.phonon.mode_symmetry) return p.phonon.mode_symmetry;
-    return FALLBACK_SYMMETRY;
+    return [];
 }
 
 function formatSymLabel(sym) {
-    return sym ? sym.replace(/_(\w+)/, '<sub>$1</sub>') : '?';
+    if (!sym || sym === '?') return '?';
+    if (sym.toLowerCase() === 'dark') return 'Silent';
+    return sym.replace(/_(\w+)/, '<sub>$1</sub>');
 }
 
 function enforcePolConstraint(prefix) {
@@ -190,6 +182,7 @@ let comparisonLabel  = null;
 let showGeometry2    = true;
 
 let _g1pol = 'x', _g1ei = 'y', _g1es = 'y';
+let g1Symmetries = []; 
 
 function computeRamanCurve(phonon) {
     if (!phonon || !phonon.raman_intensities) return null;
@@ -283,7 +276,7 @@ function fixActiveModesDots() {
 
                 point.update({
                     marker: {
-                        radius:    show ? 4 : 3,
+                        radius:    show ? 4 : 1,
                         symbol:    'diamond',
                         fillColor: show ? '#e74c3c' : '#000000',
                         lineColor: show ? '#c0392b' : '#333333',
@@ -463,6 +456,16 @@ function loadGeometry1(pol, ei, es) {
     const label = portoLabel(pol, ei, es);
     document.getElementById('m1-name').textContent = label;
     updateNotationDisplay('m1-notation', pol, ei, es);
+
+    fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            g1Symmetries = data.mode_symmetry || [];
+            rebuildRamanTable();
+            fixActiveModesDots();
+        })
+        .catch(err => console.error("Could not load symmetries:", err));
+
     p.loadURL({ json: url, name: label });
     setTimeout(setPageTitle, 50);
 }
