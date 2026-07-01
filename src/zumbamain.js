@@ -248,47 +248,51 @@ function overlayComparisonRaman() {
 
 function fixActiveModesDots() {
     if (typeof Highcharts === 'undefined') return;
-    const chart = Highcharts.charts.find(
-        c => c && c.renderTo && c.renderTo.id === 'raman-spectrum'
-    );
+    const chart = Highcharts.charts.find(c => c && c.renderTo && c.renderTo.id === 'raman-spectrum');
     if (!chart) return;
 
     const phonon = p.phonon;
-    if (!phonon) return;
+    if (!phonon || !phonon.eigenvalues) return;
+    
     const gi  = phonon.gamma_index || 0;
     const frq = phonon.eigenvalues[gi];
-    const int = phonon.raman_intensities;
-    if (!frq || !int) return;
+    if (!frq) return;
 
     const symLabels = getModeSymmetry();
     const activeSym = getActiveSymmetries(_g1pol, _g1ei, _g1es);
 
-    const scatterSeries = chart.series.find(
-        s => !s.options._isComparison &&
-             !s.options.isWeightSeries &&
-             !s.options.isLegendSeries &&
-             (s.type === 'scatter' || (s.options && s.options.type === 'scatter'))
-    );
-    if (!scatterSeries) return;
+    chart.series.forEach(s => {
+        if (s.options._isComparison || s.options.isWeightSeries || s.options.isLegendSeries) return;
+        if (s.type !== 'scatter' && !(s.options && s.options.type === 'scatter')) return;
 
-    scatterSeries.points.forEach(point => {
-        const freq  = point.x;
-        const bIdx  = point.series.options.bandIndex; 
-
-        const modeIdx = (Number.isFinite(bIdx)) ? bIdx : null;
-        const sym      = (modeIdx !== null) ? symLabels[modeIdx] : null;
-        const show     = sym ? activeSym.has(sym) : false;
-
-        point.update({
-            marker: {
-                radius:      show ? 8 : 0,
-                symbol:      'diamond',
-                fillColor:   show ? '#e74c3c' : 'transparent',
-                lineColor:   show ? '#c0392b' : 'transparent',
-                lineWidth:   show ? 2 : 0,
-                enabled:     show,
+        s.points.forEach(point => {
+            let modeIdx = -1;
+            let minDiff = Infinity;
+            
+            for (let i = 0; i < frq.length; i++) {
+                const diff = Math.abs(frq[i] - point.x);
+                if (diff < minDiff) {
+                    minDiff = diff;
+                    modeIdx = i;
+                }
             }
-        }, false); 
+
+            if (modeIdx !== -1 && minDiff < 0.1) {
+                const sym  = symLabels[modeIdx];
+                const show = sym ? activeSym.has(sym) : false;
+
+                point.update({
+                    marker: {
+                        radius:    show ? 4 : 3,
+                        symbol:    'diamond',
+                        fillColor: show ? '#e74c3c' : '#000000',
+                        lineColor: show ? '#c0392b' : '#333333',
+                        lineWidth: 1,
+                        enabled:   true
+                    }
+                }, false);
+            }
+        });
     });
 
     chart.redraw();
@@ -350,7 +354,7 @@ function rebuildRamanTable() {
         const symWeight = isActive ? 'bold' : 'normal';
         const symCell = `<td style="${tdStyle}color:${symColor};font-weight:${symWeight};">${formatSymLabel(sym)}</td>`;
 
-        return `<tr style="border-bottom:1px solid #eee; background:${bg};">
+        return `<tr data-band-index="${i}" style="border-bottom:1px solid #eee; background:${bg}; transition: background 0.2s;">
             <td style="${tdStyle}">${i + 1}</td>
             ${freqCell}
             <td style="${tdStyle}">${i1}</td>
@@ -395,6 +399,49 @@ p.plotRaman = function () {
     }, 0);
 };
 
+const _origSelectMode = p.selectModeByBandIndex.bind(p);
+
+p.selectModeByBandIndex = function (gamma_index, band_index) {
+    if (!d || !d.chart) {
+        console.warn("Chart not ready, skipping original mode selection.");
+        return; 
+    }
+
+
+    _origSelectMode(gamma_index, band_index);
+
+    const phonon = p.phonon;
+    if (!phonon || !phonon.eigenvalues) return;
+    
+    const freq = phonon.eigenvalues[gamma_index][band_index];
+    const symLabels = getModeSymmetry();
+    const sym = symLabels[band_index];
+    const isActive = getActiveSymmetries(_g1pol, _g1ei, _g1es).has(sym);
+    const modeColor = isActive ? '#e74c3c' : '#000000';
+
+    if (d.chart.xAxis && d.chart.xAxis[0]) {
+        d.chart.xAxis[0].removePlotLine('selected-mode-line');
+        d.chart.xAxis[0].addPlotLine({
+            id: 'selected-mode-line',
+            value: freq,
+            color: modeColor,
+            width: 2,
+            zIndex: 5
+        });
+    }
+
+    const tbody = document.querySelector('#raman-table-container tbody');
+    if (tbody) {
+        tbody.querySelectorAll('tr').forEach(tr => tr.style.borderLeft = 'none');
+        const row = tbody.querySelector(`tr[data-band-index="${band_index}"]`);
+        if (row) {
+            row.style.borderLeft = `5px solid ${modeColor}`;
+            row.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    }
+};
+
+window.app = p;
 
 function setPageTitle() {
     const el = document.getElementById('name');
