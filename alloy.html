@@ -54,7 +54,22 @@
         .alloy-panel h3 {
             margin: 6px 0 8px 0;
             font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
+        .alloy-panel h3 .stripe {
+            display: inline-block;
+            width: 22px;
+            height: 4px;
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+        .stripe-1 { background: #2c3e50; }
+        .stripe-2 { background: #e67e22;
+                    background: repeating-linear-gradient(
+                        90deg, #e67e22 0px, #e67e22 4px, transparent 4px, transparent 7px);
+                    border: 1px solid #e67e22; }
         .slider-row {
             display: flex;
             align-items: center;
@@ -118,7 +133,7 @@
             <div class="flex-menu">
                 <div id="menu">
                     <div class="alloy-panel" id="panel1">
-                        <h3>BaZr(S<sub>1-x</sub>Se<sub>x</sub>)<sub>3</sub></h3>
+                        <h3><span class="stripe stripe-1"></span>Material 1</h3>
                         <div class="slider-row">
                             <label>x</label>
                             <input type="range" id="x-slider"
@@ -132,11 +147,29 @@
                             <span class="slider-val" id="m-val">32.06</span>
                         </div>
                         <div class="alloy-name" id="alloy-name">—</div>
-                        <div class="alloy-name" style="margin-top:6px;">
-                            x mixes the force constants (bonding) between the two
-                            end-member dynamical matrices; m independently overrides
-                            the chalcogen mass at diagonalization time.
+                    </div>
+
+                    <div class="alloy-panel" id="panel2">
+                        <h3><span class="stripe stripe-2"></span>Material 2 <small style="font-weight:normal;color:#aaa;">(Raman overlay)</small></h3>
+                        <div class="slider-row">
+                            <label>x</label>
+                            <input type="range" id="x2-slider"
+                                   min="0" max="1" step="0.01" value="1">
+                            <span class="slider-val" id="x2-val">1.00</span>
                         </div>
+                        <div class="slider-row">
+                            <label>m</label>
+                            <input type="range" id="m2-slider"
+                                   min="32.06" max="78.97" step="0.1" value="78.97">
+                            <span class="slider-val" id="m2-val">78.97</span>
+                        </div>
+                        <div class="alloy-name" id="alloy2-name">—</div>
+                    </div>
+
+                    <div class="alloy-name" style="margin-top:6px;">
+                        x mixes the force constants (bonding) between the two
+                        end-member dynamical matrices; m independently overrides
+                        the chalcogen mass at diagonalization time.
                     </div>
 
                     <div id="options-list">
@@ -288,7 +321,10 @@
             </div>
 
             <div class="flex-vibcrystal"><div id="vibcrystal"></div></div>
-            <div class="flex-highcharts"><div id="highcharts"></div></div>
+            <div class="flex-highcharts">
+                <div id="highcharts"></div>
+                <div id="raman-spectrum" style="height: 400px; width: 100%; margin-top: 20px;"></div>
+            </div>
         </div>
     </div>
 </body>
