@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { describe, it } from 'node:test';
 
-import { buildMixedInternalJson } from '../src/alloymix.js';
+import { buildMixedInternalJson, computeMixedRamanIntensities } from '../src/alloymix.js';
 import { solveHermitianEigenSystem } from '../src/dynamicalmatrix.js';
 import { PhononHighcharts } from '../src/phononhighcharts.js';
 
@@ -97,5 +97,51 @@ describe('alloy dynamical-matrix mixing', () => {
             assert.equal(series.data.length, 1);
             assert.equal(series.data[0].kIndex, 0);
         }
+    });
+
+    it('computes Raman activities matching QE dynmat.x for the pure BaZrS3 endpoint', async () => {
+        const mixed = buildMixedInternalJson(endmemberS, endmemberSe, 0, 32.06);
+        const { eigenvectors, eigenvaluesCm1 } = await solveHermitianEigenSystem(
+            mixed.dynamical_matrix, [0, 0, 0]
+        );
+        const order = eigenvaluesCm1.map((_, i) => i).sort((a, b) => eigenvaluesCm1[a] - eigenvaluesCm1[b]);
+        const activities = computeMixedRamanIntensities(endmemberS, endmemberSe, 0, 32.06, eigenvectors);
+
+        // reference: QE dynmat.x Raman column for bazrs3.dyn, native S mass (1-indexed modes)
+        const reference = { 6: 42.8962, 9: 111.7040, 13: 20.3699, 16: 49.8196, 18: 5.3743, 19: 105.8911, 20: 322.9583, 21: 9.9834 };
+        for (const [mode1, expected] of Object.entries(reference)) {
+            const sortedIndex = order[Number(mode1) - 1];
+            assert.ok(
+                Math.abs(activities[sortedIndex] - expected) < 0.01,
+                `mode ${mode1}: got ${activities[sortedIndex]}, expected ~${expected}`
+            );
+        }
+    });
+
+    it('computes Raman activities matching QE dynmat.x for a mixed x=0.10 composition', async () => {
+        const x = 0.10;
+        const m = 36.75;
+        const mixed = buildMixedInternalJson(endmemberS, endmemberSe, x, m);
+        const { eigenvectors, eigenvaluesCm1 } = await solveHermitianEigenSystem(
+            mixed.dynamical_matrix, [0, 0, 0]
+        );
+        const order = eigenvaluesCm1.map((_, i) => i).sort((a, b) => eigenvaluesCm1[a] - eigenvaluesCm1[b]);
+        const activities = computeMixedRamanIntensities(endmemberS, endmemberSe, x, m, eigenvectors);
+
+        // reference: dynmat_alloy_10.out (x=10%, m=M_EFF(0.10)=36.75), 1-indexed modes
+        const reference = { 6: 38.7286, 9: 136.2116, 15: 0.0172 };
+        for (const [mode1, expected] of Object.entries(reference)) {
+            const sortedIndex = order[Number(mode1) - 1];
+            assert.ok(
+                Math.abs(activities[sortedIndex] - expected) < 0.01,
+                `mode ${mode1}: got ${activities[sortedIndex]}, expected ~${expected}`
+            );
+        }
+    });
+
+    it('returns null when raman_tensor is absent from either end-member', () => {
+        const strippedS = { ...endmemberS, raman_tensor: null };
+        const activities = computeMixedRamanIntensities(strippedS, endmemberSe, 0.5, 50, []);
+        assert.equal(activities, null);
     });
 });
