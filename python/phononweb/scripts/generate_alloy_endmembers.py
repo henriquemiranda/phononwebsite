@@ -85,6 +85,9 @@ def build_payload(dyn_path: str, name: str, formula: str) -> dict:
         "repetitions": [2, 2, 2],
         "dynamical_matrix": dynamical_matrix,
         "amu_to_native_mass_unit": AMU_TO_NATIVE,
+        "raman_tensor": (
+            parsed["raman_tensor"].tolist() if parsed["raman_tensor"] is not None else None
+        ),
     }
 
 

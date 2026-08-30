@@ -46,6 +46,89 @@ export function buildMixedMasses(atomTypes, mAmu, amuToNative) {
     });
 }
 
+export function buildMixedMassesAmu(atomTypes, mAmu) {
+    return atomTypes.map((type) => {
+        if (type === 'Ba') return BA_AMU;
+        if (type === 'Zr') return ZR_AMU;
+        return mAmu;
+    });
+}
+
+/**
+ * Linearly interpolate the DFPT Raman tensor (d(chi)/du, shape
+ * [atom][pol][alpha][beta]) between the two end-members. Same blanket
+ * linear interpolation as the force constants -- verified against real
+ * QE dynmat.x output to reproduce mode Raman activities exactly (see
+ * python/phononweb/tests/test_alloy_endmembers.py).
+ */
+export function mixRamanTensor(rtS, rtSe, x) {
+    const natoms = rtS.length;
+    const mixed = new Array(natoms);
+    for (let a = 0; a < natoms; a++) {
+        mixed[a] = new Array(3);
+        for (let p = 0; p < 3; p++) {
+            const blockS = rtS[a][p];
+            const blockSe = rtSe[a][p];
+            const block = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+            for (let row = 0; row < 3; row++) {
+                for (let col = 0; col < 3; col++) {
+                    block[row][col] = (1 - x) * blockS[row][col] + x * blockSe[row][col];
+                }
+            }
+            mixed[a][p] = block;
+        }
+    }
+    return mixed;
+}
+
+/**
+ * Compute the powder-averaged Raman activity for every mode, from raw
+ * (mass-weighted) eigenvectors as returned by solveHermitianEigenSystem,
+ * the (mixed) Raman tensor, and each atom's mass in amu.
+ *
+ * Formula (matches QE's dynmat.x exactly, validated against real
+ * dynmat.out output for both end-members and mixed x/m compositions):
+ *   displacement[atom][pol] = eigenvector[atom][pol] / sqrt(mass_amu[atom])
+ *   R[alpha][beta] = sum_{atom,pol} ramanTensor[atom][pol][alpha][beta] * displacement[atom][pol]
+ *   a = trace(R) / 3
+ *   anisotropy^2 = 0.5*((Rxx-Ryy)^2+(Ryy-Rzz)^2+(Rzz-Rxx)^2) + 3*(Rxy^2+Ryz^2+Rzx^2)
+ *   activity = 45*a^2 + 7*anisotropy^2
+ */
+export function computeRamanActivities(eigenvectors, ramanTensor, massesAmu) {
+    const natoms = massesAmu.length;
+    const nmodes = eigenvectors.length;
+    const activities = new Array(nmodes);
+
+    for (let n = 0; n < nmodes; n++) {
+        const eigenvector = eigenvectors[n];
+        const R = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+
+        for (let atom = 0; atom < natoms; atom++) {
+            const invSqrtMass = 1 / Math.sqrt(massesAmu[atom]);
+            for (let pol = 0; pol < 3; pol++) {
+                const displacement = eigenvector[atom * 3 + pol][0] * invSqrtMass;
+                const tensorBlock = ramanTensor[atom][pol];
+                for (let alpha = 0; alpha < 3; alpha++) {
+                    for (let beta = 0; beta < 3; beta++) {
+                        R[alpha][beta] += tensorBlock[alpha][beta] * displacement;
+                    }
+                }
+            }
+        }
+
+        const a = (R[0][0] + R[1][1] + R[2][2]) / 3;
+        const anisotropy2 = 0.5 * (
+            (R[0][0] - R[1][1]) ** 2 +
+            (R[1][1] - R[2][2]) ** 2 +
+            (R[2][2] - R[0][0]) ** 2
+        ) + 3 * (R[0][1] ** 2 + R[1][2] ** 2 + R[2][0] ** 2);
+
+        activities[n] = 45 * a * a + 7 * anisotropy2;
+    }
+
+    return activities;
+}
+
 export function mixAlloyDynamicalMatrix(endmemberS, endmemberSe, x, mAmu) {
     const dmS = endmemberS.dynamical_matrix;
     const dmSe = endmemberSe.dynamical_matrix;
@@ -59,6 +142,20 @@ export function mixAlloyDynamicalMatrix(endmemberS, endmemberSe, x, mAmu) {
         ),
         masses: buildMixedMasses(endmemberS.atom_types, mAmu, endmemberS.amu_to_native_mass_unit),
     };
+}
+
+/**
+ * Compute Raman activities for the mixed alloy at (x, m), given the raw
+ * eigenvectors from solveHermitianEigenSystem(mixedDynamicalMatrix, [0,0,0]).
+ * Returns null if either end-member is missing raman_tensor data.
+ */
+export function computeMixedRamanIntensities(endmemberS, endmemberSe, x, mAmu, eigenvectors) {
+    if (!endmemberS.raman_tensor || !endmemberSe.raman_tensor) {
+        return null;
+    }
+    const ramanTensor = mixRamanTensor(endmemberS.raman_tensor, endmemberSe.raman_tensor, x);
+    const massesAmu = buildMixedMassesAmu(endmemberS.atom_types, mAmu);
+    return computeRamanActivities(eigenvectors, ramanTensor, massesAmu);
 }
 
 /**

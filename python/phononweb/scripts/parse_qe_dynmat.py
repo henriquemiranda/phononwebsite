@@ -92,6 +92,29 @@ def parse_qe_dynmat(filename):
                     vals[2 * axis_col], vals[2 * axis_col + 1]
                 )
 
+    # Optional trailing DFPT Raman tensor block (d(chi)/du, present when the
+    # calculation was run with lraman=.true.). Format per atom/polarization:
+    #   atom #    N    pol.  P
+    #   <3x3 real matrix, one row per line>
+    raman_tensor = None
+    atom_pol_re = re.compile(r"^\s*atom\s*#\s*(\d+)\s+pol\.\s*(\d+)")
+    for i in range(row, len(lines)):
+        if "Raman tensor" in lines[i]:
+            raman_tensor = np.zeros((natoms, 3, 3, 3), dtype=np.float64)
+            r = i + 1
+            for _ in range(natoms * 3):
+                while not atom_pol_re.match(lines[r]):
+                    r += 1
+                m = atom_pol_re.match(lines[r])
+                atom_index = int(m.group(1)) - 1
+                pol_index = int(m.group(2)) - 1
+                r += 1
+                for axis_row in range(3):
+                    vals = [float(x.replace("D", "E").replace("d", "e")) for x in lines[r].split()]
+                    raman_tensor[atom_index, pol_index, axis_row, :] = vals
+                    r += 1
+            break
+
     return {
         "natoms": natoms,
         "ntyp": ntyp,
@@ -101,4 +124,5 @@ def parse_qe_dynmat(filename):
         "atom_pos_car": atom_pos_car,
         "lattice": lattice,
         "dynamical_matrix": dynmat,
+        "raman_tensor": raman_tensor,
     }
