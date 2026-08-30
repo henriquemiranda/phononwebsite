@@ -715,6 +715,10 @@ export class PhononJson {
             ? data["eigenvalues"].map((row) => row.slice())
             : null;
         this.repetitions = data["repetitions"];
+
+        this.raman_intensities = data["raman_intensities"] || null;
+        this.gamma_index = data["gamma_index"] || 0;
+
         this.average_mass = data["average_mass"];
         this.mode_amplitude_convention = data["mode_amplitude_convention"];
         this.dynamical_matrix = data["dynamical_matrix"] || null;
