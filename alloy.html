@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Alloy Phonon Visualizer</title>
+    <meta name="author" content="Henrique Miranda, Raoul Weber">
+    <meta name="copyright" content="2014 Theoretical Solid-State Physics Group of University of Luxembourg">
+    <meta http-equiv="content-language" content="text/html; charset=utf-8; en">
+    <meta name="title" content="Alloy Phonon Visualizations">
+    <meta name="description" content="Interactive visualization of phonons for the BaZr(S(1-x)Se(x))3 alloy, mixed live from two end-member dynamical matrices.">
+    <meta name="keywords" content="phonons, lattice vibrations, alloys, visualization">
+    <meta name="Format" content="text/html">
+    <meta name="Language" content="en">
+    <meta charset="utf-8">
+
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+    <style>
+        .flex-container {
+            -webkit-flex-flow: row nowrap;
+            flex-flow: row nowrap;
+            align-items: stretch;
+            height: calc(100vh - 80px);
+        }
+        .flex-menu {
+            width: auto;
+            min-width: 220px;
+            max-width: 280px;
+            flex: 1 1 240px;
+            overflow-y: auto;
+        }
+        .flex-vibcrystal {
+            width: auto;
+            flex: 2 1 0;
+            min-height: 500px;
+            position: relative;
+        }
+        .flex-highcharts {
+            width: auto;
+            flex: 2 1 0;
+            overflow-y: auto;
+        }
+        #vibcrystal {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+        }
+        .alloy-panel {
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .alloy-panel h3 {
+            margin: 6px 0 8px 0;
+            font-size: 13px;
+        }
+        .slider-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 6px;
+            font-size: 12px;
+        }
+        .slider-row label {
+            width: 14px;
+            font-weight: bold;
+            flex-shrink: 0;
+            font-style: italic;
+            color: #333;
+        }
+        .slider-row input[type=range] {
+            flex: 1;
+            min-width: 0;
+        }
+        .slider-val {
+            width: 44px;
+            text-align: right;
+            font-size: 11px;
+            color: #555;
+            flex-shrink: 0;
+            font-family: monospace;
+        }
+        .alloy-name {
+            font-size: 11px;
+            color: #777;
+            margin-top: 2px;
+            word-break: break-all;
+            font-family: monospace;
+            min-height: 14px;
+        }
+        .material-name h1 sub,
+        .material-name h1 sup {
+            font-size: 0.55em;
+            line-height: 0;
+        }
+        .alloy-name sub,
+        .alloy-name sup {
+            font-size: 0.85em;
+            line-height: 0;
+        }
+    </style>
+
+    <script src="alloy.min.js" type="module"></script>
+</head>
+
+<body>
+    <div class="container">
+        <ul class="navigation">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="phonon.html">Phonons</a></li>
+            <li><a href="alloy.html">Alloys</a></li>
+            <li><a href="exciton.html">Excitons</a></li>
+            <li><a href="structure.html">Structures</a></li>
+        </ul>
+        <div class="material-name"><h1 id="name">Material</h1></div>
+        <div class="flex-container">
+            <div class="flex-menu">
+                <div id="menu">
+                    <div class="alloy-panel" id="panel1">
+                        <h3>BaZr(S<sub>1-x</sub>Se<sub>x</sub>)<sub>3</sub></h3>
+                        <div class="slider-row">
+                            <label>x</label>
+                            <input type="range" id="x-slider"
+                                   min="0" max="1" step="0.01" value="0">
+                            <span class="slider-val" id="x-val">0.00</span>
+                        </div>
+                        <div class="slider-row">
+                            <label>m</label>
+                            <input type="range" id="m-slider"
+                                   min="32.06" max="78.97" step="0.1" value="32.06">
+                            <span class="slider-val" id="m-val">32.06</span>
+                        </div>
+                        <div class="alloy-name" id="alloy-name">—</div>
+                        <div class="alloy-name" style="margin-top:6px;">
+                            x mixes the force constants (bonding) between the two
+                            end-member dynamical matrices; m independently overrides
+                            the chalcogen mass at diagonalization time.
+                        </div>
+                    </div>
+
+                    <div id="options-list">
+                        <div>
+                            <h3>Lattice parameters (Ångström):</h3>
+                            <table id="lattice"></table>
+                        </div>
+
+                        <div>
+                            <h3>Atomic positions (reduced):</h3>
+                            <div><table id="atompos"></table></div>
+                        </div>
+
+                        <div>
+                            <h3>Repetitions:</h3>
+                            <input id="nx" value="2" type="number">
+                            <input id="ny" value="2" type="number">
+                            <input id="nz" value="2" type="number">
+                            <button id="update" type="button">update</button>
+                        </div>
+
+                        <div>
+                            <h3>Mode selection:</h3>
+                            k-index <input id="kindex" value="1" type="number">
+                            band    <input id="nindex"  value="1" type="number">
+                            <button id="modeselect" type="button">apply</button>
+                        </div>
+
+                        <div style="display: table;">
+                            <div style="display: table-cell; padding-right: 5px;">
+                                <h3>Camera:</h3>
+                                <button id="camerax" type="button">x</button>
+                                <button id="cameray" type="button">y</button>
+                                <button id="cameraz" type="button">z</button>
+                            </div>
+                            <div style="display: table-cell; padding-right: 5px;">
+                                <h3>Cell:</h3>
+                                <input id="drawcell" type="checkbox">on</input>
+                            </div>
+                            <div style="display: table-cell;">
+                                <h3>Export movie:</h3>
+                                <button id="gifbutton"  type="button">gif</button>
+                                <button id="webmbutton" type="button">webm</button>
+                                <div id="progress"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <input id="mode_weights_plot" type="checkbox">mode weights</input>
+                            <input id="drawshading" type="checkbox" checked>shading</input>
+                        </div>
+
+                        <div>
+                            <h3>Amplitude:</h3>
+                            <input id="amplitude_range" type="range">
+                            <input id="amplitude_box"   type="number">
+                        </div>
+
+                        <div>
+                            <h3>Speed:</h3>
+                            <input id="speed_range" type="range">
+                            <button id="playpause" type="button">pause</button>
+                        </div>
+
+                        <div class="advanced-appearance">
+                            <div class="appearance-subsection">Atom</div>
+                            <div class="appearance-row">
+                                <label for="displaystyle">display</label>
+                                <select id='displaystyle'>
+                                    <option value="jmol">Jmol</option>
+                                    <option value="vesta">Vesta</option>
+                                </select>
+                            </div>
+                            <div class="appearance-row">
+                                <label for="appearance_atom_list">type</label>
+                                <div id="appearance_atom_list" class="appearance-atom-list"></div>
+                            </div>
+                            <div class="appearance-row">
+                                <label for="atom_color_input">color</label>
+                                <input id="atom_color_input" type="color">
+                            </div>
+                            <div class="appearance-row">
+                                <label for="atom_radius_input">radius</label>
+                                <div class="appearance-controls">
+                                    <input id="atom_radius_input" type="number"
+                                           min="0.1" max="5.0" step="0.05" value="1.0">
+                                    <button id="appearance_reset_atom_button" type="button">reset</button>
+                                </div>
+                            </div>
+                            <div class="appearance-subsection">Bonds</div>
+                            <div class="appearance-row">
+                                <label for="bond_color_input">color</label>
+                                <div class="appearance-controls">
+                                    <input id="bond_color_input" type="color">
+                                    <button id="appearance_reset_bonds_button" type="button">reset</button>
+                                </div>
+                            </div>
+                            <div class="appearance-row">
+                                <label for="bond_radius_input">radius</label>
+                                <input id="bond_radius_input" type="number"
+                                       min="0.01" max="1.0" step="0.01" value="0.1">
+                            </div>
+                            <div class="appearance-row">
+                                <label for="bond_color_by_atom_checkbox">split colors</label>
+                                <div class="appearance-controls">
+                                    <input id="bond_color_by_atom_checkbox" type="checkbox">on</input>
+                                </div>
+                            </div>
+                            <div class="appearance-row">
+                                <label for="bond_rules_list">types</label>
+                                <div id="bond_rules_list"></div>
+                            </div>
+                            <div class="appearance-row">
+                                <label for="bond_add_atom_a">bond</label>
+                                <div class="appearance-controls">
+                                    <select id="bond_add_atom_a"></select>
+                                    <select id="bond_add_atom_b"></select>
+                                    <input id="bond_add_cutoff_input" type="number"
+                                           min="0.01" step="0.01" placeholder="max">
+                                    <button id="bond_add_button" type="button">add</button>
+                                </div>
+                            </div>
+                            <div class="appearance-subsection">Vectors</div>
+                            <div class="appearance-row">
+                                <label for="arrow_color_input">color</label>
+                                <input id="arrow_color_input" type="color">
+                            </div>
+                            <div class="appearance-row">
+                                <label for="drawvectors">visible</label>
+                                <div class="appearance-controls">
+                                    <input id="drawvectors" type="checkbox">on</input>
+                                </div>
+                            </div>
+                            <div class="appearance-row">
+                                <label for="vectors_amplitude_range">size</label>
+                                <input id="vectors_amplitude_range" type="range">
+                            </div>
+                            <div class="appearance-row">
+                                <label for="arrow_radius_input">radius</label>
+                                <div class="appearance-controls">
+                                    <input id="arrow_radius_input" type="number"
+                                           min="0.01" max="1.0" step="0.01" value="0.1">
+                                    <button id="appearance_reset_vectors_button" type="button">reset</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex-vibcrystal"><div id="vibcrystal"></div></div>
+            <div class="flex-highcharts"><div id="highcharts"></div></div>
+        </div>
+    </div>
+</body>
+</html>

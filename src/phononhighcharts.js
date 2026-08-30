@@ -620,6 +620,11 @@ export class PhononHighcharts {
         let baseColor = this.showModeWeights ? '#94a3b8' : '#0066FF';
         let visibleTypeIndices = this.getVisibleAtomTypeIndices();
         let singleVisibleType = visibleTypeIndices.length === 1 ? visibleTypeIndices[0] : null;
+        // With a single q-point there is no dispersion to draw a line along --
+        // every band collapses to one stacked point at x=0. Draw those as a
+        // visible, clickable "stick spectrum" of modes instead of 1px dots.
+        let isSingleQpoint = dists.length === 1;
+        let markerRadius = isSingleQpoint ? 5 : 1;
 
         //go through the eigenvalues and create eival list
         for (let n=0; n<nbands; n++) {
@@ -649,7 +654,7 @@ export class PhononHighcharts {
                         lineWidth: this.showModeWeights ? 0.8 : 2,
                         zIndex: 5,
                         showInLegend: false,
-                        marker: { radius: 1, symbol: "circle"},
+                        marker: { radius: markerRadius, symbol: "circle"},
                         data: eig
                     });
 
