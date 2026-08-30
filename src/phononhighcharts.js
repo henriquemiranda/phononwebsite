@@ -539,6 +539,14 @@ export class PhononHighcharts {
             this.chart.destroy();
             this.chart = null;
         }
+        // The old chart's points (including any previously-selected point) are
+        // gone now -- selectModePoint() must not try to deselect a point that
+        // belonged to the destroyed chart on its next call, or Highcharts
+        // throws inside point.select() trying to reach the point's dead chart.
+        this.selectedPoint = null;
+        this.selectedBandIndex = null;
+        this.selectedK = null;
+        this.selectedX = null;
         this.chart = globalThis.Highcharts.chart(this.container[0], this.HighchartsOptions);
         this.refreshLegendAndWeights();
     }
