@@ -207,8 +207,12 @@
             </div>
             <div class="flex-vibcrystal"><div id="vibcrystal"></div></div>
             <div class="flex-highcharts">
+                <div id="plot-view-controls" role="tablist" aria-label="Plot view" style="display:none; margin-bottom:12px;">
+                    <button type="button" role="tab" data-plot-view="dispersion" aria-selected="false">Dispersion</button>
+                    <button type="button" role="tab" data-plot-view="raman" aria-selected="false">Raman</button>
+                </div>
                 <div id="highcharts"></div>
-                <div id="raman-spectrum" style="height: 400px; width: 100%; margin-top: 20px;"></div>
+                <div id="raman-spectrum" style="display:none; height: 400px; width: 100%; margin-top: 20px;"></div>
             </div>
         </div>
     </div>
