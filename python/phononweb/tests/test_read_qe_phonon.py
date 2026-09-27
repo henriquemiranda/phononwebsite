@@ -1,11 +1,14 @@
 from pathlib import Path
 
 import numpy as np
+import pytest
 
 from phononweb.scripts.read_qe_phonon import (
+    reorder_raman_activities,
     read_raman_intensities,
     stokes_intensity_factor,
 )
+from phononweb.qephonon import QePhonon
 
 FIXTURE_DYNMAT = (
     Path(__file__).resolve().parents[3]
@@ -40,3 +43,33 @@ def test_stokes_intensity_factor_matches_reference_values():
     factor = stokes_intensity_factor(frequencies, 300.0)
 
     np.testing.assert_allclose(factor, [1.11081904e-05, 6.23692705e-06], rtol=1e-6)
+
+
+def test_reorder_raman_activities_uses_gamma_branch_order():
+    assert reorder_raman_activities([10.0, 20.0, 30.0], [1, 0, 2]).tolist() == [20.0, 10.0, 30.0]
+
+
+def test_reorder_raman_activities_rejects_mismatched_mode_counts():
+    with pytest.raises(ValueError, match='Raman mode count'):
+        reorder_raman_activities([10.0, 20.0], [0, 1, 2])
+
+
+def test_reorder_eigenvalues_records_raw_mode_order_at_each_qpoint():
+    phonon = QePhonon.__new__(QePhonon)
+    phonon.nqpoints = 2
+    phonon.nphons = 3
+    phonon.natoms = 1
+    phonon.eigenvalues = np.array([[100.0, 200.0, 300.0], [205.0, 105.0, 305.0]])
+    phonon.eigenvectors = np.zeros((2, 3, 1, 3, 2))
+
+    phonon.eigenvectors[0, 0, 0, 0, 0] = 1.0
+    phonon.eigenvectors[0, 1, 0, 1, 0] = 1.0
+    phonon.eigenvectors[0, 2, 0, 2, 0] = 1.0
+    phonon.eigenvectors[1, 0, 0, 1, 0] = 1.0
+    phonon.eigenvectors[1, 1, 0, 0, 0] = 1.0
+    phonon.eigenvectors[1, 2, 0, 2, 0] = 1.0
+
+    phonon.reorder_eigenvalues()
+
+    assert phonon.mode_order.tolist() == [[0, 1, 2], [1, 0, 2]]
+    np.testing.assert_allclose(phonon.eigenvalues[1], [105.0, 205.0, 305.0])

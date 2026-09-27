@@ -61,6 +61,19 @@ def read_raman_intensities(filename):
         print(f"Error reading dynmat file: {e}")
         return None
 
+def reorder_raman_activities(activities, mode_order):
+    """Reorder raw QE Raman activities into the branch-connected mode order."""
+    activities = np.asarray(activities, dtype=float)
+    mode_order = np.asarray(mode_order, dtype=int)
+    if len(activities) != len(mode_order):
+        raise ValueError(
+            f"Raman mode count ({len(activities)}) does not match "
+            f"the Gamma-point mode count ({len(mode_order)})."
+        )
+    if not np.array_equal(np.sort(mode_order), np.arange(len(mode_order))):
+        raise ValueError("Invalid mode-order mapping at the Gamma point.")
+    return activities[mode_order]
+
 def main():
     parser = argparse.ArgumentParser(description='Read QE phonon data and optionally inject Raman intensities.')
     parser.add_argument('prefix',            help='the prefix used in calculation')
@@ -105,17 +118,15 @@ def main():
                 frequencies = np.array(data['eigenvalues'][gamma_index])
                 raw_activities = np.array(raman_data)
 
-                if len(raw_activities) != len(frequencies):
+                ordered_activities = reorder_raman_activities(
+                    raw_activities,
+                    q.mode_order[gamma_index],
+                )
+                if len(ordered_activities) != len(frequencies):
                     raise ValueError(
-                        f"Raman mode count ({len(raw_activities)}) does not match "
+                        f"Raman mode count ({len(ordered_activities)}) does not match "
                         f"the Gamma-point mode count ({len(frequencies)})."
                     )
-
-                mode_order = np.asarray(q.mode_order[gamma_index], dtype=int)
-                if not np.array_equal(np.sort(mode_order), np.arange(len(frequencies))):
-                    raise ValueError(f"Invalid mode-order mapping at Gamma point {gamma_index}.")
-
-                ordered_activities = raw_activities[mode_order]
                 conversion_factors = stokes_intensity_factor(frequencies, 300.0)
                 corrected_intensities = ordered_activities * conversion_factors
                 max_val = np.max(corrected_intensities)
