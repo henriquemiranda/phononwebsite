@@ -671,7 +671,9 @@ export class PhononWebpage {
         const phononContainer = document.getElementById('highcharts');
         const ramanContainer = document.getElementById('raman-spectrum');
         const tableContainer = document.getElementById('raman-table-container');
+        const plotContainer = document.querySelector('.flex-highcharts');
         if (!this.phonon || !this.phonon.raman_intensities) {
+            if (plotContainer) plotContainer.classList.remove('raman-enabled');
             if (controls) controls.style.display = 'none';
             if (ramanContainer) ramanContainer.style.display = 'none';
             if (phononContainer) phononContainer.style.display = '';
@@ -680,6 +682,7 @@ export class PhononWebpage {
             return;
         }
 
+        if (plotContainer) plotContainer.classList.add('raman-enabled');
         if (controls) {
             controls.style.display = 'block';
             if (!this.plotViewControlsInitialized) {

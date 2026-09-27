@@ -246,10 +246,17 @@ h3 {
 }
 
 #plot-chart-area {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.flex-highcharts.raman-enabled #plot-chart-area {
+    top: 40px;
     height: calc(100% - 40px);
     min-height: 400px;
-    width: 100%;
-    position: relative;
 }
 
 #highcharts,
