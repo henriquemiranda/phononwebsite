@@ -32,18 +32,23 @@ class Phonon():
 
         eig = np.zeros([self.nqpoints,self.nphons])
         eiv = np.zeros([self.nqpoints,self.nphons,self.nphons],dtype=complex)
-        #set order at gamma
+        mode_order = np.zeros([self.nqpoints,self.nphons],dtype=int)
+        # Track each connected branch's source index in the original q-point order.
+        # The first q-point is the reference ordering for the full path.
         order = list(range(self.nphons))
+        mode_order[0] = order
         eig[0] = self.eigenvalues[0]
         eiv[0] = vectors[0]
         for k in range(1,self.nqpoints):
             order = estimate_band_connection(vectors[k-1].T,vectors[k].T,order)
+            mode_order[k] = order
             for n,i in enumerate(order):
                 eig[k,n] = self.eigenvalues[k,i]
                 eiv[k,n] = vectors[k,i]
 
         #update the eigenvalues with the ordered version
         self.eigenvalues  = eig
+        self.mode_order = mode_order
         dim = (self.nqpoints,self.nphons,self.natoms,3,2)
         self.eigenvectors = eiv.view(float).reshape(dim)
 
@@ -271,5 +276,3 @@ class Phonon():
         text += str(self.nqpoints)
         text += "\n"
         return text
-
-

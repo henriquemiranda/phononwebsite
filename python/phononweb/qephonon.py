@@ -35,7 +35,8 @@ class QePhonon(Phonon):
         if modes: filename = "%s/%s"%(self.folder,modes)
         else :    filename = "%s/%s.modes"%(self.folder,self.prefix)
         self.read_modes(filename)
-        
+
+        self.mode_order = np.tile(np.arange(self.nphons), (self.nqpoints, 1))
 
         #reorder eigenvalues
         if reorder:
@@ -128,4 +129,3 @@ class QePhonon(Phonon):
             pass
         else:
             raise ValueError("Coordinate format %s in input file not known"%pos_type)
-

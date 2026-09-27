@@ -104,16 +104,24 @@ def main():
             if gamma_index is not None:
                 frequencies = np.array(data['eigenvalues'][gamma_index])
                 raw_activities = np.array(raman_data)
-                
-                length = min(len(frequencies), len(raw_activities))
-                conversion_factors = stokes_intensity_factor(frequencies[:length], 300.0)
-                corrected_intensities = raw_activities[:length] * conversion_factors
+
+                if len(raw_activities) != len(frequencies):
+                    raise ValueError(
+                        f"Raman mode count ({len(raw_activities)}) does not match "
+                        f"the Gamma-point mode count ({len(frequencies)})."
+                    )
+
+                mode_order = np.asarray(q.mode_order[gamma_index], dtype=int)
+                if not np.array_equal(np.sort(mode_order), np.arange(len(frequencies))):
+                    raise ValueError(f"Invalid mode-order mapping at Gamma point {gamma_index}.")
+
+                ordered_activities = raw_activities[mode_order]
+                conversion_factors = stokes_intensity_factor(frequencies, 300.0)
+                corrected_intensities = ordered_activities * conversion_factors
                 max_val = np.max(corrected_intensities)
                 if max_val > 0:
                     corrected_intensities = corrected_intensities / max_val
-                final_intensities = np.zeros(len(frequencies))
-                final_intensities[-length:] = corrected_intensities[-length:]
-                data['raman_intensities'] = final_intensities.tolist()
+                data['raman_intensities'] = corrected_intensities.tolist()
                 data['gamma_index'] = gamma_index
                 
                 with open(json_filename, 'w') as f:
