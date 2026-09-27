@@ -1,9 +1,11 @@
 from pathlib import Path
+import sys
 
 import numpy as np
 import pytest
 
 from phononweb.scripts.read_qe_phonon import (
+    main as read_qe_phonon_main,
     reorder_raman_activities,
     read_raman_intensities,
     stokes_intensity_factor,
@@ -73,3 +75,35 @@ def test_reorder_eigenvalues_records_raw_mode_order_at_each_qpoint():
 
     assert phonon.mode_order.tolist() == [[0, 1, 2], [1, 0, 2]]
     np.testing.assert_allclose(phonon.eigenvalues[1], [105.0, 205.0, 305.0])
+
+
+def test_main_rejects_mismatched_raman_mode_count_before_writing_json(tmp_path, monkeypatch, capsys):
+    fixture_dir = FIXTURE_DYNMAT.parent
+    for filename in ('gr.scf', 'gr.modes'):
+        (tmp_path / filename).write_bytes((fixture_dir / filename).read_bytes())
+
+    dynmat_lines = FIXTURE_DYNMAT.read_text().splitlines()
+    table_header = next(
+        i for i, line in enumerate(dynmat_lines)
+        if 'mode' in line and 'Raman' in line
+    )
+    short_dynmat = tmp_path / 'short.dynmat.out'
+    short_dynmat.write_text('\n'.join(dynmat_lines[:table_header + 3]) + '\n')
+
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(
+        sys,
+        'argv',
+        [
+            'read_qe_phonon', 'gr', 'Graphene',
+            '--scf', 'gr.scf', '--modes', 'gr.modes',
+            '--dynmat', 'short.dynmat.out', '--writeonly',
+        ],
+    )
+
+    with pytest.raises(SystemExit) as error:
+        read_qe_phonon_main()
+
+    assert error.value.code == 2
+    assert 'Raman mode count (2)' in capsys.readouterr().err
+    assert not (tmp_path / 'Graphene.json').exists()
