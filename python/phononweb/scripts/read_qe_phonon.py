@@ -13,7 +13,11 @@ import argparse
 import sys
 import json
 import numpy as np
-from scipy.constants import h, c, k
+
+# Exact SI constants for the Raman Stokes intensity conversion.
+h = 6.62607015e-34  # Planck constant (J s)
+c = 299792458.0  # Speed of light in vacuum (m/s)
+k = 1.380649e-23  # Boltzmann constant (J/K)
 
 def stokes_intensity_factor(f, t):
     """
