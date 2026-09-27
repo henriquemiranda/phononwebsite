@@ -89294,7 +89294,7 @@ function requireHighcharts () {
 }
 
 var highchartsExports = requireHighcharts();
-var Highcharts = /*@__PURE__*/getDefaultExportFromCjs(highchartsExports);
+var Highcharts$1 = /*@__PURE__*/getDefaultExportFromCjs(highchartsExports);
 
 /*! js-yaml 4.1.0 https://github.com/nodeca/js-yaml @license MIT */
 function isNothing(subject) {
@@ -108695,6 +108695,10 @@ class PhononJson {
             ? data["eigenvalues"].map((row) => row.slice())
             : null;
         this.repetitions = data["repetitions"];
+
+        this.raman_intensities = data["raman_intensities"] || null;
+        this.gamma_index = data["gamma_index"] || 0;
+
         this.average_mass = data["average_mass"];
         this.mode_amplitude_convention = data["mode_amplitude_convention"];
         this.dynamical_matrix = data["dynamical_matrix"] || null;
@@ -109523,6 +109527,8 @@ class PhononWebpage {
         this.materialsIndex = [];
         this.disabledReferenceKeys = new Set();
         this.loadingState = null;
+        this.activePlotView = null;
+        this.plotViewControlsInitialized = false;
     }
 
     getModeMaxDisplacementNorm() {
@@ -110124,6 +110130,175 @@ class PhononWebpage {
         this.selectMode(this.dom_k.val(), this.dom_n.val(), true);
     }
 
+    setPlotView(view) {
+        if (view !== 'dispersion' && view !== 'raman') return;
+        this.activePlotView = view;
+
+        const phononContainer = document.getElementById('highcharts');
+        const ramanContainer = document.getElementById('raman-spectrum');
+        if (phononContainer) phononContainer.style.display = view === 'dispersion' ? '' : 'none';
+        if (ramanContainer) ramanContainer.style.display = view === 'raman' ? 'flex' : 'none';
+
+        const controls = document.getElementById('plot-view-controls');
+        if (controls) {
+            controls.querySelectorAll('[data-plot-view]').forEach((button) => {
+                button.setAttribute('aria-selected', String(button.dataset.plotView === view));
+            });
+        }
+        if (view === 'raman' && typeof Highcharts !== 'undefined') {
+            const chart = Highcharts.charts.find((candidate) =>
+                candidate && candidate.renderTo && candidate.renderTo.id === 'raman-spectrum-chart'
+            );
+            if (chart) chart.reflow();
+        }
+    }
+
+    plotRaman() {
+        const controls = document.getElementById('plot-view-controls');
+        const phononContainer = document.getElementById('highcharts');
+        const ramanContainer = document.getElementById('raman-spectrum');
+        const tableContainer = document.getElementById('raman-table-container');
+        const plotContainer = document.querySelector('.flex-highcharts');
+        if (!this.phonon || !this.phonon.raman_intensities) {
+            if (plotContainer) plotContainer.classList.remove('raman-enabled');
+            if (controls) controls.style.display = 'none';
+            if (ramanContainer) ramanContainer.style.display = 'none';
+            if (phononContainer) phononContainer.style.display = '';
+            if (tableContainer) tableContainer.innerHTML = '';
+            this.activePlotView = null;
+            return;
+        }
+
+        if (plotContainer) plotContainer.classList.add('raman-enabled');
+        if (controls) {
+            controls.style.display = 'block';
+            if (!this.plotViewControlsInitialized) {
+                controls.querySelectorAll('[data-plot-view]').forEach((button) => {
+                    button.addEventListener('click', () => this.setPlotView(button.dataset.plotView));
+                });
+                this.plotViewControlsInitialized = true;
+            }
+        }
+        if (!this.activePlotView) this.activePlotView = 'raman';
+        this.setPlotView(this.activePlotView);
+        window.app = this;
+        
+        let self = this;
+        let gamma_idx = this.phonon.gamma_index || 0;
+        let frequencies = this.phonon.eigenvalues[gamma_idx];
+        let intensities = this.phonon.raman_intensities;
+        
+        let gamma = 2.0;
+        let maxFreq = Math.max(...frequencies) + 50;
+        
+        let continuousData = [];
+        let stickData = [];  
+        let allModes = [];   
+        
+        for (let i = 0; i < frequencies.length; i++) {
+            let I_at_peak = 0;
+            for (let j = 0; j < frequencies.length; j++) {
+                if (intensities[j] > 0) {
+                    let dw = frequencies[i] - frequencies[j];
+                    I_at_peak += intensities[j] * ((gamma * gamma) / (dw * dw + gamma * gamma));
+                }
+            }
+        
+            let isActive = intensities[i] > 0;
+        
+            allModes.push({ 
+                x: frequencies[i], 
+                y: I_at_peak, 
+                modeIndex: i, 
+                active: isActive 
+            });
+        
+            if (isActive) {
+                stickData.push({ x: frequencies[i], y: I_at_peak, modeIndex: i });
+            }
+        }
+        
+        for (let w = 0; w < maxFreq; w += 1) {
+            let I_total = 0;
+            for (let i = 0; i < frequencies.length; i++) {
+                if (intensities[i] > 0) {
+                    let dw = w - frequencies[i];
+                    I_total += intensities[i] * ((gamma * gamma) / (dw * dw + gamma * gamma));
+                }
+            }
+            continuousData.push([w, I_total]);
+        }
+        
+        if (typeof Highcharts !== 'undefined') {
+            let existingChart = Highcharts.charts.find(c => c && c.renderTo && c.renderTo.id === 'raman-spectrum-chart');
+            if (existingChart) existingChart.destroy();
+        
+            Highcharts.chart('raman-spectrum-chart', {
+                title: { text: 'Raman Spectrum' },
+                xAxis: { title: { text: 'Frequency (cm⁻¹)' } },
+                yAxis: { title: { text: 'Intensity' } },
+                series: [
+                    {
+                        name: 'Spectrum',
+                        type: 'line',
+                        data: continuousData,
+                        color: '#2c3e50',
+                        marker: { enabled: false },
+                        enableMouseTracking: false
+                    },
+                    {
+                        name: 'Active Modes',
+                        type: 'scatter',
+                        data: stickData,
+                        color: '#e74c3c',
+                        cursor: 'pointer',
+                        point: {
+                            events: {
+                                click: function () {
+                                    self.selectModeByBandIndex(gamma_idx, this.modeIndex);
+                                }
+                            }
+                        }
+                    }
+                ]
+            });
+        }
+        
+        const maxI = Math.max(...allModes.filter(m => m.active).map(d => d.y));
+        let tableHTML = `
+                <table id="raman-table" style="width:100%; border-collapse:collapse; font-size:14px; font-family:sans-serif;">
+                    <thead style="position: sticky; top: 0; z-index: 10;">
+                        <tr style="background:#2c3e50; color:white;">
+                            <th style="padding:10px; text-align:center; background:#2c3e50;">Mode #</th>
+                            <th style="padding:10px; text-align:center; background:#2c3e50;">Frequency (cm⁻¹)</th>
+                            <th style="padding:10px; text-align:center; background:#2c3e50;">Intensity (norm.)</th>
+                            <th style="padding:10px; text-align:center; background:#2c3e50;">Raman Active</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${allModes
+                            .sort((a, b) => a.x - b.x)
+                            .map((d, i) => `
+                                <tr style="border-bottom: 1px solid #eee; background:${d.active ? '#fff3f3' : (i % 2 === 0 ? '#f9f9f9' : 'white')};">
+                                    <td style="padding:8px; text-align:center;">${d.modeIndex + 1}</td>
+                                    
+                                    <td style="padding:8px; text-align:center;">
+                                        <span style="color:#3498db; text-decoration:underline; cursor:pointer; font-weight:bold;"
+                                              onclick="window.app.selectModeByBandIndex(${gamma_idx}, ${d.modeIndex})"
+                                              title="Visualize this phonon mode">
+                                            ${d.x.toFixed(2)}
+                                        </span>
+                                    </td>
+                                    
+                                    <td style="padding:8px; text-align:center;">${d.active ? (d.y / maxI).toFixed(4) : '—'}</td>
+                                    <td style="padding:8px; text-align:center; color:#e74c3c;">${d.active ? '<b>✓</b>' : ''}</td>
+                                </tr>`)
+                            .join('')}
+                    </tbody>
+                </table>`;
+
+        if (tableContainer) tableContainer.innerHTML = tableHTML;
+    }
     update(dispersion = true) {
         /*
         Update all the aspects fo the webpage
@@ -110157,6 +110332,7 @@ class PhononWebpage {
                 this.dispersion.selectModePoint(this.phonon, this.k, this.n);
             }
         }
+       this.plotRaman();
     }
 
     getDispersionOptions() {
@@ -110520,7 +110696,7 @@ function resolveGifConstructor(mod) {
 globalThis.THREE = THREE;
 globalThis.$ = $$1;
 globalThis.jQuery = $$1;
-globalThis.Highcharts = Highcharts;
+globalThis.Highcharts = Highcharts$1;
 globalThis.Complex = createComplex;
 globalThis.jsyaml = jsYaml;
 const GIF$1 = resolveGifConstructor(GIFLib);

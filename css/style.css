@@ -245,10 +245,45 @@ h3 {
     position: absolute;
 }
 
-#highcharts {
+#plot-chart-area {
     height: 100%;
     width: 100%;
     position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.flex-highcharts.raman-enabled #plot-chart-area {
+    top: 40px;
+    height: calc(100% - 40px);
+    min-height: 400px;
+}
+
+#highcharts,
+#raman-spectrum {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+
+#raman-spectrum {
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#raman-spectrum-chart {
+    flex: 3 1 0;
+    min-height: 0;
+    position: relative;
+    width: 100%;
+}
+
+#raman-table-container {
+    flex: 2 1 0;
+    min-height: 0;
+    overflow-y: auto;
+    width: 100%;
 }
 
 #structureviewer {
