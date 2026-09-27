@@ -99,47 +99,58 @@ def main():
     if args.reps:   q.set_repetitions(args.reps)
 
     print(q)
-    q.write_json()
-    
+
+    raman_payload = None
     if args.dynmat:
         raman_data = read_raman_intensities(args.dynmat)
-        
-        if raman_data:
-            with open(json_filename, 'r') as f:
-                data = json.load(f)
 
-            gamma_index = None
-            for i, qpt in enumerate(data.get('qpoints', [])):
-                if all(abs(x) < 1e-5 for x in qpt):
-                    gamma_index = i
-                    break
-            
-            if gamma_index is not None:
-                frequencies = np.array(data['eigenvalues'][gamma_index])
-                raw_activities = np.array(raman_data)
+        if raman_data is None:
+            parser.error(f"Could not read Raman data from {args.dynmat!r}.")
+        if not raman_data:
+            parser.error(f"No Raman mode table found in {args.dynmat!r}.")
 
-                ordered_activities = reorder_raman_activities(
-                    raw_activities,
-                    q.mode_order[gamma_index],
-                )
-                if len(ordered_activities) != len(frequencies):
-                    raise ValueError(
-                        f"Raman mode count ({len(ordered_activities)}) does not match "
-                        f"the Gamma-point mode count ({len(frequencies)})."
-                    )
-                conversion_factors = stokes_intensity_factor(frequencies, 300.0)
-                corrected_intensities = ordered_activities * conversion_factors
-                max_val = np.max(corrected_intensities)
-                if max_val > 0:
-                    corrected_intensities = corrected_intensities / max_val
-                data['raman_intensities'] = corrected_intensities.tolist()
-                data['gamma_index'] = gamma_index
-                
-                with open(json_filename, 'w') as f:
-                    json.dump(data, f, indent=1)
-                print("Success")
-            else:
-                print("Warning: Gamma point not found.")
+        gamma_index = next(
+            (
+                i for i, qpt in enumerate(q.qpoints)
+                if all(abs(x) < 1e-5 for x in qpt)
+            ),
+            None,
+        )
+        if gamma_index is None:
+            parser.error("Gamma point not found in the QE modes data.")
+
+        frequencies = np.asarray(q.eigenvalues[gamma_index])
+        try:
+            ordered_activities = reorder_raman_activities(
+                raman_data,
+                q.mode_order[gamma_index],
+            )
+        except ValueError as error:
+            parser.error(str(error))
+        if len(ordered_activities) != len(frequencies):
+            parser.error(
+                f"Raman mode count ({len(ordered_activities)}) does not match "
+                f"the Gamma-point mode count ({len(frequencies)})."
+            )
+
+        conversion_factors = stokes_intensity_factor(frequencies, 300.0)
+        corrected_intensities = ordered_activities * conversion_factors
+        max_val = np.max(corrected_intensities)
+        if max_val > 0:
+            corrected_intensities = corrected_intensities / max_val
+        raman_payload = {
+            'raman_intensities': corrected_intensities.tolist(),
+            'gamma_index': gamma_index,
+        }
+
+    q.write_json()
+    if raman_payload:
+        with open(json_filename, 'r') as f:
+            data = json.load(f)
+        data.update(raman_payload)
+        with open(json_filename, 'w') as f:
+            json.dump(data, f, indent=1)
+        print("Success")
 
     if not args.writeonly:
         q.open_json()
