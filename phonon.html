@@ -211,8 +211,13 @@
                     <button type="button" role="tab" data-plot-view="dispersion" aria-selected="false">Dispersion</button>
                     <button type="button" role="tab" data-plot-view="raman" aria-selected="false">Raman</button>
                 </div>
-                <div id="highcharts"></div>
-                <div id="raman-spectrum" style="display:none; height: 400px; width: 100%; margin-top: 20px;"></div>
+                <div id="plot-chart-area">
+                    <div id="highcharts"></div>
+                    <div id="raman-spectrum">
+                        <div id="raman-spectrum-chart"></div>
+                        <div id="raman-table-container"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

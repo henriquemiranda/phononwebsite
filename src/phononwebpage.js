@@ -650,7 +650,7 @@ export class PhononWebpage {
         const phononContainer = document.getElementById('highcharts');
         const ramanContainer = document.getElementById('raman-spectrum');
         if (phononContainer) phononContainer.style.display = view === 'dispersion' ? '' : 'none';
-        if (ramanContainer) ramanContainer.style.display = view === 'raman' ? 'block' : 'none';
+        if (ramanContainer) ramanContainer.style.display = view === 'raman' ? 'flex' : 'none';
 
         const controls = document.getElementById('plot-view-controls');
         if (controls) {
@@ -658,12 +658,9 @@ export class PhononWebpage {
                 button.setAttribute('aria-selected', String(button.dataset.plotView === view));
             });
         }
-        const tableContainer = document.getElementById('raman-table-container');
-        if (tableContainer) tableContainer.style.display = view === 'raman' ? 'block' : 'none';
-
         if (view === 'raman' && typeof Highcharts !== 'undefined') {
             const chart = Highcharts.charts.find((candidate) =>
-                candidate && candidate.renderTo && candidate.renderTo.id === 'raman-spectrum'
+                candidate && candidate.renderTo && candidate.renderTo.id === 'raman-spectrum-chart'
             );
             if (chart) chart.reflow();
         }
@@ -678,7 +675,7 @@ export class PhononWebpage {
             if (controls) controls.style.display = 'none';
             if (ramanContainer) ramanContainer.style.display = 'none';
             if (phononContainer) phononContainer.style.display = '';
-            if (tableContainer) tableContainer.remove();
+            if (tableContainer) tableContainer.innerHTML = '';
             this.activePlotView = null;
             return;
         }
@@ -743,10 +740,10 @@ export class PhononWebpage {
         }
         
         if (typeof Highcharts !== 'undefined') {
-            let existingChart = Highcharts.charts.find(c => c && c.renderTo && c.renderTo.id === 'raman-spectrum');
+            let existingChart = Highcharts.charts.find(c => c && c.renderTo && c.renderTo.id === 'raman-spectrum-chart');
             if (existingChart) existingChart.destroy();
         
-            Highcharts.chart('raman-spectrum', {
+            Highcharts.chart('raman-spectrum-chart', {
                 title: { text: 'Raman Spectrum' },
                 xAxis: { title: { text: 'Frequency (cm⁻¹)' } },
                 yAxis: { title: { text: 'Intensity' } },
@@ -778,10 +775,7 @@ export class PhononWebpage {
         }
         
         const maxI = Math.max(...allModes.filter(m => m.active).map(d => d.y));
-        let existingContainer = document.getElementById('raman-table-container');
-        if (existingContainer) existingContainer.remove();
         let tableHTML = `
-            <div id="raman-table-container" style="display:${this.activePlotView === 'raman' ? 'block' : 'none'}; max-height: 400px; overflow-y: auto; margin-top: 16px; border: 1px solid #ccc;">
                 <table id="raman-table" style="width:100%; border-collapse:collapse; font-size:14px; font-family:sans-serif;">
                     <thead style="position: sticky; top: 0; z-index: 10;">
                         <tr style="background:#2c3e50; color:white;">
@@ -811,13 +805,9 @@ export class PhononWebpage {
                                 </tr>`)
                             .join('')}
                     </tbody>
-                </table>
-            </div>`;
-        
-        const flexHighcharts = document.querySelector('.flex-highcharts');
-        if (flexHighcharts) {
-            flexHighcharts.insertAdjacentHTML('beforeend', tableHTML);
-        }
+                </table>`;
+
+        if (tableContainer) tableContainer.innerHTML = tableHTML;
     }
     update(dispersion = true) {
         /*
