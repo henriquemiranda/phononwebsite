@@ -50,5 +50,16 @@ export default [
             }
         ],
         plugins,
+    },
+    {
+        input: 'src/alloymain.js',
+        output: [
+            {
+                format: 'es',
+                file: 'build/alloy.js',
+                sourcemap: true,
+            }
+        ],
+        plugins,
     }
 ];
