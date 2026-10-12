@@ -259,18 +259,13 @@ function fixActiveModesDots() {
         if (s.type !== 'scatter' && !(s.options && s.options.type === 'scatter')) return;
 
         s.points.forEach(point => {
-            let modeIdx = -1;
-            let minDiff = Infinity;
-            
-            for (let i = 0; i < frq.length; i++) {
-                const diff = Math.abs(frq[i] - point.x);
-                if (diff < minDiff) {
-                    minDiff = diff;
-                    modeIdx = i;
-                }
-            }
+            // Each point already carries its own mode index (set when the
+            // series was built in plotRaman()); matching by closest
+            // frequency instead was fragile whenever two modes of different
+            // symmetry land within 0.1 cm-1 of each other.
+            const modeIdx = point.modeIndex;
 
-            if (modeIdx !== -1 && minDiff < 0.1) {
+            if (modeIdx !== undefined && modeIdx !== null) {
                 const sym  = symLabels[modeIdx];
                 const show = sym ? activeSym.has(sym) : false;
 
