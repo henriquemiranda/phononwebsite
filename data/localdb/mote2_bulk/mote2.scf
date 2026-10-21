@@ -1,0 +1,38 @@
+&control
+          wf_collect = .true.,
+         calculation = 'scf',
+           verbosity = 'high',
+          pseudo_dir = '/work/projects/tss-physics/pseudos/espresso',
+              prefix = "mote2",
+/&end
+&system
+             ecutwfc = 60,
+         occupations = "fixed",
+           celldm(1) = 6.567862405,
+               ibrav = 4,
+           celldm(3) = 3.965571151,
+                 nat = 6,
+                ntyp = 2,
+/&end
+&electrons
+         mixing_beta = 0.5,
+            conv_thr = 1.d-10,
+/&end
+&ions
+        ion_dynamics = 'bfgs',
+/&end
+&cell
+         cell_dofree = 'all',
+/&end
+ATOMIC_SPECIES
+  Mo   95.940    Mo.rel-pz-ape.UPF
+  Te  127.600        Te.pz-hgh.UPF
+ATOMIC_POSITIONS { crystal }
+Mo       0.333333333   0.666666667   0.000000000
+Te       0.666666667   0.333333333   0.129764691
+Te       0.666666667   0.333333333  -0.129764691
+Mo       0.666666667   0.333333333   0.500000000
+Te       0.333333333   0.666666667   0.629764691
+Te       0.333333333   0.666666667   0.370235309
+K_POINTS { automatic }
+ 12 12 4 0 0  0

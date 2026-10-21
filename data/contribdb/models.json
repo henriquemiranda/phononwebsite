@@ -1,0 +1,18 @@
+[
+    {
+        "name": "Bulk TiSe2",
+        "folder": "data/contribdb/tise2_bulk",
+        "author": "M. Calandra, F. Mauri",
+        "year": "2011",
+        "url": "https://doi.org/10.1103/PhysRevLett.106.196406",
+        "journal": "PRL"
+    },
+    {
+        "name": "Bulk hBN",
+        "folder": "data/contribdb/hbn_bulk",
+        "author": "F. Paleari",
+        "year": "2018",
+        "url": "https://doi.org/10.1103/PhysRevLett.122.187401",
+        "journal": "PRL"
+    }
+]

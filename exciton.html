@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TSS Physics - Visualization of excitons</title>
+    <meta name="author" content="Henrique Miranda, Raoul Weber">
+    <meta name="copyright" content="2015 Theoretical Solid-State Physics Group of University of Luxembourg">
+    <meta http-equiv="content-language" content="text/html; charset=utf-8; en">
+    <meta name="title" content="Theoretical Solid-State Physics: Exciton visualizations">
+    <meta name="description" content="Interactive website for the visualization of excitons.">
+    <meta name="keywords" content="University of Luxembourg, theoretical solid-state physics, excitons, optical absorption, wavefunctions">
+    <meta charset="utf-8">
+
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="exciton.min.js" type="module"></script>
+</head>
+
+<body>
+    <div class="container">
+        <ul class="navigation">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="phonon.html">Phonons</a></li>
+            <li><a href="exciton.html">Excitons</a></li>
+            <li><a href="structure.html">Structures</a></li>
+        </ul>
+        <div class="material-name"><h1 id="name">Exciton</h1></div>
+        <div class="flex-container">
+            <div class="flex-menu">
+                <div id="menu">
+                    <div id="material-list" class="exciton-material-panel">
+                        <h3>Materials:</h3>
+                        <ul id="mat" class="exciton-material-list"></ul>
+                    </div>
+
+                    <div id="options-list">
+                        <div>
+                            <h3>Custom file:</h3>
+                            <input type="file" id="file-input" name="customfile" accept=".json">
+                        </div>
+
+                        <div>
+                            <h3>Lattice parameters (Ångström):</h3>
+                            <table id="lattice">
+                            </table>
+                        </div>
+
+                        <div class="isosurface-section">
+                            <h3>Isosurface:</h3>
+                            <div class="appearance-row">
+                                <label for="isosurface_mode">render</label>
+                                <select id="isosurface_mode">
+                                    <option value="marching-cubes">marching cubes</option>
+                                    <option value="raymarch-trilinear">raymarch trilinear</option>
+                                    <option value="raymarch-tricubic">raymarch tricubic</option>
+                                </select>
+                            </div>
+                            <div class="appearance-row">
+                                <label for="isolevel_range">level</label>
+                                <div class="isosurface-control-field">
+                                    <input id="isolevel_range" class="input-isolevel" type="range" min="0.001" max="1.0" step="0.001" value="0.02">
+                                    <div id="isolevel_value" class="isosurface-control-value">0.020</div>
+                                </div>
+                            </div>
+                            <div class="appearance-row">
+                                <label for="isosurface_opacity_range">opacity</label>
+                                <div class="isosurface-control-field">
+                                    <input id="isosurface_opacity_range" class="input-isolevel" type="range" min="0" max="1" step="0.01" value="0.18">
+                                    <div id="isosurface_opacity_value" class="isosurface-control-value">0.18</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3>Camera:</h3>
+                            <button id="camerax" type="button">x</button>
+                            <button id="cameray" type="button">y</button>
+                            <button id="cameraz" type="button">z</button>
+                        </div>
+
+                        <div class="advanced-appearance">
+                            <div class="appearance-subsection">Atom</div>
+                            <div class="appearance-row">
+                                <label for="displaystyle">display</label>
+                                <select id="displaystyle">
+                                    <option value="jmol">jmol</option>
+                                    <option value="vesta">vesta</option>
+                                </select>
+                            </div>
+                            <div class="appearance-row">
+                                <label for="appearance_atom_list">type</label>
+                                <div id="appearance_atom_list" class="appearance-atom-list"></div>
+                            </div>
+                            <div class="appearance-row">
+                                <label for="atom_color_input">color</label>
+                                <input id="atom_color_input" type="color">
+                            </div>
+                            <div class="appearance-row">
+                                <label for="atom_radius_input">radius</label>
+                                <div class="appearance-controls">
+                                    <input id="atom_radius_input" type="number" min="0.1" max="5.0" step="0.05" value="1.0">
+                                    <button id="appearance_reset_atom_button" type="button">reset</button>
+                                </div>
+                            </div>
+
+                            <div class="appearance-subsection">Bonds</div>
+                            <div class="appearance-row">
+                                <label for="bond_color_input">color</label>
+                                <div class="appearance-controls">
+                                    <input id="bond_color_input" type="color">
+                                    <button id="appearance_reset_bonds_button" type="button">reset</button>
+                                </div>
+                            </div>
+                            <div class="appearance-row">
+                                <label for="bond_radius_input">radius</label>
+                                <input id="bond_radius_input" type="number" min="0.01" max="1.0" step="0.01" value="0.1">
+                            </div>
+                            <div class="appearance-row">
+                                <label for="bond_color_by_atom_checkbox">split colors</label>
+                                <div class="appearance-controls">
+                                    <input id="bond_color_by_atom_checkbox" type="checkbox">on</input>
+                                </div>
+                            </div>
+                            <div class="appearance-row">
+                                <label for="bond_rules_list">types</label>
+                                <div id="bond_rules_list"></div>
+                            </div>
+                            <div class="appearance-row">
+                                <label for="bond_add_atom_a">bond</label>
+                                <div class="appearance-controls">
+                                    <select id="bond_add_atom_a"></select>
+                                    <select id="bond_add_atom_b"></select>
+                                    <input id="bond_add_cutoff_input" type="number" min="0.01" step="0.01" placeholder="max">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3>How to use:</h3>
+                            <p>Click anywhere on the absorption spectrum to select the closest bright exciton. The 3D viewer updates the corresponding wavefunction isosurface in real space.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-vibcrystal"><div id="excitonwf"></div></div>
+            <div class="flex-highcharts"><div id="highcharts"></div></div>
+        </div>
+    </div>
+</body>
+</html>

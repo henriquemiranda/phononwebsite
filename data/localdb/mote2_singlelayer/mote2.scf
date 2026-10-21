@@ -1,0 +1,35 @@
+&control
+          wf_collect = .true.,
+         calculation = "scf",
+           verbosity = 'high',
+          pseudo_dir = '/home/henrique/pseudopotentials/espresso',
+              prefix = "mote2",
+              outdir = '.',
+/&end
+&system
+             ecutwfc = 80,
+         occupations = "fixed",
+           celldm(1) = 6.567862405,
+               ibrav = 4,
+           celldm(3) = 6.09026156966,
+            !lspinorb = .true.,
+            !noncolin = .true.,
+                 nat = 3,
+                ntyp = 2,
+/&end
+&electrons
+         mixing_beta = 0.3,
+            conv_thr = 1.d-12,
+/&end
+&ions
+        ion_dynamics = 'bfgs',
+/&end
+ATOMIC_SPECIES
+  Mo   95.940    Mo.rel-pz-ape.UPF
+  Te  127.600        Te.pz-hgh.UPF
+ATOMIC_POSITIONS { crystal }
+ Mo   0.333333333333   0.666666666667   0.0000000000
+ Te   0.666666666667   0.333333333333   0.0844061692
+ Te   0.666666666667   0.333333333333  -0.0844061692
+K_POINTS { automatic }
+9 9  1  0  0  0

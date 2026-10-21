@@ -1,0 +1,39 @@
+ &control
+    calculation = 'relax',
+    restart_mode='from_scratch',
+    prefix='TiSe2',
+    tstress = .true.,
+    tprnfor = .true.,
+    pseudo_dir = './',
+    outdir='./tmp/',
+    verbosity='high',
+ &end
+ &system    
+    ibrav=  4, 
+    celldm(1)=6.6893,
+    celldm(3)=1.697,
+    nat=  3, 
+    ntyp = 2,
+    ecutwfc = 45.0,
+    ecutrho = 450.0, 
+    degauss=0.01,
+    occupations="smearing",
+    smearing="mp",
+ &end
+ &electrons
+   diagonalization='david',
+    mixing_mode = 'plain',
+    mixing_beta = 0.2 ,
+    conv_thr =  1.0d-9,
+ &end
+ &ions
+ &end
+ATOMIC_SPECIES crystal
+Ti  47.867  Ti.pbe-sp-van_ak.UPF
+Se  78.96   Se_PBE_TM_cons.UPF
+ATOMIC_POSITIONS crystal 
+Ti 0.000000000000000000  0.000000000000000000  0.000000000000000000 
+Se 0.333333333333333333  0.666666666666666666  0.25504
+Se 0.666666666666666666  0.333333333333333333 -0.25504
+K_POINTS automatic
+24  24   12  0 0 0

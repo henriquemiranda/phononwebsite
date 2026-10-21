@@ -1,0 +1,46 @@
+MD.NumCGsteps 1000
+LatticeConstant 1.000000 Ang
+PAO.EnergyShift 0.001361 eV
+DM.Tolerance 0.0001
+DM.MixingWeight 0.1
+MD.MaxForceTol 0.000001 eV/Ang
+Use.New.Diagk .true.
+SystemLabel gr
+PAO.BasisSize sz
+MD.MaxStressTol 0.000001 eV/Ang**3
+SolutionMethod diagon
+AtomicCoordinatesFormat NotScaledCartesianAng
+MaxSCFIterations 120
+MD.TypeOfRun Broyden
+
+    %block GeometryConstraints
+    routine constr
+    stress 3
+    %endblock GeometryConstraints
+     
+SCF.MixAfterConvergence .false.
+DM.NumberPulay 5
+MeshCutoff 5442.279131 eV
+MD.RelaxCellOnly .true.
+NumberOfSpecies 1
+MD.VariableCell .true.
+NumberOfAtoms 2
+DM.UseSaveDM False
+ElectronicTemperature 0.027211 eV
+%block LatticeVectors
+  2.30000000000000   0.00000000000000   0.00000000000000
+ -1.15000000000000   1.99185842870421   0.00000000000000
+  0.00000000000000   0.00000000000000  15.00000000000000
+%endblock LatticeVectors
+%block ChemicalSpeciesLabel
+1 6 C
+%endblock ChemicalSpeciesLabel
+%block AtomicCoordinatesAndAtomicSpecies
+  0.00000000000000   0.00000000000000   0.00000000000000 1 12.011000
+  1.15000000000000   0.66395280956807   0.00000000000000 1 12.011000
+%endblock AtomicCoordinatesAndAtomicSpecies
+%block KgridMonkhorstPack
+ 60   0   0 0.0
+  0  60   0 0.0
+  0   0   1 0.0
+%endblock KgridMonkhorstPack

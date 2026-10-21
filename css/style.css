@@ -1,0 +1,615 @@
+html, body {
+    font-family: Arial,helvetica,sans-serif;
+    margin: 0;
+    height: 99.5%;
+    width: 100%;
+}
+
+section {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 650px;
+}
+
+.homepage-layout {
+    height: 100%;
+}
+
+.homepage-layout .flex-menu {
+    flex: 1;
+}
+
+.homepage-layout .homepage-content-panel {
+    flex: 4;
+}
+
+.homepage-menu-panel {
+    padding-bottom: 1rem;
+}
+
+#homepage-panel {
+    position: absolute;
+    inset: 0;
+    overflow: auto;
+    padding: 0 1.5rem 2.5rem;
+    box-sizing: border-box;
+}
+
+.homepage-content {
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.homepage-toc-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.homepage-toc-item + .homepage-toc-item {
+    margin-top: 0.2rem;
+}
+
+.homepage-toc-item a {
+    display: block;
+    padding: 0.28rem 0.45rem;
+    text-decoration: none;
+    color: #475569;
+    border-left: 3px solid transparent;
+    transition: background-color 120ms ease, color 120ms ease, border-color 120ms ease;
+}
+
+.homepage-toc-item a:hover {
+    background: rgba(0, 191, 255, 0.12);
+    color: #0f172a;
+}
+
+.homepage-toc-item a.active {
+    background: rgba(0, 191, 255, 0.16);
+    border-left-color: deepskyblue;
+    color: #0c4a6e;
+    font-weight: 700;
+}
+
+.homepage-toc-item.level-h2 a {
+    padding-left: 1rem;
+    font-size: 0.96rem;
+}
+
+.homepage-toc-item.level-h3 a {
+    padding-left: 1.45rem;
+    font-size: 0.92rem;
+}
+
+code {
+    background: #f8f8f8;
+}
+
+blockquote, pre {
+    margin: 0 0 1em;
+    padding: 1em;
+    background: #f8f8f8;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.2) 0 0 0.2rem;
+    -moz-box-shadow: rgba(0, 0, 0, 0.2) 0 0 0.2rem;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 0 0.2rem;
+}
+
+pre {
+    word-wrap: normal;
+    white-space: pre;
+}
+
+canvas {
+    width: 100%;
+    height: 100%
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    padding: 0.25rem;
+    text-align: left;
+    border: 1px solid #ccc;
+}
+
+section {
+    line-height: 1.6rem;
+}
+
+h1 {
+    font-size: 2em;
+    margin: .3em;
+}
+
+h3 {
+    font-size: 1em;
+    margin-top: 0.5em;
+    margin-bottom: 0.3em;
+}
+
+    
+.container  {
+    height: 100%;
+    width: 100%;
+    display: flex;
+
+    flex-direction: column;
+    justify-content: flex-start;
+
+}
+
+.navigation {
+    display: flex;
+
+    flex-direction: row;
+    justify-content: flex-start;
+
+    list-style: none;
+    margin: 0;
+
+    background: deepskyblue;
+    padding-left: 0;
+}
+
+.navigation a {
+    text-decoration: none;
+    display: block;
+    padding: 0.5em;
+    color: white;
+}
+
+@media screen and (max-width: 1000px) {
+    #homepage-panel {
+        position: relative;
+        overflow: visible;
+        padding: 0 1rem 2rem;
+    }
+
+    .homepage-content {
+        max-width: none;
+    }
+}
+
+#nx, #ny, #nz {
+    width: 20%;
+}
+
+#progress { 
+    position: absolute; 
+    left: 0; 
+    top: 0; 
+    z-index: 100; 
+    height: 10px; 
+    background-color: #b70000;
+    width: 0;
+    transition: width 140ms ease;
+}
+
+#stats {
+    z-index: 100;
+    position: absolute;
+    bottom: 0;
+}
+
+#material-list {
+    padding: 0px 5px 0px 5px;
+    flex: 1;
+}
+
+#materials_filter {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0 0 0.45rem;
+    padding: 0.4rem 0.55rem;
+    border: 1px solid #b6c2cf;
+    border-radius: 0.4rem;
+    font: inherit;
+}
+
+#materials_filter:focus {
+    outline: none;
+    border-color: deepskyblue;
+    box-shadow: 0 0 0 2px rgba(0, 191, 255, 0.15);
+}
+
+#material-list.exciton-material-panel {
+    flex: 0 0 80px;
+}
+
+#options-list {
+    padding: 0px 5px 0px 5px;
+    overflow: auto;
+    flex: 2;
+}
+
+#menu {
+    height: 100%;
+    width: 100%;
+   	position: absolute;
+    display: flex;
+    flex-direction: column;
+}
+
+#vibcrystal {
+    height: 100%;
+    width: 100%;
+   	position: absolute;
+}
+
+#excitonwf {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+
+#plot-chart-area {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.flex-highcharts.raman-enabled #plot-chart-area {
+    top: 40px;
+    height: calc(100% - 40px);
+    min-height: 400px;
+}
+
+#highcharts,
+#raman-spectrum {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+
+#raman-spectrum {
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#raman-spectrum-chart {
+    flex: 3 1 0;
+    min-height: 0;
+    position: relative;
+    width: 100%;
+}
+
+#raman-table-container {
+    flex: 2 1 0;
+    min-height: 0;
+    overflow-y: auto;
+    width: 100%;
+}
+
+#structureviewer {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+
+.material-name {
+    vertical-align: middle;
+    text-align: center;
+    height: 3em;
+    margin: 0;
+}
+
+.flex-container {
+    width: 100%;
+  	height: 100%;
+    position: relative;
+    padding: 0;
+    margin: 0;
+    justify-content: space-around;
+
+    flex: 1;
+    display: flex;
+    -webkit-flex-flow: row wrap;
+    flex-flow: row wrap;
+    align-items: stretch;
+}
+
+.flex-menu {
+    width: 100%;
+    flex: 1;
+    order: 1;
+    position: relative;
+}
+
+.flex-vibcrystal {
+    width: 100%;
+    flex: 2;
+    order: 2;
+    position: relative;
+}
+
+.flex-highcharts {
+    width: 100%;
+    flex: 2;
+    order: 3;
+    position: relative;
+}
+
+.structure-layout .flex-menu {
+    flex: 1;
+}
+
+.structure-layout .structure-viewer-panel {
+    flex: 4;
+}
+
+#lattice td {
+  width: 20%;
+}
+
+#atompos td {
+  width: 20%;
+}
+
+ap {
+  width: 10%;
+}
+
+#atompos td {
+    vertical-align: middle;
+}
+
+#atompos td.atom-type-cell {
+    width: 26%;
+    border-right: 0;
+    background: transparent;
+}
+
+.atom-type-badge {
+    --atom-badge-bg: #64748b;
+    --atom-badge-fg: #ffffff;
+    display: inline-block;
+    min-width: 1.5rem;
+    padding: 0.18rem 0.45rem;
+    border-radius: 999px;
+    background: var(--atom-badge-bg);
+    color: var(--atom-badge-fg);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    line-height: 1.1;
+    text-align: center;
+}
+
+.atom-badge-pair {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.atom-badge-separator {
+    color: #475569;
+    font-weight: 700;
+}
+
+#mat {
+    list-style: none;
+    margin: 0;
+    height: 200px;
+    overflow: auto;
+    padding-left: 0;
+}
+
+#mat.exciton-material-list {
+    height: 48px;
+}
+
+#mat li + li {
+    margin-top: 0.03rem;
+}
+
+#mat li a {
+    display: block;
+    padding: 0.08rem 0.4rem;
+    text-decoration: none;
+    color: #475569;
+    border-left: 3px solid transparent;
+    transition: background-color 120ms ease, color 120ms ease, border-color 120ms ease;
+    line-height: 1.15;
+}
+
+#mat li a:hover {
+    background: rgba(0, 191, 255, 0.12);
+    color: #0f172a;
+    border-left-color: deepskyblue;
+}
+
+#ref {
+    font-size: 0.8em;
+    list-style: none;
+    margin: 0;
+    padding-left: 0;
+    padding-top: .5em;
+    padding-bottom: .5em;
+}
+
+#ref .reference-filter-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.45rem;
+    transition: opacity 120ms ease, color 120ms ease;
+    margin-bottom: 0.22rem;
+}
+
+#ref .reference-filter-toggle {
+    margin: 0.18rem 0 0;
+    width: 0.95rem;
+    height: 0.95rem;
+    cursor: pointer;
+}
+
+#ref .reference-filter-text {
+    flex: 1;
+}
+
+.advanced-appearance {
+    padding: 2px 0;
+}
+
+.advanced-appearance .appearance-row {
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr);
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+}
+
+.advanced-appearance .appearance-subsection {
+    font-weight: bold;
+    margin: 8px 0 4px 0;
+    padding-top: 4px;
+}
+
+.advanced-appearance .appearance-atom-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.advanced-appearance .appearance-atom-list button.active {
+    font-weight: bold;
+}
+
+.advanced-appearance .appearance-row label {
+    display: inline-block;
+    font-size: 0.95em;
+}
+
+.advanced-appearance .appearance-controls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.advanced-appearance input[type="number"] {
+    width: 90px;
+}
+
+.advanced-appearance input[type="color"] {
+    width: 40px;
+    height: 28px;
+}
+
+.advanced-appearance .appearance-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+.structure-toggle-row {
+    display: flex;
+    gap: 14px;
+    margin: 8px 0 2px;
+}
+
+.isosurface-section {
+    margin: 6px 0 8px;
+}
+
+.isosurface-section .appearance-row {
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr);
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+}
+
+.isosurface-control-field {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 52px;
+    align-items: center;
+    gap: 8px;
+}
+
+.isosurface-section .input-isolevel {
+    width: 100%;
+}
+
+.isosurface-control-value {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+.structure-help-text {
+    font-size: 0.92em;
+    line-height: 1.35;
+    margin: 0.45rem 0 0;
+}
+
+#appearance_reset_vectors_button {
+    padding-left: 6px;
+    padding-right: 6px;
+    font-size: 0.9em;
+}
+
+
+@media all and (max-width: 700px) {
+    .navigation {
+        justify-content: space-around;
+    }
+
+    .advanced-appearance .appearance-row {
+        grid-template-columns: 1fr;
+        gap: 4px;
+    }
+
+    .advanced-appearance .appearance-actions {
+        justify-content: flex-start;
+    }
+
+    .isosurface-section .appearance-row {
+        grid-template-columns: 1fr;
+        gap: 4px;
+    }
+
+    .isosurface-control-field {
+        grid-template-columns: minmax(0, 1fr) 52px;
+    }
+
+    .container {
+      height: auto;
+    }
+
+    .flex-container {
+	    -webkit-flex-flow: column wrap;
+	    flex-flow: column wrap;
+      height: auto;
+    }
+
+    #menu {
+        height: auto;
+        position: relative;
+    }
+
+    .flex-menu {
+        flex: auto;
+        order: 1;
+        height: initial;
+    }
+
+    .flex-vibcrystal {
+        flex: auto;
+        min-height: 500px;
+        width: 90%;
+    }
+
+    .flex-highcharts {
+        flex: auto;
+        order: 3;
+        min-height: 500px;
+    }
+
+    body {
+      overflow: auto;
+    }
+}
