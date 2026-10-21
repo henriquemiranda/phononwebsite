@@ -10,11 +10,15 @@ import { StructureViewerBase } from './structureviewerbase.js';
 import { buildCrystalBondRules, getChemicalBondLimit } from './bonding.js';
 import { createAtomSphereGeometry, createBondCylinderGeometry, createCellLineObject } from './viewergeometry.js';
 import { buildBondList, getViewerAtomRadius } from './viewermeshes.js';
+import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 
 const vec_y = new THREE.Vector3( 0, 1, 0 );
 const vec_0 = new THREE.Vector3( 0, 0, 0 );
-const direction = new THREE.Vector3( 0, 0, 0 );
-const quaternion = new THREE.Quaternion();
+// scratch objects reused by the per-frame update to avoid allocations
+const scratchDir = new THREE.Vector3();
+const scratchMid = new THREE.Vector3();
+const scratchOffset = new THREE.Vector3();
+const scratchVel = new THREE.Vector3();
 
 function getComplexParts(z) {
     if (z && z.__rawComplex) {
@@ -43,15 +47,19 @@ function getComplexParts(z) {
     return [re, im];
 }
 
-function getBond( point1, point2 ) {
+function computeBondFrame( point1, point2, outMidpoint, outQuaternion, outDir ) {
     /*
-    get a quaternion and midpoint that links two points
+    fill the midpoint, the quaternion and the unit direction
+    linking two points and return their distance
     */
-    direction.subVectors(point2, point1);
-    quaternion.setFromUnitVectors( vec_y, direction.clone().normalize() );
-
-    return { quaternion: quaternion,
-             midpoint: point1.clone().add( direction.multiplyScalar(0.5) ) };
+    outDir.subVectors(point2, point1);
+    let length = outDir.length();
+    if (length > 0) {
+        outDir.multiplyScalar(1.0 / length);
+    }
+    outQuaternion.setFromUnitVectors( vec_y, outDir );
+    outMidpoint.copy(point1).addScaledVector(outDir, 0.5 * length);
+    return length;
 }
 
 function getSupportedWebmMimeType() {
@@ -202,8 +210,10 @@ export class VibCrystal extends StructureViewerBase {
         this.bondobjects = [];
         this.bondmesh = null;
         this.bondmeshes = [];
+        this.arrowmesh = null;
         this.bonds = [];
         this.instanceDummy = new THREE.Object3D();
+        this.animateFrame = this.animate.bind(this);
         this.captureK = null;
         this.captureN = null;
 		this.modified_covalent_radii = JSON.parse(JSON.stringify(atomic_data.covalent_radii));
@@ -1061,48 +1071,22 @@ export class VibCrystal extends StructureViewerBase {
             }
 
             mesh.material.color.copy(this.getAtomColor(atomNumber));
-            mesh.material.needsUpdate = true;
         }
     }
 
     refreshBondMeshColors() {
-        if (this.bondColorByAtom && this.splitBondObjects && this.splitBondObjects.length) {
-            for (let i = 0; i < this.splitBondObjects.length; i++) {
-                let bondPair = this.splitBondObjects[i];
-                if (bondPair.meshA && bondPair.meshA.material) {
-                    bondPair.meshA.material.color.copy(this.getAtomColor(bondPair.aAtomNumber));
-                    bondPair.meshA.material.needsUpdate = true;
-                }
-                if (bondPair.meshB && bondPair.meshB.material) {
-                    bondPair.meshB.material.color.copy(this.getAtomColor(bondPair.bAtomNumber));
-                    bondPair.meshB.material.needsUpdate = true;
-                }
-            }
-            return;
-        }
-
         if (!this.bondmeshes || !this.bondmeshes.length) {
             return;
         }
 
-        if (this.bondColorByAtom && this.bondmeshes.length >= 2) {
-            let meshA = this.bondmeshes[0];
-            let meshB = this.bondmeshes[1];
-
+        if (this.bondColorByAtom && this.bondmesh && this.bondmesh.setColorAt) {
+            let mesh = this.bondmesh;
             for (let i=0; i<this.bonds.length; i++) {
                 let bond = this.bonds[i];
-                if (meshA.setColorAt) {
-                    meshA.setColorAt(i, this.getAtomColor(bond.a_atom_number));
-                }
-                if (meshB.setColorAt) {
-                    meshB.setColorAt(i, this.getAtomColor(bond.b_atom_number));
-                }
+                mesh.setColorAt(2 * i, this.getAtomColor(bond.a_atom_number));
+                mesh.setColorAt(2 * i + 1, this.getAtomColor(bond.b_atom_number));
             }
-
-            if (meshA.instanceColor) { meshA.instanceColor.needsUpdate = true; }
-            if (meshB.instanceColor) { meshB.instanceColor.needsUpdate = true; }
-            if (meshA.material) { meshA.material.needsUpdate = true; }
-            if (meshB.material) { meshB.material.needsUpdate = true; }
+            if (mesh.instanceColor) { mesh.instanceColor.needsUpdate = true; }
             return;
         }
 
@@ -1112,7 +1096,6 @@ export class VibCrystal extends StructureViewerBase {
                 continue;
             }
             mesh.material.color.setHex(this.bondscolor);
-            mesh.material.needsUpdate = true;
         }
     }
 
@@ -1127,7 +1110,6 @@ export class VibCrystal extends StructureViewerBase {
                 continue;
             }
             arrow.material.color.setHex(this.arrowcolor);
-            arrow.material.needsUpdate = true;
         }
     }
 
@@ -1163,7 +1145,7 @@ export class VibCrystal extends StructureViewerBase {
         this.bondobjects  = [];
         this.bondmesh = null;
         this.bondmeshes = [];
-        this.splitBondObjects = [];
+        this.arrowmesh = null;
         this.arrowobjects = [];
         this.atompos = [];
         this.atomvel = [];
@@ -1270,22 +1252,20 @@ export class VibCrystal extends StructureViewerBase {
                 } );
             }
 
-            for (let i=0; i<atoms.length; i++) {
-                // Use a group instead of legacy Geometry.merge() so the arrow
-                // representation remains compatible with newer Three.js releases.
-                let object = new THREE.Group();
-                let axisMesh = new THREE.Mesh(axisGeometry, AxisMaterial);
-                let arrowMesh = new THREE.Mesh(arrowGeometry, AxisMaterial);
-                let length = (this.arrowLength + this.arrowLength * this.arrowHeadLengthRatio) / 2;
+            // Bake the head offset into its geometry and merge it with the axis
+            // so that all the arrows are drawn with a single instanced mesh.
+            let length = (this.arrowLength + this.arrowLength * this.arrowHeadLengthRatio) / 2;
+            arrowGeometry.translate(0, length, 0);
+            let arrowsGeometry = mergeGeometries([axisGeometry, arrowGeometry]);
+            axisGeometry.dispose();
+            arrowGeometry.dispose();
 
-                arrowMesh.position.y = length;
-                object.add(axisMesh);
-                object.add(arrowMesh);
-                object.position.copy( geometricCenter );
-
-                this.scene.add( object );
-                this.arrowobjects.push( object );
-            }
+            this.arrowmesh = new THREE.InstancedMesh(arrowsGeometry, AxisMaterial, atoms.length);
+            this.arrowmesh.name = "arrows";
+            this.arrowmesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+            this.arrowmesh.frustumCulled = false;
+            this.scene.add( this.arrowmesh );
+            this.arrowobjects.push( this.arrowmesh );
         }
 
         this.bonds = buildBondList(
@@ -1311,85 +1291,41 @@ export class VibCrystal extends StructureViewerBase {
                 this.bondRadius, 1.0, this.bondSegments, this.bondVertical
             );
 
+            // With per-atom colours each bond is drawn as two halves:
+            // instance 2*i is the half next to atom a and 2*i+1 the half next to atom b.
+            let instanceCount = this.bondColorByAtom ? 2 * this.bonds.length : this.bonds.length;
+            this.bondmesh = new THREE.InstancedMesh(
+                bondGeometry,
+                createBondMaterial(false),
+                instanceCount
+            );
             if (this.bondColorByAtom) {
-                let dir = new THREE.Vector3();
-                for (let i=0; i<this.bonds.length; i++) {
-                    let bond = this.bonds[i];
-                    let lengthNow = bond.a.distanceTo(bond.b);
-                    let bonddata = getBond(bond.a, bond.b);
-                    dir.copy(bond.b).sub(bond.a).normalize();
-                    let offset = dir.clone().multiplyScalar(lengthNow * 0.25);
-
-                    let meshA = new THREE.Mesh(
-                        bondGeometry,
-                        this.createShadedMaterial({
-                            color: this.getAtomColorHex(bond.a_atom_number),
-                            blending: THREE.NormalBlending,
-                        })
-                    );
-                    let meshB = new THREE.Mesh(
-                        bondGeometry,
-                        this.createShadedMaterial({
-                            color: this.getAtomColorHex(bond.b_atom_number),
-                            blending: THREE.NormalBlending,
-                        })
-                    );
-
-                    meshA.position.copy(bonddata.midpoint).sub(offset);
-                    meshB.position.copy(bonddata.midpoint).add(offset);
-                    meshA.setRotationFromQuaternion(bonddata.quaternion);
-                    meshB.setRotationFromQuaternion(bonddata.quaternion);
-                    meshA.scale.set(1, lengthNow * 0.5, 1);
-                    meshB.scale.set(1, lengthNow * 0.5, 1);
-                    meshA.name = "bond";
-                    meshB.name = "bond";
-
-                    this.scene.add(meshA);
-                    this.scene.add(meshB);
-                    this.splitBondObjects.push({
-                        meshA,
-                        meshB,
-                        aAtomNumber: bond.a_atom_number,
-                        bAtomNumber: bond.b_atom_number,
-                    });
-                    this.bondobjects.push(meshA);
-                    this.bondobjects.push(meshB);
-                }
-            } else {
-                this.bondmesh = new THREE.InstancedMesh(
-                    bondGeometry,
-                    createBondMaterial(false),
-                    this.bonds.length
-                );
-                this.bondmesh.name = "bonds";
-                this.bondmesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
-                this.bondmesh.frustumCulled = false;
-
-                for (let i=0; i<this.bonds.length; i++) {
-                    let bond = this.bonds[i];
-                    let bonddata = getBond(bond.a, bond.b);
-                    this.instanceDummy.position.copy(bonddata.midpoint);
-                    this.instanceDummy.quaternion.copy(bonddata.quaternion);
-                    this.instanceDummy.scale.set(1, bond.baseLength, 1);
-                    this.instanceDummy.updateMatrix();
-                    this.bondmesh.setMatrixAt(i, this.instanceDummy.matrix);
-                }
-
-                this.bondmesh.instanceMatrix.needsUpdate = true;
-                this.bondmeshes.push(this.bondmesh);
-                this.scene.add(this.bondmesh);
+                this.bondmesh.material.color.setHex(0xffffff);
             }
+            this.bondmesh.name = "bonds";
+            this.bondmesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+            this.bondmesh.frustumCulled = false;
+            this.bondmeshes.push(this.bondmesh);
+            this.bondobjects.push(this.bondmesh);
+            this.scene.add(this.bondmesh);
+            this.refreshBondMeshColors();
         }
 
+        this.updateDynamicTransforms();
     }
 
     removeStructure() {
         let nobjects = this.scene.children.length;
         let scene = this.scene
 
-        //remove everything
+        //remove everything, releasing the GPU resources of the meshes built by addStructure
         for (let i=nobjects-1; i>=0; i--) {
-            scene.remove(scene.children[i]);
+            let child = scene.children[i];
+            this.disposeSceneObject(child);
+            if (child.isInstancedMesh) {
+                child.dispose();
+            }
+            scene.remove(child);
         }
     }
 
@@ -1402,6 +1338,13 @@ export class VibCrystal extends StructureViewerBase {
             2. vibrations
             3. phonon
         */
+
+        // Selecting another mode of the same structure only changes the vibrations,
+        // so the scene can be kept and only the displacements updated.
+        let sameStructure = this.initialized &&
+            this.scene && this.atomobjects && this.atomobjects.length &&
+            phononweb.phonon === this.phonon &&
+            phononweb.atoms === this.atoms;
 
         this.phonon     = phononweb.phonon;
         this.vibrations = phononweb.vibrations;
@@ -1416,6 +1359,13 @@ export class VibCrystal extends StructureViewerBase {
         if (this.autoBondRulesSourcePhonon !== this.phonon || !Object.keys(this.bondRules).length) {
             this.initializeBondRulesFromAtoms(this.atoms, this.phonon.atom_numbers);
             this.autoBondRulesSourcePhonon = this.phonon;
+        }
+
+        if (sameStructure) {
+            this.updateDynamicTransforms();
+            this.needsRender = true;
+            this.startAnimationLoop();
+            return;
         }
 
         //check if it is initialized
@@ -1482,7 +1432,7 @@ export class VibCrystal extends StructureViewerBase {
         if (this.animationFrameId === null) {
             this.lastFrameTime = null;
             if (typeof requestAnimationFrame === 'function') {
-                this.animationFrameId = requestAnimationFrame( this.animate.bind(this) );
+                this.animationFrameId = requestAnimationFrame( this.animateFrame );
             } else {
                 this.animationFrameId = setTimeout(() => this.animate(Date.now()), 16);
             }
@@ -1510,9 +1460,110 @@ export class VibCrystal extends StructureViewerBase {
             this.render();
         }
         if (typeof requestAnimationFrame === 'function') {
-            this.animationFrameId = requestAnimationFrame( this.animate.bind(this) );
+            this.animationFrameId = requestAnimationFrame( this.animateFrame );
         } else {
             this.animationFrameId = setTimeout(() => this.animate(Date.now()), 16);
+        }
+    }
+
+    getPhaseFactors() {
+        /*
+        complex factor A*exp(i*2*pi*t) applied to the eigenvectors at the current time
+        */
+        let phaseTime = this.time;
+        if (this.captureState === 'capturing' && this.captureFrameTarget > 0) {
+            phaseTime = this.capturePhaseStart + (this.captureFrameCount / this.captureFrameTarget);
+        }
+        let phaseAngle = phaseTime * 2.0 * mat.pi;
+        return [this.amplitude * Math.cos(phaseAngle), this.amplitude * Math.sin(phaseAngle)];
+    }
+
+    updateDynamicTransforms(phaseRe, phaseIm) {
+        /*
+        update the atoms, bonds and arrows instance matrices for the given phase
+        */
+        if (phaseRe === undefined) {
+            [phaseRe, phaseIm] = this.getPhaseFactors();
+        }
+        let atomobjects = this.atomobjects || [];
+        let vibrationComponents = this.vibrationComponents || [];
+        if (vibrationComponents.length < atomobjects.length) {
+            return;
+        }
+
+        //update positions according to vibrational modes
+        let arrowmesh = this.arrows ? this.arrowmesh : null;
+        let dummy = this.instanceDummy;
+        let s = .5*this.arrowScale/this.amplitude;
+        for (let i=0; i<atomobjects.length; i++) {
+            let atom       = atomobjects[i];
+            let atompos    = this.atompos[i];
+            let vibrations = vibrationComponents[i];
+
+            let vx = phaseRe * vibrations[0][0] - phaseIm * vibrations[0][1];
+            let vy = phaseRe * vibrations[1][0] - phaseIm * vibrations[1][1];
+            let vz = phaseRe * vibrations[2][0] - phaseIm * vibrations[2][1];
+
+            let x  = atompos.x + vx;
+            let y  = atompos.y + vy;
+            let z  = atompos.z + vz;
+
+            atom.position.set( x, y, z );
+
+            //the atom instance matrices are pure translations: write them directly
+            let atomInstance = this.atomInstanceRefs[i];
+            let matrixArray = atomInstance.mesh.instanceMatrix.array;
+            let offset = 16 * atomInstance.instanceId;
+            matrixArray[offset + 12] = x;
+            matrixArray[offset + 13] = y;
+            matrixArray[offset + 14] = z;
+
+            if (arrowmesh) {
+
+                //velocity vector
+                scratchVel.set(vx,vy,vz);
+                let vlength = scratchVel.length()/this.amplitude;
+
+                dummy.position.set(x+vx*s,y+vy*s,z+vz*s);
+                dummy.scale.set(1, vlength*this.arrowScale, 1);
+                dummy.quaternion.setFromUnitVectors(vec_y,scratchVel.normalize());
+                dummy.updateMatrix();
+                arrowmesh.setMatrixAt(i, dummy.matrix);
+            }
+        }
+
+        //update the bonds positions
+        let bondmesh = this.bondmesh;
+        if (bondmesh) {
+            for (let i=0; i<this.bonds.length; i++) {
+                let bond = this.bonds[i];
+                let lengthNow = computeBondFrame(bond.a, bond.b, scratchMid, dummy.quaternion, scratchDir);
+                if (this.bondColorByAtom) {
+                    scratchOffset.copy(scratchDir).multiplyScalar(lengthNow * 0.25);
+                    dummy.scale.set(1, lengthNow * 0.5, 1);
+
+                    dummy.position.copy(scratchMid).sub(scratchOffset);
+                    dummy.updateMatrix();
+                    bondmesh.setMatrixAt(2 * i, dummy.matrix);
+
+                    dummy.position.copy(scratchMid).add(scratchOffset);
+                    dummy.updateMatrix();
+                    bondmesh.setMatrixAt(2 * i + 1, dummy.matrix);
+                } else {
+                    dummy.position.copy(scratchMid);
+                    dummy.scale.set(1, lengthNow, 1);
+                    dummy.updateMatrix();
+                    bondmesh.setMatrixAt(i, dummy.matrix);
+                }
+            }
+            bondmesh.instanceMatrix.needsUpdate = true;
+        }
+
+        for (let i=0; i<this.atommeshes.length; i++) {
+            this.atommeshes[i].instanceMatrix.needsUpdate = true;
+        }
+        if (arrowmesh) {
+            arrowmesh.instanceMatrix.needsUpdate = true;
         }
     }
 
@@ -1521,103 +1572,10 @@ export class VibCrystal extends StructureViewerBase {
             this.needsRender = false;
             return;
         }
-        let phaseTime = this.time;
-        if (this.captureState === 'capturing' && this.captureFrameTarget > 0) {
-            phaseTime = this.capturePhaseStart + (this.captureFrameCount / this.captureFrameTarget);
-        }
-        let phaseAngle = phaseTime * 2.0 * mat.pi;
-        let phaseRe = this.amplitude * Math.cos(phaseAngle);
-        let phaseIm = this.amplitude * Math.sin(phaseAngle);
-        let v = new THREE.Vector3();
 
         if (!this.paused) {
-
-            //update positions according to vibrational modes
-            for (let i=0; i<this.atomobjects.length; i++) {
-                let atom       = this.atomobjects[i];
-                let atompos    = this.atompos[i];
-                let vibrations = this.vibrationComponents[i];
-
-                let vx = phaseRe * vibrations[0][0] - phaseIm * vibrations[0][1];
-                let vy = phaseRe * vibrations[1][0] - phaseIm * vibrations[1][1];
-                let vz = phaseRe * vibrations[2][0] - phaseIm * vibrations[2][1];
-
-                let x  = atompos.x + vx;
-                let y  = atompos.y + vy;
-                let z  = atompos.z + vz;
-
-                atom.position.set( x, y, z );
-                let atomInstance = this.atomInstanceRefs[i];
-                this.instanceDummy.position.copy(atom.position);
-                this.instanceDummy.quaternion.set(0, 0, 0, 1);
-                this.instanceDummy.scale.set(1, 1, 1);
-                this.instanceDummy.updateMatrix();
-                atomInstance.mesh.setMatrixAt(atomInstance.instanceId, this.instanceDummy.matrix);
-
-                if (this.arrows) {
-
-                    //velocity vector
-                    v.set(vx,vy,vz);
-                    let vlength = v.length()/this.amplitude;
-                    let s = .5*this.arrowScale/this.amplitude;
-
-                    this.arrowobjects[i].position.set(x+vx*s,y+vy*s,z+vz*s);
-                    this.arrowobjects[i].scale.y = vlength*this.arrowScale;
-                    this.arrowobjects[i].quaternion.setFromUnitVectors(vec_y,v.normalize());
-                }
-            }
-
-            //update the bonds positions
-            for (let i=0; i<this.bonds.length; i++) {
-                let bond = this.bonds[i];
-                let bonddata = getBond(bond.a, bond.b);
-                this.instanceDummy.quaternion.copy(bonddata.quaternion);
-                let lengthNow = bond.a.distanceTo(bond.b);
-                if (this.bondColorByAtom && this.splitBondObjects && this.splitBondObjects.length) {
-                    let dir = new THREE.Vector3().copy(bond.b).sub(bond.a).normalize();
-                    let offset = dir.multiplyScalar(lengthNow * 0.25);
-                    let bondPair = this.splitBondObjects[i];
-
-                    if (bondPair && bondPair.meshA && bondPair.meshB) {
-                        bondPair.meshA.position.copy(bonddata.midpoint).sub(offset);
-                        bondPair.meshB.position.copy(bonddata.midpoint).add(offset);
-                        bondPair.meshA.setRotationFromQuaternion(bonddata.quaternion);
-                        bondPair.meshB.setRotationFromQuaternion(bonddata.quaternion);
-                        bondPair.meshA.scale.set(1, lengthNow * 0.5, 1);
-                        bondPair.meshB.scale.set(1, lengthNow * 0.5, 1);
-                    }
-                } else if (this.bondColorByAtom && this.bondmeshes.length >= 2) {
-                    let dir = new THREE.Vector3().copy(bond.b).sub(bond.a).normalize();
-                    let offset = dir.multiplyScalar(lengthNow * 0.25);
-
-                    this.instanceDummy.scale.set(1, lengthNow * 0.5, 1);
-
-                    this.instanceDummy.position.copy(bonddata.midpoint).sub(offset);
-                    this.instanceDummy.updateMatrix();
-                    this.bondmeshes[0].setMatrixAt(i, this.instanceDummy.matrix);
-
-                    this.instanceDummy.position.copy(bonddata.midpoint).add(offset);
-                    this.instanceDummy.updateMatrix();
-                    this.bondmeshes[1].setMatrixAt(i, this.instanceDummy.matrix);
-                } else if (this.bondmesh) {
-                    this.instanceDummy.position.copy(bonddata.midpoint);
-                    this.instanceDummy.scale.set(1, lengthNow, 1);
-                    this.instanceDummy.updateMatrix();
-                    this.bondmesh.setMatrixAt(i, this.instanceDummy.matrix);
-                }
-            }
-
-            for (let i=0; i<this.atommeshes.length; i++) {
-                this.atommeshes[i].instanceMatrix.needsUpdate = true;
-            }
-            if (this.bondmeshes && this.bondmeshes.length) {
-                for (let i=0; i<this.bondmeshes.length; i++) {
-                    this.bondmeshes[i].instanceMatrix.needsUpdate = true;
-                }
-            } else if (this.bondmesh) {
-                this.bondmesh.instanceMatrix.needsUpdate = true;
-            }
-
+            let [phaseRe, phaseIm] = this.getPhaseFactors();
+            this.updateDynamicTransforms(phaseRe, phaseIm);
         }
 
         this.renderer.render( this.scene, this.camera );
