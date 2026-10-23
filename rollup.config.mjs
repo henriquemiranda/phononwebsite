@@ -83,5 +83,16 @@ export default [
             }
         ],
         plugins,
+    },
+    {
+        input: 'src/cuvacmain.js',
+        output: [
+            {
+                format: 'es',
+                file: 'build/cuvac.js',
+                sourcemap: true,
+            }
+        ],
+        plugins,
     }
 ];

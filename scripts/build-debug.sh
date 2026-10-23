@@ -15,9 +15,10 @@ fi
 
 rollup -c
 
-cp -r figures css libs README.md phonon.html exciton.html structure.html alloy.html zumba.html mixing.html favicon.svg favicon.ico build/
+cp -r figures css libs README.md phonon.html exciton.html structure.html alloy.html zumba.html mixing.html cuvac.html favicon.svg favicon.ico build/
 cp -r alloydb build/alloydb
 cp -r zumbadb build/zumbadb
+cp -r defectdb build/defectdb
 # Reuse the local datasets instead of copying gigabytes into every debug build.
 ln -s ../data build/data || cp -r data build/
 cp build/main.js build/main.min.js
@@ -26,3 +27,4 @@ cp build/structure.js build/structure.min.js
 cp build/alloy.js build/alloy.min.js
 cp build/zumba.js build/zumba.min.js
 cp build/mixing.js build/mixing.min.js
+cp build/cuvac.js build/cuvac.min.js
