@@ -779,7 +779,7 @@ export class PhononWebpage {
             Highcharts.chart('raman-spectrum-chart', {
                 title: { text: 'Raman Spectrum' },
                 subtitle: source ? {
-                    text: 'Raman tensors: <a href="' + source.url + '" target="_blank" rel="noopener">' +
+                    text: 'Raman tensors: <a href="' + source.url + '" target="_blank">' +
                           source.text + '</a>, ' + source.license,
                     useHTML: true
                 } : undefined,
