@@ -10,6 +10,7 @@ import * as mat from './mat.js';
 import * as utils from './utils.js';
 import { atomColorHexToCss, getAtomBadgeTextColor } from './atomcolors.js';
 import { renderLatticeTable, renderAtomPositionsTable } from './structureinfo.js';
+import { getMaterialsProjectId, fetchRamanTensors, mapRamanIntensities, findGammaIndex, RAMANDB_PROXY_URL, RAMANDB_REFERENCE } from './ramandb.js';
 
 export class PhononWebpage {
 
@@ -40,6 +41,8 @@ export class PhononWebpage {
         this.loadingState = null;
         this.activePlotView = null;
         this.plotViewControlsInitialized = false;
+        this.ramanDbId = null;
+        this.ramanDbProxyUrl = RAMANDB_PROXY_URL;
     }
 
     getModeMaxDisplacementNorm() {
@@ -235,6 +238,7 @@ export class PhononWebpage {
 
         function set_name() {
             delete self.link;
+            self.ramanDbId = null;
             self.name = utils.format_formula_html(self.phonon.name);
             self.loadCallback();
         }
@@ -261,6 +265,7 @@ export class PhononWebpage {
         this.k = 0;
         this.n = 0;
         delete this.link;
+        this.ramanDbId = getMaterialsProjectId(url_vars);
         if (callback == null) {
             callback = this.loadCallback.bind(this);
         }
@@ -428,6 +433,30 @@ export class PhononWebpage {
             return;
         }
         this.update();
+        this.loadRamanDatabase();
+    }
+
+    loadRamanDatabase() {
+        /*
+        fetch the Raman spectrum of materials without one from the
+        Computational Raman Database, keyed by the Materials Project id
+        */
+        let phonon = this.phonon;
+        if (!phonon || phonon.raman_intensities || !this.ramanDbId) {
+            return Promise.resolve();
+        }
+        return fetchRamanTensors(this.ramanDbId, this.ramanDbProxyUrl).then((modes) => {
+            //the user may have opened another material in the meantime
+            if (!modes || this.phonon !== phonon || !phonon.eigenvalues) { return; }
+            let gammaIndex = findGammaIndex(phonon.kpoints);
+            if (gammaIndex < 0 || !phonon.eigenvalues[gammaIndex]) { return; }
+            let intensities = mapRamanIntensities(modes, phonon.eigenvalues[gammaIndex]);
+            if (!intensities) { return; }
+            phonon.raman_intensities = intensities;
+            phonon.gamma_index = gammaIndex;
+            phonon.raman_source = RAMANDB_REFERENCE;
+            this.plotRaman();
+        });
     }
 
     getRepetitions() {
@@ -746,8 +775,14 @@ export class PhononWebpage {
             let existingChart = Highcharts.charts.find(c => c && c.renderTo && c.renderTo.id === 'raman-spectrum-chart');
             if (existingChart) existingChart.destroy();
         
+            let source = this.phonon.raman_source;
             Highcharts.chart('raman-spectrum-chart', {
                 title: { text: 'Raman Spectrum' },
+                subtitle: source ? {
+                    text: 'Raman tensors: <a href="' + source.url + '" target="_blank" rel="noopener">' +
+                          source.text + '</a>, ' + source.license,
+                    useHTML: true
+                } : undefined,
                 xAxis: { title: { text: 'Frequency (cm⁻¹)' } },
                 yAxis: { title: { text: 'Intensity' } },
                 series: [
