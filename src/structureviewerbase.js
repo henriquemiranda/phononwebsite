@@ -104,8 +104,8 @@ export class StructureViewerBase {
         if ('toneMapping' in this.renderer) {
             this.renderer.toneMapping = THREE.NoToneMapping;
         }
-        this.renderer.setPixelRatio(this.getPreferredPixelRatio());
-        this.renderer.setSize(this.dimensions.width, this.dimensions.height, false);
+        this.appliedRendererSize = null;
+        this.updateRendererPixelRatio();
         containerElement.appendChild(this.renderer.domElement);
         this.canvas = this.renderer.domElement;
         this.canvas.style.display = 'block';
@@ -215,7 +215,8 @@ export class StructureViewerBase {
     getPreferredPixelRatio() {
         const nativePixelRatio = window.devicePixelRatio || 1;
         if (!this.getIsosurfaceRenderMode().startsWith('raymarch')) {
-            return nativePixelRatio;
+            // beyond 2x the extra pixels are hardly visible but cost a lot of fill rate
+            return Math.min(nativePixelRatio, 2);
         }
         const interpolation = this.getIsosurfaceRenderMode() === 'raymarch-tricubic' ? 'tricubic' : 'trilinear';
         const profile = getRaymarchPerformanceProfile({
@@ -261,9 +262,18 @@ export class StructureViewerBase {
         if (!this.renderer) {
             return;
         }
-        this.renderer.setPixelRatio(this.getPreferredPixelRatio());
-        if (this.dimensions && this.dimensions.width && this.dimensions.height) {
-            this.renderer.setSize(this.dimensions.width, this.dimensions.height, false);
+        const pixelRatio = this.getPreferredPixelRatio();
+        const width = this.dimensions ? this.dimensions.width : 0;
+        const height = this.dimensions ? this.dimensions.height : 0;
+        // called on every controls change event: skip resizing the drawing buffer when nothing changed
+        const applied = this.appliedRendererSize;
+        if (applied && applied.pixelRatio === pixelRatio && applied.width === width && applied.height === height) {
+            return;
+        }
+        this.appliedRendererSize = { pixelRatio, width, height };
+        this.renderer.setPixelRatio(pixelRatio);
+        if (width && height) {
+            this.renderer.setSize(width, height, false);
         }
     }
 

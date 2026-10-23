@@ -182,6 +182,9 @@ Build the local site into `build/`:
 
     npm run build
 
+The local build links `build/data` to `data/` to avoid duplicating the datasets.
+Use `npm run build:site` for a self-contained deployment build that copies the data.
+
 Start a local server from `build/`:
 
     cd build
@@ -200,6 +203,33 @@ Useful commands:
 - `npm run generate:index` regenerates `build/index.html` from `README.md` and `ref_index.html`
 - `npm test` runs the JavaScript test suite
 - `npm run test:py` runs the Python test suite
+
+Keeping Git storage small
+-------------------------
+
+PhononDB files use Git LFS on the source branch. The generated `gh-pages`
+branch contains full dataset files, so deployment keeps only its latest commit.
+For development, clone the source branch without fetching deployment branches:
+
+    git clone --single-branch --branch master git@github.com:henriquemiranda/phononwebsite.git
+
+In an existing clone, exclude the generated deployment branch from normal fetches
+(requires Git 2.29 or newer):
+
+    git config --add remote.origin.fetch '^refs/heads/gh-pages'
+
+Apply the same exclusion to any fork remote used for source reviews. This prevents
+future downloads of deployment history. An explicit `git fetch origin gh-pages`
+can still download a deployment when needed.
+
+To reclaim space already used by deployment history, drop the local references
+and prune the unreachable objects (this also discards reflog history):
+
+    git branch -D gh-pages                              # if a local branch exists
+    git update-ref -d refs/remotes/origin/gh-pages      # repeat for each remote
+    git reflog expire --expire=now --all
+    git gc --prune=now
+    git lfs prune
 
 You can leave your suggestions and feature requests here:  
 <https://github.com/henriquemiranda/phononwebsite/issues>

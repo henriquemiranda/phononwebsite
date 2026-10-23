@@ -15,10 +15,11 @@ fi
 
 rollup -c
 
-cp -r figures css libs data README.md phonon.html exciton.html structure.html alloy.html zumba.html mixing.html favicon.svg favicon.ico build/
+cp -r figures css libs README.md phonon.html exciton.html structure.html alloy.html zumba.html mixing.html favicon.svg favicon.ico build/
 cp -r alloydb build/alloydb
 cp -r zumbadb build/zumbadb
-rm -f build/data/phonondb2017/.gitignore
+# Reuse the local datasets instead of copying gigabytes into every debug build.
+ln -s ../data build/data || cp -r data build/
 cp build/main.js build/main.min.js
 cp build/exciton.js build/exciton.min.js
 cp build/structure.js build/structure.min.js

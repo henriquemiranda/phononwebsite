@@ -51,3 +51,5 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build
+          # Generated datasets are large; retain only the current deployment.
+          force_orphan: true
