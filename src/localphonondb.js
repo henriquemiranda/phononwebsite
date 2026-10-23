@@ -10,7 +10,8 @@ export class LocalPhononDB {
         this.year = 2018;
         this.url = "https://github.com/atztogo/phonondb";
         this.generated = "data/phonondb2017/models.json";
-        this.root = "data/phonondb2017";
+        //this fork has no LFS quota, so the data files are served by the upstream site
+        this.root = "https://henriquemiranda.github.io/phononwebsite/data/phonondb2017";
     }
 
     get_materials(callback) {
